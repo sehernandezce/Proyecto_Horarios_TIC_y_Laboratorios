@@ -2,7 +2,7 @@
 
 ## PLATAFORMAS PARA EL DESARROLLO DEL SOFTWARE
 
-* *Lenguaje de programación*: Java
+* Lenguaje de programación: Java
 * IDE: NetBeans
 * Gestor de base de datos: MySQL
 * Gestor de versiones del software: GitKraken con repositorio en GitHub

@@ -1,6 +1,6 @@
 # Proyecto_Horarios_TIC_y_Laboratorios
 
-##PLATAFORMAS PARA EL DESARROLLO DEL SOFTWARE
+## PLATAFORMAS PARA EL DESARROLLO DEL SOFTWARE
 
 * Lenguaje de programación: Java
 * IDE: NetBeans

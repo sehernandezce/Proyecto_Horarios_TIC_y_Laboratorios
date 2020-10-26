@@ -355,6 +355,9 @@
                   <Image iconType="3" name="/Imagenes/usuario.png"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabel18MousePressed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="userLabel1">
               <Properties>

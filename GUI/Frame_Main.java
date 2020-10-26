@@ -10,6 +10,8 @@ public class Frame_Main extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);  
          ocultar_todosPaneles();
+         Paneles_Menu.setVisible(false);
+         
     }
 
     @SuppressWarnings("unchecked")
@@ -228,6 +230,11 @@ public class Frame_Main extends javax.swing.JFrame {
         jLabel17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/logo Unal_opt (1).jpg"))); // NOI18N
 
         jLabel18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/usuario.png"))); // NOI18N
+        jLabel18.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabel18MousePressed(evt);
+            }
+        });
 
         userLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         userLabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -1152,6 +1159,7 @@ public class Frame_Main extends javax.swing.JFrame {
     public void entrar_bienvenida(int tipo_Usuario){ //Selecciona el tipo de menu segun el usuario        
        ocultar_todosPaneles();
         Bienvenida.setVisible(true);
+        Paneles_Menu.setVisible(true);
         if(tipo_Usuario==   1){
               Menu_UE.setVisible(false);
          }else if(tipo_Usuario ==2){             
@@ -1321,6 +1329,11 @@ public class Frame_Main extends javax.swing.JFrame {
     private void jLabel8MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MousePressed
        ver_Estadisticas();
     }//GEN-LAST:event_jLabel8MousePressed
+
+    private void jLabel18MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel18MousePressed
+        ocultar_todosPaneles();
+        Bienvenida.setVisible(true);
+    }//GEN-LAST:event_jLabel18MousePressed
 
     /**
      * @param args the command line arguments

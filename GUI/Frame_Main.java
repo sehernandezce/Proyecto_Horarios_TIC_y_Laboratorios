@@ -1164,6 +1164,8 @@ public class Frame_Main extends javax.swing.JFrame {
               Menu_UE.setVisible(false);
          }else if(tipo_Usuario ==2){             
               Menu_UC.setVisible(false);
+         }else{
+              Paneles_Menu.setVisible(false);
          }
         
     }

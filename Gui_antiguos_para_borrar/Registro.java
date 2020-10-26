@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package GUI;
+package Gui_antiguos_para_borrar;
 
 /**
  *
@@ -44,6 +44,9 @@ public class Registro extends javax.swing.JPanel {
         coordinador = new javax.swing.JLabel();
         registrarse = new javax.swing.JButton();
         atras_r = new javax.swing.JButton();
+
+        setBackground(new java.awt.Color(240, 240, 240));
+        setForeground(new java.awt.Color(0, 0, 0));
 
         crearUser.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         crearUser.setText("Crear usuario");

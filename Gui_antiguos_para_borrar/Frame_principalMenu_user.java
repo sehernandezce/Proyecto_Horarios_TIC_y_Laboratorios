@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package GUI;
+package Gui_antiguos_para_borrar;
 
 /**
  *
@@ -118,7 +118,7 @@ public class Frame_principalMenu_user extends javax.swing.JFrame {
         MenuLayout.setVerticalGroup(
             MenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(MenuLayout.createSequentialGroup()
-                .addGap(125, 125, 125)
+                .addGap(97, 97, 97)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(8, 8, 8)
                 .addComponent(jLabel1)
@@ -205,7 +205,7 @@ public class Frame_principalMenu_user extends javax.swing.JFrame {
         panelPrincipal_menu.removeAll();
         panelPrincipal_menu.add(solicitar);
         panelPrincipal_menu.setVisible(true);
-                
+
     }//GEN-LAST:event_jLabel2MousePressed
 
     /**

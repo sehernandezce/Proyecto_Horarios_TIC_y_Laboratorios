@@ -13,38 +13,68 @@ public class Validar_Registro {
         
     }
     
-    public String verificarRegistro(String nombre, String password, String rePassword, int tipoUsuario){
-        if(!verificarLongitudNombre(nombre)){
-            return("Longitud nombre incorreta");
+    public int verificarRegistro(String name, String pass1, String pass2, int tipoUsuario, String codigo){
+        if(!verificarLongitudNombre(name)){
+            return(-1); // "Longitud nombre incorreta"
         }
-        else if (!verificarLongitudPassword(password)){
-            return("Longitud contraseña incorreta");
+        else if (!verificarLongitudPassword(pass1)){
+            return(-2); // "Longitud contraseña incorreta"
         }
-         else if (!verificarContrasenias(password,rePassword)){
-            return("Las contraseñas no coinciden");
+         else if (!verificarContrasenias(pass1,pass2)){
+            return(-3);//"Las contraseñas no coinciden"
         }
+         else if (!verificarSeguridadContrasenias(pass1)){
+            return(-4);//"La contraseña no es segura. Debe tener al menos un numero, una mayuscula y una minuscula "
+        }
+         else if(tipoUsuario==2){
+             return dao.VerificarCode(codigo.hashCode());
+         }
          else {
-             usuario.setNombreusuarioInstitucional(nombre);
-             usuario.setContrasenia(password);
+             usuario.setNombreusuarioInstitucional(name);
+             usuario.setContrasenia(String.valueOf(pass1.hashCode())); 
              usuario.setTipoUsuario(tipoUsuario);
              dao.crear(usuario);
-             return "Usuario registrado";
+             return 1; //"Usuario registrado"
          }    
         
     }
             
     public boolean verificarContrasenias( String password, String rePassword){
-        return password.equals(rePassword);
+       return password.equals(rePassword);
+    }
+    
+    public boolean verificarSeguridadContrasenias( String password){
+        
+        if(password.equals(password.toUpperCase())){
+            return false;
+        }else if(password.equals(password.toLowerCase())){
+             return false;
+        }else if(isNumeric(password)){
+             return false;
+        }
+        return true;
     }
     
     public boolean verificarLongitudNombre(String nombre)
     {
-        return (nombre.length()>1 && nombre.length()<= 6);
+        return (nombre.length()>4 && nombre.length()<= 20);
     }  
     
      public boolean verificarLongitudPassword(String password)
     {
-        return (password.length()>1 && password.length()<= 6);
+        return (password.length()>8 && password.length()<= 20);
     }
+    
+     public boolean isNumeric(String cadena) {
+
+        try {
+            Integer.parseInt(cadena);
+           return true;
+        } catch (NumberFormatException excepcion) {
+            return false;
+        }
+
+    }
+     
     
 }

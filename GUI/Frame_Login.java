@@ -2,6 +2,7 @@
 package GUI;
 
 import Control.Validar_Login;
+import Control.Validar_Registro;
 import Entidad.Usuario;
 import javax.swing.JOptionPane;
 
@@ -14,34 +15,74 @@ public class Frame_Login extends javax.swing.JFrame {
     
     public Frame_Login() {
        initComponents();
-       this.setLocationRelativeTo(null);         
+       this.setLocationRelativeTo(null);  
+       grupo_botones.add(jRBYes);
+       grupo_botones.add(jRBNo);
        panelRegistrase.setVisible(false);  
+      
     }
     
     
     private void logIn(){ //Iniciar Sesion
-        this.setVisible(false);
+        
+       try{
+            Usuario usuario =new Usuario();      
+            //Aqui va lo de ingresar datos usuario
+            Validar_Login validar_Login=new Validar_Login();    
+            usuario.setNombreusuarioInstitucional(JtfUsuario.getText());
+            usuario.setContrasenia(jPasswordField1.getText());  // Falta el hash       
+            usuario.setTipoUsuario(validar_Login.verificarLogin(usuario));
+            usuario.setContrasenia("1234567890"); // esto sera para que luego de logearse, el hash se borre
+            if( usuario.getTipoUsuario()>0){
+             this.setVisible(false);
+             frame_Main.entrar_bienvenida(usuario);
+             frame_Main.setVisible(true);
+            }else{
+                //Error, no existe =0, ver el validar login
+        }
+            
+            //
+            
+
+            
+            //
+       }catch(Exception e){
+            JOptionPane.showMessageDialog(this,"A ocurrido un error: "+e); 
+       }
        
-        Usuario usuario =new Usuario();      
-        //Aqui va lo de ingresar datos usuario
-        Validar_Login validar_Login=new Validar_Login();    
-        usuario.setNombreusuarioInstitucional(JtfUsuario.getText());
-        usuario.setContrasenia(jPasswordField1.getText());  // Falta el hash       
-        usuario.setTipoUsuario(validar_Login.verificarLogin(usuario));
-        usuario.setContrasenia("1234567890"); // esto sera para que luego de logearse, el hash se borre
-        if( usuario.getTipoUsuario()>0){
-         frame_Main.entrar_bienvenida(usuario);
-         frame_Main.setVisible(true);
-        }else{
-            //Error, no existe =0, ver el validar login
+       
+    }
+    
+    private void logUp(){ //Registrarse
+        try{
+           Validar_Registro validar_Registro =new Validar_Registro();
+           int valReg=validar_Registro.verificarRegistro(usuario_r.getText(),contraseñaR.getText(),conf_contraseñaR.getText(),tipUser(),codico_coordinador.getText());
+           if(valReg == 1){
+             JOptionPane.showMessageDialog(this,"El usuario ha sido creado exitosamente");
+           }
+            
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(this,"A ocurrido un error: "+e); 
         }
        
     }
-
+    
+    private int tipUser(){
+        if(grupo_botones.isSelected(jRBYes.getModel())){
+            return 2; //User estandar
+        }else if(grupo_botones.isSelected(jRBNo.getModel())){
+            return 1; // User Coordinador
+        }else{
+            return -1;
+        }
+    }
+    
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        grupo_botones = new javax.swing.ButtonGroup();
         panelCerrar = new javax.swing.JPanel();
         jlClose1 = new javax.swing.JLabel();
         jlMinimize1 = new javax.swing.JLabel();
@@ -62,16 +103,16 @@ public class Frame_Login extends javax.swing.JFrame {
         contraseña_r = new javax.swing.JLabel();
         conf_contraseña_r = new javax.swing.JLabel();
         dominioUn = new javax.swing.JLabel();
-        si = new javax.swing.JCheckBox();
-        codico_coordinador = new javax.swing.JTextField();
-        no = new javax.swing.JCheckBox();
         coordinador = new javax.swing.JLabel();
         registrarse = new javax.swing.JButton();
         LbRegistrar1 = new javax.swing.JLabel();
         signInTitle1 = new javax.swing.JLabel();
-        contraseña = new javax.swing.JPasswordField();
-        conf_contraseña = new javax.swing.JPasswordField();
+        contraseñaR = new javax.swing.JPasswordField();
+        conf_contraseñaR = new javax.swing.JPasswordField();
         jSeparator3 = new javax.swing.JSeparator();
+        jRBYes = new javax.swing.JRadioButton();
+        jRBNo = new javax.swing.JRadioButton();
+        codico_coordinador = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(500, 550));
@@ -148,6 +189,7 @@ public class Frame_Login extends javax.swing.JFrame {
         panelIniciarSesion.add(LbContraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 240, -1, -1));
 
         LbResaturarC.setText("¿Ha olvidado la contraseña?");
+        LbResaturarC.setEnabled(false);
         panelIniciarSesion.add(LbResaturarC, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 290, -1, -1));
 
         signInTitle.setBackground(new java.awt.Color(203, 203, 204));
@@ -183,13 +225,6 @@ public class Frame_Login extends javax.swing.JFrame {
         dominioUn.setText("@unal.edu.co");
         panelRegistrase.add(dominioUn, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 160, -1, 20));
 
-        si.setText("Si");
-        panelRegistrase.add(si, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 320, -1, -1));
-        panelRegistrase.add(codico_coordinador, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 320, 95, -1));
-
-        no.setText("No");
-        panelRegistrase.add(no, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 320, -1, -1));
-
         coordinador.setText("¿Es usted cooordinador de espacio?");
         panelRegistrase.add(coordinador, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 320, -1, -1));
 
@@ -214,9 +249,17 @@ public class Frame_Login extends javax.swing.JFrame {
         signInTitle1.setForeground(new java.awt.Color(0, 0, 0));
         signInTitle1.setText("Crear usuario");
         panelRegistrase.add(signInTitle1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 40, -1, 46));
-        panelRegistrase.add(contraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 220, 190, -1));
-        panelRegistrase.add(conf_contraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 260, 190, 20));
+        panelRegistrase.add(contraseñaR, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 220, 190, -1));
+        panelRegistrase.add(conf_contraseñaR, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 260, 190, 20));
         panelRegistrase.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 100, 310, 10));
+
+        jRBYes.setText("Si");
+        panelRegistrase.add(jRBYes, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 320, -1, -1));
+
+        jRBNo.setSelected(true);
+        jRBNo.setText("No");
+        panelRegistrase.add(jRBNo, new org.netbeans.lib.awtextra.AbsoluteConstraints(277, 320, 50, -1));
+        panelRegistrase.add(codico_coordinador, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 320, 100, 30));
 
         getContentPane().add(panelRegistrase, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 500, 520));
 
@@ -246,8 +289,7 @@ public class Frame_Login extends javax.swing.JFrame {
     }//GEN-LAST:event_jlMinimize1MouseClicked
 
     private void registrarseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrarseActionPerformed
-       panelIniciarSesion.setVisible(true);
-        panelRegistrase.setVisible(false);  
+       logUp();        
     }//GEN-LAST:event_registrarseActionPerformed
 
     private void formMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMousePressed
@@ -316,24 +358,25 @@ public class Frame_Login extends javax.swing.JFrame {
     private javax.swing.JLabel LbRegistrar1;
     private javax.swing.JLabel LbResaturarC;
     private javax.swing.JLabel LbUsuario;
-    private javax.swing.JTextField codico_coordinador;
-    private javax.swing.JPasswordField conf_contraseña;
+    private javax.swing.JPasswordField codico_coordinador;
+    private javax.swing.JPasswordField conf_contraseñaR;
     private javax.swing.JLabel conf_contraseña_r;
-    private javax.swing.JPasswordField contraseña;
+    private javax.swing.JPasswordField contraseñaR;
     private javax.swing.JLabel contraseña_r;
     private javax.swing.JLabel coordinador;
     private javax.swing.JLabel dominioUn;
+    private javax.swing.ButtonGroup grupo_botones;
     private javax.swing.JPasswordField jPasswordField1;
+    private javax.swing.JRadioButton jRBNo;
+    private javax.swing.JRadioButton jRBYes;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JLabel jlClose1;
     private javax.swing.JLabel jlMinimize1;
-    private javax.swing.JCheckBox no;
     private javax.swing.JPanel panelCerrar;
     private javax.swing.JPanel panelIniciarSesion;
     private javax.swing.JPanel panelRegistrase;
     private javax.swing.JButton registrarse;
-    private javax.swing.JCheckBox si;
     private javax.swing.JLabel signInTitle;
     private javax.swing.JLabel signInTitle1;
     private javax.swing.JLabel userLogoLabel;

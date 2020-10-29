@@ -26,7 +26,7 @@ public class UsuarioDAO {
             resultSet = -1;
             connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
             statement = connection.createStatement();
-            resultSet = statement.executeUpdate("INSERT INTO usuarios( `ID_TIPOUSUARIO`, `USUARIOINSTITUCIONAL`, `CONTRASENIA`) VALUES (\""
+            resultSet = statement.executeUpdate("INSERT INTO USUARIOS( `ID_TIPOUSUARIO`, `USUARIOINSTITUCIONAL`, `CONTRASENIA`) VALUES (\""
                     + object.getTipoUsuario() + "\",\"" + object.getNombreusuarioInstitucional()+"\"," +object.getContrasenia() +")");
             
             return resultSet > 0;
@@ -82,4 +82,43 @@ public class UsuarioDAO {
 
     }
     
+    
+    public boolean VerificarCode(int cod) { // Verifica el codigo
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+         int code;
+         
+        try {
+            resultSet = null;
+            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
+            statement = connection.createStatement();      
+            resultSet = statement.executeQuery("SELECT * FROM USUARIOS "
+                    + "WHERE USUARIOINSTITUCIONAL = 'UserCode" 
+                    + "', ID_TIPOUSUARIO = '3' AND CONTRASENIA='" + cod + "'");
+            
+            if(resultSet.next()){                    
+               
+                return true;
+            }else{
+                return false;
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error en SQL" + ex);
+            return false;
+        } finally {
+            try {
+                resultSet.close();
+                statement.close();
+                connection.close();
+                 return resultSet.next();
+                    
+                  
+                                  
+            } catch (SQLException ex) {
+
+            }
+        }
+
+    }
 }

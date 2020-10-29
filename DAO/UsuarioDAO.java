@@ -17,7 +17,7 @@ public class UsuarioDAO {
     static final String DB_USER = "SeeTableUser";
     static final String DB_PASSWD = "ISsRD1*y"; 
 
-    public boolean crear(Usuario object) {
+    public boolean crear(Usuario object) { // Ingresar un usuario en la base de datos
         Connection connection = null;
         Statement statement = null;
         int resultSet;      
@@ -44,7 +44,7 @@ public class UsuarioDAO {
 
     }
 
-    public boolean leer(Usuario par) {
+    public int leer(Usuario par) { // Buscar un usuario en la base de datos. 0=Usuario no existe
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
@@ -52,24 +52,29 @@ public class UsuarioDAO {
             resultSet = null;
             connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
             statement = connection.createStatement();
-            resultSet = statement.executeQuery("SELECT * FROM usuarios "
+            resultSet = statement.executeQuery("SELECT * FROM USUARIOS "
                     + "WHERE USUARIOINSTITUCIONAL = '" + par.getNombreusuarioInstitucional()
                     + "' AND CONTRASENIA='" + par.getContrasenia() + "'");
-            if(resultSet.next()){
-                
-                return true;
+            
+            if(resultSet.next()){                    
+                int tipUser=Integer.valueOf(resultSet.getString(2));
+                return tipUser;
             }else{
-                return false;
+                return 0;
             }
         } catch (SQLException ex) {
             System.out.println("Error en SQL" + ex);
-            return false;
+            return 0;
         } finally {
             try {
                 resultSet.close();
                 statement.close();
                 connection.close();
-                return resultSet.next();
+                    if(resultSet.next()){
+                        return Integer.valueOf(resultSet.getString(2));
+                    }else{
+                        return 0;
+                    }                
             } catch (SQLException ex) {
 
             }

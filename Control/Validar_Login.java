@@ -7,28 +7,21 @@ import Entidad.Usuario;
 
 public class Validar_Login {
     private UsuarioDAO dao = new UsuarioDAO();
-    
+   
     public  Validar_Login(){
         
     }
     
-    public String verificarLogin(Usuario usuario){
+    public int verificarLogin(Usuario usuario){
         if (!verificarLongitudNombre (usuario.getNombreusuarioInstitucional())){
-            return("Longitud nombre incorrecta");
+            return (-1); //Longitud nombre incorrecta == -1 
         }
          if (!verificarLongitudPassword (usuario.getContrasenia())){
-            return("Longitud contraseña incorrecta");
+            return(-2); //Longitud contraseña incorrecta == -2
         }
          
-          if(dao.leer(usuario)==true){         
-             return("Bienvenido, confirme codigo de seguridad");
-         }
-          
-         if(dao.leer(usuario)==true){             
-             return("Bienvenido");
-         }
+        return(dao.leer(usuario)); //Bienvenido > 0, en otro caso retorna 0= usuario no existe
          
-        return("Datos incorrectos") ;
     }
     
     public boolean verificarLongitudNombre (String nombre){

@@ -1,6 +1,8 @@
 
 package GUI;
 
+import Control.Validar_Login;
+import Entidad.Usuario;
 import javax.swing.JOptionPane;
 
 
@@ -18,9 +20,22 @@ public class Frame_Login extends javax.swing.JFrame {
     
     
     private void logIn(){ //Iniciar Sesion
-         this.setVisible(false);
-        frame_Main.setVisible(true);
-        frame_Main.entrar_bienvenida(1);
+        this.setVisible(false);
+       
+        Usuario usuario =new Usuario();      
+        //Aqui va lo de ingresar datos usuario
+        Validar_Login validar_Login=new Validar_Login();    
+        usuario.setNombreusuarioInstitucional(JtfUsuario.getText());
+        usuario.setContrasenia(jPasswordField1.getText());  // Falta el hash       
+        usuario.setTipoUsuario(validar_Login.verificarLogin(usuario));
+        usuario.setContrasenia("1234567890"); // esto sera para que luego de logearse, el hash se borre
+        if( usuario.getTipoUsuario()>0){
+         frame_Main.entrar_bienvenida(usuario);
+         frame_Main.setVisible(true);
+        }else{
+            //Error, no existe =0, ver el validar login
+        }
+       
     }
 
     @SuppressWarnings("unchecked")
@@ -33,7 +48,7 @@ public class Frame_Login extends javax.swing.JFrame {
         panelIniciarSesion = new javax.swing.JPanel();
         Ingresar = new javax.swing.JButton();
         LbRegistrar = new javax.swing.JLabel();
-        Usuario = new javax.swing.JTextField();
+        JtfUsuario = new javax.swing.JTextField();
         LbUsuario = new javax.swing.JLabel();
         LbContraseña = new javax.swing.JLabel();
         LbResaturarC = new javax.swing.JLabel();
@@ -122,7 +137,7 @@ public class Frame_Login extends javax.swing.JFrame {
             }
         });
         panelIniciarSesion.add(LbRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 420, -1, -1));
-        panelIniciarSesion.add(Usuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 190, 230, -1));
+        panelIniciarSesion.add(JtfUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 190, 230, -1));
 
         LbUsuario.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         LbUsuario.setText("Usuario institucional");
@@ -295,12 +310,12 @@ public class Frame_Login extends javax.swing.JFrame {
    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Ingresar;
+    private javax.swing.JTextField JtfUsuario;
     private javax.swing.JLabel LbContraseña;
     private javax.swing.JLabel LbRegistrar;
     private javax.swing.JLabel LbRegistrar1;
     private javax.swing.JLabel LbResaturarC;
     private javax.swing.JLabel LbUsuario;
-    private javax.swing.JTextField Usuario;
     private javax.swing.JTextField codico_coordinador;
     private javax.swing.JPasswordField conf_contraseña;
     private javax.swing.JLabel conf_contraseña_r;

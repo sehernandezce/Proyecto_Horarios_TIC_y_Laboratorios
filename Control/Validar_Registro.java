@@ -13,7 +13,7 @@ public class Validar_Registro {
         
     }
     
-    public String verificarRegistro(String nombre, String password, String rePassword, String tipoUsuario){
+    public String verificarRegistro(String nombre, String password, String rePassword, int tipoUsuario){
         if(!verificarLongitudNombre(nombre)){
             return("Longitud nombre incorreta");
         }

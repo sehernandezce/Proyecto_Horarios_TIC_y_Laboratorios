@@ -1,16 +1,16 @@
 package Entidad;
 
-public class Espacios {
+public class Espacio {
 
     private int id_Espacios;
     private int capacidad;   
     private int tipoEspacio;
     private String nombreEspacio;
     private String numEspacio;   
-    private String edificio;
-    private String encargado;
+    private int id_edificio;
+    private int id_encargado;
     private Boolean activo;
-    
+
     public int getId_Espacios() {
         return id_Espacios;
     }
@@ -51,20 +51,20 @@ public class Espacios {
         this.numEspacio = numEspacio;
     }
 
-    public String getEdificio() {
-        return edificio;
+    public int getId_edificio() {
+        return id_edificio;
     }
 
-    public void setEdificio(String edificio) {
-        this.edificio = edificio;
+    public void setId_edificio(int id_edificio) {
+        this.id_edificio = id_edificio;
     }
 
-    public String getEncargado() {
-        return encargado;
+    public int getId_encargado() {
+        return id_encargado;
     }
 
-    public void setEncargado(String encargado) {
-        this.encargado = encargado;
+    public void setId_encargado(int id_encargado) {
+        this.id_encargado = id_encargado;
     }
 
     public Boolean getActivo() {
@@ -74,6 +74,7 @@ public class Espacios {
     public void setActivo(Boolean activo) {
         this.activo = activo;
     }
+    
     
 
     

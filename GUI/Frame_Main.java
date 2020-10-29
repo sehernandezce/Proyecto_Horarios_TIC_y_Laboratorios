@@ -1,10 +1,12 @@
 package GUI;
 
+import Entidad.Usuario;
 import javax.swing.JOptionPane;
 
 public class Frame_Main extends javax.swing.JFrame {
     
     private int x,y;
+    private Usuario usuario;
     
     public Frame_Main() {
         initComponents();
@@ -135,7 +137,6 @@ public class Frame_Main extends javax.swing.JFrame {
         setMaximumSize(new java.awt.Dimension(1024, 550));
         setMinimumSize(new java.awt.Dimension(1024, 550));
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(1024, 550));
         setResizable(false);
         setSize(new java.awt.Dimension(1024, 550));
         addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
@@ -1156,13 +1157,14 @@ public class Frame_Main extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
     
-    public void entrar_bienvenida(int tipo_Usuario){ //Selecciona el tipo de menu segun el usuario        
+    public void entrar_bienvenida(Usuario usuario2){ //Selecciona el tipo de menu segun el usuario        
        ocultar_todosPaneles();
         Bienvenida.setVisible(true);
         Paneles_Menu.setVisible(true);
-        if(tipo_Usuario==   1){
+        this.usuario = usuario2;
+        if(usuario.getTipoUsuario() == 1){
               Menu_UE.setVisible(false);
-         }else if(tipo_Usuario ==2){             
+         }else if(usuario.getTipoUsuario() == 2 ){             
               Menu_UC.setVisible(false);
          }else{
               Paneles_Menu.setVisible(false);

@@ -5,7 +5,7 @@ public class Usuario {
     private int idUsuario;
     private String nombreusuarioInstitucional;
     private String contrasenia;   
-    private String tipoUsuario;
+    private int tipoUsuario;
     
     
     public String getNombreusuarioInstitucional() {
@@ -32,11 +32,11 @@ public class Usuario {
         this.idUsuario = idUsuario;
     }
 
-    public String getTipoUsuario() {
+    public int getTipoUsuario() {
         return tipoUsuario;
     }
 
-    public void setTipoUsuario(String tipoUsuario) {
+    public void setTipoUsuario(int tipoUsuario) {
         this.tipoUsuario = tipoUsuario;
     }
    

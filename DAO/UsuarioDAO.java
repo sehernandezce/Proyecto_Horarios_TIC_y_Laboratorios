@@ -87,7 +87,6 @@ public class UsuarioDAO {
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
-         int code;
          
         try {
             resultSet = null;

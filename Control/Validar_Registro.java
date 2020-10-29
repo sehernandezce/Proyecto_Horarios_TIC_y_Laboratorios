@@ -27,7 +27,17 @@ public class Validar_Registro {
             return(-4);//"La contraseña no es segura. Debe tener al menos un numero, una mayuscula y una minuscula "
         }
          else if(tipoUsuario==2){
-             return dao.VerificarCode(codigo.hashCode());
+             int a=codigo.hashCode();
+            if(!dao.VerificarCode(a)){
+                 return -5;//"Codigo incorrecto"
+            }else{
+             usuario.setNombreusuarioInstitucional(name);
+             usuario.setContrasenia(String.valueOf(pass1.hashCode())); 
+             usuario.setTipoUsuario(tipoUsuario);
+             dao.crear(usuario);
+             return 1; 
+            }
+               
          }
          else {
              usuario.setNombreusuarioInstitucional(name);

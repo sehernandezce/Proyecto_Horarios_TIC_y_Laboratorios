@@ -37,9 +37,9 @@ public class Frame_Login extends javax.swing.JFrame {
              this.setVisible(false);
              frame_Main.entrar_bienvenida(usuario);
              frame_Main.setVisible(true);
-            }else{
-                //Error, no existe =0, ver el validar login
-        }
+            }else if(usuario.getTipoUsuario()==-1){
+              
+            }
             
             //
             

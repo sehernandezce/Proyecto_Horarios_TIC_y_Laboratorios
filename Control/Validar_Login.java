@@ -20,17 +20,16 @@ public class Validar_Login {
             return(-2); //Longitud contraseña incorrecta == -2
         }
          
-        return(dao.leer(usuario)); //Bienvenido > 0, en otro caso retorna 0= usuario no existe
+        return(dao.leer(usuario)); //Bienvenido > 0, -3 si hay un error en la BD y 0 si el usuario no existe
          
     }
     
     public boolean verificarLongitudNombre (String nombre){
-        return (nombre.length()>1 && nombre.length() <=6);
+        return (nombre.length()>1 && nombre.length() <=20);
         
     }
     
     public boolean verificarLongitudPassword (String password){
-        return (password.length()>1 && password.length() <=6);
-        
+        return (password.length()>8 && password.length()<= 20);
     }
 }

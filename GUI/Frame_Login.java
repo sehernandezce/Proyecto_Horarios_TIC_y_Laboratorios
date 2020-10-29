@@ -33,16 +33,21 @@ public class Frame_Login extends javax.swing.JFrame {
             usuario.setContrasenia(jPasswordField1.getText());  // Falta el hash       
             usuario.setTipoUsuario(validar_Login.verificarLogin(usuario));
             usuario.setContrasenia("1234567890"); // esto sera para que luego de logearse, el hash se borre
+            
             if( usuario.getTipoUsuario()>0){
-             this.setVisible(false);
-             frame_Main.entrar_bienvenida(usuario);
-             frame_Main.setVisible(true);
-            }else if(usuario.getTipoUsuario()==-1){
-              
+                this.setVisible(false);
+                frame_Main.entrar_bienvenida(usuario);
+                frame_Main.setVisible(true);
+            }else if(usuario.getTipoUsuario() == -1){
+                JOptionPane.showMessageDialog(null, "Longitud nombre incorrecta",  "Longitud nombre", JOptionPane.INFORMATION_MESSAGE);
+            }else if(usuario.getTipoUsuario() == -2){
+                JOptionPane.showMessageDialog(null, "Longitud contraseña incorrecta",  "Longitud contraseña", JOptionPane.INFORMATION_MESSAGE);
+            }else if(usuario.getTipoUsuario() == 0){
+                JOptionPane.showMessageDialog(null, "No se encuentra el usuario, Por favor verifique",  "No se encuentra ese usuario", JOptionPane.INFORMATION_MESSAGE);
+            }else if(usuario.getTipoUsuario() == -3){
+                JOptionPane.showMessageDialog(null, "No se ha podido conectar con la Base de Datos",  "Error", JOptionPane.INFORMATION_MESSAGE);
             }
-            
-            //
-            
+  
 
             
             //

@@ -90,7 +90,7 @@ public class UsuarioDAO {
     }
     
     
-    public boolean VerificarCode(String cod) { // Verifica el codigo
+    public boolean VerificarCode(String cod) throws Exception { // Verifica el codigo
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
@@ -101,11 +101,17 @@ public class UsuarioDAO {
             statement = connection.createStatement();      
             resultSet = statement.executeQuery("SELECT * FROM USUARIOS "
                     + "WHERE USUARIOINSTITUCIONAL = 'UserCode" 
-                    + "', ID_TIPOUSUARIO = '3' AND CONTRASENIA='" + cod + "'");
+                    + "', ID_TIPOUSUARIO = '3' ");
+           //         + "AND CONTRASENIA='" + cod + "'");
             
             if(resultSet.next()){                    
-               
-                return true;
+                if(contraseniahasheada.check(cod, resultSet.getString(4))){
+                   
+                    return true;
+                }else{
+                    return false;  
+                }    
+                return false;
             }else{
                 return false;
             }

@@ -101,7 +101,7 @@ public class UsuarioDAO {
             statement = connection.createStatement();      
             resultSet = statement.executeQuery("SELECT * FROM USUARIOS "
                     + "WHERE USUARIOINSTITUCIONAL = 'UserCode" 
-                    + "', ID_TIPOUSUARIO = '3' ");
+                    + "'AND ID_TIPOUSUARIO = '3' ");
            //         + "AND CONTRASENIA='" + cod + "'");
             
             if(resultSet.next()){                    
@@ -110,8 +110,7 @@ public class UsuarioDAO {
                     return true;
                 }else{
                     return false;  
-                }    
-                return false;
+                }                 
             }else{
                 return false;
             }

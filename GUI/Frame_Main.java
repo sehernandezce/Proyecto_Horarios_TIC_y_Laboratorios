@@ -1,6 +1,11 @@
 package GUI;
 
+import Control.ValidarEspacios;
+import DAO.EspaciosDAO;
 import Entidad.Usuario;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class Frame_Main extends javax.swing.JFrame {
@@ -581,34 +586,7 @@ public class Frame_Main extends javax.swing.JFrame {
         jPanel2.setMinimumSize(new java.awt.Dimension(854, 520));
         jPanel2.setPreferredSize(new java.awt.Dimension(854, 520));
 
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
-            },
-            new String [] {
-                "Nombre espacio", "Salon", "Edificio", "Encargado", "Estado", "Informacion"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, true, false, false, true
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
+        jTable3.setFocusable(false);
         jScrollPane3.setViewportView(jTable3);
 
         jTable4.setModel(new javax.swing.table.DefaultTableModel(
@@ -1189,16 +1167,11 @@ public class Frame_Main extends javax.swing.JFrame {
     
     
            
-    private void solicitar_Espacio(String Espacio){ //Para mostrar la informacion en el panel de solicitar espacios    
-       
-        /*
-        solicitar_Espacio("Laboratorios");
-        solicitar_Espacio("Sala de reuniones");
-        solicitar_Espacio("Sala de computadores");
-        solicitar_Espacio("Auditorios");
-        */
-        ocultar_todosPaneles();
-        Solicitar_Espacio.setVisible(true);  
+    private void solicitar_Espacio(String Espacio) throws SQLException{ //Para mostrar la informacion en el panel de solicitar espacios    
+
+             ocultar_todosPaneles();
+             llenarTabla(Espacio);
+             Solicitar_Espacio.setVisible(true); 
         
     }
     
@@ -1220,34 +1193,23 @@ public class Frame_Main extends javax.swing.JFrame {
        Estadisticas.setVisible(true); 
         
     }
-      private void llenarTabla(String tipo){//modelo tabla
+     
+      private void llenarTabla(String tipo) throws SQLException{//modelo tabla
+        ValidarEspacios  validarEspacios = new  ValidarEspacios ();
+        Object[][] tabla=validarEspacios.llenarMatriz(tipo, usuario);        
         jTable3.setModel(new javax.swing.table.DefaultTableModel(
-    new Object [][] {// matriz
-        {null, null, null, null, null, null},
-        {null, null, null, null, null, null},
-        {null, null, null, null, null, null},
-        {null, null, null, null, null, null},
-        {null, null, null, null, null, null},
-        {null, null, null, null, null, null},
-        {null, null, null, null, null, null},
-        {null, null, null, null, null, null},
-        {null, null, null, null, null, null},
-        {null, null, null, null, null, null},
-        {null, null, null, null, null, null},
-        {null, null, null, null, null, null},
-        {null, null, null, null, null, null}
-    },
-               
-    new String [] {
-        "Nombre espacio", "Salon", "Edificio", "Encargado", "Estado", "Informacion"
-    }
-    ) {});
+         tabla, new String [] {"Nombre espacio", "Salon", "Edificio", "Encargado", "Estado", "Informacion" }) 
+                         );
     }
     
     /// Acciones de los botones y labels
     
     private void jLabel2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MousePressed
+        try {
             solicitar_Espacio("Laboratorios");
+        } catch (SQLException ex) {
+            Logger.getLogger(Frame_Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jLabel2MousePressed
 
     private void jlClose1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlClose1MouseClicked
@@ -1285,31 +1247,61 @@ public class Frame_Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jCheckBox3ActionPerformed
 
     private void jLabel19MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel19MousePressed
-         solicitar_Espacio("Laboratorios");
+      
+        try {
+            solicitar_Espacio("Laboratorios");
+        } catch (SQLException ex) {
+            Logger.getLogger(Frame_Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       
     }//GEN-LAST:event_jLabel19MousePressed
 
     private void jLabel20MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel20MousePressed
-       solicitar_Espacio("Sala de reuniones");
+        try {
+            solicitar_Espacio("Sala de reuniones");
+        } catch (SQLException ex) {
+            Logger.getLogger(Frame_Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jLabel20MousePressed
 
     private void jLabel21MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel21MousePressed
-       solicitar_Espacio("Sala de computadores");
+        try {
+            solicitar_Espacio("Sala de computadores");
+        } catch (SQLException ex) {
+            Logger.getLogger(Frame_Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jLabel21MousePressed
 
     private void jLabel22MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel22MousePressed
-      solicitar_Espacio("Auditorios");
+        try {
+            solicitar_Espacio("Auditorios");
+        } catch (SQLException ex) {
+            Logger.getLogger(Frame_Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jLabel22MousePressed
 
     private void jLabel3MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MousePressed
-         solicitar_Espacio("Sala de reuniones");
+        try {
+            solicitar_Espacio("Sala de reuniones");
+        } catch (SQLException ex) {
+            Logger.getLogger(Frame_Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jLabel3MousePressed
 
     private void jLabel4MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MousePressed
-       solicitar_Espacio("Sala de computadores");
+        try {
+            solicitar_Espacio("Sala de computadores");
+        } catch (SQLException ex) {
+            Logger.getLogger(Frame_Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jLabel4MousePressed
 
     private void jLabel5MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MousePressed
-       solicitar_Espacio("Auditorios");
+        try {
+            solicitar_Espacio("Auditorios");
+        } catch (SQLException ex) {
+            Logger.getLogger(Frame_Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jLabel5MousePressed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed

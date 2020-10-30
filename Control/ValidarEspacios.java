@@ -10,34 +10,31 @@ import java.sql.SQLException;
 public class ValidarEspacios {
     
     
-    EspaciosDAO espacioDao= new EspaciosDAO();
-    public String[][] llenarMatriz(int tipoEspacio,Usuario par) throws SQLException{
-       
-       int fila=0;
-       ResultSet resultSet= espacioDao.leer(par, tipoEspacio);
-       resultSet.afterLast();
-       int tamanio=resultSet.getRow();
-       resultSet.absolute(1);
-       String[][] tabla=new String[tamanio][6];
-       while(resultSet.next()){
-           for(int i=2;i<7;i++){
-               tabla[fila][i-2]=resultSet.getString(i);
-               
-           }
-           tabla[fila][5]=resultSet.getString(1);
-         }
-       
-       return tabla;
-       }
-        
+    private EspaciosDAO espacioDao= new EspaciosDAO();
     
-    
-
     public  ValidarEspacios(){
         
     }
     
+     public String[][] llenarMatriz(String tipoEspacio,Usuario par) throws SQLException{
+       return espacioDao.leer(par, AsignartipEsp(tipoEspacio));
+       }
     
+    
+    private int AsignartipEsp(String tipoEspacio){
+        
+        if(tipoEspacio.equals("Laboratorios")){
+            return 1;
+        }else if(tipoEspacio.equals("Sala de reuniones")){
+            return 2;
+        }else if(tipoEspacio.equals("Sala de computadores")){
+             return 3;
+        }else if(tipoEspacio.equals("Auditorios")){
+           return 4;
+        }else{
+           return 0;
+        }
+    }
     
 
 }

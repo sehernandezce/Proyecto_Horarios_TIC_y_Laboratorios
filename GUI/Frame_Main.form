@@ -906,16 +906,6 @@
               <SubComponents>
                 <Component class="javax.swing.JTable" name="jTable3">
                   <Properties>
-                    <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                      <Table columnCount="6" rowCount="13">
-                        <Column editable="false" title="Nombre espacio" type="java.lang.Object"/>
-                        <Column editable="false" title="Salon" type="java.lang.Object"/>
-                        <Column editable="true" title="Edificio" type="java.lang.Object"/>
-                        <Column editable="false" title="Encargado" type="java.lang.Object"/>
-                        <Column editable="false" title="Estado" type="java.lang.Object"/>
-                        <Column editable="true" title="Informacion" type="java.lang.Object"/>
-                      </Table>
-                    </Property>
                     <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
                       <TableColumnModel selectionModel="0">
                         <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
@@ -950,6 +940,7 @@
                         </Column>
                       </TableColumnModel>
                     </Property>
+                    <Property name="focusable" type="boolean" value="false"/>
                     <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
                       <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                     </Property>

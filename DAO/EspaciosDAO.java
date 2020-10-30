@@ -61,7 +61,7 @@ public class EspaciosDAO {
     
     
     /*
-    select distinct  esp.ID_ESPACIO,  esp.NOMBRE_ESPACIO,  esp.NUM_ESPACIO, edi.NOMBRE_EDIFICIOS, CONCAT(enc.NOMBRE_PERSONA, ' ' ,enc.APELLIDO_PERSONA) as nombre , esp.ACTIVO, esp.CAPACIDAD,  tesp.NOMBRE_TIPOESPACIO ,   enc.ID_PERSONA from ESPACIOS as espa, 
+    "select distinct  esp.ID_ESPACIO,  esp.NOMBRE_ESPACIO,  esp.NUM_ESPACIO, edi.NOMBRE_EDIFICIOS, CONCAT(enc.NOMBRE_PERSONA, ' ' ,enc.APELLIDO_PERSONA) as nombre , esp.ACTIVO, esp.CAPACIDAD,  tesp.NOMBRE_TIPOESPACIO ,   enc.ID_PERSONA from ESPACIOS as espa, 
     ESPACIOS as esp, 
     TIPO_ESPACIOS as tesp, 
     ENCARGADOS as enc, 
@@ -69,9 +69,9 @@ public class EspaciosDAO {
     where esp.id_edificio=edi.id_edificio
     and esp.ID_TIPOESPACIO=tesp.ID_TIPOESPACIO
     and esp.ID_PERSONA=enc.ID_PERSONA
-    and esp.ID_TIPOESPACIO = ;
+    and esp.ID_TIPOESPACIO ="  ;
     */
-    public ResultSet leer(Usuario par, int tipEspacio) { // buscar todos los lugares conrespecto a un tipo de espacio
+    public String[][] leer(Usuario par, int tipEspacio) { // buscar todos los lugares conrespecto a un tipo de espacio
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
@@ -80,28 +80,52 @@ public class EspaciosDAO {
             seleccionarUser(par.getTipoUsuario());
             connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
             statement = connection.createStatement();
-            resultSet = statement.executeQuery("SELECT *FROM ESPACIOS  "
-                    + "WHERE id_tipoEspacio = '" + tipEspacio+ "' NATURAL JOIN ENCARGADOS");
+           
+            resultSet = statement.executeQuery("CALL InfoporTipodeEspacio(" +tipEspacio+")");
             if(resultSet.next()){
-                return resultSet;
+                return ObtenerData(resultSet);
             }else{
-                return resultSet;
+                return null;
             }
         } catch (SQLException ex) {
             System.out.println("Error en SQL" + ex);
-            return resultSet;
+            return null;
         } finally {
             try {
                 resultSet.close();
                 statement.close();
                 connection.close();
-                return resultSet;
+                //return null;
             } catch (SQLException ex) {
 
             }
         }
 
     }
+    
+    public String[][] ObtenerData(ResultSet resultSet) throws SQLException{
+       
+       int fila=0;       
+       resultSet.afterLast();
+       resultSet.previous();
+      
+       int tamanio=resultSet.getRow();
+       resultSet.absolute(0);
+     
+       String[][] tabla=new String[tamanio][6];
+       while(resultSet.next()){
+        
+           for(int i=2;i<7;i++){
+               tabla[fila][i-2]=resultSet.getString(i);
+              
+           }
+           tabla[fila][5]=resultSet.getString(1);
+           fila++;
+         }
+       
+       return tabla;
+       }
+            
 
        
     public boolean actualizar(Usuario par, Espacio espacio) {

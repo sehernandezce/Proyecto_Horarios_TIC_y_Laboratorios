@@ -1,6 +1,7 @@
 package DAO;
 
 
+import Control.ContraseniaHasheada;
 import Entidad.Usuario;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -9,7 +10,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class UsuarioDAO {
-
+    
+    private ContraseniaHasheada contraseniahasheada = new ContraseniaHasheada();
     static final String DB_URL
             = "jdbc:mysql://database-1.cjxw1f4bh3ms.us-east-1.rds.amazonaws.com:3306/Horarios_Tics_y_Laboratorios?characterEncoding=utf8"; //Endpoint
     static final String DB_DRV
@@ -26,8 +28,8 @@ public class UsuarioDAO {
             resultSet = -1;
             connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
             statement = connection.createStatement();
-            resultSet = statement.executeUpdate("INSERT INTO USUARIOS( `ID_TIPOUSUARIO`, `USUARIOINSTITUCIONAL`, `CONTRASENIA`) VALUES (\""
-                    + object.getTipoUsuario() + "\",\"" + object.getNombreusuarioInstitucional()+"\"," +object.getContrasenia() +")");
+            resultSet = statement.executeUpdate("INSERT INTO USUARIOS( `ID_TIPOUSUARIO`, `USUARIOINSTITUCIONAL`, `CONTRASENIA`) VALUES ('"
+                    + object.getTipoUsuario() + "','" + object.getNombreusuarioInstitucional()+"','" + object.getContrasenia() + "'" + ")" );
             
             return resultSet > 0;
         } catch (SQLException ex) {
@@ -44,7 +46,7 @@ public class UsuarioDAO {
 
     }
 
-    public int leer(Usuario par) { // Buscar un usuario en la base de datos. 0=Usuario no existe
+    public int leer(Usuario par) throws Exception { // Buscar un usuario en la base de datos. 0=Usuario no existe
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
@@ -53,10 +55,15 @@ public class UsuarioDAO {
             connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
             statement = connection.createStatement();
             resultSet = statement.executeQuery("SELECT * FROM USUARIOS "
-                    + "WHERE USUARIOINSTITUCIONAL = '" + par.getNombreusuarioInstitucional()
-                    + "' AND CONTRASENIA='" + par.getContrasenia() + "'");
+                    + "WHERE USUARIOINSTITUCIONAL = '" + par.getNombreusuarioInstitucional() + "'" );
+ //                   + "' AND CONTRASENIA='" + par.getContrasenia() + "'");
             
-            if(resultSet.next()){                    
+            if(resultSet.next()){
+                System.out.println(resultSet.getString(4));
+                System.out.println(par.getContrasenia());
+                if(contraseniahasheada.check(par.getContrasenia(), resultSet.getString(4))){
+                    System.out.println("son iguales");
+                }
                 int tipUser=Integer.valueOf(resultSet.getString(2));
                 return tipUser;
             }else{

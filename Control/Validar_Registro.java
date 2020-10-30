@@ -49,7 +49,9 @@ public class Validar_Registro {
                
          }else {
              usuario.setNombreusuarioInstitucional(name);
-             usuario.setContrasenia(contraseniahasheada.getSaltedHash(pass1)); 
+             usuario.setContrasenia(contraseniahasheada.getSaltedHash(pass1));
+             System.out.println(contraseniahasheada.getSaltedHash(pass1));
+                     
              usuario.setTipoUsuario(tipoUsuario);
              dao.crear(usuario);
              return 1; //"Usuario registrado"

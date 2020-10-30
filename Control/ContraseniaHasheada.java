@@ -18,7 +18,7 @@ public class ContraseniaHasheada {
 
     private static final int iterations = 20*1000;
     private static final int saltLen = 32;
-    private static final int desiredKeyLen = 256;
+    private static final int desiredKeyLen = 254;
     
     /**Computa una versión salteada en PBKDF2 de hash de texto plano,
        apropiada para guardar en una base de datos

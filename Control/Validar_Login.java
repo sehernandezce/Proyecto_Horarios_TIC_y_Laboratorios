@@ -24,7 +24,7 @@ public class Validar_Login {
     }
     
     public boolean verificarLongitudNombre (String nombre){
-        return (nombre.length()>1 && nombre.length() <=20);
+        return (nombre.length()>4 && nombre.length() <=20);
         
     }
     

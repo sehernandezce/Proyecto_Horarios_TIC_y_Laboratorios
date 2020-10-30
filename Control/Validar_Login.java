@@ -6,8 +6,7 @@ import Entidad.Usuario;
 
 
 public class Validar_Login {
-    private UsuarioDAO dao = new UsuarioDAO();
-    private ContraseniaHasheada contraseniahasheada = new ContraseniaHasheada(); 
+    private UsuarioDAO dao = new UsuarioDAO();    
     public  Validar_Login(){
         
     }
@@ -19,9 +18,8 @@ public class Validar_Login {
          if (!verificarLongitudPassword (usuario.getContrasenia())){
             return(-2); //Longitud contraseña incorrecta == -2
         }
- //       usuario.setContrasenia(contraseniahasheada.getSaltedHash(usuario.getContrasenia()));
-
-        return(dao.leer(usuario)); //Bienvenido > 0, en otro caso retorna 0= usuario no existe
+     
+         return(dao.leer(usuario)); //Bienvenido > 0, en otro caso retorna 0= usuario no existe
          
     }
     

@@ -14,8 +14,7 @@ import org.apache.commons.codec.binary.Base64;
 public class Validar_Registro {
     
     private UsuarioDAO dao = new UsuarioDAO();
-    Usuario usuario =new Usuario ();
-    private ContraseniaHasheada contraseniahasheada = new ContraseniaHasheada(); 
+    Usuario usuario =new Usuario (); 
     
     public Validar_Registro(){
         
@@ -35,13 +34,11 @@ public class Validar_Registro {
             return(-4);//"La contraseña no es segura. Debe tener al menos un numero, una mayuscula y una minuscula "
         }
          else if(tipoUsuario==2){
-            String hasheado = contraseniahasheada.getSaltedHash(codigo);
-            
-            if(!dao.VerificarCode(hasheado)){
+            if(!dao.VerificarCode(codigo)){
                  return -5;//"Codigo incorrecto"
             }else{
              usuario.setNombreusuarioInstitucional(name);
-             usuario.setContrasenia(contraseniahasheada.getSaltedHash(pass1)); 
+             usuario.setContrasenia(pass1); 
              usuario.setTipoUsuario(tipoUsuario);
              dao.crear(usuario);
              return 1; 
@@ -49,9 +46,7 @@ public class Validar_Registro {
                
          }else {
              usuario.setNombreusuarioInstitucional(name);
-             usuario.setContrasenia(contraseniahasheada.getSaltedHash(pass1));
-             System.out.println(contraseniahasheada.getSaltedHash(pass1));
-                     
+             usuario.setContrasenia(pass1);                
              usuario.setTipoUsuario(tipoUsuario);
              dao.crear(usuario);
              return 1; //"Usuario registrado"

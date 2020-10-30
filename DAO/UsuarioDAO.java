@@ -11,15 +11,16 @@ import java.sql.Statement;
 
 public class UsuarioDAO {
     
-    private ContraseniaHasheada contraseniahasheada = new ContraseniaHasheada();
+   
     static final String DB_URL
             = "jdbc:mysql://database-1.cjxw1f4bh3ms.us-east-1.rds.amazonaws.com:3306/Horarios_Tics_y_Laboratorios?characterEncoding=utf8"; //Endpoint
     static final String DB_DRV
             = "com.mysql.jdbc.Driver";
     static final String DB_USER = "SeeTableUser";
     static final String DB_PASSWD = "ISsRD1*y"; 
-
-    public boolean crear(Usuario object) { // Ingresar un usuario en la base de datos
+    private ContraseniaHasheada contraseniahasheada = new ContraseniaHasheada();
+    
+    public boolean crear(Usuario object) throws Exception { // Ingresar un usuario en la base de datos
         Connection connection = null;
         Statement statement = null;
         int resultSet;      
@@ -29,7 +30,7 @@ public class UsuarioDAO {
             connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
             statement = connection.createStatement();
             resultSet = statement.executeUpdate("INSERT INTO USUARIOS( `ID_TIPOUSUARIO`, `USUARIOINSTITUCIONAL`, `CONTRASENIA`) VALUES ('"
-                    + object.getTipoUsuario() + "','" + object.getNombreusuarioInstitucional()+"','" + object.getContrasenia() + "'" + ")" );
+                    + object.getTipoUsuario() + "','" + object.getNombreusuarioInstitucional()+"','" + contraseniahasheada.getSaltedHash(object.getContrasenia()) + "'" + ")" );
             
             return resultSet > 0;
         } catch (SQLException ex) {
@@ -59,13 +60,12 @@ public class UsuarioDAO {
  //                   + "' AND CONTRASENIA='" + par.getContrasenia() + "'");
             
             if(resultSet.next()){
-                System.out.println(resultSet.getString(4));
-                System.out.println(par.getContrasenia());
                 if(contraseniahasheada.check(par.getContrasenia(), resultSet.getString(4))){
-                    System.out.println("son iguales");
-                }
-                int tipUser=Integer.valueOf(resultSet.getString(2));
-                return tipUser;
+                    int tipUser=Integer.valueOf(resultSet.getString(2));
+                    return tipUser;
+                }else{
+                    return 0;  
+                }             
             }else{
                 return 0;
             }

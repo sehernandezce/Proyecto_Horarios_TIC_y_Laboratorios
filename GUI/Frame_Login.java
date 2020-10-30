@@ -43,7 +43,7 @@ public class Frame_Login extends javax.swing.JFrame {
             }else if(usuario.getTipoUsuario() == -2){
                 JOptionPane.showMessageDialog(null, "Longitud contraseña incorrecta",  "Longitud contraseña", JOptionPane.INFORMATION_MESSAGE);
             }else if(usuario.getTipoUsuario() == 0){
-                JOptionPane.showMessageDialog(null, "No se encuentra el usuario, Por favor verifique",  "No se encuentra ese usuario", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Datos incorrectos",  "No se encuentra ese usuario", JOptionPane.INFORMATION_MESSAGE);
             }else if(usuario.getTipoUsuario() == -3){
                 JOptionPane.showMessageDialog(null, "No se ha podido conectar con la Base de Datos",  "Error", JOptionPane.INFORMATION_MESSAGE);
             }

@@ -1257,6 +1257,8 @@ public class Frame_Main extends javax.swing.JFrame {
              Espacio espacio = new Espacio();
              espacio=validarEspacios.BuscarInfoEspacio(usuario, Integer.valueOf(obj.toString()));
              Frame_DetallesEspacio frame_DetallesEspacio= new Frame_DetallesEspacio();
+             frame_DetallesEspacio.setVisible(true); 
+             System.out.println(espacio.getId_espacio());
              frame_DetallesEspacio.llenarFrame(usuario, espacio);             
              frame_DetallesEspacio.setVisible(true); 
           }catch (Exception e){

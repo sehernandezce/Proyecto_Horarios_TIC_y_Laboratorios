@@ -16,6 +16,7 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);  
         buttonGroup1.add(jRadioBActivo);
         buttonGroup1.add(jRadioBInactivo); 
+        
     }
 
     /**
@@ -31,17 +32,12 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
         paneldetallesInventario = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        javax.swing.JTextField jTextTipoEspacio2 = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        javax.swing.JTextField jTextNumeroSalon = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
-        javax.swing.JTextField jTextNombreEspacio1 = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        javax.swing.JTextField jTextCapacidad = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        javax.swing.JTextField jTextNumeroEdificio1 = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         jRadioBActivo = new javax.swing.JRadioButton();
         jRadioBInactivo = new javax.swing.JRadioButton();
@@ -52,6 +48,11 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
         jLabelEliminar1 = new javax.swing.JLabel();
         jButtonEditar = new javax.swing.JButton();
         jButtonGuardar = new javax.swing.JButton();
+        jTextField1 = new javax.swing.JTextField();
+        jTextNombreEspacio2 = new javax.swing.JTextField();
+        jTextCapacidad = new javax.swing.JTextField();
+        jTextNumeroEdificio2 = new javax.swing.JTextField();
+        jTextNumeroSalon1 = new javax.swing.JTextField();
         panelCerrar = new javax.swing.JPanel();
         jlClose1 = new javax.swing.JLabel();
         jlMinimize1 = new javax.swing.JLabel();
@@ -91,13 +92,11 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Detalles de inventario:");
         paneldetallesInventario.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, -1, -1));
-        paneldetallesInventario.add(jTextTipoEspacio2, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 70, 150, 30));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Capacidad:");
         paneldetallesInventario.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 200, -1, -1));
-        paneldetallesInventario.add(jTextNumeroSalon, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 130, 90, 30));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(0, 0, 0));
@@ -110,19 +109,16 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
         jLabel5.setForeground(new java.awt.Color(0, 0, 0));
         jLabel5.setText("Nombre del Espacio:");
         paneldetallesInventario.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 70, -1, -1));
-        paneldetallesInventario.add(jTextNombreEspacio1, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 60, 240, 30));
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(0, 0, 0));
         jLabel6.setText("Edificio:");
         paneldetallesInventario.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 130, -1, -1));
-        paneldetallesInventario.add(jTextCapacidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 190, 50, 30));
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(0, 0, 0));
         jLabel7.setText("Estado:");
         paneldetallesInventario.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 200, -1, -1));
-        paneldetallesInventario.add(jTextNumeroEdificio1, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 130, 140, 30));
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(0, 0, 0));
@@ -165,6 +161,21 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
         jButtonGuardar.setText("Guardar");
         paneldetallesInventario.add(jButtonGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 550, 100, 30));
 
+        jTextField1.setEnabled(false);
+        paneldetallesInventario.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 70, 150, 30));
+
+        jTextNombreEspacio2.setEnabled(false);
+        paneldetallesInventario.add(jTextNombreEspacio2, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 70, 220, 30));
+
+        jTextCapacidad.setEnabled(false);
+        paneldetallesInventario.add(jTextCapacidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 190, 70, 30));
+
+        jTextNumeroEdificio2.setEnabled(false);
+        paneldetallesInventario.add(jTextNumeroEdificio2, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 130, 130, 30));
+
+        jTextNumeroSalon1.setEnabled(false);
+        paneldetallesInventario.add(jTextNumeroSalon1, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 130, 110, 30));
+
         getContentPane().add(paneldetallesInventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 770, 600));
 
         panelCerrar.setBackground(new java.awt.Color(153, 153, 153));
@@ -205,12 +216,17 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
     public void llenarFrame(Usuario u, Espacio esp) throws SQLException{
         this.usuario=u;
         
-     
-        esp.getNombre_espacio();
-        esp.getNombre_encargado();
-        esp.getNum_Espacio();
-        esp.getNombre_edificio();
-        esp.getCapacidad();
+        jTextField1.setText(esp.getNombre_tipoespacio());
+        if(esp.getNombre_espacio().equals(null)){
+             jTextNombreEspacio2.setText(" ");
+        }else{
+             jTextNombreEspacio2.setText(esp.getNombre_espacio());
+        }
+       
+        jComboBox1.addItem(esp.getNombre_encargado());
+        jTextNumeroSalon1.setText(esp.getNum_Espacio());
+        jTextNumeroEdificio2.setText(esp.getNombre_edificio());
+        jTextCapacidad.setText(String.valueOf(esp.getCapacidad()));       
         
         if(esp.getEstado()){
             jRadioBActivo.setSelected(true);
@@ -304,6 +320,11 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
     private javax.swing.JRadioButton jRadioBInactivo;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTextField jTextCapacidad;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextNombreEspacio2;
+    private javax.swing.JTextField jTextNumeroEdificio2;
+    private javax.swing.JTextField jTextNumeroSalon1;
     private javax.swing.JLabel jlClose1;
     private javax.swing.JLabel jlMinimize1;
     private javax.swing.JPanel panelCerrar;

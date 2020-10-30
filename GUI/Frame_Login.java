@@ -175,8 +175,8 @@ public class Frame_Login extends javax.swing.JFrame {
         LbUsuario.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         LbUsuario.setForeground(new java.awt.Color(255, 255, 255));
         LbUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Logo u_preview_rev_1_opt.png"))); // NOI18N
-        LbUsuario.setText("Horarios TIC's y Laboratorios");
-        panelCerrar.add(LbUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 6, 190, 20));
+        LbUsuario.setText("Horarios de salas TIC's y Laboratorios");
+        panelCerrar.add(LbUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 6, 240, 20));
 
         getContentPane().add(panelCerrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 

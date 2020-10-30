@@ -194,7 +194,6 @@ public class Frame_Main extends javax.swing.JFrame {
         getContentPane().add(panelCerrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         Paneles_Menu.setBackground(new java.awt.Color(204, 204, 204));
-        Paneles_Menu.setForeground(new java.awt.Color(0, 0, 0));
         Paneles_Menu.setMinimumSize(new java.awt.Dimension(170, 520));
         Paneles_Menu.setPreferredSize(new java.awt.Dimension(170, 520));
         Paneles_Menu.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -322,7 +321,7 @@ public class Frame_Main extends javax.swing.JFrame {
                             .addGroup(Menu_UELayout.createSequentialGroup()
                                 .addGap(48, 48, 48)
                                 .addComponent(jLabel18)))
-                        .addGap(0, 14, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(Menu_UELayout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(Menu_UELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -548,12 +547,10 @@ public class Frame_Main extends javax.swing.JFrame {
         getContentPane().add(Paneles_Menu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 170, 520));
 
         Solicitar_Espacio.setBackground(new java.awt.Color(204, 204, 204));
-        Solicitar_Espacio.setForeground(new java.awt.Color(0, 0, 0));
         Solicitar_Espacio.setPreferredSize(new java.awt.Dimension(854, 520));
         Solicitar_Espacio.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel2.setBackground(new java.awt.Color(204, 204, 204));
-        jPanel2.setForeground(new java.awt.Color(0, 0, 0));
         jPanel2.setMinimumSize(new java.awt.Dimension(854, 520));
         jPanel2.setPreferredSize(new java.awt.Dimension(854, 520));
 
@@ -565,7 +562,6 @@ public class Frame_Main extends javax.swing.JFrame {
         });
         jScrollPane3.setViewportView(jTable3);
 
-        jTable4.setForeground(new java.awt.Color(0, 0, 0));
         jTable4.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null},
@@ -589,27 +585,21 @@ public class Frame_Main extends javax.swing.JFrame {
         jScrollPane4.setViewportView(jTable4);
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(0, 0, 0));
         jLabel10.setText("Solicitar espacio:");
 
         jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(0, 0, 0));
         jLabel11.setText("Tipo de espacio:");
 
         jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel12.setForeground(new java.awt.Color(0, 0, 0));
         jLabel12.setText("¿En que horario desea reservar el espacio? ");
 
         jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel13.setForeground(new java.awt.Color(0, 0, 0));
         jLabel13.setText("Hora de inicio:");
 
         jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel15.setForeground(new java.awt.Color(0, 0, 0));
         jLabel15.setText("Hora final:");
 
         jLabel27.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel27.setForeground(new java.awt.Color(0, 0, 0));
         jLabel27.setText("¿El evento se repite?");
 
         jCheckBox3.setBackground(new java.awt.Color(204, 204, 204));
@@ -621,18 +611,13 @@ public class Frame_Main extends javax.swing.JFrame {
 
         jButton2.setBackground(new java.awt.Color(204, 204, 204));
         jButton2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(0, 0, 0));
         jButton2.setText("Personalizar");
 
         jLabel28.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel28.setForeground(new java.awt.Color(0, 0, 0));
         jLabel28.setText("Motivo solicitud:");
 
         jComboBox2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jComboBox2.setForeground(new java.awt.Color(0, 0, 0));
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccion" }));
-
-        jCalendar2.setForeground(new java.awt.Color(0, 0, 0));
 
         jButton3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton3.setText("Solicitar");
@@ -757,7 +742,6 @@ public class Frame_Main extends javax.swing.JFrame {
         getContentPane().add(Solicitar_Espacio, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 30, -1, -1));
 
         Bienvenida.setBackground(new java.awt.Color(204, 204, 204));
-        Bienvenida.setForeground(new java.awt.Color(0, 0, 0));
         Bienvenida.setMaximumSize(new java.awt.Dimension(854, 520));
         Bienvenida.setMinimumSize(new java.awt.Dimension(854, 520));
         Bienvenida.setPreferredSize(new java.awt.Dimension(854, 520));
@@ -803,7 +787,6 @@ public class Frame_Main extends javax.swing.JFrame {
         getContentPane().add(Bienvenida, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 30, 854, 520));
 
         Mis_Solicitudes.setBackground(new java.awt.Color(204, 204, 204));
-        Mis_Solicitudes.setForeground(new java.awt.Color(0, 0, 0));
         Mis_Solicitudes.setMinimumSize(new java.awt.Dimension(854, 520));
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -975,7 +958,6 @@ public class Frame_Main extends javax.swing.JFrame {
         getContentPane().add(Mis_Solicitudes, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 30, -1, -1));
 
         Administrar_Solicitudes.setBackground(new java.awt.Color(204, 204, 204));
-        Administrar_Solicitudes.setForeground(new java.awt.Color(0, 0, 0));
         Administrar_Solicitudes.setMinimumSize(new java.awt.Dimension(854, 520));
 
         jLabel30.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -1081,7 +1063,6 @@ public class Frame_Main extends javax.swing.JFrame {
         getContentPane().add(Administrar_Solicitudes, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 30, -1, -1));
 
         Estadisticas.setBackground(new java.awt.Color(204, 204, 204));
-        Estadisticas.setForeground(new java.awt.Color(0, 0, 0));
         Estadisticas.setMinimumSize(new java.awt.Dimension(854, 520));
         Estadisticas.setName(""); // NOI18N
         Estadisticas.setPreferredSize(new java.awt.Dimension(854, 520));

@@ -3,17 +3,25 @@ package Control;
 
 import DAO.UsuarioDAO;
 import Entidad.Usuario;
+/*librerías de seguridad:*/
+import javax.crypto.SecretKey;
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
+import java.security.SecureRandom;
+import org.apache.commons.codec.binary.Base64;
+
 
 public class Validar_Registro {
     
     private UsuarioDAO dao = new UsuarioDAO();
     Usuario usuario =new Usuario ();
+    private ContraseniaHasheada contraseniahasheada = new ContraseniaHasheada(); 
     
     public Validar_Registro(){
         
     }
     
-    public int verificarRegistro(String name, String pass1, String pass2, int tipoUsuario, String codigo){
+    public int verificarRegistro(String name, String pass1, String pass2, int tipoUsuario, String codigo) throws Exception{
         if(!verificarLongitudNombre(name)){
             return(-1); // "Longitud nombre incorreta"
         }
@@ -27,12 +35,13 @@ public class Validar_Registro {
             return(-4);//"La contraseña no es segura. Debe tener al menos un numero, una mayuscula y una minuscula "
         }
          else if(tipoUsuario==2){
-             int a=codigo.hashCode();
-            if(!dao.VerificarCode(a)){
+            String hasheado = contraseniahasheada.getSaltedHash(codigo);
+            
+            if(!dao.VerificarCode(hasheado)){
                  return -5;//"Codigo incorrecto"
             }else{
              usuario.setNombreusuarioInstitucional(name);
-             usuario.setContrasenia(String.valueOf(pass1.hashCode())); 
+             usuario.setContrasenia(contraseniahasheada.getSaltedHash(pass1)); 
              usuario.setTipoUsuario(tipoUsuario);
              dao.crear(usuario);
              return 1; 
@@ -41,7 +50,7 @@ public class Validar_Registro {
          }
          else {
              usuario.setNombreusuarioInstitucional(name);
-             usuario.setContrasenia(String.valueOf(pass1.hashCode())); 
+             usuario.setContrasenia(contraseniahasheada.getSaltedHash(pass1)); 
              usuario.setTipoUsuario(tipoUsuario);
              dao.crear(usuario);
              return 1; //"Usuario registrado"
@@ -64,6 +73,8 @@ public class Validar_Registro {
         }
         return true;
     }
+    
+    
     
     public boolean verificarLongitudNombre(String nombre)
     {

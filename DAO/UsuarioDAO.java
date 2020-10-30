@@ -83,7 +83,7 @@ public class UsuarioDAO {
     }
     
     
-    public boolean VerificarCode(int cod) { // Verifica el codigo
+    public boolean VerificarCode(String cod) { // Verifica el codigo
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;

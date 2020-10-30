@@ -61,13 +61,23 @@ public class Frame_Login extends javax.swing.JFrame {
     private void logUp(){ //Registrarse
         try{
            Validar_Registro validar_Registro =new Validar_Registro();
-           int valReg=validar_Registro.verificarRegistro(usuario_r.getText(),contraseñaR.getText(),conf_contraseñaR.getText(),tipUser(),codico_coordinador.getText());
+           int valReg = validar_Registro.verificarRegistro(usuario_r.getText(),contraseñaR.getText(),conf_contraseñaR.getText(),tipUser(),codico_coordinador.getText());
            if(valReg == 1){
              JOptionPane.showMessageDialog(this,"El usuario ha sido creado exitosamente");
-           }
-            
+           }else if(valReg == -1){
+                JOptionPane.showMessageDialog(null, "Longitud nombre incorreta",  "Nombre no Valido", JOptionPane.INFORMATION_MESSAGE);
+            }else if(valReg == -2){
+                JOptionPane.showMessageDialog(null, "Longitud contraseña incorreta",  "Contraseña no Valida", JOptionPane.INFORMATION_MESSAGE);
+            }else if(valReg == -3){
+                JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden",  "Problema con Contraseñas", JOptionPane.INFORMATION_MESSAGE);
+            }else if(valReg == -4){
+                JOptionPane.showMessageDialog(null, "La contraseña no es segura. Debe tener al menos un numero, una mayuscula y una minuscula",  "Contraseña no segura", JOptionPane.INFORMATION_MESSAGE);
+            }else if(valReg == -5){
+                JOptionPane.showMessageDialog(null, "El codigo de coordinador que seleciona no es correcto",  "Codigo incorrecto", JOptionPane.INFORMATION_MESSAGE);
+            }
+
         }catch(Exception e){
-            JOptionPane.showMessageDialog(this,"A ocurrido un error: "+e); 
+            JOptionPane.showMessageDialog(this,"A ocurrido un error, nombre del error: "+e); 
         }
        
     }
@@ -251,7 +261,6 @@ public class Frame_Login extends javax.swing.JFrame {
 
         signInTitle1.setBackground(new java.awt.Color(203, 203, 204));
         signInTitle1.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
-        signInTitle1.setForeground(new java.awt.Color(0, 0, 0));
         signInTitle1.setText("Crear usuario");
         panelRegistrase.add(signInTitle1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 40, -1, 46));
         panelRegistrase.add(contraseñaR, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 220, 190, -1));

@@ -57,7 +57,20 @@ public class EspaciosDAO {
 //        }
 //
 //    }
-
+//Select * From ESPACIOS Natural join ENCARGADOS;
+    
+    
+    /*
+    select distinct  esp.ID_ESPACIO,  esp.NOMBRE_ESPACIO,  esp.NUM_ESPACIO, edi.NOMBRE_EDIFICIOS, CONCAT(enc.NOMBRE_PERSONA, ' ' ,enc.APELLIDO_PERSONA) as nombre , esp.ACTIVO, esp.CAPACIDAD,  tesp.NOMBRE_TIPOESPACIO ,   enc.ID_PERSONA from ESPACIOS as espa, 
+    ESPACIOS as esp, 
+    TIPO_ESPACIOS as tesp, 
+    ENCARGADOS as enc, 
+    EDIFICIOS as edi
+    where esp.id_edificio=edi.id_edificio
+    and esp.ID_TIPOESPACIO=tesp.ID_TIPOESPACIO
+    and esp.ID_PERSONA=enc.ID_PERSONA
+    and esp.ID_TIPOESPACIO = ;
+    */
     public ResultSet leer(Usuario par, int tipEspacio) { // buscar todos los lugares conrespecto a un tipo de espacio
         Connection connection = null;
         Statement statement = null;
@@ -67,8 +80,8 @@ public class EspaciosDAO {
             seleccionarUser(par.getTipoUsuario());
             connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
             statement = connection.createStatement();
-            resultSet = statement.executeQuery("SELECT * FROM ESPACIOS "
-                    + "WHERE id_tipoEspacio = '" + tipEspacio+ "'");
+            resultSet = statement.executeQuery("SELECT *FROM ESPACIOS  "
+                    + "WHERE id_tipoEspacio = '" + tipEspacio+ "' NATURAL JOIN ENCARGADOS");
             if(resultSet.next()){
                 return resultSet;
             }else{

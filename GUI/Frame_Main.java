@@ -757,7 +757,7 @@ public class Frame_Main extends javax.swing.JFrame {
                     .addComponent(jCalendar2, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton3)
-                .addContainerGap(54, Short.MAX_VALUE))
+                .addContainerGap(61, Short.MAX_VALUE))
         );
 
         Solicitar_Espacio.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -1219,6 +1219,29 @@ public class Frame_Main extends javax.swing.JFrame {
         ocultar_todosPaneles();
        Estadisticas.setVisible(true); 
         
+    }
+      private void llenarTabla(String tipo){//modelo tabla
+        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+    new Object [][] {// matriz
+        {null, null, null, null, null, null},
+        {null, null, null, null, null, null},
+        {null, null, null, null, null, null},
+        {null, null, null, null, null, null},
+        {null, null, null, null, null, null},
+        {null, null, null, null, null, null},
+        {null, null, null, null, null, null},
+        {null, null, null, null, null, null},
+        {null, null, null, null, null, null},
+        {null, null, null, null, null, null},
+        {null, null, null, null, null, null},
+        {null, null, null, null, null, null},
+        {null, null, null, null, null, null}
+    },
+               
+    new String [] {
+        "Nombre espacio", "Salon", "Edificio", "Encargado", "Estado", "Informacion"
+    }
+    ) {});
     }
     
     /// Acciones de los botones y labels

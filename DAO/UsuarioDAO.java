@@ -11,7 +11,7 @@ import java.sql.Statement;
 public class UsuarioDAO {
 
     static final String DB_URL
-            = "jdbc:mysql://database-1.cjxw1f4bh3ms.us-east-1.rds.amazonaws.com:3306/Horarios_Tics_y_Laboratorios"; //Endpoint
+            = "jdbc:mysql://database-1.cjxw1f4bh3ms.us-east-1.rds.amazonaws.com:3306/Horarios_Tics_y_Laboratorios?characterEncoding=utf8"; //Endpoint
     static final String DB_DRV
             = "com.mysql.jdbc.Driver";
     static final String DB_USER = "SeeTableUser";
@@ -64,7 +64,7 @@ public class UsuarioDAO {
             }
         } catch (SQLException ex) {
             System.out.println("Error en SQL" + ex);
-            return 0;
+            return -3;
         } finally {
             try {
                 resultSet.close();

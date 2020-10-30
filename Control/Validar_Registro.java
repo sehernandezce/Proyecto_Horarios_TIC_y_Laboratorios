@@ -47,8 +47,7 @@ public class Validar_Registro {
              return 1; 
             }
                
-         }
-         else {
+         }else {
              usuario.setNombreusuarioInstitucional(name);
              usuario.setContrasenia(contraseniahasheada.getSaltedHash(pass1)); 
              usuario.setTipoUsuario(tipoUsuario);

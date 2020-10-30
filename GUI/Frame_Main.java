@@ -28,6 +28,7 @@ public class Frame_Main extends javax.swing.JFrame {
         panelCerrar = new javax.swing.JPanel();
         jlClose1 = new javax.swing.JLabel();
         jlMinimize1 = new javax.swing.JLabel();
+        LbUsuario = new javax.swing.JLabel();
         Paneles_Menu = new javax.swing.JPanel();
         Menu_UE = new javax.swing.JPanel();
         jSeparator1 = new javax.swing.JSeparator();
@@ -156,7 +157,7 @@ public class Frame_Main extends javax.swing.JFrame {
         });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        panelCerrar.setBackground(new java.awt.Color(0, 51, 204));
+        panelCerrar.setBackground(new java.awt.Color(153, 153, 153));
         panelCerrar.setForeground(new java.awt.Color(102, 255, 255));
         panelCerrar.setMaximumSize(new java.awt.Dimension(1024, 30));
         panelCerrar.setMinimumSize(new java.awt.Dimension(1024, 30));
@@ -179,8 +180,17 @@ public class Frame_Main extends javax.swing.JFrame {
         });
         panelCerrar.add(jlMinimize1, new org.netbeans.lib.awtextra.AbsoluteConstraints(970, 10, -1, -1));
 
+        LbUsuario.setBackground(new java.awt.Color(0, 51, 204));
+        LbUsuario.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        LbUsuario.setForeground(new java.awt.Color(255, 255, 255));
+        LbUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Logo u_preview_rev_1_opt.png"))); // NOI18N
+        LbUsuario.setText("Horarios TIC's y Laboratorios");
+        panelCerrar.add(LbUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 6, 190, 20));
+
         getContentPane().add(panelCerrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
+        Paneles_Menu.setBackground(new java.awt.Color(204, 204, 204));
+        Paneles_Menu.setForeground(new java.awt.Color(0, 0, 0));
         Paneles_Menu.setMinimumSize(new java.awt.Dimension(170, 520));
         Paneles_Menu.setPreferredSize(new java.awt.Dimension(170, 520));
         Paneles_Menu.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -233,7 +243,7 @@ public class Frame_Main extends javax.swing.JFrame {
             }
         });
 
-        jLabel17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/logo Unal_opt (1).jpg"))); // NOI18N
+        jLabel17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/logo-universidad-nacional-de-colombia-sede-manizales-1-638_preview_rev_1_opt.png"))); // NOI18N
 
         jLabel18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/usuario.png"))); // NOI18N
         jLabel18.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -242,14 +252,13 @@ public class Frame_Main extends javax.swing.JFrame {
             }
         });
 
-        userLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        userLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        userLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        userLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         userLabel1.setText("Username");
 
         roleLabel.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        roleLabel.setForeground(new java.awt.Color(255, 255, 255));
         roleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        roleLabel.setText("User role");
+        roleLabel.setText("Usuario Coordinador");
 
         jLabel8.setText("Estadisticas");
         jLabel8.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -269,6 +278,18 @@ public class Frame_Main extends javax.swing.JFrame {
             .addComponent(jSeparator5)
             .addComponent(jSeparator6)
             .addGroup(Menu_UELayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(Menu_UELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jSeparator7)
+                    .addComponent(jSeparator10)
+                    .addGroup(Menu_UELayout.createSequentialGroup()
+                        .addComponent(jLabel8)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+            .addGroup(Menu_UELayout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addComponent(jLabel17)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Menu_UELayout.createSequentialGroup()
                 .addGroup(Menu_UELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jSeparator8)
                     .addComponent(jSeparator9)
@@ -295,26 +316,15 @@ public class Frame_Main extends javax.swing.JFrame {
                                 .addContainerGap()
                                 .addComponent(jLabel7))
                             .addGroup(Menu_UELayout.createSequentialGroup()
-                                .addGap(45, 45, 45)
-                                .addComponent(jLabel17))
-                            .addGroup(Menu_UELayout.createSequentialGroup()
                                 .addGap(48, 48, 48)
-                                .addComponent(jLabel18))
-                            .addGroup(Menu_UELayout.createSequentialGroup()
-                                .addGap(24, 24, 24)
-                                .addGroup(Menu_UELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(userLabel1)
-                                    .addComponent(roleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(0, 17, Short.MAX_VALUE)))
-                .addContainerGap())
-            .addGroup(Menu_UELayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(Menu_UELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSeparator7)
-                    .addComponent(jSeparator10)
+                                .addComponent(jLabel18)))
+                        .addGap(0, 14, Short.MAX_VALUE))
                     .addGroup(Menu_UELayout.createSequentialGroup()
-                        .addComponent(jLabel8)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addContainerGap()
+                        .addGroup(Menu_UELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(userLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(roleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap())
         );
         Menu_UELayout.setVerticalGroup(
             Menu_UELayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -415,7 +425,7 @@ public class Frame_Main extends javax.swing.JFrame {
             }
         });
 
-        jLabel25.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/logo Unal_opt (1).jpg"))); // NOI18N
+        jLabel25.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/logo-universidad-nacional-de-colombia-sede-manizales-1-638_preview_rev_1_opt.png"))); // NOI18N
 
         jLabel26.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/usuario.png"))); // NOI18N
         jLabel26.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -424,14 +434,13 @@ public class Frame_Main extends javax.swing.JFrame {
             }
         });
 
-        userLabel2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        userLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        userLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        userLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         userLabel2.setText("Username");
 
         roleLabel1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        roleLabel1.setForeground(new java.awt.Color(255, 255, 255));
         roleLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        roleLabel1.setText("User role");
+        roleLabel1.setText("Usuario estandar");
 
         javax.swing.GroupLayout Menu_UCLayout = new javax.swing.GroupLayout(Menu_UC);
         Menu_UC.setLayout(Menu_UCLayout);
@@ -471,17 +480,17 @@ public class Frame_Main extends javax.swing.JFrame {
                                 .addContainerGap()
                                 .addComponent(jLabel24))
                             .addGroup(Menu_UCLayout.createSequentialGroup()
-                                .addGap(45, 45, 45)
-                                .addComponent(jLabel25))
-                            .addGroup(Menu_UCLayout.createSequentialGroup()
                                 .addGap(48, 48, 48)
                                 .addComponent(jLabel26))
                             .addGroup(Menu_UCLayout.createSequentialGroup()
-                                .addGap(24, 24, 24)
-                                .addGroup(Menu_UCLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(userLabel2)
-                                    .addComponent(roleLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(0, 17, Short.MAX_VALUE)))
+                                .addGap(33, 33, 33)
+                                .addComponent(jLabel25)))
+                        .addGap(0, 14, Short.MAX_VALUE))
+                    .addGroup(Menu_UCLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(Menu_UCLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(userLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(roleLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         Menu_UCLayout.setVerticalGroup(
@@ -489,9 +498,9 @@ public class Frame_Main extends javax.swing.JFrame {
             .addGroup(Menu_UCLayout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(jLabel26)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(userLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(5, 5, 5)
+                .addComponent(userLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(roleLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator20, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -534,6 +543,8 @@ public class Frame_Main extends javax.swing.JFrame {
 
         getContentPane().add(Paneles_Menu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 170, 520));
 
+        Bienvenida.setBackground(new java.awt.Color(204, 204, 204));
+        Bienvenida.setForeground(new java.awt.Color(0, 0, 0));
         Bienvenida.setMaximumSize(new java.awt.Dimension(854, 520));
         Bienvenida.setMinimumSize(new java.awt.Dimension(854, 520));
         Bienvenida.setPreferredSize(new java.awt.Dimension(854, 520));
@@ -579,6 +590,8 @@ public class Frame_Main extends javax.swing.JFrame {
 
         getContentPane().add(Bienvenida, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 30, 854, 520));
 
+        Solicitar_Espacio.setBackground(new java.awt.Color(204, 204, 204));
+        Solicitar_Espacio.setForeground(new java.awt.Color(0, 0, 0));
         Solicitar_Espacio.setPreferredSize(new java.awt.Dimension(854, 520));
         Solicitar_Espacio.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         Solicitar_Espacio.add(jSeparator11, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 155, 643, -1));
@@ -742,6 +755,8 @@ public class Frame_Main extends javax.swing.JFrame {
 
         getContentPane().add(Solicitar_Espacio, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 30, -1, -1));
 
+        Mis_Solicitudes.setBackground(new java.awt.Color(204, 204, 204));
+        Mis_Solicitudes.setForeground(new java.awt.Color(0, 0, 0));
         Mis_Solicitudes.setMinimumSize(new java.awt.Dimension(854, 520));
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -912,6 +927,8 @@ public class Frame_Main extends javax.swing.JFrame {
 
         getContentPane().add(Mis_Solicitudes, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 30, -1, -1));
 
+        Administrar_Solicitudes.setBackground(new java.awt.Color(204, 204, 204));
+        Administrar_Solicitudes.setForeground(new java.awt.Color(0, 0, 0));
         Administrar_Solicitudes.setMinimumSize(new java.awt.Dimension(854, 520));
 
         jLabel30.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -1016,6 +1033,8 @@ public class Frame_Main extends javax.swing.JFrame {
 
         getContentPane().add(Administrar_Solicitudes, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 30, -1, -1));
 
+        Estadisticas.setBackground(new java.awt.Color(204, 204, 204));
+        Estadisticas.setForeground(new java.awt.Color(0, 0, 0));
         Estadisticas.setMinimumSize(new java.awt.Dimension(854, 520));
         Estadisticas.setName(""); // NOI18N
         Estadisticas.setPreferredSize(new java.awt.Dimension(854, 520));
@@ -1142,8 +1161,10 @@ public class Frame_Main extends javax.swing.JFrame {
         this.usuario = usuario2;
         if(usuario.getTipoUsuario() == 1){
               Menu_UE.setVisible(false);
+              userLabel2.setText(usuario.getNombreusuarioInstitucional());
          }else if(usuario.getTipoUsuario() == 2 ){             
               Menu_UC.setVisible(false);
+              userLabel1.setText(usuario.getNombreusuarioInstitucional());
          }else{
               Paneles_Menu.setVisible(false);
          }
@@ -1167,8 +1188,7 @@ public class Frame_Main extends javax.swing.JFrame {
     
     
            
-    private void solicitar_Espacio(String Espacio) throws SQLException{ //Para mostrar la informacion en el panel de solicitar espacios    
-
+    private void solicitar_Espacio(String Espacio) throws SQLException{ //Para mostrar la informacion en el panel de solicitar espacios     
              ocultar_todosPaneles();
              llenarTabla(Espacio);
              Solicitar_Espacio.setVisible(true); 
@@ -1396,6 +1416,7 @@ public class Frame_Main extends javax.swing.JFrame {
     private javax.swing.JPanel Administrar_Solicitudes;
     private javax.swing.JPanel Bienvenida;
     private javax.swing.JPanel Estadisticas;
+    private javax.swing.JLabel LbUsuario;
     private javax.swing.JPanel MensajeBienvenida;
     private javax.swing.JPanel Menu_UC;
     private javax.swing.JPanel Menu_UE;

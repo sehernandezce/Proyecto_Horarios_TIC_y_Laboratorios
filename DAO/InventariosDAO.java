@@ -58,8 +58,7 @@ public class InventariosDAO {
 //        }
 //
 //    }
-
-    public ResultSet leer(Usuario par, int idEspacio) {// Busca el inventario de un espacio con su id.
+      public String[][] leer(Usuario par, int idEspacio) { // buscar todos los lugares conrespecto a un tipo de espacio
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
@@ -68,29 +67,51 @@ public class InventariosDAO {
             seleccionarUser(par.getTipoUsuario());
             connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
             statement = connection.createStatement();
-            resultSet = statement.executeQuery("SELECT * FROM INVENTARIOS "
-                    + "WHERE ID_ESPACIO = '" + idEspacio + "'");
+          
+            resultSet = statement.executeQuery("select ID_INVENTARIO, NOMBREATRIBUTO, DESCRIPCION from INVENTARIOS where ID_ESPACIO=(" +idEspacio+")");
             if(resultSet.next()){
-                return resultSet;
+                return ObtenerData(resultSet);
             }else{
-                return resultSet;
+                return null;
             }
         } catch (SQLException ex) {
             System.out.println("Error en SQL" + ex);
-            return resultSet;
+            return null;
         } finally {
             try {
                 resultSet.close();
                 statement.close();
                 connection.close();
-                return resultSet;
+                //return null;
             } catch (SQLException ex) {
 
             }
         }
 
     }
-
+    
+    private String[][] ObtenerData(ResultSet resultSet) throws SQLException{
+       
+       int fila=0;       
+       resultSet.afterLast();
+       resultSet.previous();
+      
+       int tamanio=resultSet.getRow();
+       resultSet.absolute(0);
+     
+       String[][] tabla=new String[tamanio][3];
+       while(resultSet.next()){
+        
+           for(int i=1;i<4;i++){
+               tabla[fila][i-1]=resultSet.getString(i);
+              
+           }           
+           fila++;
+         }
+       
+       return tabla;
+       }
+            
         
     public boolean actualizar(Usuario par, ArrayList<Inventario>  inventarioList) {//Modifica el invetario que ya existe mas no agrega nuevos
         Connection connection = null;

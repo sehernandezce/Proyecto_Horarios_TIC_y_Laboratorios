@@ -2,21 +2,61 @@ package Entidad;
 
 public class Espacio {
 
-    private int id_Espacios;
-    private int capacidad;   
-    private int tipoEspacio;
-    private String nombreEspacio;
-    private String numEspacio;   
-    private int id_edificio;
-    private int id_encargado;
-    private Boolean activo;
+    private int id_espacio;
+    private String nombre_espacio;
+    private String num_Espacio;
+    private String nombre_edificio;     
+    private String nombre_encargado;  
+    private Boolean estado;  
+    private int capacidad;
+    private String nombre_tipoespacio;
 
-    public int getId_Espacios() {
-        return id_Espacios;
+    public int getId_espacio() {
+        return id_espacio;
     }
 
-    public void setId_Espacios(int id_Espacios) {
-        this.id_Espacios = id_Espacios;
+    public void setId_espacio(int id_espacio) {
+        this.id_espacio = id_espacio;
+    }
+
+    public String getNombre_espacio() {
+        return nombre_espacio;
+    }
+
+    public void setNombre_espacio(String nombre_espacio) {
+        this.nombre_espacio = nombre_espacio;
+    }
+
+    public String getNum_Espacio() {
+        return num_Espacio;
+    }
+
+    public void setNum_Espacio(String num_Espacio) {
+        this.num_Espacio = num_Espacio;
+    }
+
+    public String getNombre_edificio() {
+        return nombre_edificio;
+    }
+
+    public void setNombre_edificio(String nombre_edificio) {
+        this.nombre_edificio = nombre_edificio;
+    }
+
+    public String getNombre_encargado() {
+        return nombre_encargado;
+    }
+
+    public void setNombre_encargado(String nombre_encargado) {
+        this.nombre_encargado = nombre_encargado;
+    }
+
+    public Boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Boolean estado) {
+        this.estado = estado;
     }
 
     public int getCapacidad() {
@@ -27,53 +67,14 @@ public class Espacio {
         this.capacidad = capacidad;
     }
 
-    public int getTipoEspacio() {
-        return tipoEspacio;
+    public String getNombre_tipoespacio() {
+        return nombre_tipoespacio;
     }
 
-    public void setTipoEspacio(int tipoEspacio) {
-        this.tipoEspacio = tipoEspacio;
+    public void setNombre_tipoespacio(String nombre_tipoespacio) {
+        this.nombre_tipoespacio = nombre_tipoespacio;
     }
-
-    public String getNombreEspacio() {
-        return nombreEspacio;
-    }
-
-    public void setNombreEspacio(String nombreEspacio) {
-        this.nombreEspacio = nombreEspacio;
-    }
-
-    public String getNumEspacio() {
-        return numEspacio;
-    }
-
-    public void setNumEspacio(String numEspacio) {
-        this.numEspacio = numEspacio;
-    }
-
-    public int getId_edificio() {
-        return id_edificio;
-    }
-
-    public void setId_edificio(int id_edificio) {
-        this.id_edificio = id_edificio;
-    }
-
-    public int getId_encargado() {
-        return id_encargado;
-    }
-
-    public void setId_encargado(int id_encargado) {
-        this.id_encargado = id_encargado;
-    }
-
-    public Boolean getActivo() {
-        return activo;
-    }
-
-    public void setActivo(Boolean activo) {
-        this.activo = activo;
-    }
+    
     
     
 

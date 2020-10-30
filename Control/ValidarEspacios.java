@@ -3,6 +3,7 @@ package Control;
 
 import DAO.UsuarioDAO;
 import DAO.EspaciosDAO;
+import Entidad.Espacio;
 import Entidad.Usuario;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -36,5 +37,8 @@ public class ValidarEspacios {
         }
     }
     
+    public Espacio BuscarInfoEspacio(Usuario par, int idEspacio){
+        return espacioDao.leerunEspacio(par, idEspacio);
+    }
 
 }

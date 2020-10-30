@@ -2,6 +2,7 @@ package GUI;
 
 import Control.ValidarEspacios;
 import DAO.EspaciosDAO;
+import Entidad.Espacio;
 import Entidad.Usuario;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -12,15 +13,14 @@ public class Frame_Main extends javax.swing.JFrame {
     
     private int x,y;
     private Usuario usuario;
+    private ValidarEspacios  validarEspacios = new  ValidarEspacios ();
     
     public Frame_Main() {
         initComponents();
         this.setLocationRelativeTo(null);  
          ocultar_todosPaneles();
-         Paneles_Menu.setVisible(false);
-         
-          Paneles_Menu.setVisible(true);
-         Solicitar_Espacio.setVisible(true);
+         Paneles_Menu.setVisible(false);         
+        
          
     }
 
@@ -558,7 +558,11 @@ public class Frame_Main extends javax.swing.JFrame {
         jPanel2.setPreferredSize(new java.awt.Dimension(854, 520));
 
         jTable3.setBackground(new java.awt.Color(204, 204, 204));
-        jTable3.setFocusable(false);
+        jTable3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable3MouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(jTable3);
 
         jTable4.setForeground(new java.awt.Color(0, 0, 0));
@@ -1234,6 +1238,7 @@ public class Frame_Main extends javax.swing.JFrame {
     private void solicitar_Espacio(String Espacio) throws SQLException{ //Para mostrar la informacion en el panel de solicitar espacios     
              ocultar_todosPaneles();
              jLabel36.setText(Espacio);
+             jLabel37.setText("");
              llenarTabla(Espacio);
              Solicitar_Espacio.setVisible(true); 
         
@@ -1259,12 +1264,27 @@ public class Frame_Main extends javax.swing.JFrame {
     }
      
       private void llenarTabla(String tipo) throws SQLException{//modelo tabla
-        ValidarEspacios  validarEspacios = new  ValidarEspacios ();
+        
         Object[][] tabla=validarEspacios.llenarMatriz(tipo, usuario);        
         jTable3.setModel(new javax.swing.table.DefaultTableModel(
          tabla, new String [] {"Nombre espacio", "Salon", "Edificio", "Encargado", "Estado", "Informacion" }) 
                          );
     }
+      
+      private void verDetalles(Object obj){
+          try{
+             Espacio espacio = new Espacio();
+             espacio=validarEspacios.BuscarInfoEspacio(usuario, Integer.valueOf(obj.toString()));
+             //espacio, usuario enviar al frame
+             
+          }catch (Exception e){
+              
+          }
+          
+           
+          
+            // crear el frame
+      }
     
     /// Acciones de los botones y labels
     
@@ -1417,6 +1437,19 @@ public class Frame_Main extends javax.swing.JFrame {
         ocultar_todosPaneles();
         Bienvenida.setVisible(true);
     }//GEN-LAST:event_jLabel18MousePressed
+
+    private void jTable3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable3MouseClicked
+        if(jTable3.getSelectedRow()!=-1 && jTable3.getSelectedColumn()!=-1){
+            if(jTable3.getSelectedColumn()==5){
+                     verDetalles(jTable3.getValueAt(jTable3.getSelectedRow(),5));
+             }
+              String edificio=(jTable3.getValueAt(jTable3.getSelectedRow(),2)).toString();
+              String Salon=(jTable3.getValueAt(jTable3.getSelectedRow(),1)).toString();
+              jLabel37.setText(Salon+" - "+edificio+"  "); 
+        }
+      
+      
+    }//GEN-LAST:event_jTable3MouseClicked
 
     /**
      * @param args the command line arguments

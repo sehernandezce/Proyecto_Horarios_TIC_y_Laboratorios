@@ -10,6 +10,7 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
 
     private int x,y;
     private Usuario usuario;
+    Frame_Main fraim;
     private ValidarInventario validarInventario=new ValidarInventario();
     public Frame_DetallesEspacio() {
         initComponents();
@@ -84,62 +85,51 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
         paneldetallesInventario.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("Encargado:");
         paneldetallesInventario.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 130, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Detalles de inventario:");
         paneldetallesInventario.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, -1, -1));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Capacidad:");
         paneldetallesInventario.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 200, -1, -1));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("Tipo de espacio:");
         paneldetallesInventario.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 70, -1, -1));
 
         paneldetallesInventario.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 130, 150, 30));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
         jLabel5.setText("Nombre del Espacio:");
         paneldetallesInventario.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 70, -1, -1));
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(0, 0, 0));
         jLabel6.setText("Edificio:");
         paneldetallesInventario.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 130, -1, -1));
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(0, 0, 0));
         jLabel7.setText("Estado:");
         paneldetallesInventario.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 200, -1, -1));
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(0, 0, 0));
         jLabel8.setText("Salón:");
         paneldetallesInventario.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 130, -1, -1));
 
         jRadioBActivo.setBackground(new java.awt.Color(204, 204, 204));
-        jRadioBActivo.setForeground(new java.awt.Color(0, 0, 0));
         jRadioBActivo.setSelected(true);
         jRadioBActivo.setText("Activo");
         jRadioBActivo.setEnabled(false);
         paneldetallesInventario.add(jRadioBActivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 200, -1, -1));
 
         jRadioBInactivo.setBackground(new java.awt.Color(204, 204, 204));
-        jRadioBInactivo.setForeground(new java.awt.Color(0, 0, 0));
         jRadioBInactivo.setText("Inactivo");
         jRadioBInactivo.setEnabled(false);
         paneldetallesInventario.add(jRadioBInactivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 200, -1, -1));
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(0, 0, 0));
         jLabel9.setText("Información del espacio:");
         paneldetallesInventario.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 10, -1, -1));
 
@@ -213,9 +203,9 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public void llenarFrame(Usuario u, Espacio esp) throws SQLException{
+    public void llenarFrame(Usuario u, Espacio esp, Frame_Main frame) throws SQLException{
         this.usuario=u;
-        
+        this.fraim = frame;
         jTextField1.setText(esp.getNombre_tipoespacio());
         if(esp.getNombre_espacio().equals(null)){
              jTextNombreEspacio2.setText(" ");
@@ -246,7 +236,9 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
         int result = JOptionPane.showConfirmDialog(null, "¿Desea cerrar el esta ventana?","Exit",dialog);
         
         if(result == 0){
+            this.fraim.enable(true);
             this.dispose();
+            
         }
     }//GEN-LAST:event_jlClose1MouseClicked
 

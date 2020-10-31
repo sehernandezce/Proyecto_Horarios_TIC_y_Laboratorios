@@ -1272,7 +1272,8 @@ public class Frame_Main extends javax.swing.JFrame {
              Frame_DetallesEspacio frame_DetallesEspacio= new Frame_DetallesEspacio();
              frame_DetallesEspacio.setVisible(true); 
              System.out.println(espacio.getId_espacio());
-             frame_DetallesEspacio.llenarFrame(usuario, espacio);             
+             frame_DetallesEspacio.llenarFrame(usuario, espacio, this);    
+             this.enable(false);
              frame_DetallesEspacio.setVisible(true); 
           }catch (Exception e){
               System.out.println(e);

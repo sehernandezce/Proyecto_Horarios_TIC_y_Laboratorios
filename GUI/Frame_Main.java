@@ -5,6 +5,7 @@ import DAO.EspaciosDAO;
 import Entidad.Espacio;
 import Entidad.Usuario;
 import java.sql.SQLException;
+import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -564,22 +565,10 @@ public class Frame_Main extends javax.swing.JFrame {
 
         jTable4.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null}
+
             },
             new String [] {
-                "Horas ocupadas"
+
             }
         ));
         jScrollPane4.setViewportView(jTable4);
@@ -618,6 +607,12 @@ public class Frame_Main extends javax.swing.JFrame {
 
         jComboBox2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccion" }));
+
+        jCalendar2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jCalendar2MouseClicked(evt);
+            }
+        });
 
         jButton3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton3.setText("Solicitar");
@@ -1251,6 +1246,23 @@ public class Frame_Main extends javax.swing.JFrame {
          tabla, new String [] {"Nombre espacio", "Salon", "Edificio", "Encargado", "Estado", "Informacion" }) 
                          );
     }
+      private void llenarTabla_espacios(int id_espacio,String fecha) throws SQLException{//modelo tabla espacios
+        Object[][] tabla=validarEspacios.llenarMatriz_horas(id_espacio, fecha, usuario);
+        jTable4.setModel(new javax.swing.table.DefaultTableModel(
+        tabla, new String [] {"Horas ocupadas"}));
+    }
+      
+      
+      
+      private String obtener_fecha(){
+          
+          int año = jCalendar2.getCalendar().get(Calendar.YEAR);
+          int mes = jCalendar2.getCalendar().get(Calendar.MONTH);
+          int dia = jCalendar2.getCalendar().get(Calendar.DAY_OF_MONTH);
+          
+          return año+"-"+mes+"-"+dia;
+      }
+      
       
       private void verDetalles(Object obj){
           try{
@@ -1431,6 +1443,11 @@ public class Frame_Main extends javax.swing.JFrame {
       
       
     }//GEN-LAST:event_jTable3MouseClicked
+
+    private void jCalendar2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jCalendar2MouseClicked
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jCalendar2MouseClicked
 
     /**
      * @param args the command line arguments

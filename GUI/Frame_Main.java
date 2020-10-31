@@ -1246,6 +1246,8 @@ public class Frame_Main extends javax.swing.JFrame {
          tabla, new String [] {"Nombre espacio", "Salon", "Edificio", "Encargado", "Estado", "Informacion" }) 
                          );
     }
+      
+      
       private void llenarTabla_espacios(int id_espacio,String fecha) throws SQLException{//modelo tabla espacios
         Object[][] tabla=validarEspacios.llenarMatriz_horas(id_espacio, fecha, usuario);
         jTable4.setModel(new javax.swing.table.DefaultTableModel(
@@ -1449,7 +1451,15 @@ public class Frame_Main extends javax.swing.JFrame {
 
     private void jCalendar2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jCalendar2MouseClicked
         // TODO add your handling code here:
-        
+        if(jTable3.getSelectedRow()!=-1 && jTable3.getSelectedColumn()!=-1){
+            int id_espacio=Integer.valueOf(jTable3.getValueAt(jTable3.getSelectedRow(),5).toString());
+            String fecha=obtener_fecha();
+            try {
+                llenarTabla_espacios(id_espacio,fecha);
+            } catch (SQLException ex) {
+                Logger.getLogger(Frame_Main.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } 
     }//GEN-LAST:event_jCalendar2MouseClicked
 
     /**

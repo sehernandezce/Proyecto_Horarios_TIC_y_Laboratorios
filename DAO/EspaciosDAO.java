@@ -145,6 +145,8 @@ public class EspaciosDAO {
        
        return tabla;
        }
+    
+    
     private String[][] ObtenerData_Horas(ResultSet resultSet) throws SQLException{
        
        int fila=0;       
@@ -156,7 +158,7 @@ public class EspaciosDAO {
      
        String[][] tabla=new String[tamanio][1];
        while(resultSet.next()){
-            tabla[fila][1]=resultSet.getString(1)+"/"+resultSet.getString(2);
+            tabla[fila][0]=resultSet.getString(1)+"/"+resultSet.getString(2);
             fila++;
          }
        

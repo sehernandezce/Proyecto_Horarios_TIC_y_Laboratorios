@@ -136,8 +136,10 @@ public class EspaciosDAO {
                     espacio.setEstado(true);
                 }else{
                    espacio.setEstado(false);
-                }                   
+                } 
                 espacio.setCapacidad(Integer.valueOf(resultSet.getString(7)));
+               
+                
                 espacio.setNombre_tipoespacio(resultSet.getString(8));
                 return espacio;
             }else{

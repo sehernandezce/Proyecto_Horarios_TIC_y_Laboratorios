@@ -11,6 +11,7 @@ import java.sql.Statement;
 
 public class EspaciosDAO {
 
+    
     static final String DB_URL
             = "jdbc:mysql://database-1.cjxw1f4bh3ms.us-east-1.rds.amazonaws.com:3306/Horarios_Tics_y_Laboratorios"; //Endpoint
     static final String DB_DRV

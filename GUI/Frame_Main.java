@@ -9,19 +9,21 @@ import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 
 public class Frame_Main extends javax.swing.JFrame {
-    
-    private int x,y;
+
+    private int x, y;
     private Usuario usuario;
-    private ValidarEspacios  validarEspacios = new  ValidarEspacios ();
-    
+    private ValidarEspacios validarEspacios = new ValidarEspacios();
+
     public Frame_Main() {
         initComponents();
-        this.setLocationRelativeTo(null);  
-         ocultar_todosPaneles();
-         Paneles_Menu.setVisible(false);         
-             
+        this.setLocationRelativeTo(null);
+        ocultar_todosPaneles();
+        Paneles_Menu.setVisible(false);
+
     }
 
     @SuppressWarnings("unchecked")
@@ -1175,82 +1177,81 @@ public class Frame_Main extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    
-    public void entrar_bienvenida(Usuario usuario2){ //Selecciona el tipo de menu segun el usuario        
-       ocultar_todosPaneles();
+
+    public void entrar_bienvenida(Usuario usuario2) { //Selecciona el tipo de menu segun el usuario        
+        ocultar_todosPaneles();
         Bienvenida.setVisible(true);
         Paneles_Menu.setVisible(true);
         this.usuario = usuario2;
-        if(usuario.getTipoUsuario() == 1){
-              Menu_UE.setVisible(false);
-              userLabel2.setText(usuario.getNombreusuarioInstitucional());
-         }else if(usuario.getTipoUsuario() == 2 ){             
-              Menu_UC.setVisible(false);
-              userLabel1.setText(usuario.getNombreusuarioInstitucional());
-         }else{
-              Paneles_Menu.setVisible(false);
-         }
-        
+        if (usuario.getTipoUsuario() == 1) {
+            Menu_UE.setVisible(false);
+            userLabel2.setText(usuario.getNombreusuarioInstitucional());
+        } else if (usuario.getTipoUsuario() == 2) {
+            Menu_UC.setVisible(false);
+            userLabel1.setText(usuario.getNombreusuarioInstitucional());
+        } else {
+            Paneles_Menu.setVisible(false);
+        }
+
     }
-    
-    private void ocultar_todosPaneles(){ // Oculta todos los paneles menos el menu
+
+    private void ocultar_todosPaneles() { // Oculta todos los paneles menos el menu
         Bienvenida.setVisible(false);
         Solicitar_Espacio.setVisible(false);
         Mis_Solicitudes.setVisible(false);
         Administrar_Solicitudes.setVisible(false);
         Estadisticas.setVisible(false);
-         
+
     }
-    
-    private void logOut(){ //Cerrar sesion        
-       Frame_Login frame_Login =new Frame_Login();  
-       this.setVisible(false);  
-       frame_Login.setVisible(true);
+
+    private void logOut() { //Cerrar sesion        
+        Frame_Login frame_Login = new Frame_Login();
+        this.setVisible(false);
+        frame_Login.setVisible(true);
     }
-    
-    
-           
-    private void solicitar_Espacio(String Espacio) throws SQLException{ //Para mostrar la informacion en el panel de solicitar espacios     
-             ocultar_todosPaneles();
-             jLabel36.setText(Espacio);
-             jLabel37.setText("");
-             llenarTabla(Espacio);
-             Solicitar_Espacio.setVisible(true); 
-        
-    }
-    
-    
-    private void mostrar_misSolicitudes(int idUsuario){ //Para mostrar la mis solicitudes
+
+    private void solicitar_Espacio(String Espacio) throws SQLException { //Para mostrar la informacion en el panel de solicitar espacios     
         ocultar_todosPaneles();
-        Mis_Solicitudes.setVisible(true);  
-        
+        jLabel36.setText(Espacio);
+        jLabel37.setText("");
+        llenarTabla(Espacio);
+        Solicitar_Espacio.setVisible(true);
+
     }
-    
-    private void administrar_Solicitudes(){ //Para mostrar las solicitudes en el administrador
+
+    private void mostrar_misSolicitudes(int idUsuario) { //Para mostrar la mis solicitudes
         ocultar_todosPaneles();
-       Administrar_Solicitudes.setVisible(true); 
-        
+        Mis_Solicitudes.setVisible(true);
+
     }
-    
-     private void ver_Estadisticas(){ //Para ver estadisticas
+
+    private void administrar_Solicitudes() { //Para mostrar las solicitudes en el administrador
         ocultar_todosPaneles();
-       Estadisticas.setVisible(true); 
-        
+        Administrar_Solicitudes.setVisible(true);
+
     }
-     
-      private void llenarTabla(String tipo) throws SQLException{//modelo tabla
-        
-        Object[][] tabla=validarEspacios.llenarMatriz(tipo, usuario);        
+
+    private void ver_Estadisticas() { //Para ver estadisticas
+        ocultar_todosPaneles();
+        Estadisticas.setVisible(true);
+
+    }
+
+    private void llenarTabla(String tipo) throws SQLException {//modelo tabla
+
+        Object[][] tabla = validarEspacios.llenarMatriz(tipo, usuario);
         jTable3.setModel(new javax.swing.table.DefaultTableModel(
-         tabla, new String [] {"Nombre espacio", "Salon", "Edificio", "Encargado", "Estado", "Informacion" }) 
-                         );
+                tabla, new String[]{"Nombre espacio", "Salon", "Edificio", "Encargado", "Estado", "Informacion"})
+        );
+        DefaultTableCellRenderer render = new DefaultTableCellRenderer();
+        render.setHorizontalAlignment(SwingConstants.CENTER);
+        jTable3.getColumnModel().getColumn(5).setCellRenderer(render);
     }
-      
-      
-      private void llenarTabla_espacios(int id_espacio,String fecha) throws SQLException{//modelo tabla espacios
-        Object[][] tabla=validarEspacios.llenarMatriz_horas(id_espacio, fecha, usuario);
+
+    private void llenarTabla_espacios(int id_espacio, String fecha) throws SQLException {//modelo tabla espacios
+        Object[][] tabla = validarEspacios.llenarMatriz_horas(id_espacio, fecha, usuario);
         jTable4.setModel(new javax.swing.table.DefaultTableModel(
-        tabla, new String [] {"Horas ocupadas"}));
+                tabla, new String[]{"Horas ocupadas"}));
     }
       
       
@@ -1285,7 +1286,7 @@ public class Frame_Main extends javax.swing.JFrame {
       }
     
     /// Acciones de los botones y labels
-    
+
     private void jLabel2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MousePressed
         try {
             solicitar_Espacio("Laboratorios");
@@ -1296,8 +1297,8 @@ public class Frame_Main extends javax.swing.JFrame {
 
     private void jlClose1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlClose1MouseClicked
         int dialog = JOptionPane.YES_NO_OPTION;
-        int result = JOptionPane.showConfirmDialog(null, "¿Desea cerrar el programa?","Exit",dialog);
-        if(result ==0){
+        int result = JOptionPane.showConfirmDialog(null, "¿Desea cerrar el programa?", "Exit", dialog);
+        if (result == 0) {
 
             System.exit(0);
         }
@@ -1308,20 +1309,20 @@ public class Frame_Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jlMinimize1MouseClicked
 
     private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
-       logOut();
+        logOut();
     }//GEN-LAST:event_jLabel7MouseClicked
 
     private void jLabel24MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel24MouseClicked
-       logOut();
+        logOut();
     }//GEN-LAST:event_jLabel24MouseClicked
 
     private void formMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMousePressed
-        x= evt.getX();   
-        y= evt.getY(); 
+        x = evt.getX();
+        y = evt.getY();
     }//GEN-LAST:event_formMousePressed
 
     private void formMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseDragged
-       this.setLocation(this.getLocation().x + evt.getX()-x,this.getLocation().y+evt.getY()-y);
+        this.setLocation(this.getLocation().x + evt.getX() - x, this.getLocation().y + evt.getY() - y);
     }//GEN-LAST:event_formMouseDragged
 
     private void jCheckBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox3ActionPerformed
@@ -1329,13 +1330,13 @@ public class Frame_Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jCheckBox3ActionPerformed
 
     private void jLabel19MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel19MousePressed
-      
+
         try {
             solicitar_Espacio("Laboratorios");
         } catch (SQLException ex) {
             Logger.getLogger(Frame_Main.class.getName()).log(Level.SEVERE, null, ex);
         }
-       
+
     }//GEN-LAST:event_jLabel19MousePressed
 
     private void jLabel20MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel20MousePressed
@@ -1396,7 +1397,7 @@ public class Frame_Main extends javax.swing.JFrame {
 
     private void jLabel26MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel26MousePressed
         ocultar_todosPaneles();
-        Bienvenida.setVisible(true); 
+        Bienvenida.setVisible(true);
     }//GEN-LAST:event_jLabel26MousePressed
 
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
@@ -1424,11 +1425,11 @@ public class Frame_Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jLabel6MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MousePressed
-       administrar_Solicitudes();
+        administrar_Solicitudes();
     }//GEN-LAST:event_jLabel6MousePressed
 
     private void jLabel8MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MousePressed
-       ver_Estadisticas();
+        ver_Estadisticas();
     }//GEN-LAST:event_jLabel8MousePressed
 
     private void jLabel18MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel18MousePressed
@@ -1437,28 +1438,26 @@ public class Frame_Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel18MousePressed
 
     private void jTable3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable3MouseClicked
-        if(jTable3.getSelectedRow()!=-1 && jTable3.getSelectedColumn()!=-1){
-            if(jTable3.getSelectedColumn()==5){
-                     verDetalles(jTable3.getValueAt(jTable3.getSelectedRow(),5));
-             }
-              String edificio=(jTable3.getValueAt(jTable3.getSelectedRow(),2)).toString();
-              String Salon=(jTable3.getValueAt(jTable3.getSelectedRow(),1)).toString();
-              jLabel37.setText(Salon+" - "+edificio+"  "); 
+        if (jTable3.getSelectedRow() != -1 && jTable3.getSelectedColumn() != -1) {
+            if (jTable3.getSelectedColumn() == 5) {
+                verDetalles(jTable3.getValueAt(jTable3.getSelectedRow(), 5));
+            }
+            String edificio = (jTable3.getValueAt(jTable3.getSelectedRow(), 2)).toString();
+            String Salon = (jTable3.getValueAt(jTable3.getSelectedRow(), 1)).toString();
+            jLabel37.setText(Salon + " - " + edificio + "  ");
+
         }
-      
-      
+
+
     }//GEN-LAST:event_jTable3MouseClicked
 
     private void jCalendar2PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jCalendar2PropertyChange
         // TODO add your handling code here:
-        System.out.println(obtener_fecha());
-        if(jTable3.getSelectedRow()!=-1 && jTable3.getSelectedColumn()!=-1){
-            int id_espacio=Integer.valueOf(jTable3.getValueAt(jTable3.getSelectedRow(),5).toString());
-            //jCalendar2.get
-            System.out.println(id_espacio);
-            String fecha=obtener_fecha();
+        if (jTable3.getSelectedRow() != -1 && jTable3.getSelectedColumn() != -1) {
+            int id_espacio = Integer.valueOf(jTable3.getValueAt(jTable3.getSelectedRow(), 5).toString());
+            String fecha = obtener_fecha();
             try {
-                llenarTabla_espacios(id_espacio,fecha);
+                llenarTabla_espacios(id_espacio, fecha);
             } catch (SQLException ex) {
                 Logger.getLogger(Frame_Main.class.getName()).log(Level.SEVERE, null, ex);
             }

@@ -11,6 +11,7 @@ import java.sql.Statement;
 
 public class EspaciosDAO {
 
+    
     static final String DB_URL
             = "jdbc:mysql://database-1.cjxw1f4bh3ms.us-east-1.rds.amazonaws.com:3306/Horarios_Tics_y_Laboratorios"; //Endpoint
     static final String DB_DRV
@@ -188,8 +189,10 @@ public class EspaciosDAO {
                     espacio.setEstado(true);
                 }else{
                    espacio.setEstado(false);
-                }                   
+                } 
                 espacio.setCapacidad(Integer.valueOf(resultSet.getString(7)));
+               
+                
                 espacio.setNombre_tipoespacio(resultSet.getString(8));
                 return espacio;
             }else{

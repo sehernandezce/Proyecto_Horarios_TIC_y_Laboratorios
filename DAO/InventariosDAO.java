@@ -70,7 +70,6 @@ public class InventariosDAO {
           
             resultSet = statement.executeQuery("select ID_INVENTARIO, NOMBREATRIBUTO, DESCRIPCION from INVENTARIOS where ID_ESPACIO=(" +idEspacio+")");
             if(resultSet.next()){
-               System.out.println( resultSet.getString(2));
                 return ObtenerData(resultSet);
             }else{
                 return null;
@@ -96,16 +95,13 @@ public class InventariosDAO {
        int fila=0;       
        resultSet.afterLast();
        resultSet.previous();
-      System.out.println( resultSet.getRow());
        int tamanio=resultSet.getRow();
        resultSet.absolute(0);
      
        String[][] tabla=new String[tamanio][3];
        while(resultSet.next()){
-        System.out.println( resultSet.getRow());
            for(int i=1;i<4;i++){
                tabla[fila][i-1]=resultSet.getString(i);
-               System.out.println( resultSet.getString(i));
            }           
            fila++;
          }

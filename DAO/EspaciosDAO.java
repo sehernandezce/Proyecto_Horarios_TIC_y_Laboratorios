@@ -102,8 +102,9 @@ public class EspaciosDAO {
             connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
             statement = connection.createStatement();
            
-            resultSet = statement.executeQuery("CALL Espacios_horas(" +id_espacio+","+fecha+")");
+            resultSet = statement.executeQuery("CALL Espacios_horas('"+id_espacio+"','"+fecha+"')");
             if(resultSet.next()){
+                System.out.println(resultSet.getString(1));
                 return ObtenerData_Horas(resultSet);
             }else{
                 return null;
@@ -180,6 +181,7 @@ public class EspaciosDAO {
             resultSet = statement.executeQuery("CALL InforporEspacio(" +idEspacio+")");
             if(resultSet.next()){
                 Espacio espacio= new Espacio();
+                System.out.println(Integer.valueOf(resultSet.getString(1)));
                 espacio.setId_espacio(Integer.valueOf(resultSet.getString(1)));
                 espacio.setNombre_espacio(resultSet.getString(2));
                 espacio.setNum_Espacio(resultSet.getString(3));

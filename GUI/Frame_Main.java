@@ -21,8 +21,7 @@ public class Frame_Main extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);  
          ocultar_todosPaneles();
          Paneles_Menu.setVisible(false);         
-        
-         
+             
     }
 
     @SuppressWarnings("unchecked")
@@ -608,9 +607,9 @@ public class Frame_Main extends javax.swing.JFrame {
         jComboBox2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccion" }));
 
-        jCalendar2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jCalendar2MouseClicked(evt);
+        jCalendar2.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jCalendar2PropertyChange(evt);
             }
         });
 
@@ -1259,7 +1258,7 @@ public class Frame_Main extends javax.swing.JFrame {
       private String obtener_fecha(){
           
           int año = jCalendar2.getCalendar().get(Calendar.YEAR);
-          int mes = jCalendar2.getCalendar().get(Calendar.MONTH);
+          int mes = jCalendar2.getCalendar().get(Calendar.MONTH)+1;
           int dia = jCalendar2.getCalendar().get(Calendar.DAY_OF_MONTH);
           
           return año+"-"+mes+"-"+dia;
@@ -1450,10 +1449,13 @@ public class Frame_Main extends javax.swing.JFrame {
       
     }//GEN-LAST:event_jTable3MouseClicked
 
-    private void jCalendar2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jCalendar2MouseClicked
+    private void jCalendar2PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jCalendar2PropertyChange
         // TODO add your handling code here:
+        System.out.println(obtener_fecha());
         if(jTable3.getSelectedRow()!=-1 && jTable3.getSelectedColumn()!=-1){
             int id_espacio=Integer.valueOf(jTable3.getValueAt(jTable3.getSelectedRow(),5).toString());
+            //jCalendar2.get
+            System.out.println(id_espacio);
             String fecha=obtener_fecha();
             try {
                 llenarTabla_espacios(id_espacio,fecha);
@@ -1461,7 +1463,7 @@ public class Frame_Main extends javax.swing.JFrame {
                 Logger.getLogger(Frame_Main.class.getName()).log(Level.SEVERE, null, ex);
             }
         } 
-    }//GEN-LAST:event_jCalendar2MouseClicked
+    }//GEN-LAST:event_jCalendar2PropertyChange
 
     /**
      * @param args the command line arguments

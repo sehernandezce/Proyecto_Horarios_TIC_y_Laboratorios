@@ -1012,7 +1012,7 @@
             </Component>
             <Component class="com.toedter.calendar.JCalendar" name="jCalendar2">
               <Events>
-                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jCalendar2MouseClicked"/>
+                <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="jCalendar2PropertyChange"/>
               </Events>
             </Component>
             <Component class="javax.swing.JButton" name="jButton3">

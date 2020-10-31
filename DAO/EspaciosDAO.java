@@ -90,6 +90,39 @@ public class EspaciosDAO {
 
     }
     
+    
+    public String[][] leerHoras_espacios(Usuario par, int id_espacio, String fecha) { // buscar todos los lugares conrespecto a un tipo de espacio
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        try {
+            resultSet = null;
+            seleccionarUser(par.getTipoUsuario());
+            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
+            statement = connection.createStatement();
+           
+            resultSet = statement.executeQuery("CALL Espacios_horas(" +id_espacio+","+fecha+")");
+            if(resultSet.next()){
+                return ObtenerData_Horas(resultSet);
+            }else{
+                return null;
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error en SQL" + ex);
+            return null;
+        } finally {
+            try {
+                resultSet.close();
+                statement.close();
+                connection.close();
+                //return null;
+            } catch (SQLException ex) {
+
+            }
+        }
+
+    }
+    
     private String[][] ObtenerData(ResultSet resultSet) throws SQLException{
        
        int fila=0;       
@@ -108,6 +141,23 @@ public class EspaciosDAO {
            }
            tabla[fila][5]=resultSet.getString(1);
            fila++;
+         }
+       
+       return tabla;
+       }
+    private String[][] ObtenerData_Horas(ResultSet resultSet) throws SQLException{
+       
+       int fila=0;       
+       resultSet.afterLast();
+       resultSet.previous();
+      
+       int tamanio=resultSet.getRow();
+       resultSet.absolute(0);
+     
+       String[][] tabla=new String[tamanio][1];
+       while(resultSet.next()){
+            tabla[fila][1]=resultSet.getString(1)+"/"+resultSet.getString(2);
+            fila++;
          }
        
        return tabla;
@@ -161,7 +211,7 @@ public class EspaciosDAO {
 
     }
      
-  
+   
      
      
 //    public boolean actualizar(Usuario par, Espacio espacio) {

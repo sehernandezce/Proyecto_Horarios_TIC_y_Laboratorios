@@ -20,7 +20,10 @@ public class ValidarEspacios {
      public String[][] llenarMatriz(String tipoEspacio,Usuario par) throws SQLException{
        return espacioDao.leer(par, AsignartipEsp(tipoEspacio));
        }
-    
+     
+     public String[][] llenarMatriz_horas(int id_espacio,String fecha,Usuario par) throws SQLException{
+       return espacioDao.leerHoras_espacios(par, id_espacio, fecha);
+       }
     
     private int AsignartipEsp(String tipoEspacio){
         

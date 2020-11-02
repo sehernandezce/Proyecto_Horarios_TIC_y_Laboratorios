@@ -9,6 +9,8 @@ import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 
 public class Frame_Main extends javax.swing.JFrame {
     
@@ -1244,6 +1246,9 @@ public class Frame_Main extends javax.swing.JFrame {
         jTable3.setModel(new javax.swing.table.DefaultTableModel(
          tabla, new String [] {"Nombre espacio", "Salon", "Edificio", "Encargado", "Estado", "Informacion" }) 
                          );
+        DefaultTableCellRenderer render = new DefaultTableCellRenderer();
+        render.setHorizontalAlignment(SwingConstants.CENTER);
+        jTable3.getColumnModel().getColumn(5).setCellRenderer(render);
     }
       
       
@@ -1451,11 +1456,9 @@ public class Frame_Main extends javax.swing.JFrame {
 
     private void jCalendar2PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jCalendar2PropertyChange
         // TODO add your handling code here:
-        System.out.println(obtener_fecha());
         if(jTable3.getSelectedRow()!=-1 && jTable3.getSelectedColumn()!=-1){
             int id_espacio=Integer.valueOf(jTable3.getValueAt(jTable3.getSelectedRow(),5).toString());
             //jCalendar2.get
-            System.out.println(id_espacio);
             String fecha=obtener_fecha();
             try {
                 llenarTabla_espacios(id_espacio,fecha);

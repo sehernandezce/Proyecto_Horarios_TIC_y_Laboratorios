@@ -68,14 +68,15 @@ public class EspaciosDAO {
             seleccionarUser(par.getTipoUsuario());
             connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
             statement = connection.createStatement();
-           
+            DB_USER=null;
+            DB_PASSWD=null;
             resultSet = statement.executeQuery("CALL InfoporTipodeEspacio(" +tipEspacio+")");
             if(resultSet.next()){
                 return ObtenerData(resultSet);
             }else{
                 return null;
             }
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             System.out.println("Error en SQL" + ex);
             return null;
         } finally {
@@ -84,7 +85,7 @@ public class EspaciosDAO {
                 statement.close();
                 connection.close();
                 //return null;
-            } catch (SQLException ex) {
+            } catch (Exception ex) {
 
             }
         }
@@ -101,15 +102,16 @@ public class EspaciosDAO {
             seleccionarUser(par.getTipoUsuario());
             connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
             statement = connection.createStatement();
-           
+            DB_USER=null;
+            DB_PASSWD=null;
             resultSet = statement.executeQuery("CALL Espacios_horas('"+id_espacio+"','"+fecha+"')");
             if(resultSet.next()){
-                System.out.println(resultSet.getString(1));
+                
                 return ObtenerData_Horas(resultSet);
             }else{
                 return null;
             }
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             System.out.println("Error en SQL" + ex);
             return null;
         } finally {
@@ -118,7 +120,7 @@ public class EspaciosDAO {
                 statement.close();
                 connection.close();
                 //return null;
-            } catch (SQLException ex) {
+            } catch (Exception ex) {
 
             }
         }
@@ -177,11 +179,12 @@ public class EspaciosDAO {
             seleccionarUser(par.getTipoUsuario());
             connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
             statement = connection.createStatement();
-           
+            DB_USER= null;
+            DB_PASSWD=null;
+            
             resultSet = statement.executeQuery("CALL InforporEspacio(" +idEspacio+")");
             if(resultSet.next()){
                 Espacio espacio= new Espacio();
-                System.out.println(Integer.valueOf(resultSet.getString(1)));
                 espacio.setId_espacio(Integer.valueOf(resultSet.getString(1)));
                 espacio.setNombre_espacio(resultSet.getString(2));
                 espacio.setNum_Espacio(resultSet.getString(3));
@@ -200,8 +203,8 @@ public class EspaciosDAO {
             }else{
                 return null;
             }
-        } catch (SQLException ex) {
-            System.out.println("Error en SQL" + ex);
+        } catch (Exception e) {
+            System.out.println("Error en SQL" + e);
             return null;
         } finally {
             try {
@@ -209,7 +212,7 @@ public class EspaciosDAO {
                 statement.close();
                 connection.close();
                 //return null;
-            } catch (SQLException ex) {
+            } catch (Exception ex) {
 
             }
         }

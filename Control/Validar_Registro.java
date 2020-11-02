@@ -64,7 +64,7 @@ public class Validar_Registro {
             return false;
         }else if(password.equals(password.toLowerCase())){
              return false;
-        }else if(isNumeric(password)){
+        }else if(!(password.matches("[0-9]*")||!password.matches("[a-zA-Z]*"))){
              return false;
         }
         return true;

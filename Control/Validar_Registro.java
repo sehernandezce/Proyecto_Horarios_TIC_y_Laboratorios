@@ -40,16 +40,24 @@ public class Validar_Registro {
              usuario.setNombreusuarioInstitucional(name);
              usuario.setContrasenia(pass1); 
              usuario.setTipoUsuario(tipoUsuario);
-             dao.crear(usuario);
-             return 1; 
+             if(dao.crear(usuario)){
+                 return 1; 
+             }else{
+                 return -6;
+             }
+             
             }
                
          }else {
              usuario.setNombreusuarioInstitucional(name);
              usuario.setContrasenia(pass1);                
-             usuario.setTipoUsuario(tipoUsuario);
-             dao.crear(usuario);
-             return 1; //"Usuario registrado"
+             usuario.setTipoUsuario(tipoUsuario);       
+              if(dao.crear(usuario)){
+                 return 1;  //"Usuario registrado"
+             }else{
+                 return -6;
+             }
+        
          }    
         
     }

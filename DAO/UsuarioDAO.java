@@ -23,16 +23,23 @@ public class UsuarioDAO {
     public boolean crear(Usuario object) throws Exception { // Ingresar un usuario en la base de datos
         Connection connection = null;
         Statement statement = null;
+        ResultSet resultSet2 = null;
         int resultSet;      
         
         try {
             resultSet = -1;
             connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
             statement = connection.createStatement();
-            resultSet = statement.executeUpdate("INSERT INTO USUARIOS( `ID_TIPOUSUARIO`, `USUARIOINSTITUCIONAL`, `CONTRASENIA`) VALUES ('"
+            resultSet2 = statement.executeQuery("SELECT * FROM USUARIOS "
+                    + "WHERE USUARIOINSTITUCIONAL = '" + object.getNombreusuarioInstitucional() + "'" );
+            if(resultSet2.next()){                
+                return false;
+            }else{
+                resultSet = statement.executeUpdate("INSERT INTO USUARIOS( `ID_TIPOUSUARIO`, `USUARIOINSTITUCIONAL`, `CONTRASENIA`) VALUES ('"
                     + object.getTipoUsuario() + "','" + object.getNombreusuarioInstitucional()+"','" + contraseniahasheada.getSaltedHash(object.getContrasenia()) + "'" + ")" );
-            
-            return resultSet > 0;
+             return resultSet > 0;
+            }           
+           
         } catch (SQLException ex) {
             System.out.println("Error en SQL" + ex);
             return false;

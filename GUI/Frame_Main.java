@@ -1216,8 +1216,12 @@ public class Frame_Main extends javax.swing.JFrame {
              ocultar_todosPaneles();
              jLabel36.setText(Espacio);
              jLabel37.setText("");
-             jTable3.setModel(null);
-             jTable4.setModel(null);
+             jTable3.setModel(new javax.swing.table.DefaultTableModel(
+         new Object [][]{}, new String [] {"Nombre espacio", "Salon", "Edificio", "Encargado", "Estado", "Informacion" }) 
+                         );
+             jTable4.setModel(new javax.swing.table.DefaultTableModel(
+         new Object [][]{}, new String [] {"Horas ocupadas"}) 
+                         );
              llenarTabla(Espacio);
              Solicitar_Espacio.setVisible(true); 
         

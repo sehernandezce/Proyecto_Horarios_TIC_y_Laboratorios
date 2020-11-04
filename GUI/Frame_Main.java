@@ -1216,6 +1216,8 @@ public class Frame_Main extends javax.swing.JFrame {
              ocultar_todosPaneles();
              jLabel36.setText(Espacio);
              jLabel37.setText("");
+             jTable3.setModel(null);
+             jTable4.setModel(null);
              llenarTabla(Espacio);
              Solicitar_Espacio.setVisible(true); 
         

@@ -35,7 +35,6 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -49,11 +48,16 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
         jLabelEliminar1 = new javax.swing.JLabel();
         jButtonEditar = new javax.swing.JButton();
         jButtonGuardar = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
+        jTextCorreoEncargado = new javax.swing.JTextField();
         jTextNombreEspacio2 = new javax.swing.JTextField();
         jTextCapacidad = new javax.swing.JTextField();
-        jTextNumeroEdificio2 = new javax.swing.JTextField();
+        jTextNombreEdificio = new javax.swing.JTextField();
         jTextNumeroSalon1 = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
+        jTextNumeroEdificio3 = new javax.swing.JTextField();
+        jTextField2 = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
+        jTextCorreoEncargado1 = new javax.swing.JTextField();
         panelCerrar = new javax.swing.JPanel();
         jlClose1 = new javax.swing.JLabel();
         jlMinimize1 = new javax.swing.JLabel();
@@ -63,7 +67,6 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
         setLocationByPlatform(true);
         setMinimumSize(new java.awt.Dimension(770, 617));
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(770, 617));
         setResizable(false);
         setSize(new java.awt.Dimension(770, 617));
         addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
@@ -85,8 +88,8 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
         paneldetallesInventario.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel1.setText("Encargado:");
-        paneldetallesInventario.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 130, -1, -1));
+        jLabel1.setText("Correo Encargado:");
+        paneldetallesInventario.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 120, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel2.setText("Detalles de inventario:");
@@ -94,25 +97,23 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel3.setText("Capacidad:");
-        paneldetallesInventario.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 200, -1, -1));
+        paneldetallesInventario.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 210, -1, -1));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel4.setText("Tipo de espacio:");
         paneldetallesInventario.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 70, -1, -1));
-
-        paneldetallesInventario.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 130, 150, 30));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel5.setText("Nombre del Espacio:");
         paneldetallesInventario.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 70, -1, -1));
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel6.setText("Edificio:");
-        paneldetallesInventario.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 130, -1, -1));
+        jLabel6.setText("Nombre Edificio:");
+        paneldetallesInventario.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 180, 110, 20));
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel7.setText("Estado:");
-        paneldetallesInventario.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 200, -1, -1));
+        paneldetallesInventario.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 230, -1, -1));
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel8.setText("Salón:");
@@ -122,12 +123,12 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
         jRadioBActivo.setSelected(true);
         jRadioBActivo.setText("Activo");
         jRadioBActivo.setEnabled(false);
-        paneldetallesInventario.add(jRadioBActivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 200, -1, -1));
+        paneldetallesInventario.add(jRadioBActivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 230, -1, -1));
 
         jRadioBInactivo.setBackground(new java.awt.Color(204, 204, 204));
         jRadioBInactivo.setText("Inactivo");
         jRadioBInactivo.setEnabled(false);
-        paneldetallesInventario.add(jRadioBInactivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 200, -1, -1));
+        paneldetallesInventario.add(jRadioBInactivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 230, -1, -1));
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel9.setText("Información del espacio:");
@@ -151,20 +152,47 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
         jButtonGuardar.setText("Guardar");
         paneldetallesInventario.add(jButtonGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 550, 100, 30));
 
-        jTextField1.setEnabled(false);
-        paneldetallesInventario.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 70, 150, 30));
+        jTextCorreoEncargado.setEnabled(false);
+        paneldetallesInventario.add(jTextCorreoEncargado, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 120, 150, 30));
 
         jTextNombreEspacio2.setEnabled(false);
-        paneldetallesInventario.add(jTextNombreEspacio2, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 70, 220, 30));
+        paneldetallesInventario.add(jTextNombreEspacio2, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 70, 220, 30));
 
         jTextCapacidad.setEnabled(false);
-        paneldetallesInventario.add(jTextCapacidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 190, 70, 30));
+        paneldetallesInventario.add(jTextCapacidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 210, 70, 30));
 
-        jTextNumeroEdificio2.setEnabled(false);
-        paneldetallesInventario.add(jTextNumeroEdificio2, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 130, 130, 30));
+        jTextNombreEdificio.setEnabled(false);
+        jTextNombreEdificio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextNombreEdificioActionPerformed(evt);
+            }
+        });
+        paneldetallesInventario.add(jTextNombreEdificio, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 180, 260, 30));
 
         jTextNumeroSalon1.setEnabled(false);
-        paneldetallesInventario.add(jTextNumeroSalon1, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 130, 110, 30));
+        paneldetallesInventario.add(jTextNumeroSalon1, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 130, 70, 30));
+
+        jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel10.setText("Numero Edificio:");
+        paneldetallesInventario.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 130, 110, 20));
+
+        jTextNumeroEdificio3.setEnabled(false);
+        jTextNumeroEdificio3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextNumeroEdificio3ActionPerformed(evt);
+            }
+        });
+        paneldetallesInventario.add(jTextNumeroEdificio3, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 130, 110, 30));
+
+        jTextField2.setEnabled(false);
+        paneldetallesInventario.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 70, 150, 30));
+
+        jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel11.setText("Nombre Encargado:");
+        paneldetallesInventario.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 170, -1, -1));
+
+        jTextCorreoEncargado1.setEnabled(false);
+        paneldetallesInventario.add(jTextCorreoEncargado1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 170, 140, 30));
 
         getContentPane().add(paneldetallesInventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 770, 600));
 
@@ -206,16 +234,16 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
     public void llenarFrame(Usuario u, Espacio esp, Frame_Main frame) throws SQLException{
         this.usuario=u;
         this.fraim = frame;
-        jTextField1.setText(esp.getNombre_tipoespacio());
+        jTextCorreoEncargado.setText(esp.getNombre_tipoespacio());
         if(esp.getNombre_espacio().equals(null)){
              jTextNombreEspacio2.setText(" ");
         }else{
              jTextNombreEspacio2.setText(esp.getNombre_espacio());
         }
        
-        jComboBox1.addItem(esp.getNombre_encargado());
+        //jComboBox1.addItem(esp.getNombre_encargado());
         jTextNumeroSalon1.setText(esp.getNum_Espacio());
-        jTextNumeroEdificio2.setText(esp.getNombre_edificio());
+        jTextNombreEdificio.setText(esp.getNombre_edificio());
         jTextCapacidad.setText(String.valueOf(esp.getCapacidad()));       
         
         if(esp.getEstado()){
@@ -254,6 +282,14 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
         x= evt.getX();   
         y= evt.getY(); 
     }//GEN-LAST:event_formMousePressed
+
+    private void jTextNombreEdificioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextNombreEdificioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextNombreEdificioActionPerformed
+
+    private void jTextNumeroEdificio3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextNumeroEdificio3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextNumeroEdificio3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -296,8 +332,9 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jButtonEditar;
     private javax.swing.JButton jButtonGuardar;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -313,9 +350,12 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextCapacidad;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextCorreoEncargado;
+    private javax.swing.JTextField jTextCorreoEncargado1;
+    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextNombreEdificio;
     private javax.swing.JTextField jTextNombreEspacio2;
-    private javax.swing.JTextField jTextNumeroEdificio2;
+    private javax.swing.JTextField jTextNumeroEdificio3;
     private javax.swing.JTextField jTextNumeroSalon1;
     private javax.swing.JLabel jlClose1;
     private javax.swing.JLabel jlMinimize1;

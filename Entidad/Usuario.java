@@ -2,7 +2,7 @@ package Entidad;
 
 public class Usuario {
     
-    private int idUsuario;
+    
     private String nombreusuarioInstitucional;
     private String contrasenia;   
     private int tipoUsuario;
@@ -24,13 +24,7 @@ public class Usuario {
         this.contrasenia = contrasenia;
     }
 
-    public int getIdUsuario() {
-        return idUsuario;
-    }
 
-    public void setIdUsuario(int idUsuario) {
-        this.idUsuario = idUsuario;
-    }
 
     public int getTipoUsuario() {
         return tipoUsuario;

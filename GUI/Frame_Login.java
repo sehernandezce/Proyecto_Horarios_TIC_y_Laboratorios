@@ -38,7 +38,7 @@ public class Frame_Login extends javax.swing.JFrame {
                 this.setVisible(false);
                 frame_Main.entrar_bienvenida(usuario);
                 frame_Main.setVisible(true);
-            }else if(usuario.getTipoUsuario() == -1){
+            }else if(usuario.getTipoUsuario() == -1 || usuario.getTipoUsuario() == 3){
                 JOptionPane.showMessageDialog(null, "Usuario no Valido",  "Longitud nombre", JOptionPane.INFORMATION_MESSAGE);
             }else if(usuario.getTipoUsuario() == -2){
                 JOptionPane.showMessageDialog(null, "Contraseña no Valida",  "Longitud contraseña", JOptionPane.INFORMATION_MESSAGE);

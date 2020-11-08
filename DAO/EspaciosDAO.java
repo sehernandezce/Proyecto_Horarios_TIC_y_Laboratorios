@@ -22,7 +22,7 @@ public class EspaciosDAO {
 
     private void seleccionarUser(int tipUser){
         
-        if(tipUser==1){
+        if(tipUser==1 ||  tipUser==4){
             this.DB_USER="UserStandard";
             this.DB_PASSWD="Us58*uQL";
         }else if(tipUser==2){
@@ -93,7 +93,7 @@ public class EspaciosDAO {
     }
     
     
-    public String[][] leerHoras_espacios(Usuario par, int id_espacio, String fecha) { // buscar todos los lugares conrespecto a un tipo de espacio
+    public String[][] leerHoras_espacios(Usuario par, int id_espacio, String fecha, int day) { // buscar todos los lugares conrespecto a un tipo de espacio
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
@@ -104,7 +104,7 @@ public class EspaciosDAO {
             statement = connection.createStatement();
             DB_USER=null;
             DB_PASSWD=null;
-            resultSet = statement.executeQuery("CALL Espacios_horas('"+id_espacio+"','"+fecha+"')");
+            resultSet = statement.executeQuery("CALL Espacios_horas('"+id_espacio+"','"+fecha+"','"+day+"')");
             if(resultSet.next()){
                 
                 return ObtenerData_Horas(resultSet);
@@ -136,14 +136,14 @@ public class EspaciosDAO {
        int tamanio=resultSet.getRow();
        resultSet.absolute(0);
      
-       String[][] tabla=new String[tamanio][6];
+       String[][] tabla=new String[tamanio][7];
        while(resultSet.next()){
         
-           for(int i=2;i<7;i++){
-               tabla[fila][i-2]=resultSet.getString(i);
+           for(int i=1;i<7;i++){
+               tabla[fila][i-1]=resultSet.getString(i);
               
            }
-           tabla[fila][5]=resultSet.getString(1);
+           tabla[fila][6]="Ver más";
            fila++;
          }
        
@@ -189,16 +189,17 @@ public class EspaciosDAO {
                 espacio.setNombre_espacio(resultSet.getString(2));
                 espacio.setNum_Espacio(resultSet.getString(3));
                 espacio.setNombre_edificio(resultSet.getString(4));
-                espacio.setNombre_encargado(resultSet.getString(5));
-                if(resultSet.getString(6).equals("Activo")){
+                espacio.setNum_edificio(Integer.valueOf(resultSet.getString(5)));
+                espacio.setNombre_encargado(resultSet.getString(6));
+                 espacio.setCorreo_encargado(resultSet.getString(7));
+                if(resultSet.getString(8).equals("Activo")){
                     espacio.setEstado(true);
                 }else{
                    espacio.setEstado(false);
                 } 
-                espacio.setCapacidad(Integer.valueOf(resultSet.getString(7)));
-               
+                espacio.setCapacidad(Integer.valueOf(resultSet.getString(9)));                
                 
-                espacio.setNombre_tipoespacio(resultSet.getString(8));
+                espacio.setNombre_tipoespacio(resultSet.getString(10));
                 return espacio;
             }else{
                 return null;

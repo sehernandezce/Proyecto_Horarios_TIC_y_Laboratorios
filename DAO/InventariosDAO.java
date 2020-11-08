@@ -21,7 +21,7 @@ public class InventariosDAO {
 
     private void seleccionarUser(int tipUser){
         
-        if(tipUser==1){
+        if(tipUser==1 || tipUser==4){
             this.DB_USER="UserStandard";
             this.DB_PASSWD="Us58*uQL";
         }else if(tipUser==2){

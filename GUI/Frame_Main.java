@@ -559,6 +559,7 @@ public class Frame_Main extends javax.swing.JFrame {
         jPanel2.setPreferredSize(new java.awt.Dimension(854, 520));
 
         jTable3.setBackground(new java.awt.Color(204, 204, 204));
+        jTable3.getTableHeader().setReorderingAllowed(false);
         jTable3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTable3MouseClicked(evt);
@@ -689,7 +690,6 @@ public class Frame_Main extends javax.swing.JFrame {
                         .addComponent(jLabel37, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jCalendar2, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton3)
                         .addGap(15, 15, 15)))
                 .addGap(32, 32, 32))
@@ -1069,7 +1069,7 @@ public class Frame_Main extends javax.swing.JFrame {
         Bienvenida.setVisible(true);
         Paneles_Menu.setVisible(true);
         this.usuario = usuario2;
-        if(usuario.getTipoUsuario() == 1){
+        if(usuario.getTipoUsuario() == 1 || usuario.getTipoUsuario() == 4){
               Menu_UE.setVisible(false);
               userLabel2.setText(usuario.getNombreusuarioInstitucional());
          }else if(usuario.getTipoUsuario() == 2 ){             
@@ -1102,7 +1102,7 @@ public class Frame_Main extends javax.swing.JFrame {
              jLabel36.setText(Espacio);
              jLabel37.setText("");
              jTable3.setModel(new javax.swing.table.DefaultTableModel(
-         new Object [][]{}, new String [] {"Nombre espacio", "Salon", "Edificio", "Encargado", "Estado", "Informacion" }) 
+         new Object [][]{}, new String [] {" ID", "Nombre espacio", "Salon", "Edificio", "Encargado", "Estado","Información adicional"}) 
                          );
              jTable4.setModel(new javax.swing.table.DefaultTableModel(
          new Object [][]{}, new String [] {"Horas ocupadas"}) 
@@ -1135,7 +1135,7 @@ public class Frame_Main extends javax.swing.JFrame {
         
         Object[][] tabla=validarEspacios.llenarMatriz(tipo, usuario);        
         jTable3.setModel(new javax.swing.table.DefaultTableModel(
-         tabla, new String [] {"Nombre espacio", "Salon", "Edificio", "Encargado", "Estado", "Informacion" }) 
+         tabla, new String [] {" ID", "Nombre espacio", "Salon", "Edificio", "Encargado", "Estado","Información adicional" }) 
                          );
         DefaultTableCellRenderer render = new DefaultTableCellRenderer();
         render.setHorizontalAlignment(SwingConstants.CENTER);
@@ -1143,8 +1143,8 @@ public class Frame_Main extends javax.swing.JFrame {
     }
       
       
-      private void llenarTabla_espacios(int id_espacio,String fecha) throws SQLException{//modelo tabla espacios
-        Object[][] tabla=validarEspacios.llenarMatriz_horas(id_espacio, fecha, usuario);
+      private void llenarTabla_espacios(int id_espacio,String fecha, int day) throws SQLException{//modelo tabla espacios
+        Object[][] tabla=validarEspacios.llenarMatriz_horas(id_espacio, fecha, usuario, day);
         jTable4.setModel(new javax.swing.table.DefaultTableModel(
         tabla, new String [] {"Horas ocupadas"}));
     }
@@ -1160,6 +1160,13 @@ public class Frame_Main extends javax.swing.JFrame {
           return año+"-"+mes+"-"+dia;
       }
       
+      private int obt_diaSemana(){
+          TimeZone timezone = TimeZone.getDefault();
+         Calendar calendar = new GregorianCalendar(timezone);
+         calendar.set(jCalendar2.getCalendar().get(Calendar.YEAR), jCalendar2.getCalendar().get(Calendar.MONTH), jCalendar2.getCalendar().get(Calendar.DAY_OF_MONTH));
+         int nD=calendar.get(Calendar.DAY_OF_WEEK);
+         return nD;
+      }
       
       private void verDetalles(Object obj){
           
@@ -1330,11 +1337,11 @@ public class Frame_Main extends javax.swing.JFrame {
 
     private void jTable3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable3MouseClicked
         if(jTable3.getSelectedRow()!=-1 && jTable3.getSelectedColumn()!=-1){
-            if(jTable3.getSelectedColumn()==5){
-                     verDetalles(jTable3.getValueAt(jTable3.getSelectedRow(),5));
+            if(jTable3.getSelectedColumn()==6){
+                     verDetalles(jTable3.getValueAt(jTable3.getSelectedRow(),0));
              }
-              String edificio=(jTable3.getValueAt(jTable3.getSelectedRow(),2)).toString();
-              String Salon=(jTable3.getValueAt(jTable3.getSelectedRow(),1)).toString();
+              String edificio=(jTable3.getValueAt(jTable3.getSelectedRow(),3)).toString();
+              String Salon=(jTable3.getValueAt(jTable3.getSelectedRow(),2)).toString();
               jLabel37.setText(Salon+" - "+edificio+"  "); 
         }
       
@@ -1344,11 +1351,13 @@ public class Frame_Main extends javax.swing.JFrame {
     private void jCalendar2PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jCalendar2PropertyChange
         // TODO add your handling code here:
         if(jTable3.getSelectedRow()!=-1 && jTable3.getSelectedColumn()!=-1){
-            int id_espacio=Integer.valueOf(jTable3.getValueAt(jTable3.getSelectedRow(),5).toString());
+            int id_espacio=Integer.valueOf(jTable3.getValueAt(jTable3.getSelectedRow(),0).toString());
             //jCalendar2.get
             String fecha=obtener_fecha();
+            int day=obt_diaSemana();
+            System.out.println(day);
             try {
-                llenarTabla_espacios(id_espacio,fecha);
+                llenarTabla_espacios(id_espacio,fecha,day);
             } catch (SQLException ex) {
                 Logger.getLogger(Frame_Main.class.getName()).log(Level.SEVERE, null, ex);
             }

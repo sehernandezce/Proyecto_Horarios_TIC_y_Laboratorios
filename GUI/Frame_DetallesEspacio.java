@@ -134,6 +134,7 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
         jLabel9.setText("Información del espacio:");
         paneldetallesInventario.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 10, -1, -1));
 
+        jTable1.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(jTable1);
 
         paneldetallesInventario.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 310, 700, 230));
@@ -240,10 +241,12 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
         }else{
              jTextNombreEspacio2.setText(esp.getNombre_espacio());
         }
-       
-        //jComboBox1.addItem(esp.getNombre_encargado());
+        jTextField2.setText(esp.getNombre_tipoespacio());
+        jTextCorreoEncargado.setText(esp.getCorreo_encargado());
+        jTextCorreoEncargado1.setText(esp.getNombre_encargado());        
         jTextNumeroSalon1.setText(esp.getNum_Espacio());
         jTextNombreEdificio.setText(esp.getNombre_edificio());
+        jTextNumeroEdificio3.setText(String.valueOf(esp.getNum_edificio()));     
         jTextCapacidad.setText(String.valueOf(esp.getCapacidad()));       
         
         if(esp.getEstado()){

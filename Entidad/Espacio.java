@@ -5,11 +5,31 @@ public class Espacio {
     private int id_espacio;
     private String nombre_espacio;
     private String num_Espacio;
-    private String nombre_edificio;     
+    private String nombre_edificio;
+    private int num_edificio;
     private String nombre_encargado;  
+    private String correo_encargado;
     private Boolean estado;  
     private int capacidad;
     private String nombre_tipoespacio;
+    
+    public String getCorreo_encargado() {
+        return correo_encargado;
+    }
+
+    public void setCorreo_encargado(String correo_encargado) {
+        this.correo_encargado = correo_encargado;
+    }
+
+    
+    public int getNum_edificio() {
+        return num_edificio;
+    }
+
+    public void setNum_edificio(int num_edificio) {
+        this.num_edificio = num_edificio;
+    }
+   
 
     public int getId_espacio() {
         return id_espacio;

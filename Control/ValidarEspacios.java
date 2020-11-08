@@ -21,8 +21,8 @@ public class ValidarEspacios {
        return espacioDao.leer(par, AsignartipEsp(tipoEspacio));
        }
      
-     public String[][] llenarMatriz_horas(int id_espacio,String fecha,Usuario par) throws SQLException{
-       return espacioDao.leerHoras_espacios(par, id_espacio, fecha);
+     public String[][] llenarMatriz_horas(int id_espacio,String fecha,Usuario par, int day) throws SQLException{
+       return espacioDao.leerHoras_espacios(par, id_espacio, fecha,day);
        }
     
     private int AsignartipEsp(String tipoEspacio){

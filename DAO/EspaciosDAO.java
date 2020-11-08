@@ -220,66 +220,62 @@ public class EspaciosDAO {
 
     }
      
-   
-     
-     
-//    public boolean actualizar(Usuario par, Espacio espacio) {
-//        Connection connection = null;
-//        Statement statement = null;
-//        int resultSet;
-//        try {
-//            resultSet = -1;
-//            seleccionarUser(par.getTipoUsuario());
-//            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
-//            statement = connection.createStatement();            
-//            
-//            resultSet = statement.executeUpdate("UPDATE ESPACIOS "
-//                    + "SET id_edificio = '" + espacio.getId_edificio() + "' , "
-//                    + "id_tipoEspacio = '" + espacio.getTipoEspacio() + "' , "
-//                    + "id_persona = '" + espacio.getId_encargado() + "' , "
-//                    + "nombre_Espacio = '" + espacio.getNombreEspacio()+ "' , "
-//                    + "num_espacio = '" + espacio.getNumEspacio()+ "' , "
-//                    + "activo = " + espacio.getActivo()+ " , " 
-//                    + "capacidad = '" + espacio.getCapacidad()
-//                    + "' WHERE id_espacio='" + espacio.getId_Espacios()+ "';");
-//            return resultSet > 0;
-//        } catch (SQLException ex) {
-//            System.out.println("Error en SQL" + ex);
-//            return false;
-//        } finally {
-//            try {
-//                statement.close();
-//                connection.close();
-//
-//            } catch (SQLException ex) {
-//
-//            }
-//        }
-//    }
+    public int ActualizarinfoEspacio(Usuario par, Espacio Espacio) { // buscar todos los lugares conrespecto a un tipo de espacio
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        try {
+            resultSet = null;
+            seleccionarUser(par.getTipoUsuario());
+            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
+            statement = connection.createStatement();
+            DB_USER= null;
+            DB_PASSWD=null;
+            System.out.println("Select actualizarEspacio('" +par.getNombreusuarioInstitucional()+"',"
+                    +Espacio.getId_espacio()+","
+                    +Espacio.getNombre_tipoespacio()+",'"
+                    +Espacio.getNombre_espacio()+"',"
+                    +Espacio.getNum_Espacio()+","
+                    +Espacio.getNum_edificio()+",'"
+                    +Espacio.getNombre_edificio()+"','"
+                    +Espacio.getCorreo_encargado()+"','"
+                    +Espacio.getNombre_encargado()+"',"
+                    +Espacio.getEstado()+","
+                    +Espacio.getCapacidad()       
+                    +")");
+            resultSet = statement.executeQuery("Select actualizarEspacio('" +par.getNombreusuarioInstitucional()+"',"
+                    +Espacio.getId_espacio()+","
+                    +Espacio.getNombre_tipoespacio()+",'"
+                    +Espacio.getNombre_espacio()+"',"
+                    +Espacio.getNum_Espacio()+","
+                    +Espacio.getNum_edificio()+",'"
+                    +Espacio.getNombre_edificio()+"','"
+                    +Espacio.getCorreo_encargado()+"','"
+                    +Espacio.getNombre_encargado()+"',"
+                    +Espacio.getEstado()+","
+                    +Espacio.getCapacidad()       
+                    +")");
+            if(resultSet.next()){               
+                return Integer.valueOf(resultSet.getString(1));
+            }else{
+                return -4;
+            }
+        } catch (Exception e) {
+            System.out.println("Error en SQL" + e);
+            return -4;
+        } finally {
+            try {
+                resultSet.close();
+                statement.close();
+                connection.close();
+                //return null;
+            } catch (Exception ex) {
 
-//    public boolean eliminar(Usuario object) {
-//        Connection connection = null;
-//        Statement statement = null;
-//        int resultSet;
-//        try {
-//            resultSet=-1;
-//            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
-//            statement = connection.createStatement();
-//            resultSet = statement.executeUpdate("DELETE FROM usuarios "
-//                    + "WHERE NOMBRE='" + object.getNombre()
-//                    + "' AND PASSWORD='" + object.getPassword() + "';");
-//            return resultSet > 0;
-//        } catch (SQLException ex) {
-//            System.out.println("Error en SQL" + ex);
-//            return false;
-//        } finally {
-//            try {
-//                statement.close();
-//                connection.close();
-//
-//            } catch (SQLException ex) {
-//
-//            }
-//        }
-//    }
+            }
+        }
+
+    }
+     
+     
+
 }

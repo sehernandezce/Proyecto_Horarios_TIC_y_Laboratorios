@@ -43,5 +43,21 @@ public class ValidarEspacios {
     public Espacio BuscarInfoEspacio(Usuario par, int idEspacio){
         return espacioDao.leerunEspacio(par, idEspacio);
     }
-
+    
+    public int ValidarInfoEspacio(Usuario par, Espacio esp){
+        
+        if(par.getTipoUsuario()!=2){
+            return -5;
+        }else if (!verificarLongitudName(esp.getCorreo_encargado())){
+            return -6;
+        }else{
+            esp.setNombre_tipoespacio(String.valueOf(AsignartipEsp(esp.getNombre_tipoespacio())));
+            return espacioDao.ActualizarinfoEspacio(par,esp); 
+        }     
+        
+    }
+    
+      private boolean verificarLongitudName (String nombre){
+        return (nombre.length()>4 && nombre.length() <=20);        
+    }
 }

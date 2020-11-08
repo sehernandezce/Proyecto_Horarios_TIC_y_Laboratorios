@@ -558,6 +558,11 @@ public class Frame_Main extends javax.swing.JFrame {
         jPanel2.setMinimumSize(new java.awt.Dimension(854, 520));
         jPanel2.setPreferredSize(new java.awt.Dimension(854, 520));
 
+        jTable3 = new javax.swing.JTable(){
+            public boolean isCellEditable (int rowIndex, int colIndex){
+                return false;
+            }
+        };
         jTable3.setBackground(new java.awt.Color(204, 204, 204));
         jTable3.getTableHeader().setReorderingAllowed(false);
         jTable3.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -567,6 +572,11 @@ public class Frame_Main extends javax.swing.JFrame {
         });
         jScrollPane3.setViewportView(jTable3);
 
+        jTable4 = new javax.swing.JTable(){
+            public boolean isCellEditable (int rowIndex, int colIndex){
+                return false;
+            }
+        };
         jTable4.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -689,9 +699,7 @@ public class Frame_Main extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(jLabel37, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jCalendar2, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jButton3)
-                        .addGap(15, 15, 15)))
+                    .addComponent(jButton3))
                 .addGap(32, 32, 32))
         );
         jPanel2Layout.setVerticalGroup(

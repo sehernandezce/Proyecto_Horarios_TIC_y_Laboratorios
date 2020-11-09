@@ -1105,7 +1105,7 @@ public class Frame_Main extends javax.swing.JFrame {
     
     
            
-    private void solicitar_Espacio(String Espacio) throws SQLException{ //Para mostrar la informacion en el panel de solicitar espacios     
+    public void solicitar_Espacio(String Espacio) throws SQLException{ //Para mostrar la informacion en el panel de solicitar espacios     
              ocultar_todosPaneles();
              jLabel36.setText(Espacio);
              jLabel37.setText("");
@@ -1116,8 +1116,7 @@ public class Frame_Main extends javax.swing.JFrame {
          new Object [][]{}, new String [] {"Horas ocupadas"}) 
                          );
              llenarTabla(Espacio);
-             Solicitar_Espacio.setVisible(true); 
-        
+             Solicitar_Espacio.setVisible(true);         
     }
     
     

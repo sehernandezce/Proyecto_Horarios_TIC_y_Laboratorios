@@ -231,18 +231,7 @@ public class EspaciosDAO {
             statement = connection.createStatement();
             DB_USER= null;
             DB_PASSWD=null;
-            System.out.println("Select actualizarEspacio('" +par.getNombreusuarioInstitucional()+"',"
-                    +Espacio.getId_espacio()+","
-                    +Espacio.getNombre_tipoespacio()+",'"
-                    +Espacio.getNombre_espacio()+"',"
-                    +Espacio.getNum_Espacio()+","
-                    +Espacio.getNum_edificio()+",'"
-                    +Espacio.getNombre_edificio()+"','"
-                    +Espacio.getCorreo_encargado()+"','"
-                    +Espacio.getNombre_encargado()+"',"
-                    +Espacio.getEstado()+","
-                    +Espacio.getCapacidad()       
-                    +")");
+            
             resultSet = statement.executeQuery("Select actualizarEspacio('" +par.getNombreusuarioInstitucional()+"',"
                     +Espacio.getId_espacio()+","
                     +Espacio.getNombre_tipoespacio()+",'"

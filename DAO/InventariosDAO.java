@@ -110,7 +110,7 @@ public class InventariosDAO {
        }
             
         
-    public boolean actualizar(Usuario par, ArrayList<Inventario>  inventarioList) {//Modifica el invetario que ya existe mas no agrega nuevos
+    public boolean actualizar(Usuario par, ArrayList<Inventario>  inventarioList, String id_espacio) {//Modifica el invetario que ya existe mas no agrega nuevos
         Connection connection = null;
         Statement statement = null;
         int resultSet;
@@ -120,14 +120,17 @@ public class InventariosDAO {
             connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
             statement = connection.createStatement();            
             
-            for(int i=0; i<inventarioList.size(); i++){
-                resultSet = statement.executeUpdate("UPDATE INVENTARIOS "
-                    + "SET ID_ESPACIO = '" + inventarioList.get(i).getId_Espacio() + "' , "
-                    + "NOMBREATRIBUTO = '" + inventarioList.get(i).getNombreAtributo()+ "' , "
-                    + "DESCRIPCION = '" + inventarioList.get(i).getDescripcion()
-                    + "' WHERE id_inventario='" + inventarioList.get(i).getId_inventario()+ "';");
-            }     
+          
             
+            for(int i=0; i<inventarioList.size(); i++){
+                 
+                resultSet = statement.executeUpdate("CALL Actualizar_Agregar_Inv ( "
+                    +id_espacio+",'"
+                    + par.getNombreusuarioInstitucional()+"',"
+                    +inventarioList.get(i).getId_inventario()+",'"
+                    +inventarioList.get(i).getNombreAtributo()+"','"
+                    +inventarioList.get(i).getDescripcion() +"');");
+            }     
            return resultSet > 0;
         } catch (SQLException ex) {
             System.out.println("Error en SQL" + ex);
@@ -143,30 +146,33 @@ public class InventariosDAO {
         }
     }
 
-//    public boolean eliminar(Usuario object) {falta hacerlo
-//        Connection connection = null;
-//        Statement statement = null;
-//        int resultSet;
-//        try {
-//            resultSet=-1;
-//            seleccionarUser(object.getTipoUsuario());
-//            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
-//            statement = connection.createStatement();
-//            resultSet = statement.executeUpdate("DELETE FROM usuarios "
-//                    + "WHERE NOMBRE='" + object.getNombre()
-//                    + "' AND PASSWORD='" + object.getPassword() + "';");
-//            return resultSet > 0;
-//        } catch (SQLException ex) {
-//            System.out.println("Error en SQL" + ex);
-//            return false;
-//        } finally {
-//            try {
-//                statement.close();
-//                connection.close();
-//
-//            } catch (SQLException ex) {
-//
-//            }
-//        }
-//    }
+    public boolean eliminar(Usuario object, ArrayList<String> idinventarioList) {
+        Connection connection = null;
+        Statement statement = null;
+        int resultSet;
+        try {
+            resultSet=-1;
+            seleccionarUser(object.getTipoUsuario());
+            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
+            statement = connection.createStatement();
+            
+             for(int i=0; i<idinventarioList.size(); i++){
+            resultSet = statement.executeUpdate("DELETE FROM INVENTARIOS "
+                    + "WHERE ID_INVENTARIO="+idinventarioList.get(i)+ ";");
+            
+             }
+            return resultSet > 0;
+        } catch (SQLException ex) {
+            System.out.println("Error en SQL" + ex);
+            return false;
+        } finally {
+            try {
+                statement.close();
+                connection.close();
+
+            } catch (SQLException ex) {
+
+            }
+        }
+    }
 }

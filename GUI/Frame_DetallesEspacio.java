@@ -3,10 +3,13 @@ package GUI;
 import Control.ValidarEspacios;
 import Control.ValidarInventario;
 import Entidad.Espacio;
+import Entidad.Inventario;
 import Entidad.Usuario;
 import java.awt.Color;
 import java.sql.SQLException;
-import javax.swing.JLabel;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
@@ -16,8 +19,11 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
 
     private int x,y;
     private Usuario usuario;
-    Frame_Main fraim;
-    private ValidarInventario validarInventario=new ValidarInventario();
+    private Frame_Main fraim;
+    private String verifinv="0";
+    private ValidarInventario validarInventario=new ValidarInventario();    
+    private final ArrayList<String> invDelete = new ArrayList<String>();
+    
     public Frame_DetallesEspacio() {
         initComponents();
         this.setLocationRelativeTo(null);  
@@ -169,9 +175,19 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
         paneldetallesInventario.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 310, 700, 230));
 
         jLabelAñadir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/anadir.png"))); // NOI18N
+        jLabelAñadir.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabelAñadirMouseClicked(evt);
+            }
+        });
         paneldetallesInventario.add(jLabelAñadir, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 270, -1, -1));
 
         jLabelEliminar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cancelar.png"))); // NOI18N
+        jLabelEliminar1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabelEliminar1MouseClicked(evt);
+            }
+        });
         paneldetallesInventario.add(jLabelEliminar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 270, -1, -1));
 
         jButtonEditar.setBackground(new java.awt.Color(204, 204, 204));
@@ -341,8 +357,13 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
         }else{
              jRadioBActivo.setSelected(false);
             jRadioBInactivo.setSelected(true);
-        }
-       Object[][] tabla=validarInventario.llenarMatrizInv(esp.getId_espacio(), u);        
+        }          
+       llenartableInv(esp.getId_espacio());
+    }
+    
+    private void llenartableInv(int idesp) throws SQLException{
+        
+        Object[][] tabla=validarInventario.llenarMatrizInv(idesp, usuario);   
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
          tabla, new String [] {"Id inventario", "Nombre", "Descripción" }){                              
                       } 
@@ -381,40 +402,101 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
         return espacio;
     }
     
-    private void guardar(){
+   
+    private void guardar() throws SQLException{
          boolean verif=false;
         try{
             Integer.valueOf(jTextNumeroEdificio3.getText());
-            Integer.valueOf(jTextCapacidad.getText());
+            Integer.valueOf(jTextNumeroSalon1.getText());
             Integer.valueOf(jTextCapacidad.getText());
             verif=true;
         }catch(Exception e){
              JOptionPane.showMessageDialog(null, "Ha ingresado un valor no valido",  "Valor no valido", JOptionPane.INFORMATION_MESSAGE);
         }
-        if(verif && !jTextCorreoEncargado.getText().equals(usuario.getNombreusuarioInstitucional())){
+        ArrayList<Inventario> inventario=saveInv();
+        
+        if(verif && !jTextCorreoEncargado.getText().equals(usuario.getNombreusuarioInstitucional())&& !verifinv.equals("-7")){
             ValidarEspacios validarEspacios = new ValidarEspacios ();
-             int n= validarEspacios.ValidarInfoEspacio(usuario, capturarE());
+             int n= validarEspacios.ValidarInfoEspacio(usuario, capturarE()); 
              if(n==1){
-               JOptionPane.showMessageDialog(null, "Se han actualizado los datos correctamente",  "Guardado", JOptionPane.INFORMATION_MESSAGE);  
+                     
+                     if(validarInventario.ValidarInfoInventario(usuario, jTextField2.getText(),inventario,invDelete)){
+                        JOptionPane.showMessageDialog(null, "Se han actualizado los datos correctamente",  "Guardado", JOptionPane.INFORMATION_MESSAGE);    
+                        invDelete.clear();
+                         Espacio espacio = new Espacio();
+                        espacio = validarEspacios.BuscarInfoEspacio(usuario, Integer.valueOf(jTextField2.getText()));
+                        llenarFrame(usuario, espacio, fraim);
+                         try {
+                            fraim.solicitar_Espacio(jTextField3.getText());
+                        } catch (SQLException ex) {
+                            Logger.getLogger(Frame_DetallesEspacio.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                     }else{
+                          JOptionPane.showMessageDialog(null, "Se ha actualizado los datos del espacio. Ha ocurrido un error al actualizar el inventario",  "Error", JOptionPane.INFORMATION_MESSAGE);  
+                     }                     
+                               
+                 
               }else if(n==-1 || n==-5){
                  JOptionPane.showMessageDialog(null, "El usuario "+usuario.getNombreusuarioInstitucional()+" no tiene permisos para modificar los espacios" ,  "Accion invalida", JOptionPane.INFORMATION_MESSAGE);   
               }else if(n==-2){
                  JOptionPane.showMessageDialog(null, "Ya existe un espacio con el edificio y salon : "+ jTextNumeroEdificio3.getText() +" " + jTextNumeroSalon1.getText(),  "Accion invalida", JOptionPane.INFORMATION_MESSAGE);   
               }else if(n==-3){
-                 JOptionPane.showMessageDialog(null, "El usuario "+jTextCorreoEncargado.getText() +" no existe" ,  "Accion invalida", JOptionPane.INFORMATION_MESSAGE);   
+                 JOptionPane.showMessageDialog(null, "El usuario "+jTextCorreoEncargado.getText() +" no es valido" ,  "Accion invalida", JOptionPane.INFORMATION_MESSAGE);   
               }else if(n==-4){
                  JOptionPane.showMessageDialog(null, "Ha ocurrido un error al intentar conectar con el servidor" ,  "Error", JOptionPane.INFORMATION_MESSAGE);   
               }else if(n==-6){
                  JOptionPane.showMessageDialog(null, "Usuario de encargado invalido" ,  "Accion invalida", JOptionPane.INFORMATION_MESSAGE);   
+              }else if(n==-8){
+                 JOptionPane.showMessageDialog(null, "Nombre de espacio invalido" ,  "Accion invalida", JOptionPane.INFORMATION_MESSAGE);   
               }         
+        }else{
+            if(jTextCorreoEncargado.getText().equals(usuario.getNombreusuarioInstitucional())){
+               JOptionPane.showMessageDialog(null, "No es posible asignar el rol coordinador como encargado" ,  "Accion invalida", JOptionPane.INFORMATION_MESSAGE);      
+            }            
+            if(verifinv.equals("-7")){
+                 verifinv="0";
+              JOptionPane.showMessageDialog(null, "Por favor, ingrese el nombre de atributo a cada item del inventario" ,  "Accion invalida", JOptionPane.INFORMATION_MESSAGE);        
+            }
         }
      }
+    
+    private void deletInv(){
+        if(jTable1.getSelectedRow()!=-1 && jTable1.getSelectedColumn()!=-1){
+           if(!jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString().equals("")){
+               invDelete.add(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString());
+           }
+       }
+    }
+    
+    private ArrayList<Inventario> saveInv(){
+        ArrayList<Inventario> inventario = new ArrayList<Inventario>();
+        for(int i=0; i<jTable1.getRowCount(); i++){
+            Inventario e=new Inventario ();
+            if(jTable1.getValueAt(i, 1).toString().equals("")){               
+                verifinv="-7";
+                break;
+            }
+            else if(!jTable1.getValueAt(i, 1).toString().equals("")){
+                if(jTable1.getValueAt(i, 0).toString().equals("")){
+                     e.setId_inventario("-1");
+                }else{
+                   e.setId_inventario(jTable1.getValueAt(i, 0).toString()); 
+                }               
+                e.setNombreAtributo(jTable1.getValueAt(i, 1).toString());
+                e.setDescripcion(jTable1.getValueAt(i, 2).toString());
+                inventario.add(e);               
+            }            
+         }
+                 
+        return inventario;
+    }
+    
     private void jlClose1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlClose1MouseClicked
         int dialog = JOptionPane.YES_NO_OPTION;
         int result = JOptionPane.showConfirmDialog(null, "¿Desea cerrar el esta ventana?","Exit",dialog);
         
         if(result == 0){
-            this.fraim.enable(true);
+            this.fraim.enable(true);            
             this.dispose();
             
         }
@@ -447,9 +529,27 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonEditarActionPerformed
 
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
-        guardar();
+        try {
+            guardar();
+        } catch (SQLException ex) {
+            Logger.getLogger(Frame_DetallesEspacio.class.getName()).log(Level.SEVERE, null, ex);
+        }
        
     }//GEN-LAST:event_jButtonGuardarActionPerformed
+
+    private void jLabelAñadirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelAñadirMouseClicked
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.addRow(new Object[]{"", "", ""});
+    }//GEN-LAST:event_jLabelAñadirMouseClicked
+
+    private void jLabelEliminar1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelEliminar1MouseClicked
+       if(jTable1.getSelectedRow()!=-1 && jTable1.getSelectedColumn()!=-1){
+            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+             deletInv();
+            model.removeRow(jTable1.getSelectedRow());           
+       }
+              
+    }//GEN-LAST:event_jLabelEliminar1MouseClicked
 
     /**
      * @param args the command line arguments

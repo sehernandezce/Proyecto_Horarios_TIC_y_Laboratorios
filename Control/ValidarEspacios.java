@@ -48,6 +48,8 @@ public class ValidarEspacios {
         
         if(par.getTipoUsuario()!=2){
             return -5;
+        }else if(!verificarLongitudName(esp.getNombre_espacio())){
+            return -8;
         }else if (!verificarLongitudName(esp.getCorreo_encargado())){
             return -6;
         }else{

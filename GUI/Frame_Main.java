@@ -19,13 +19,16 @@ public class Frame_Main extends javax.swing.JFrame {
     private int x,y;
     private Usuario usuario;
     private ValidarEspacios  validarEspacios = new  ValidarEspacios ();
+    private String idEspacioSeleccionado;
+    private boolean tablaTocada = false;
+    private EspaciosDAO daoDeEspacios = new EspaciosDAO();
     
     public Frame_Main() {
         initComponents();
         this.setLocationRelativeTo(null);  
          ocultar_todosPaneles();
          Paneles_Menu.setVisible(false);         
-             
+         
     }
 
     
@@ -108,6 +111,7 @@ public class Frame_Main extends javax.swing.JFrame {
         jLabel36 = new javax.swing.JLabel();
         jLabel37 = new javax.swing.JLabel();
         jTextMotivoSolicitud = new javax.swing.JTextField();
+        jButton9 = new javax.swing.JButton();
         Bienvenida = new javax.swing.JPanel();
         MensajeBienvenida = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -642,11 +646,20 @@ public class Frame_Main extends javax.swing.JFrame {
 
         jTextMotivoSolicitud.setEnabled(false);
 
+        jButton9.setText("Borrar El Espacio Seleccionado");
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton9ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSeparator12)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(jSeparator12)
+                .addGap(89, 89, 89))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(31, 31, 31)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 795, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -701,6 +714,10 @@ public class Frame_Main extends javax.swing.JFrame {
                         .addComponent(jCalendar2, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jButton3))
                 .addGap(32, 32, 32))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton9)
+                .addGap(164, 164, 164))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -709,7 +726,9 @@ public class Frame_Main extends javax.swing.JFrame {
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton9)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -1202,6 +1221,9 @@ public class Frame_Main extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(Frame_Main.class.getName()).log(Level.SEVERE, null, ex);
         }
+        if(usuario.getTipoUsuario() != 2){  //Si el usuario no es coordinador, deshabilitar el botón para eliminar espacios.
+            this.jButton9.setVisible(false);
+        }
     }//GEN-LAST:event_jLabel2MousePressed
 
     private void jlClose1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlClose1MouseClicked
@@ -1278,6 +1300,9 @@ public class Frame_Main extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(Frame_Main.class.getName()).log(Level.SEVERE, null, ex);
         }
+        if(usuario.getTipoUsuario() != 2){  //Si el usuario no es coordinador, deshabilitar el botón para eliminar espacios.
+            this.jButton9.setVisible(false);
+        }
     }//GEN-LAST:event_jLabel3MousePressed
 
     private void jLabel4MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MousePressed
@@ -1286,6 +1311,9 @@ public class Frame_Main extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(Frame_Main.class.getName()).log(Level.SEVERE, null, ex);
         }
+        if(usuario.getTipoUsuario() != 2){  //Si el usuario no es coordinador, deshabilitar el botón para eliminar espacios.
+            this.jButton9.setVisible(false);
+        }
     }//GEN-LAST:event_jLabel4MousePressed
 
     private void jLabel5MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MousePressed
@@ -1293,6 +1321,9 @@ public class Frame_Main extends javax.swing.JFrame {
             solicitar_Espacio("Auditorios");
         } catch (SQLException ex) {
             Logger.getLogger(Frame_Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if(usuario.getTipoUsuario() != 2){  //Si el usuario no es coordinador, deshabilitar el botón para eliminar espacios.
+            this.jButton9.setVisible(false);
         }
     }//GEN-LAST:event_jLabel5MousePressed
 
@@ -1338,18 +1369,21 @@ public class Frame_Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel8MousePressed
 
     private void jLabel18MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel18MousePressed
+        tablaTocada = false;
         ocultar_todosPaneles();
         Bienvenida.setVisible(true);
     }//GEN-LAST:event_jLabel18MousePressed
 
     private void jTable3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable3MouseClicked
+        tablaTocada = true;
         if(jTable3.getSelectedRow()!=-1 && jTable3.getSelectedColumn()!=-1){
             if(jTable3.getSelectedColumn()==6){
                      verDetalles(jTable3.getValueAt(jTable3.getSelectedRow(),0));
              }
               String edificio=(jTable3.getValueAt(jTable3.getSelectedRow(),3)).toString();
               String Salon=(jTable3.getValueAt(jTable3.getSelectedRow(),2)).toString();
-              jLabel37.setText(Salon+" - "+edificio+"  "); 
+              jLabel37.setText(Salon+" - "+edificio+"  ");
+              idEspacioSeleccionado = (jTable3.getValueAt(jTable3.getSelectedRow(), 0)).toString();
         }
       
       
@@ -1370,6 +1404,15 @@ public class Frame_Main extends javax.swing.JFrame {
             }
         } 
     }//GEN-LAST:event_jCalendar2PropertyChange
+
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        if(!tablaTocada){
+            JOptionPane.showMessageDialog(null, "No ha seleccionado un espacio para borrar.", "Error", JOptionPane.INFORMATION_MESSAGE);
+        }else{
+            daoDeEspacios.borrarEspacio(idEspacioSeleccionado);
+            JOptionPane.showMessageDialog(null, "El espacio fue borrado.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_jButton9ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1428,6 +1471,7 @@ public class Frame_Main extends javax.swing.JFrame {
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
+    private javax.swing.JButton jButton9;
     private com.toedter.calendar.JCalendar jCalendar2;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JCheckBox jCheckBox2;

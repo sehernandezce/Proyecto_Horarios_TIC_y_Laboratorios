@@ -1158,7 +1158,12 @@ public class Frame_Main extends javax.swing.JFrame {
     private void administrar_Solicitudes(){ //Para mostrar las solicitudes en el administrador
         ocultar_todosPaneles();
        Administrar_Solicitudes.setVisible(true); 
-        
+       try {
+            llenarTabla_solicitudes("Todos");
+        } catch (SQLException ex) {
+            Logger.getLogger(Frame_Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       Tipo_estados.clearSelection();
     }
     
      private void ver_Estadisticas(){ //Para ver estadisticas

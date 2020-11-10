@@ -1,6 +1,7 @@
 package GUI;
 
 import Control.ValidarEspacios;
+import Control.Validar_administrar_solicitud;
 import DAO.EspaciosDAO;
 import Entidad.Espacio;
 import Entidad.Usuario;
@@ -19,6 +20,7 @@ public class Frame_Main extends javax.swing.JFrame {
     private int x,y;
     private Usuario usuario;
     private ValidarEspacios  validarEspacios = new  ValidarEspacios ();
+    private Validar_administrar_solicitud validarSolicitudes=new Validar_administrar_solicitud();
     
     public Frame_Main() {
         initComponents();
@@ -33,6 +35,7 @@ public class Frame_Main extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        Tipo_estados = new javax.swing.ButtonGroup();
         panelCerrar = new javax.swing.JPanel();
         jlClose1 = new javax.swing.JLabel();
         jlMinimize1 = new javax.swing.JLabel();
@@ -125,10 +128,10 @@ public class Frame_Main extends javax.swing.JFrame {
         jTextField3 = new javax.swing.JTextField();
         jButton6 = new javax.swing.JButton();
         jButton10 = new javax.swing.JButton();
-        jCheckBox1 = new javax.swing.JCheckBox();
-        jCheckBox2 = new javax.swing.JCheckBox();
-        jCheckBox4 = new javax.swing.JCheckBox();
-        jCheckBox5 = new javax.swing.JCheckBox();
+        Jcbox_espera = new javax.swing.JCheckBox();
+        Jcbox_aceptada = new javax.swing.JCheckBox();
+        Jcbox_cancelada = new javax.swing.JCheckBox();
+        Jcbox_rechazada = new javax.swing.JCheckBox();
         jComboBox1 = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
         Estadisticas = new javax.swing.JPanel();
@@ -808,13 +811,10 @@ public class Frame_Main extends javax.swing.JFrame {
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "ID_SOLICITUD", "USUARIOINTITUCIONAL", "FECHA_INICIO", "FECHA_TRMINA", "NOMBRE_ESPACIO", "ID_EDIFICIO", "ID_ESTADO", "FECHA_SOLICITUD"
             }
         ));
         jScrollPane5.setViewportView(jTable2);
@@ -856,15 +856,44 @@ public class Frame_Main extends javax.swing.JFrame {
 
         jButton10.setText("Cancelar");
 
-        jCheckBox1.setText("En espera");
+        Tipo_estados.add(Jcbox_espera);
+        Jcbox_espera.setText("En espera");
+        Jcbox_espera.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Jcbox_esperaActionPerformed(evt);
+            }
+        });
 
-        jCheckBox2.setText("Aceptada");
+        Tipo_estados.add(Jcbox_aceptada);
+        Jcbox_aceptada.setText("Aceptada");
+        Jcbox_aceptada.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Jcbox_aceptadaActionPerformed(evt);
+            }
+        });
 
-        jCheckBox4.setText("Cancelada");
+        Tipo_estados.add(Jcbox_cancelada);
+        Jcbox_cancelada.setText("Cancelada");
+        Jcbox_cancelada.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Jcbox_canceladaActionPerformed(evt);
+            }
+        });
 
-        jCheckBox5.setText("Rechazada");
+        Tipo_estados.add(Jcbox_rechazada);
+        Jcbox_rechazada.setText("Rechazada");
+        Jcbox_rechazada.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Jcbox_rechazadaActionPerformed(evt);
+            }
+        });
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Titulo 1", "Titulo 2", "Item 3", "Item 4" }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
 
         jLabel9.setText("Filtro:");
 
@@ -889,13 +918,13 @@ public class Frame_Main extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, Administrar_SolicitudesLayout.createSequentialGroup()
                         .addComponent(jLabel31)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jCheckBox5)
+                        .addComponent(Jcbox_rechazada)
                         .addGap(15, 15, 15)
-                        .addComponent(jCheckBox4)
+                        .addComponent(Jcbox_cancelada)
                         .addGap(18, 18, 18)
-                        .addComponent(jCheckBox2)
+                        .addComponent(Jcbox_aceptada)
                         .addGap(18, 18, 18)
-                        .addComponent(jCheckBox1))
+                        .addComponent(Jcbox_espera))
                     .addGroup(Administrar_SolicitudesLayout.createSequentialGroup()
                         .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -930,10 +959,10 @@ public class Frame_Main extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jLabel31))
                     .addGroup(Administrar_SolicitudesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jCheckBox1)
-                        .addComponent(jCheckBox2)
-                        .addComponent(jCheckBox4)
-                        .addComponent(jCheckBox5)))
+                        .addComponent(Jcbox_espera)
+                        .addComponent(Jcbox_aceptada)
+                        .addComponent(Jcbox_cancelada)
+                        .addComponent(Jcbox_rechazada)))
                 .addGap(6, 6, 6)
                 .addComponent(jLabel32)
                 .addGroup(Administrar_SolicitudesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1116,7 +1145,7 @@ public class Frame_Main extends javax.swing.JFrame {
          new Object [][]{}, new String [] {"Horas ocupadas"}) 
                          );
              llenarTabla(Espacio);
-             Solicitar_Espacio.setVisible(true);         
+             Solicitar_Espacio.setVisible(true);  
     }
     
     
@@ -1156,7 +1185,14 @@ public class Frame_Main extends javax.swing.JFrame {
         tabla, new String [] {"Horas ocupadas"}));
     }
       
-      
+       private void llenarTabla_solicitudes(String tipo_e) throws SQLException{//modelo tabla espacios
+        Object[][] tabla= validarSolicitudes.llenarMatriz(usuario, tipo_e);
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        tabla, new String [] {
+        "ID_SOLICITUD", "USUARIOINTITUCIONAL", "FECHA_INICIO", "FECHA_TRMINA", "NOMBRE_ESPACIO", "ID_EDIFICIO", "ID_ESTADO", "FECHA_SOLICITUD"
+            }
+        ));
+    }
       
       private String obtener_fecha(){
           
@@ -1193,6 +1229,23 @@ public class Frame_Main extends javax.swing.JFrame {
           
             // crear el frame
       }
+      /*
+      private String obtener_estado(){
+          if(Jcbox_rechazada.isSelected()){
+              return "Rechazada";
+          }
+          if(Jcbox_cancelada.isSelected()){
+              return "Cancelada";
+          }
+          if(Jcbox_aceptada.isSelected()){
+              return "Aceptada";
+          }
+          if(Jcbox_espera.isSelected()){
+              return "Espera";
+          }
+      return null;    
+      }
+      */
     
     /// Acciones de los botones y labels
     
@@ -1371,6 +1424,42 @@ public class Frame_Main extends javax.swing.JFrame {
         } 
     }//GEN-LAST:event_jCalendar2PropertyChange
 
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void Jcbox_rechazadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Jcbox_rechazadaActionPerformed
+        try {
+            llenarTabla_solicitudes("Rechazada");
+        } catch (SQLException ex) {
+            Logger.getLogger(Frame_Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_Jcbox_rechazadaActionPerformed
+
+    private void Jcbox_esperaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Jcbox_esperaActionPerformed
+       try {
+            llenarTabla_solicitudes("Espera");
+        } catch (SQLException ex) {
+            Logger.getLogger(Frame_Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_Jcbox_esperaActionPerformed
+
+    private void Jcbox_canceladaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Jcbox_canceladaActionPerformed
+        try {
+            llenarTabla_solicitudes("Cancelada");
+        } catch (SQLException ex) {
+            Logger.getLogger(Frame_Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_Jcbox_canceladaActionPerformed
+
+    private void Jcbox_aceptadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Jcbox_aceptadaActionPerformed
+        try {
+            llenarTabla_solicitudes("Aceptada");
+        } catch (SQLException ex) {
+            Logger.getLogger(Frame_Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_Jcbox_aceptadaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1413,12 +1502,17 @@ public class Frame_Main extends javax.swing.JFrame {
     private javax.swing.JPanel Administrar_Solicitudes;
     private javax.swing.JPanel Bienvenida;
     private javax.swing.JPanel Estadisticas;
+    private javax.swing.JCheckBox Jcbox_aceptada;
+    private javax.swing.JCheckBox Jcbox_cancelada;
+    private javax.swing.JCheckBox Jcbox_espera;
+    private javax.swing.JCheckBox Jcbox_rechazada;
     private javax.swing.JLabel LbUsuario;
     private javax.swing.JPanel MensajeBienvenida;
     private javax.swing.JPanel Menu_UC;
     private javax.swing.JPanel Menu_UE;
     private javax.swing.JPanel Paneles_Menu;
     private javax.swing.JPanel Solicitar_Espacio;
+    private javax.swing.ButtonGroup Tipo_estados;
     private javax.swing.JLabel controlPanelTitle;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton2;
@@ -1429,11 +1523,7 @@ public class Frame_Main extends javax.swing.JFrame {
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private com.toedter.calendar.JCalendar jCalendar2;
-    private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JCheckBox jCheckBox2;
     private javax.swing.JCheckBox jCheckBox3;
-    private javax.swing.JCheckBox jCheckBox4;
-    private javax.swing.JCheckBox jCheckBox5;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;

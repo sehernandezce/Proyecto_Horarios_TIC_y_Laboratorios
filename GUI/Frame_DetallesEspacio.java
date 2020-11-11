@@ -448,6 +448,8 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
                  JOptionPane.showMessageDialog(null, "Usuario de encargado invalido" ,  "Accion invalida", JOptionPane.INFORMATION_MESSAGE);   
               }else if(n==-8){
                  JOptionPane.showMessageDialog(null, "Nombre de espacio invalido" ,  "Accion invalida", JOptionPane.INFORMATION_MESSAGE);   
+              }else if(n==-9){
+                  JOptionPane.showMessageDialog(null, "El espacio ha sido eliminado" ,  "Accion invalida", JOptionPane.INFORMATION_MESSAGE);   
               }         
         }else{
             if(jTextCorreoEncargado.getText().equals(usuario.getNombreusuarioInstitucional())){

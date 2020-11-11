@@ -68,7 +68,7 @@ public class InventariosDAO {
             connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
             statement = connection.createStatement();
           
-            resultSet = statement.executeQuery("select ID_INVENTARIO, NOMBREATRIBUTO, DESCRIPCION from INVENTARIOS where ID_ESPACIO=(" +idEspacio+")");
+            resultSet = statement.executeQuery("select ID_INVENTARIO, NOMBREATRIBUTO, DESCRIPCION from INVENTARIOS where VIVO_INV=1 AND ID_ESPACIO=(" +idEspacio+")");
             if(resultSet.next()){
                 return ObtenerData(resultSet);
             }else{
@@ -157,7 +157,7 @@ public class InventariosDAO {
             statement = connection.createStatement();
             
              for(int i=0; i<idinventarioList.size(); i++){
-            resultSet = statement.executeUpdate("DELETE FROM INVENTARIOS "
+            resultSet = statement.executeUpdate("UPDATE FROM INVENTARIOS SET VIVO_INV=FALSE"
                     + "WHERE ID_INVENTARIO="+idinventarioList.get(i)+ ";");
             
              }

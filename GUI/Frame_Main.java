@@ -1467,7 +1467,7 @@ public class Frame_Main extends javax.swing.JFrame {
         if(!tablaTocada){
             JOptionPane.showMessageDialog(null, "No ha seleccionado un espacio para borrar.", "Error", JOptionPane.INFORMATION_MESSAGE);
         }else{
-            daoDeEspacios.borrarEspacio(idEspacioSeleccionado);
+            validarEspacios.borrarEspacio(idEspacioSeleccionado);
             JOptionPane.showMessageDialog(null, "El espacio fue borrado.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_jButton9ActionPerformed

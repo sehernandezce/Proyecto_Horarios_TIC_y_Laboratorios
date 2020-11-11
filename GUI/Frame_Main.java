@@ -4,6 +4,8 @@ import Control.ValidarEspacios;
 import Control.Validar_administrar_solicitud;
 import Entidad.Espacio;
 import Entidad.Usuario;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -11,8 +13,11 @@ import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 public class Frame_Main extends javax.swing.JFrame {
     
@@ -22,6 +27,7 @@ public class Frame_Main extends javax.swing.JFrame {
     private String idEspacioSeleccionado;
     private boolean tablaTocada = false;
     private Validar_administrar_solicitud validarSolicitudes=new Validar_administrar_solicitud();
+    private TableRowSorter TRSFiltro;
     
     public Frame_Main() {
         initComponents();
@@ -127,14 +133,14 @@ public class Frame_Main extends javax.swing.JFrame {
         jTextField2 = new javax.swing.JTextField();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
-        jTextField3 = new javax.swing.JTextField();
+        Buscador = new javax.swing.JTextField();
         jButton6 = new javax.swing.JButton();
         jButton10 = new javax.swing.JButton();
         Jcbox_espera = new javax.swing.JCheckBox();
         Jcbox_aceptada = new javax.swing.JCheckBox();
         Jcbox_cancelada = new javax.swing.JCheckBox();
         Jcbox_rechazada = new javax.swing.JCheckBox();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        Categorias = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
         Estadisticas = new javax.swing.JPanel();
         jLabel33 = new javax.swing.JLabel();
@@ -856,11 +862,16 @@ public class Frame_Main extends javax.swing.JFrame {
 
         jButton5.setText("Rechazar");
 
-        jTextField3.setToolTipText("Buscar por nombre");
-        jTextField3.setName(""); // NOI18N
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+        Buscador.setToolTipText("Buscar por nombre");
+        Buscador.setName(""); // NOI18N
+        Buscador.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
+                BuscadorActionPerformed(evt);
+            }
+        });
+        Buscador.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                BuscadorKeyTyped(evt);
             }
         });
 
@@ -905,10 +916,10 @@ public class Frame_Main extends javax.swing.JFrame {
             }
         });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Titulo 1", "Titulo 2", "Item 3", "Item 4" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        Categorias.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ID_SOLICITUD", "USUARIOINTITUCIONAL", "FECHA_INICIO", "FECHA_TRMINA", "NOMBRE_ESPACIO", "ID_EDIFICIO", "ID_ESTADO", "FECHA_SOLICITUD" }));
+        Categorias.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                CategoriasActionPerformed(evt);
             }
         });
 
@@ -943,13 +954,13 @@ public class Frame_Main extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(Jcbox_espera))
                     .addGroup(Administrar_SolicitudesLayout.createSequentialGroup()
-                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(Buscador, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton6)
                         .addGap(31, 31, 31)
                         .addGroup(Administrar_SolicitudesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel9)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(Categorias, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(141, 141, 141)))
                 .addContainerGap(43, Short.MAX_VALUE))
         );
@@ -966,9 +977,9 @@ public class Frame_Main extends javax.swing.JFrame {
                         .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addGroup(Administrar_SolicitudesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Buscador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton6)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(Categorias, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(19, 19, 19)
                 .addGroup(Administrar_SolicitudesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(Administrar_SolicitudesLayout.createSequentialGroup()
@@ -1251,6 +1262,34 @@ public class Frame_Main extends javax.swing.JFrame {
           
             // crear el frame
       }
+      
+      
+      
+      public int categoria_fil(String categoria){
+          if(categoria.equals("ID_SOLICITUD")){
+              return 1;
+          }else if(categoria.equals("USUARIOINTITUCIONAL")){
+              return 2;
+          }else if(categoria.equals("FECHA_INICIO")){
+              return 3;
+          }else if(categoria.equals("FECHA_TRMINA")){
+              return 4;
+          }else if(categoria.equals("NOMBRE_ESPACIO")){
+              return 5;
+          }else if(categoria.equals("ID_EDIFICIO")){
+              return 6;
+          }else if(categoria.equals("ID_ESTADO")){
+              return 7;
+          }else if(categoria.equals("FECHA_SOLICITUD")){
+              return 8;
+          }else{
+              return 0;
+          }
+   
+      }
+      
+     
+     
       /*
       private String obtener_estado(){
           if(Jcbox_rechazada.isSelected()){
@@ -1400,9 +1439,9 @@ public class Frame_Main extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton4ActionPerformed
 
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+    private void BuscadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscadorActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
+    }//GEN-LAST:event_BuscadorActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
@@ -1470,9 +1509,9 @@ public class Frame_Main extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton9ActionPerformed
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+    private void CategoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CategoriasActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    }//GEN-LAST:event_CategoriasActionPerformed
 
     private void Jcbox_rechazadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Jcbox_rechazadaActionPerformed
         try {
@@ -1483,7 +1522,7 @@ public class Frame_Main extends javax.swing.JFrame {
     }//GEN-LAST:event_Jcbox_rechazadaActionPerformed
 
     private void Jcbox_esperaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Jcbox_esperaActionPerformed
-       try {
+        try {
             llenarTabla_solicitudes("Espera");
         } catch (SQLException ex) {
             Logger.getLogger(Frame_Main.class.getName()).log(Level.SEVERE, null, ex);
@@ -1505,6 +1544,19 @@ public class Frame_Main extends javax.swing.JFrame {
             Logger.getLogger(Frame_Main.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_Jcbox_aceptadaActionPerformed
+
+    private void BuscadorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BuscadorKeyTyped
+        String categoria=(String)Categorias.getSelectedItem();
+        System.out.println(categoria_fil(categoria));
+        Buscador.addKeyListener(new KeyAdapter(){
+            @Override
+            public void keyReleased(KeyEvent ke) {
+                TRSFiltro.setRowFilter(RowFilter.regexFilter("(?i)"+Buscador.getText(), (categoria_fil(categoria)-1)));
+            }
+        });
+        TRSFiltro = new TableRowSorter(jTable2.getModel());
+        jTable2.setRowSorter(TRSFiltro);
+    }//GEN-LAST:event_BuscadorKeyTyped
 
     /**
      * @param args the command line arguments
@@ -1547,6 +1599,8 @@ public class Frame_Main extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Administrar_Solicitudes;
     private javax.swing.JPanel Bienvenida;
+    private javax.swing.JTextField Buscador;
+    private javax.swing.JComboBox<String> Categorias;
     private javax.swing.JPanel Estadisticas;
     private javax.swing.JCheckBox Jcbox_aceptada;
     private javax.swing.JCheckBox Jcbox_cancelada;
@@ -1571,7 +1625,6 @@ public class Frame_Main extends javax.swing.JFrame {
     private javax.swing.JButton jButton9;
     private com.toedter.calendar.JCalendar jCalendar2;
     private javax.swing.JCheckBox jCheckBox3;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -1650,7 +1703,6 @@ public class Frame_Main extends javax.swing.JFrame {
     private javax.swing.JTextArea jTextArea2;
     private javax.swing.JTextArea jTextArea3;
     private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextMotivoSolicitud;
     private com.toedter.calendar.JYearChooser jYearChooser1;
     private com.toedter.calendar.JYearChooser jYearChooser2;

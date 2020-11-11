@@ -127,14 +127,17 @@ public class EspaciosDAO {
 
     }
 
-    public static void borrarEspacio(String idEspacio) {
+    public void borrarEspacio(Usuario par, String idEspacio) {
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
         try {
             resultSet = null;
-            connection = DriverManager.getConnection(DB_URL, "UserCoordinator", "uC102*lPg");
+            seleccionarUser(par.getTipoUsuario());
+            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
             statement = connection.createStatement();
+            DB_USER=null;
+            DB_PASSWD=null;
             int update = statement.executeUpdate("update ESPACIOS set VIVO = false, ACTIVO = false where ID_ESPACIO = "+ idEspacio + ";");
         } catch (Exception ex) {
             System.out.println("Error en SQL" + ex);

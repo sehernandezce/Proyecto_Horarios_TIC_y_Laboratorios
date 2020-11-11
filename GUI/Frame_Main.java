@@ -2,7 +2,6 @@ package GUI;
 
 import Control.ValidarEspacios;
 import Control.Validar_administrar_solicitud;
-import DAO.EspaciosDAO;
 import Entidad.Espacio;
 import Entidad.Usuario;
 import java.sql.SQLException;
@@ -22,7 +21,6 @@ public class Frame_Main extends javax.swing.JFrame {
     private ValidarEspacios  validarEspacios = new  ValidarEspacios ();
     private String idEspacioSeleccionado;
     private boolean tablaTocada = false;
-    private EspaciosDAO daoDeEspacios = new EspaciosDAO();
     private Validar_administrar_solicitud validarSolicitudes=new Validar_administrar_solicitud();
     
     public Frame_Main() {
@@ -1467,7 +1465,7 @@ public class Frame_Main extends javax.swing.JFrame {
         if(!tablaTocada){
             JOptionPane.showMessageDialog(null, "No ha seleccionado un espacio para borrar.", "Error", JOptionPane.INFORMATION_MESSAGE);
         }else{
-            validarEspacios.borrarEspacio(idEspacioSeleccionado);
+            validarEspacios.borrarEspacio(usuario,idEspacioSeleccionado);
             JOptionPane.showMessageDialog(null, "El espacio fue borrado.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_jButton9ActionPerformed

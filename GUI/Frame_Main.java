@@ -135,8 +135,8 @@ public class Frame_Main extends javax.swing.JFrame{
         jLabel31 = new javax.swing.JLabel();
         jLabel32 = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        Aceptar_sol_boton = new javax.swing.JButton();
+        Rechazar_sol_boton = new javax.swing.JButton();
         Buscador = new javax.swing.JTextField();
         jButton6 = new javax.swing.JButton();
         jButton10 = new javax.swing.JButton();
@@ -873,17 +873,17 @@ public class Frame_Main extends javax.swing.JFrame{
             }
         });
 
-        jButton4.setText("Aceptar");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        Aceptar_sol_boton.setText("Aceptar");
+        Aceptar_sol_boton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                Aceptar_sol_botonActionPerformed(evt);
             }
         });
 
-        jButton5.setText("Rechazar");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        Rechazar_sol_boton.setText("Rechazar");
+        Rechazar_sol_boton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                Rechazar_sol_botonActionPerformed(evt);
             }
         });
 
@@ -973,8 +973,8 @@ public class Frame_Main extends javax.swing.JFrame{
                                 .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 560, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(63, 63, 63)
                                 .addGroup(Administrar_SolicitudesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(Rechazar_sol_boton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(Aceptar_sol_boton, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jButton10, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                             .addComponent(jLabel30)
                             .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 768, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -1034,9 +1034,9 @@ public class Frame_Main extends javax.swing.JFrame{
                         .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(Administrar_SolicitudesLayout.createSequentialGroup()
                         .addGap(19, 19, 19)
-                        .addComponent(jButton4)
+                        .addComponent(Aceptar_sol_boton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton5)
+                        .addComponent(Rechazar_sol_boton)
                         .addGap(13, 13, 13)
                         .addComponent(jButton10)))
                 .addGap(18, 18, 18)
@@ -1225,9 +1225,15 @@ public class Frame_Main extends javax.swing.JFrame{
     }
     
     private void administrar_Solicitudes(){ //Para mostrar las solicitudes en el administrador
-        ocultar_todosPaneles();        
-       Administrar_Solicitudes.setVisible(true); 
-     
+        ocultar_todosPaneles();   
+        if(usuario.getTipoUsuario() == 1 || usuario.getTipoUsuario() == 4){
+            Aceptar_sol_boton.setEnabled(false);
+            Rechazar_sol_boton.setEnabled(false);
+            Administrar_Solicitudes.setVisible(true);
+        }else{
+            Administrar_Solicitudes.setVisible(true);
+        }
+        
        try {
             llenarTabla_solicitudes("Todos");
         } catch (SQLException ex) {
@@ -1530,7 +1536,7 @@ public class Frame_Main extends javax.swing.JFrame{
     }//GEN-LAST:event_jLabel5MousePressed
 
     private void jLabel23MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel23MousePressed
-       mostrar_misSolicitudes(1);
+       administrar_Solicitudes();
         
     }//GEN-LAST:event_jLabel23MousePressed
 
@@ -1543,9 +1549,9 @@ public class Frame_Main extends javax.swing.JFrame{
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField2ActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void Aceptar_sol_botonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Aceptar_sol_botonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_Aceptar_sol_botonActionPerformed
 
     private void BuscadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscadorActionPerformed
         // TODO add your handling code here:
@@ -1678,13 +1684,13 @@ public class Frame_Main extends javax.swing.JFrame{
         }
     }//GEN-LAST:event_jButton10ActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void Rechazar_sol_botonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Rechazar_sol_botonActionPerformed
         try {
             cambiarEstado("Rechazada");
         } catch (AddressException ex) {
             Logger.getLogger(Frame_Main.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_jButton5ActionPerformed
+    }//GEN-LAST:event_Rechazar_sol_botonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1725,6 +1731,7 @@ public class Frame_Main extends javax.swing.JFrame{
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Aceptar_sol_boton;
     private javax.swing.JPanel Administrar_Solicitudes;
     private javax.swing.JPanel Bienvenida;
     private javax.swing.JTextField Buscador;
@@ -1739,14 +1746,13 @@ public class Frame_Main extends javax.swing.JFrame{
     private javax.swing.JPanel Menu_UC;
     private javax.swing.JPanel Menu_UE;
     private javax.swing.JPanel Paneles_Menu;
+    private javax.swing.JButton Rechazar_sol_boton;
     private javax.swing.JPanel Solicitar_Espacio;
     private javax.swing.ButtonGroup Tipo_estados;
     private javax.swing.JLabel controlPanelTitle;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;

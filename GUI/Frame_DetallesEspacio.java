@@ -74,6 +74,7 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
         jTextCorreoEncargado1 = new javax.swing.JTextField();
         jTextField3 = new javax.swing.JTextField();
+        jLabelCargandoe = new javax.swing.JLabel();
         panelCerrar = new javax.swing.JPanel();
         jlClose1 = new javax.swing.JLabel();
         jlMinimize1 = new javax.swing.JLabel();
@@ -260,6 +261,7 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
         jTextField3.setDisabledTextColor(new java.awt.Color(69, 73, 74));
         jTextField3.setEnabled(false);
         paneldetallesInventario.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 70, 150, 30));
+        paneldetallesInventario.add(jLabelCargandoe, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 560, 100, 20));
 
         getContentPane().add(paneldetallesInventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 770, 600));
 
@@ -312,7 +314,22 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
            }
               
         }
+     
+    private void cargando(boolean b){
+        if(b){
+           jLabelCargandoe.setText("Cargando..."); 
+        }else{
+           jLabelCargandoe.setText(""); 
+        }
+    }
     
+    private void actualizando(boolean b){
+        if(b){
+           jLabelCargandoe.setText("Actualizando..."); 
+        }else{
+           jLabelCargandoe.setText(""); 
+        }
+    }
 //    public boolean isCellEditable (int rowIndex, int colIndex){
 //             return false;
 //         }
@@ -334,6 +351,7 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
          
      }
     public void llenarFrame(Usuario u, Espacio esp, Frame_Main frame) throws SQLException{
+        
         this.usuario=u;
         this.fraim = frame;
         jTextCorreoEncargado.setText(esp.getNombre_tipoespacio());
@@ -405,6 +423,7 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
    
     private void guardar() throws SQLException{
          boolean verif=false;
+          
         try{
             Integer.valueOf(jTextNumeroEdificio3.getText());
             Integer.valueOf(jTextNumeroSalon1.getText());
@@ -425,6 +444,7 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
                         invDelete.clear();
                          Espacio espacio = new Espacio();
                         espacio = validarEspacios.BuscarInfoEspacio(usuario, Integer.valueOf(jTextField2.getText()));
+                        actualizando(true);
                         llenarFrame(usuario, espacio, fraim);
                          try {
                             fraim.solicitar_Espacio(jTextField3.getText());
@@ -460,6 +480,7 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
               JOptionPane.showMessageDialog(null, "Por favor, ingrese el nombre de atributo a cada item del inventario" ,  "Accion invalida", JOptionPane.INFORMATION_MESSAGE);        
             }
         }
+        
      }
     
     private void deletInv(){
@@ -532,7 +553,9 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
 
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
         try {
+            cargando(true);
             guardar();
+             cargando(false);
         } catch (SQLException ex) {
             Logger.getLogger(Frame_DetallesEspacio.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -606,6 +629,7 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabelAñadir;
+    private javax.swing.JLabel jLabelCargandoe;
     private javax.swing.JLabel jLabelEliminar1;
     private javax.swing.JRadioButton jRadioBActivo;
     private javax.swing.JRadioButton jRadioBInactivo;

@@ -38,6 +38,24 @@ public class Validar_administrar_solicitud {
         } 
     }
     
+    public int cambiarEstado(Usuario par, String tipo_e, String id_solicitud, String Observacion){
+            
+            int tipoE=convertirTipo_e(tipo_e);
+            if(tipoE==1){                   
+                  return solicitud.cambiarEstado(par,tipoE,id_solicitud,Observacion);
+            }else if(tipoE==2){
+                 return solicitud.cambiarEstado(par,tipoE,id_solicitud,Observacion);
+            }else if(tipoE==3){
+                  return solicitud.cambiarEstado(par,tipoE,id_solicitud,Observacion);
+            }else if(tipoE==4){                
+                 return solicitud.cambiarEstado(par,tipoE,id_solicitud,Observacion);
+            }else{
+                return -1;
+            }   
+            
+            
+    }
     
     
+ 
 }

@@ -92,4 +92,38 @@ public class SolicitudDAO {
        
        return tabla;
        }
+    
+    
+      public int cambiarEstado(Usuario par, int tipo_e, String id_solicitud, String obs) { // buscar las solicitudes dependiendo el estado y tipo de usuario
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        try {
+            resultSet = null;
+            seleccionarUser(par.getTipoUsuario());
+            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
+            statement = connection.createStatement();
+            DB_USER=null;
+            DB_PASSWD=null;
+            resultSet = statement.executeQuery("Select cambiar_estado('"+par.getNombreusuarioInstitucional()+"',"+id_solicitud+","+tipo_e+",'"+obs+"')");
+            if(resultSet.next()){
+                return Integer.valueOf(resultSet.getString(1));
+            }else{
+                return -2;
+            }
+        } catch (Exception ex) {
+            System.out.println("Error en SQL" + ex);
+            return -2;
+        } finally {
+            try {
+                resultSet.close();
+                statement.close();
+                connection.close();
+                //return null;
+            } catch (Exception ex) {
+
+            }
+        }
+
+    }
 }

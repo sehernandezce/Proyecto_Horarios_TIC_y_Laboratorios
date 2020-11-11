@@ -126,7 +126,30 @@ public class EspaciosDAO {
         }
 
     }
-    
+
+    public static void borrarEspacio(String idEspacio) {
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        try {
+            resultSet = null;
+            connection = DriverManager.getConnection(DB_URL, "UserCoordinator", "uC102*lPg");
+            statement = connection.createStatement();
+            int update = statement.executeUpdate("update ESPACIOS set VIVO = false, ACTIVO = false where ID_ESPACIO = "+ idEspacio + ";");
+        } catch (Exception ex) {
+            System.out.println("Error en SQL" + ex);
+        } finally {
+            try {
+                resultSet.close();
+                statement.close();
+                connection.close();
+                //return null;
+            } catch (Exception ex) {
+
+            }
+        }
+    }
+            
     private String[][] ObtenerData(ResultSet resultSet) throws SQLException{
        
        int fila=0;       
@@ -265,6 +288,6 @@ public class EspaciosDAO {
 
     }
      
-     
+    
 
 }

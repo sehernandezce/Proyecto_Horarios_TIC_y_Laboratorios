@@ -12,6 +12,7 @@ public class Espacio {
     private Boolean estado;  
     private int capacidad;
     private String nombre_tipoespacio;
+    private Boolean vivo;
     
     public String getCorreo_encargado() {
         return correo_encargado;
@@ -94,14 +95,6 @@ public class Espacio {
     public void setNombre_tipoespacio(String nombre_tipoespacio) {
         this.nombre_tipoespacio = nombre_tipoespacio;
     }
-    
-    
-    
-
-    
-    
-    
-    
     
     
     

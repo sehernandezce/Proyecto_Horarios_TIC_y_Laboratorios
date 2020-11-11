@@ -9,3 +9,6 @@
 * **Librería para la interfaz gráfica**:  Swing
 * **UML**: Visual Paradigm
 * **SCRUM**: Trello
+* **Librería de criptografía**: PBEKeySpec (Java)
+* **Codec criptografía**: Apache Base64, versión 1.5
+

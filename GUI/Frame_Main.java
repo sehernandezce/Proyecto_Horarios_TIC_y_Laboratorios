@@ -1,7 +1,9 @@
 package GUI;
 
+import Control.EnviarCorreo;
 import Control.ValidarEspacios;
 import Control.Validar_administrar_solicitud;
+import Entidad.Correo;
 import Entidad.Espacio;
 import Entidad.Usuario;
 import java.awt.event.KeyAdapter;
@@ -12,6 +14,7 @@ import java.util.GregorianCalendar;
 import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.mail.internet.AddressException;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.SwingConstants;
@@ -19,7 +22,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 
-public class Frame_Main extends javax.swing.JFrame implements Runnable{
+public class Frame_Main extends javax.swing.JFrame{
     
     private int x,y;
     private Usuario usuario;
@@ -856,6 +859,7 @@ public class Frame_Main extends javax.swing.JFrame implements Runnable{
                 "ID_SOLICITUD", "USUARIOINTITUCIONAL", "FECHA_INICIO", "FECHA_TRMINA", "NOMBRE_ESPACIO", "ID_EDIFICIO", "ID_ESTADO", "FECHA_SOLICITUD"
             }
         ));
+        jTable2.getTableHeader().setReorderingAllowed(false);
         jScrollPane5.setViewportView(jTable2);
 
         jLabel31.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -1331,12 +1335,39 @@ public class Frame_Main extends javax.swing.JFrame implements Runnable{
    
       }
       
-     private void cambiarEstado(String tipE){
+     private void cambiarEstado(String tipE) throws AddressException{
        jLabelCargandoAS.setText("Cargando...");
          if(jTable2.getSelectedRow()!=-1 && jTable2.getSelectedColumn()!=-1){ 
             int res= validarSolicitudes.cambiarEstado(usuario, tipE, jTable2.getValueAt(jTable2.getSelectedRow(),0).toString(),jTextField2.getText());
                  if(res==1){
-                  JOptionPane.showMessageDialog(null, "Se han guardado los cambios",  "Cambiar estado de la solicitud", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Se han guardado los cambios",  "Cambiar estado de la solicitud", JOptionPane.INFORMATION_MESSAGE);  
+                    if(!tipE.equals("Cancelada")){
+                       int dialog = JOptionPane.YES_NO_OPTION;
+                        int result = JOptionPane.showConfirmDialog(null, "¿Desea notificar por correo al usuario?","Exit",dialog);
+                        if(result ==0){
+                           String contrasenia=JOptionPane.showInputDialog(null,"Ingrese la contraseña del correo: horariosdesalastics@gmail.com","Enviar correo",JOptionPane.QUESTION_MESSAGE);
+                          if(!contrasenia.equals("") || contrasenia==null){
+                           Correo correo =new Correo();
+                           correo.setAsunto("Respuesta a su solicitud con ID: "+ jTable2.getValueAt(jTable2.getSelectedRow(),0).toString());
+                           correo.setMensaje("Estimado/a <b>Usuario</b>,<br> Queremos informale que su solicitud con id: "+jTable2.getValueAt(jTable2.getSelectedRow(),0).toString()
+                            +"Ha cambiado al estado:<b> "+tipE+"</b>. A continuación se muestra la/s observacion/es indicadas por el coordinador:<br>"+jTextField2.getText()+"<br>Muchas gracias por su atención.<br>Por favor, no reponder ha este correo.");
+                           correo.setCorreoReceptor(jTable2.getValueAt(jTable2.getSelectedRow(),1).toString()+"@unal.edu.co");
+                           correo.setPasswordRemitente(contrasenia);
+                           EnviarCorreo enviarCorreo=new EnviarCorreo();
+                           boolean c=enviarCorreo.enviarC(correo);
+                             if(c){
+                                JOptionPane.showMessageDialog(null, "Se ha notificado al usuario: "+jTable2.getValueAt(jTable2.getSelectedRow(),1).toString()+"@unal.edu.co"); 
+                             }else{
+                              JOptionPane.showMessageDialog(null, "Ha ocurrido un error al intentar enviar el correo");  
+                             }
+                             
+                            }else{
+                             JOptionPane.showMessageDialog(null, "Valor no valido",  "Valor no valido", JOptionPane.INFORMATION_MESSAGE);     
+                          }
+                        } 
+                    }
+                    
+                     
                 }else if(res==-1 && res==-3 ){
                      JOptionPane.showMessageDialog(null, "Accion no valida",  "Accion no valida", JOptionPane.INFORMATION_MESSAGE);
                 }else if(res==-2){
@@ -1640,11 +1671,19 @@ public class Frame_Main extends javax.swing.JFrame implements Runnable{
     }//GEN-LAST:event_BuscadorKeyTyped
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
-       cambiarEstado("Cancelada");
+        try {
+            cambiarEstado("Cancelada");
+        } catch (AddressException ex) {
+            Logger.getLogger(Frame_Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton10ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-         cambiarEstado("Rechazada");
+        try {
+            cambiarEstado("Rechazada");
+        } catch (AddressException ex) {
+            Logger.getLogger(Frame_Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
@@ -1806,8 +1845,4 @@ public class Frame_Main extends javax.swing.JFrame implements Runnable{
     private javax.swing.JLabel userLabel2;
     // End of variables declaration//GEN-END:variables
 
-    @Override
-    public void run() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 }

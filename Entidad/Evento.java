@@ -10,15 +10,15 @@ package Entidad;
  * @author Usuario
  */
 public class Evento {
-    int idEvento;
-    String horaInicio;
-    String repeticion;
-    String fechaEvento;
-    String horaFinalEvento;
-    String motivoEvento;
-    int idEdificio;
-    int tipoRepetición;
-    int motivoRepetición;
+    private int idEvento;
+    private String horaInicio;
+    private String repeticion;
+    private String fechaEvento;
+    private String horaFinalEvento;
+    private String motivoEvento;
+    private int idEdificio;
+    private int tipoRepetición;
+    private int motivoRepetición;
 
     public Evento(int idEvento, String horaInicio, String repeticion, String fechaEvento, String horaFinalEvento, String motivoEvento, int idEdificio, int tipoRepetición, int motivoRepetición) {
         this.idEvento = idEvento;

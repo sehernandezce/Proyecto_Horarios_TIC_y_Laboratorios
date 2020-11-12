@@ -1,24 +1,17 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Entidad;
 
-/**
- *
- * @author Usuario
- */
 public class Solicitud {
-    int idSolicitud;
-    String fechaSolicitud;
-    String Observaciones;
-    int estadoSolicitud;
-    String fechaModificacion;
-    int espacioidEspacio;
-    Evento evento;
+    
+   private int idSolicitud;
+   private String fechaSolicitud;
+   private String Observaciones;
+   private String estadoSolicitud;
+   private String fechaModificacion;
+   private String espacioidEspacio;
+   private Evento evento;
 
-    public Solicitud(int idSolicitud, String fechaSolicitud, String Observaciones, int estadoSolicitud, String fechaModificacion, int espacioidEspacio, Evento evento) {
+    public Solicitud(int idSolicitud, String fechaSolicitud, String Observaciones, String estadoSolicitud, String fechaModificacion, String espacioidEspacio, Evento evento) {
         this.idSolicitud = idSolicitud;
         this.fechaSolicitud = fechaSolicitud;
         this.Observaciones = Observaciones;
@@ -54,11 +47,11 @@ public class Solicitud {
         this.Observaciones = Observaciones;
     }
 
-    public int getEstadoSolicitud() {
+    public String getEstadoSolicitud() {
         return estadoSolicitud;
     }
 
-    public void setEstadoSolicitud(int estadoSolicitud) {
+    public void setEstadoSolicitud(String estadoSolicitud) {
         this.estadoSolicitud = estadoSolicitud;
     }
 
@@ -70,11 +63,11 @@ public class Solicitud {
         this.fechaModificacion = fechaModificacion;
     }
 
-    public int getEspacioidEspacio() {
+    public String getEspacioidEspacio() {
         return espacioidEspacio;
     }
 
-    public void setEspacioidEspacio(int espacioidEspacio) {
+    public void setEspacioidEspacio(String espacioidEspacio) {
         this.espacioidEspacio = espacioidEspacio;
     }
     

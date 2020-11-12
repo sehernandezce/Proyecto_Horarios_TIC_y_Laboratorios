@@ -96,6 +96,25 @@ public class Frame_Main extends javax.swing.JFrame{
         jLabel26 = new javax.swing.JLabel();
         userLabel2 = new javax.swing.JLabel();
         roleLabel1 = new javax.swing.JLabel();
+        Administrar_Solicitudes = new javax.swing.JPanel();
+        jLabel30 = new javax.swing.JLabel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable();
+        jLabel31 = new javax.swing.JLabel();
+        jLabel32 = new javax.swing.JLabel();
+        jTextField2 = new javax.swing.JTextField();
+        Aceptar_sol_boton = new javax.swing.JButton();
+        Rechazar_sol_boton = new javax.swing.JButton();
+        Buscador = new javax.swing.JTextField();
+        jButton6 = new javax.swing.JButton();
+        jButton10 = new javax.swing.JButton();
+        Jcbox_espera = new javax.swing.JCheckBox();
+        Jcbox_aceptada = new javax.swing.JCheckBox();
+        Jcbox_cancelada = new javax.swing.JCheckBox();
+        Jcbox_rechazada = new javax.swing.JCheckBox();
+        Categorias = new javax.swing.JComboBox<>();
+        jLabel9 = new javax.swing.JLabel();
+        jLabelCargandoAS = new javax.swing.JLabel();
         Solicitar_Espacio = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -131,25 +150,6 @@ public class Frame_Main extends javax.swing.JFrame{
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         controlPanelTitle = new javax.swing.JLabel();
-        Administrar_Solicitudes = new javax.swing.JPanel();
-        jLabel30 = new javax.swing.JLabel();
-        jScrollPane5 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
-        jLabel31 = new javax.swing.JLabel();
-        jLabel32 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        Aceptar_sol_boton = new javax.swing.JButton();
-        Rechazar_sol_boton = new javax.swing.JButton();
-        Buscador = new javax.swing.JTextField();
-        jButton6 = new javax.swing.JButton();
-        jButton10 = new javax.swing.JButton();
-        Jcbox_espera = new javax.swing.JCheckBox();
-        Jcbox_aceptada = new javax.swing.JCheckBox();
-        Jcbox_cancelada = new javax.swing.JCheckBox();
-        Jcbox_rechazada = new javax.swing.JCheckBox();
-        Categorias = new javax.swing.JComboBox<>();
-        jLabel9 = new javax.swing.JLabel();
-        jLabelCargandoAS = new javax.swing.JLabel();
         Estadisticas = new javax.swing.JPanel();
         jLabel33 = new javax.swing.JLabel();
         jMonthChooser1 = new com.toedter.calendar.JMonthChooser();
@@ -569,6 +569,145 @@ public class Frame_Main extends javax.swing.JFrame{
 
         getContentPane().add(Paneles_Menu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 170, 520));
 
+        Administrar_Solicitudes.setBackground(new java.awt.Color(204, 204, 204));
+        Administrar_Solicitudes.setMinimumSize(new java.awt.Dimension(854, 520));
+        Administrar_Solicitudes.setPreferredSize(new java.awt.Dimension(854, 520));
+        Administrar_Solicitudes.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel30.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel30.setText("Administrar Solicitudes");
+        Administrar_Solicitudes.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(43, 32, -1, -1));
+
+        jTable2 = new javax.swing.JTable(){
+            public boolean isCellEditable (int rowIndex, int colIndex){
+                return false;
+            }
+        };
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID_SOLICITUD", "USUARIOINTITUCIONAL", "FECHA_INICIO", "FECHA_TRMINA", "NOMBRE_ESPACIO", "ID_EDIFICIO", "ID_ESTADO", "FECHA_SOLICITUD"
+            }
+        ));
+        jTable2.getTableHeader().setReorderingAllowed(false);
+        jScrollPane5.setViewportView(jTable2);
+
+        Administrar_Solicitudes.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(43, 115, 768, 149));
+
+        jLabel31.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel31.setText("Aceptar o rechazar solicitud seleccionada:");
+        Administrar_Solicitudes.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(43, 282, -1, -1));
+
+        jLabel32.setText("Observaciones:");
+        Administrar_Solicitudes.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(43, 305, -1, -1));
+
+        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField2ActionPerformed(evt);
+            }
+        });
+        Administrar_Solicitudes.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 350, 560, 108));
+
+        Aceptar_sol_boton.setText("Aceptar");
+        Aceptar_sol_boton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Aceptar_sol_botonActionPerformed(evt);
+            }
+        });
+        Administrar_Solicitudes.add(Aceptar_sol_boton, new org.netbeans.lib.awtextra.AbsoluteConstraints(666, 340, 84, -1));
+
+        Rechazar_sol_boton.setText("Rechazar");
+        Rechazar_sol_boton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Rechazar_sol_botonActionPerformed(evt);
+            }
+        });
+        Administrar_Solicitudes.add(Rechazar_sol_boton, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 390, -1, -1));
+
+        Buscador.setToolTipText("Buscar por nombre");
+        Buscador.setName(""); // NOI18N
+        Buscador.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BuscadorActionPerformed(evt);
+            }
+        });
+        Buscador.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                BuscadorKeyTyped(evt);
+            }
+        });
+        Administrar_Solicitudes.add(Buscador, new org.netbeans.lib.awtextra.AbsoluteConstraints(61, 68, 301, -1));
+
+        jButton6.setText("Buscar");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+        Administrar_Solicitudes.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(374, 64, -1, -1));
+
+        jButton10.setText("Cancelar");
+        jButton10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton10ActionPerformed(evt);
+            }
+        });
+        Administrar_Solicitudes.add(jButton10, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 440, 84, -1));
+
+        Tipo_estados.add(Jcbox_espera);
+        Jcbox_espera.setText("En espera");
+        Jcbox_espera.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Jcbox_esperaActionPerformed(evt);
+            }
+        });
+        Administrar_Solicitudes.add(Jcbox_espera, new org.netbeans.lib.awtextra.AbsoluteConstraints(726, 275, -1, -1));
+
+        Tipo_estados.add(Jcbox_aceptada);
+        Jcbox_aceptada.setText("Aceptada");
+        Jcbox_aceptada.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Jcbox_aceptadaActionPerformed(evt);
+            }
+        });
+        Administrar_Solicitudes.add(Jcbox_aceptada, new org.netbeans.lib.awtextra.AbsoluteConstraints(626, 275, -1, -1));
+
+        Tipo_estados.add(Jcbox_cancelada);
+        Jcbox_cancelada.setText("Cancelada");
+        Jcbox_cancelada.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Jcbox_canceladaActionPerformed(evt);
+            }
+        });
+        Administrar_Solicitudes.add(Jcbox_cancelada, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 275, -1, -1));
+
+        Tipo_estados.add(Jcbox_rechazada);
+        Jcbox_rechazada.setText("Rechazada");
+        Jcbox_rechazada.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Jcbox_rechazadaActionPerformed(evt);
+            }
+        });
+        Administrar_Solicitudes.add(Jcbox_rechazada, new org.netbeans.lib.awtextra.AbsoluteConstraints(414, 275, -1, -1));
+
+        Categorias.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ID_SOLICITUD", "USUARIOINTITUCIONAL", "FECHA_INICIO", "FECHA_TRMINA", "NOMBRE_ESPACIO", "ID_EDIFICIO", "ID_ESTADO", "FECHA_SOLICITUD" }));
+        Categorias.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CategoriasActionPerformed(evt);
+            }
+        });
+        Administrar_Solicitudes.add(Categorias, new org.netbeans.lib.awtextra.AbsoluteConstraints(476, 67, 194, -1));
+
+        jLabel9.setText("Filtro:");
+        Administrar_Solicitudes.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(476, 42, -1, -1));
+
+        jLabelCargandoAS.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
+        Administrar_Solicitudes.add(jLabelCargandoAS, new org.netbeans.lib.awtextra.AbsoluteConstraints(721, 596, 90, 20));
+
+        getContentPane().add(Administrar_Solicitudes, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 30, -1, -1));
+
         Solicitar_Espacio.setBackground(new java.awt.Color(204, 204, 204));
         Solicitar_Espacio.setPreferredSize(new java.awt.Dimension(854, 520));
         Solicitar_Espacio.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -829,7 +968,7 @@ public class Frame_Main extends javax.swing.JFrame{
 
         Solicitar_Espacio.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
-        getContentPane().add(Solicitar_Espacio, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 30, -1, -1));
+        getContentPane().add(Solicitar_Espacio, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 30, -1, 520));
 
         Bienvenida.setBackground(new java.awt.Color(204, 204, 204));
         Bienvenida.setMaximumSize(new java.awt.Dimension(854, 520));
@@ -875,212 +1014,6 @@ public class Frame_Main extends javax.swing.JFrame{
         Bienvenida.add(MensajeBienvenida, java.awt.BorderLayout.CENTER);
 
         getContentPane().add(Bienvenida, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 30, 854, 520));
-
-        Administrar_Solicitudes.setBackground(new java.awt.Color(204, 204, 204));
-        Administrar_Solicitudes.setMinimumSize(new java.awt.Dimension(854, 520));
-
-        jLabel30.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel30.setText("Administrar Solicitudes");
-
-        jTable2 = new javax.swing.JTable(){
-            public boolean isCellEditable (int rowIndex, int colIndex){
-                return false;
-            }
-        };
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "ID_SOLICITUD", "USUARIOINTITUCIONAL", "FECHA_INICIO", "FECHA_TRMINA", "NOMBRE_ESPACIO", "ID_EDIFICIO", "ID_ESTADO", "FECHA_SOLICITUD"
-            }
-        ));
-        jTable2.getTableHeader().setReorderingAllowed(false);
-        jScrollPane5.setViewportView(jTable2);
-
-        jLabel31.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel31.setText("Aceptar o rechazar solicitud seleccionada:");
-
-        jLabel32.setText("Observaciones:");
-
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
-            }
-        });
-
-        Aceptar_sol_boton.setText("Aceptar");
-        Aceptar_sol_boton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Aceptar_sol_botonActionPerformed(evt);
-            }
-        });
-
-        Rechazar_sol_boton.setText("Rechazar");
-        Rechazar_sol_boton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Rechazar_sol_botonActionPerformed(evt);
-            }
-        });
-
-        Buscador.setToolTipText("Buscar por nombre");
-        Buscador.setName(""); // NOI18N
-        Buscador.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BuscadorActionPerformed(evt);
-            }
-        });
-        Buscador.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                BuscadorKeyTyped(evt);
-            }
-        });
-
-        jButton6.setText("Buscar");
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
-            }
-        });
-
-        jButton10.setText("Cancelar");
-        jButton10.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton10ActionPerformed(evt);
-            }
-        });
-
-        Tipo_estados.add(Jcbox_espera);
-        Jcbox_espera.setText("En espera");
-        Jcbox_espera.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Jcbox_esperaActionPerformed(evt);
-            }
-        });
-
-        Tipo_estados.add(Jcbox_aceptada);
-        Jcbox_aceptada.setText("Aceptada");
-        Jcbox_aceptada.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Jcbox_aceptadaActionPerformed(evt);
-            }
-        });
-
-        Tipo_estados.add(Jcbox_cancelada);
-        Jcbox_cancelada.setText("Cancelada");
-        Jcbox_cancelada.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Jcbox_canceladaActionPerformed(evt);
-            }
-        });
-
-        Tipo_estados.add(Jcbox_rechazada);
-        Jcbox_rechazada.setText("Rechazada");
-        Jcbox_rechazada.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Jcbox_rechazadaActionPerformed(evt);
-            }
-        });
-
-        Categorias.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ID_SOLICITUD", "USUARIOINTITUCIONAL", "FECHA_INICIO", "FECHA_TRMINA", "NOMBRE_ESPACIO", "ID_EDIFICIO", "ID_ESTADO", "FECHA_SOLICITUD" }));
-        Categorias.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CategoriasActionPerformed(evt);
-            }
-        });
-
-        jLabel9.setText("Filtro:");
-
-        jLabelCargandoAS.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
-        jLabelCargandoAS.setText("5");
-
-        javax.swing.GroupLayout Administrar_SolicitudesLayout = new javax.swing.GroupLayout(Administrar_Solicitudes);
-        Administrar_Solicitudes.setLayout(Administrar_SolicitudesLayout);
-        Administrar_SolicitudesLayout.setHorizontalGroup(
-            Administrar_SolicitudesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(Administrar_SolicitudesLayout.createSequentialGroup()
-                .addContainerGap(43, Short.MAX_VALUE)
-                .addGroup(Administrar_SolicitudesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabelCargandoAS, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(Administrar_SolicitudesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(Administrar_SolicitudesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel32)
-                            .addGroup(Administrar_SolicitudesLayout.createSequentialGroup()
-                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 560, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(63, 63, 63)
-                                .addGroup(Administrar_SolicitudesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(Rechazar_sol_boton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(Aceptar_sol_boton, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jButton10, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addComponent(jLabel30)
-                            .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 768, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, Administrar_SolicitudesLayout.createSequentialGroup()
-                            .addComponent(jLabel31)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(Jcbox_rechazada)
-                            .addGap(15, 15, 15)
-                            .addComponent(Jcbox_cancelada)
-                            .addGap(18, 18, 18)
-                            .addComponent(Jcbox_aceptada)
-                            .addGap(18, 18, 18)
-                            .addComponent(Jcbox_espera))
-                        .addGroup(Administrar_SolicitudesLayout.createSequentialGroup()
-                            .addComponent(Buscador, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(jButton6)
-                            .addGap(31, 31, 31)
-                            .addGroup(Administrar_SolicitudesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel9)
-                                .addComponent(Categorias, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(141, 141, 141))))
-                .addContainerGap(43, Short.MAX_VALUE))
-        );
-        Administrar_SolicitudesLayout.setVerticalGroup(
-            Administrar_SolicitudesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(Administrar_SolicitudesLayout.createSequentialGroup()
-                .addGroup(Administrar_SolicitudesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(Administrar_SolicitudesLayout.createSequentialGroup()
-                        .addGap(32, 32, 32)
-                        .addComponent(jLabel30)
-                        .addGap(10, 10, 10))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Administrar_SolicitudesLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel9)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                .addGroup(Administrar_SolicitudesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Buscador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton6)
-                    .addComponent(Categorias, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(19, 19, 19)
-                .addGroup(Administrar_SolicitudesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(Administrar_SolicitudesLayout.createSequentialGroup()
-                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel31))
-                    .addGroup(Administrar_SolicitudesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(Jcbox_espera)
-                        .addComponent(Jcbox_aceptada)
-                        .addComponent(Jcbox_cancelada)
-                        .addComponent(Jcbox_rechazada)))
-                .addGap(6, 6, 6)
-                .addComponent(jLabel32)
-                .addGroup(Administrar_SolicitudesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(Administrar_SolicitudesLayout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(Administrar_SolicitudesLayout.createSequentialGroup()
-                        .addGap(19, 19, 19)
-                        .addComponent(Aceptar_sol_boton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(Rechazar_sol_boton)
-                        .addGap(13, 13, 13)
-                        .addComponent(jButton10)))
-                .addGap(18, 18, 18)
-                .addComponent(jLabelCargandoAS, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(21, Short.MAX_VALUE))
-        );
-
-        getContentPane().add(Administrar_Solicitudes, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 30, -1, -1));
 
         Estadisticas.setBackground(new java.awt.Color(204, 204, 204));
         Estadisticas.setMinimumSize(new java.awt.Dimension(854, 520));
@@ -1264,12 +1197,6 @@ public class Frame_Main extends javax.swing.JFrame{
     }
     
     
-    private void mostrar_misSolicitudes(int idUsuario){ //Para mostrar la mis solicitudes
-        ocultar_todosPaneles();
-       
-        
-    }
-    
     private void administrar_Solicitudes(){ //Para mostrar las solicitudes en el administrador
         ocultar_todosPaneles();   
         if(usuario.getTipoUsuario() == 1 || usuario.getTipoUsuario() == 4){
@@ -1317,9 +1244,11 @@ public class Frame_Main extends javax.swing.JFrame{
       
        private void llenarTabla_solicitudes(String tipo_e) throws SQLException{//modelo tabla espacios
         Object[][] tabla= validarSolicitudes.llenarMatriz(usuario, tipo_e);
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        jTable2.setModel(new javax.swing.table.DefaultTableModel( //fechas con horas
         tabla, new String [] {
-        "ID_SOLICITUD", "USUARIOINTITUCIONAL", "FECHA_INICIO", "FECHA_TRMINA", "NOMBRE_ESPACIO", "ID_EDIFICIO", "ID_ESTADO", "FECHA_SOLICITUD"
+        "ID SOLICITUD", "FECHA SOLICITUD", "ESTADO","FECHA DE MODIFICACIÓN","USUARIOINTITUCIONAL", "EDIFICIO","FECHA INICIO", "FECHA TERMINA", "OBSERVACIONES","INFORMACIÓN ADICIONAL"
+    //, "FECHA INICIO","HORA DE INICIO" "FECHA TERMINA"," HORA FINAL", "MOTIVO", "OBSERVACIONES" ,
+                //"REPETICIÓN" ,"DIAS", "NOMBRE_ESPACIO", "EDIFICIO", "SALON",  
             }
         ));
     }

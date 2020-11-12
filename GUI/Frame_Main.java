@@ -27,6 +27,7 @@ public class Frame_Main extends javax.swing.JFrame{
     private int x,y;
     private Usuario usuario;
     private ValidarEspacios  validarEspacios = new  ValidarEspacios ();
+    private Validar_administrar_solicitud validarSolIngresada = new Validar_administrar_solicitud();
     private String idEspacioSeleccionado;
     private boolean tablaTocada = false;
     private Validar_administrar_solicitud validarSolicitudes=new Validar_administrar_solicitud();
@@ -115,7 +116,7 @@ public class Frame_Main extends javax.swing.JFrame{
         jCheckBox3 = new javax.swing.JCheckBox();
         jButtonPersonalizar = new javax.swing.JButton();
         jLabel28 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        jComboMotivos = new javax.swing.JComboBox<>();
         jCalendar2 = new com.toedter.calendar.JCalendar();
         jButton3 = new javax.swing.JButton();
         jLabel36 = new javax.swing.JLabel();
@@ -124,6 +125,7 @@ public class Frame_Main extends javax.swing.JFrame{
         jButton9 = new javax.swing.JButton();
         jLabelCargandoSE = new javax.swing.JLabel();
         jLabelRepeticion = new javax.swing.JLabel();
+        jCheckBoxOtroMotivo = new javax.swing.JCheckBox();
         Bienvenida = new javax.swing.JPanel();
         MensajeBienvenida = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -642,8 +644,8 @@ public class Frame_Main extends javax.swing.JFrame{
         jLabel28.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel28.setText("Motivo solicitud:");
 
-        jComboBox2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccion" }));
+        jComboMotivos.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jComboMotivos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccion" }));
 
         jCalendar2.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
@@ -653,6 +655,11 @@ public class Frame_Main extends javax.swing.JFrame{
 
         jButton3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jButton3.setText("Solicitar");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jLabel36.setBackground(new java.awt.Color(255, 255, 255));
         jLabel36.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -674,6 +681,13 @@ public class Frame_Main extends javax.swing.JFrame{
         jLabelCargandoSE.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
 
         jLabelRepeticion.setToolTipText("");
+
+        jCheckBoxOtroMotivo.setText("otro:");
+        jCheckBoxOtroMotivo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBoxOtroMotivoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -725,11 +739,13 @@ public class Frame_Main extends javax.swing.JFrame{
                                                         .addComponent(jSpinner8, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                                         .addGap(12, 12, 12))
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                        .addComponent(jLabel28)
+                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jLabel28)
+                                            .addComponent(jCheckBoxOtroMotivo))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jTextMotivoSolicitud, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(jComboMotivos, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabelRepeticion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -795,9 +811,11 @@ public class Frame_Main extends javax.swing.JFrame{
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jComboMotivos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextMotivoSolicitud, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jTextMotivoSolicitud, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jCheckBoxOtroMotivo)))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel37, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -1216,6 +1234,16 @@ public class Frame_Main extends javax.swing.JFrame{
        frame_Login.setVisible(true);
     }
     
+    public void llenarMotivos(Usuario us){
+        String[] lista = validarSolicitudes.obtenerListaMotivos(us);
+        
+        for (String lista1 : lista) {
+            jComboMotivos.addItem(lista1);
+        }
+        
+        
+        
+    }
     
            
     public void solicitar_Espacio(String Espacio) throws SQLException{ //Para mostrar la informacion en el panel de solicitar espacios     
@@ -1414,8 +1442,12 @@ public class Frame_Main extends javax.swing.JFrame{
          
      }
      
-     public void setTextoMuestralabel(String text) {
+    public void setTextoMuestralabel(String text) {
         this.jLabelRepeticion.setText(text);
+    }
+    
+    public void verificarDatosBusqueda(){
+        
     }
  
      
@@ -1442,11 +1474,15 @@ public class Frame_Main extends javax.swing.JFrame{
     private void jLabel2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MousePressed
        
         try {
+            
             solicitar_Espacio("Laboratorios");
+
         } catch (SQLException ex) {
             Logger.getLogger(Frame_Main.class.getName()).log(Level.SEVERE, null, ex);
         }
     
+        llenarMotivos(usuario);
+        
         if(usuario.getTipoUsuario() != 2){  //Si el usuario no es coordinador, deshabilitar el botón para eliminar espacios.
             this.jButton9.setVisible(false);
         }
@@ -1538,7 +1574,7 @@ public class Frame_Main extends javax.swing.JFrame{
         } catch (SQLException ex) {
             Logger.getLogger(Frame_Main.class.getName()).log(Level.SEVERE, null, ex);
         }
-      
+      llenarMotivos(usuario);
         if(usuario.getTipoUsuario() != 2){  //Si el usuario no es coordinador, deshabilitar el botón para eliminar espacios.
             this.jButton9.setVisible(false);
         }
@@ -1551,7 +1587,7 @@ public class Frame_Main extends javax.swing.JFrame{
         } catch (SQLException ex) {
             Logger.getLogger(Frame_Main.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+        llenarMotivos(usuario);
         if(usuario.getTipoUsuario() != 2){  //Si el usuario no es coordinador, deshabilitar el botón para eliminar espacios.
             this.jButton9.setVisible(false);
         }
@@ -1564,7 +1600,7 @@ public class Frame_Main extends javax.swing.JFrame{
         } catch (SQLException ex) {
             Logger.getLogger(Frame_Main.class.getName()).log(Level.SEVERE, null, ex);
         }
-       
+       llenarMotivos(usuario);
         if(usuario.getTipoUsuario() != 2){  //Si el usuario no es coordinador, deshabilitar el botón para eliminar espacios.
             this.jButton9.setVisible(false);
         }
@@ -1731,6 +1767,18 @@ public class Frame_Main extends javax.swing.JFrame{
         abrirPersonalizacionHoras(this);
     }//GEN-LAST:event_jButtonPersonalizarActionPerformed
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jCheckBoxOtroMotivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxOtroMotivoActionPerformed
+        if(jCheckBoxOtroMotivo.isSelected()){
+           jTextMotivoSolicitud.setEnabled(true);
+        }else{
+            jTextMotivoSolicitud.setEnabled(false);
+        }  
+    }//GEN-LAST:event_jCheckBoxOtroMotivoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1798,7 +1846,8 @@ public class Frame_Main extends javax.swing.JFrame{
     private javax.swing.JButton jButtonPersonalizar;
     private com.toedter.calendar.JCalendar jCalendar2;
     private javax.swing.JCheckBox jCheckBox3;
-    private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JCheckBox jCheckBoxOtroMotivo;
+    private javax.swing.JComboBox<String> jComboMotivos;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

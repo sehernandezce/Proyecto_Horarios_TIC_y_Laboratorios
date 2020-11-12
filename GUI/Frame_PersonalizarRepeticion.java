@@ -17,6 +17,8 @@ public class Frame_PersonalizarRepeticion extends javax.swing.JFrame {
 
     private int x, y;
     private Frame_Main Frame;
+    private String fecha;
+    private int[] DiasSeRepite = {0,0,0,0,0,0,0};
 
     public Frame_PersonalizarRepeticion() {
         initComponents();
@@ -44,6 +46,13 @@ public class Frame_PersonalizarRepeticion extends javax.swing.JFrame {
             return "pero no se ha seleccionado ningún dia, por favor, seleccione al menos uno.";
         }
 
+        for (int i = 1; i < 7; i++) {
+            if (dias[i-1].isSelected()) {
+                DiasSeRepite[i] = 1;
+            }
+        }
+        
+        
         return "los dias " + retorno.substring(1);
     }
 
@@ -54,7 +63,7 @@ public class Frame_PersonalizarRepeticion extends javax.swing.JFrame {
         int mes = jCalendar1.getCalendar().get(Calendar.MARCH);
         int dia = jCalendar1.getCalendar().get(Calendar.DAY_OF_MONTH);
 
-        String fecha = (año + "-" + mes + "-" + dia);
+        fecha = (año + "-" + mes + "-" + dia);
 
         if ("Semanalmente".equals(String.valueOf(jComboSelectorDia.getSelectedItem()))) {
             text = "Se repite semanalmente " + repeticionDias() + " hasta el día " + fecha;
@@ -285,6 +294,11 @@ public class Frame_PersonalizarRepeticion extends javax.swing.JFrame {
         this.Frame.setTextoMuestralabel(jLabelVisualizarRepetición.getText());
         this.dispose();  
         
+        
+        System.out.println(fecha);
+        for (int i : DiasSeRepite) {
+            System.out.println(i+",");
+        }
     }//GEN-LAST:event_jButtonGuardarActionPerformed
 
     private void formMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMousePressed
@@ -306,6 +320,7 @@ public class Frame_PersonalizarRepeticion extends javax.swing.JFrame {
     }//GEN-LAST:event_formMouseDragged
 
     private void jCheckBoxLunesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxLunesActionPerformed
+
         mostrarPeriodicidad();
     }//GEN-LAST:event_jCheckBoxLunesActionPerformed
 

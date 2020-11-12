@@ -754,11 +754,14 @@
                                               <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                                           </Group>
                                           <Group type="102" alignment="1" attributes="0">
-                                              <Component id="jLabel28" min="-2" max="-2" attributes="0"/>
+                                              <Group type="103" groupAlignment="1" attributes="0">
+                                                  <Component id="jLabel28" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="jCheckBoxOtroMotivo" min="-2" max="-2" attributes="0"/>
+                                              </Group>
                                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                               <Group type="103" groupAlignment="0" attributes="0">
                                                   <Component id="jTextMotivoSolicitud" min="-2" pref="168" max="-2" attributes="0"/>
-                                                  <Component id="jComboBox2" min="-2" pref="168" max="-2" attributes="0"/>
+                                                  <Component id="jComboMotivos" min="-2" pref="168" max="-2" attributes="0"/>
                                               </Group>
                                               <EmptySpace max="-2" attributes="0"/>
                                           </Group>
@@ -843,10 +846,13 @@
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Component id="jLabel28" alignment="0" min="-2" pref="20" max="-2" attributes="0"/>
-                                          <Component id="jComboBox2" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jComboMotivos" alignment="0" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Component id="jTextMotivoSolicitud" min="-2" pref="28" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="3" attributes="0">
+                                          <Component id="jTextMotivoSolicitud" alignment="3" min="-2" pref="28" max="-2" attributes="0"/>
+                                          <Component id="jCheckBoxOtroMotivo" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      </Group>
                                   </Group>
                               </Group>
                           </Group>
@@ -1042,7 +1048,7 @@
                 <Property name="text" type="java.lang.String" value="Motivo solicitud:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JComboBox" name="jComboBox2">
+            <Component class="javax.swing.JComboBox" name="jComboMotivos">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="12" style="1"/>
@@ -1069,6 +1075,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Solicitar"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton3ActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel36">
               <Properties>
@@ -1124,6 +1133,14 @@
               <Properties>
                 <Property name="toolTipText" type="java.lang.String" value=""/>
               </Properties>
+            </Component>
+            <Component class="javax.swing.JCheckBox" name="jCheckBoxOtroMotivo">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="otro:"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jCheckBoxOtroMotivoActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

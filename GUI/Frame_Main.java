@@ -24,6 +24,7 @@ import javax.swing.table.TableRowSorter;
 
 public class Frame_Main extends javax.swing.JFrame{
     
+    public int crearE=0;
     private int x,y;
     private Usuario usuario;
     private ValidarEspacios  validarEspacios = new  ValidarEspacios ();
@@ -135,7 +136,7 @@ public class Frame_Main extends javax.swing.JFrame{
         jCheckBox3 = new javax.swing.JCheckBox();
         jButtonPersonalizar = new javax.swing.JButton();
         jLabel28 = new javax.swing.JLabel();
-        jComboMotivos = new javax.swing.JComboBox<>();
+        jComboMotivos = new javax.swing.JComboBox<String>();
         jCalendar2 = new com.toedter.calendar.JCalendar();
         jButton3 = new javax.swing.JButton();
         jLabel36 = new javax.swing.JLabel();
@@ -145,11 +146,31 @@ public class Frame_Main extends javax.swing.JFrame{
         jLabelCargandoSE = new javax.swing.JLabel();
         jLabelRepeticion = new javax.swing.JLabel();
         jCheckBoxOtroMotivo = new javax.swing.JCheckBox();
+        crearEspacio = new javax.swing.JButton();
         Bienvenida = new javax.swing.JPanel();
         MensajeBienvenida = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         controlPanelTitle = new javax.swing.JLabel();
+        Administrar_Solicitudes = new javax.swing.JPanel();
+        jLabel30 = new javax.swing.JLabel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable();
+        jLabel31 = new javax.swing.JLabel();
+        jLabel32 = new javax.swing.JLabel();
+        jTextField2 = new javax.swing.JTextField();
+        Aceptar_sol_boton = new javax.swing.JButton();
+        Rechazar_sol_boton = new javax.swing.JButton();
+        Buscador = new javax.swing.JTextField();
+        jButton6 = new javax.swing.JButton();
+        jButton10 = new javax.swing.JButton();
+        Jcbox_espera = new javax.swing.JCheckBox();
+        Jcbox_aceptada = new javax.swing.JCheckBox();
+        Jcbox_cancelada = new javax.swing.JCheckBox();
+        Jcbox_rechazada = new javax.swing.JCheckBox();
+        Categorias = new javax.swing.JComboBox<String>();
+        jLabel9 = new javax.swing.JLabel();
+        jLabelCargandoAS = new javax.swing.JLabel();
         Estadisticas = new javax.swing.JPanel();
         jLabel33 = new javax.swing.JLabel();
         jMonthChooser1 = new com.toedter.calendar.JMonthChooser();
@@ -162,7 +183,7 @@ public class Frame_Main extends javax.swing.JFrame{
         jMonthChooser2 = new com.toedter.calendar.JMonthChooser();
         jYearChooser2 = new com.toedter.calendar.JYearChooser();
         jScrollPane7 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        jList1 = new javax.swing.JList<String>();
         jButton8 = new javax.swing.JButton();
         jScrollPane8 = new javax.swing.JScrollPane();
         jTextArea3 = new javax.swing.JTextArea();
@@ -784,7 +805,7 @@ public class Frame_Main extends javax.swing.JFrame{
         jLabel28.setText("Motivo solicitud:");
 
         jComboMotivos.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jComboMotivos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccion" }));
+        jComboMotivos.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccion" }));
 
         jCalendar2.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
@@ -828,6 +849,13 @@ public class Frame_Main extends javax.swing.JFrame{
             }
         });
 
+        crearEspacio.setText("Crear Espacio");
+        crearEspacio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                crearEspacioActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -835,14 +863,6 @@ public class Frame_Main extends javax.swing.JFrame{
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jSeparator12)
                 .addGap(89, 89, 89))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(31, 31, 31)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 795, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton9)
-                .addGap(164, 164, 164))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -906,6 +926,17 @@ public class Frame_Main extends javax.swing.JFrame{
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabelCargandoSE, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(70, 70, 70))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton9)
+                        .addGap(18, 18, 18)
+                        .addComponent(crearEspacio))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(31, 31, 31)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 795, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -915,8 +946,10 @@ public class Frame_Main extends javax.swing.JFrame{
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton9)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton9)
+                    .addComponent(crearEspacio))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1015,6 +1048,212 @@ public class Frame_Main extends javax.swing.JFrame{
 
         getContentPane().add(Bienvenida, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 30, 854, 520));
 
+        Administrar_Solicitudes.setBackground(new java.awt.Color(204, 204, 204));
+        Administrar_Solicitudes.setMinimumSize(new java.awt.Dimension(854, 520));
+
+        jLabel30.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel30.setText("Administrar Solicitudes");
+
+        jTable2 = new javax.swing.JTable(){
+            public boolean isCellEditable (int rowIndex, int colIndex){
+                return false;
+            }
+        };
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID_SOLICITUD", "USUARIOINTITUCIONAL", "FECHA_INICIO", "FECHA_TRMINA", "NOMBRE_ESPACIO", "ID_EDIFICIO", "ID_ESTADO", "FECHA_SOLICITUD"
+            }
+        ));
+        jTable2.getTableHeader().setReorderingAllowed(false);
+        jScrollPane5.setViewportView(jTable2);
+
+        jLabel31.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel31.setText("Aceptar o rechazar solicitud seleccionada:");
+
+        jLabel32.setText("Observaciones:");
+
+        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField2ActionPerformed(evt);
+            }
+        });
+
+        Aceptar_sol_boton.setText("Aceptar");
+        Aceptar_sol_boton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Aceptar_sol_botonActionPerformed(evt);
+            }
+        });
+
+        Rechazar_sol_boton.setText("Rechazar");
+        Rechazar_sol_boton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Rechazar_sol_botonActionPerformed(evt);
+            }
+        });
+
+        Buscador.setToolTipText("Buscar por nombre");
+        Buscador.setName(""); // NOI18N
+        Buscador.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BuscadorActionPerformed(evt);
+            }
+        });
+        Buscador.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                BuscadorKeyTyped(evt);
+            }
+        });
+
+        jButton6.setText("Buscar");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+
+        jButton10.setText("Cancelar");
+        jButton10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton10ActionPerformed(evt);
+            }
+        });
+
+        Tipo_estados.add(Jcbox_espera);
+        Jcbox_espera.setText("En espera");
+        Jcbox_espera.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Jcbox_esperaActionPerformed(evt);
+            }
+        });
+
+        Tipo_estados.add(Jcbox_aceptada);
+        Jcbox_aceptada.setText("Aceptada");
+        Jcbox_aceptada.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Jcbox_aceptadaActionPerformed(evt);
+            }
+        });
+
+        Tipo_estados.add(Jcbox_cancelada);
+        Jcbox_cancelada.setText("Cancelada");
+        Jcbox_cancelada.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Jcbox_canceladaActionPerformed(evt);
+            }
+        });
+
+        Tipo_estados.add(Jcbox_rechazada);
+        Jcbox_rechazada.setText("Rechazada");
+        Jcbox_rechazada.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Jcbox_rechazadaActionPerformed(evt);
+            }
+        });
+
+        Categorias.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "ID_SOLICITUD", "USUARIOINTITUCIONAL", "FECHA_INICIO", "FECHA_TRMINA", "NOMBRE_ESPACIO", "ID_EDIFICIO", "ID_ESTADO", "FECHA_SOLICITUD" }));
+        Categorias.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CategoriasActionPerformed(evt);
+            }
+        });
+
+        jLabel9.setText("Filtro:");
+
+        jLabelCargandoAS.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
+        jLabelCargandoAS.setText("5");
+
+        javax.swing.GroupLayout Administrar_SolicitudesLayout = new javax.swing.GroupLayout(Administrar_Solicitudes);
+        Administrar_Solicitudes.setLayout(Administrar_SolicitudesLayout);
+        Administrar_SolicitudesLayout.setHorizontalGroup(
+            Administrar_SolicitudesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(Administrar_SolicitudesLayout.createSequentialGroup()
+                .addContainerGap(43, Short.MAX_VALUE)
+                .addGroup(Administrar_SolicitudesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabelCargandoAS, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(Administrar_SolicitudesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(Administrar_SolicitudesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel32)
+                            .addGroup(Administrar_SolicitudesLayout.createSequentialGroup()
+                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 560, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(63, 63, 63)
+                                .addGroup(Administrar_SolicitudesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(Rechazar_sol_boton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(Aceptar_sol_boton, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jButton10, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(jLabel30)
+                            .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 768, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, Administrar_SolicitudesLayout.createSequentialGroup()
+                            .addComponent(jLabel31)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(Jcbox_rechazada)
+                            .addGap(15, 15, 15)
+                            .addComponent(Jcbox_cancelada)
+                            .addGap(18, 18, 18)
+                            .addComponent(Jcbox_aceptada)
+                            .addGap(18, 18, 18)
+                            .addComponent(Jcbox_espera))
+                        .addGroup(Administrar_SolicitudesLayout.createSequentialGroup()
+                            .addComponent(Buscador, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(jButton6)
+                            .addGap(31, 31, 31)
+                            .addGroup(Administrar_SolicitudesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel9)
+                                .addComponent(Categorias, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(141, 141, 141))))
+                .addContainerGap(43, Short.MAX_VALUE))
+        );
+        Administrar_SolicitudesLayout.setVerticalGroup(
+            Administrar_SolicitudesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(Administrar_SolicitudesLayout.createSequentialGroup()
+                .addGroup(Administrar_SolicitudesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(Administrar_SolicitudesLayout.createSequentialGroup()
+                        .addGap(32, 32, 32)
+                        .addComponent(jLabel30)
+                        .addGap(10, 10, 10))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Administrar_SolicitudesLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel9)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                .addGroup(Administrar_SolicitudesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Buscador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton6)
+                    .addComponent(Categorias, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(19, 19, 19)
+                .addGroup(Administrar_SolicitudesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(Administrar_SolicitudesLayout.createSequentialGroup()
+                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel31))
+                    .addGroup(Administrar_SolicitudesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(Jcbox_espera)
+                        .addComponent(Jcbox_aceptada)
+                        .addComponent(Jcbox_cancelada)
+                        .addComponent(Jcbox_rechazada)))
+                .addGap(6, 6, 6)
+                .addComponent(jLabel32)
+                .addGroup(Administrar_SolicitudesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(Administrar_SolicitudesLayout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(Administrar_SolicitudesLayout.createSequentialGroup()
+                        .addGap(19, 19, 19)
+                        .addComponent(Aceptar_sol_boton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(Rechazar_sol_boton)
+                        .addGap(13, 13, 13)
+                        .addComponent(jButton10)))
+                .addGap(18, 18, 18)
+                .addComponent(jLabelCargandoAS, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(21, Short.MAX_VALUE))
+        );
+
+        getContentPane().add(Administrar_Solicitudes, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 30, -1, -1));
+
         Estadisticas.setBackground(new java.awt.Color(204, 204, 204));
         Estadisticas.setMinimumSize(new java.awt.Dimension(854, 520));
         Estadisticas.setName(""); // NOI18N
@@ -1040,10 +1279,10 @@ public class Frame_Main extends javax.swing.JFrame{
 
         jLabel35.setText("Tipo de espacio:");
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
+        jList1.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
+            public Object getElementAt(int i) { return strings[i]; }
         });
         jScrollPane7.setViewportView(jList1);
 
@@ -1708,6 +1947,23 @@ public class Frame_Main extends javax.swing.JFrame{
         }  
     }//GEN-LAST:event_jCheckBoxOtroMotivoActionPerformed
 
+    private void crearEspacioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crearEspacioActionPerformed
+        jLabelCargandoSE.setText("Cargando...");
+        crearE=1;
+          try{
+            
+             Espacio espacio = new Espacio();
+             Frame_DetallesEspacio frame_DetallesEspacio= new Frame_DetallesEspacio();
+             frame_DetallesEspacio.setVisible(true);     
+             this.enable(false);
+             frame_DetallesEspacio.setVisible(true); 
+             jLabelCargandoSE.setText("");
+             frame_DetallesEspacio.crearEspacio();
+          }catch (Exception e){
+              System.out.println(e);
+          }
+    }//GEN-LAST:event_crearEspacioActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1766,6 +2022,7 @@ public class Frame_Main extends javax.swing.JFrame{
     private javax.swing.JPanel Solicitar_Espacio;
     private javax.swing.ButtonGroup Tipo_estados;
     private javax.swing.JLabel controlPanelTitle;
+    private javax.swing.JButton crearEspacio;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton6;

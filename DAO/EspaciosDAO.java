@@ -8,6 +8,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import GUI.Frame_DetallesEspacio;
 
 public class EspaciosDAO {
 
@@ -30,7 +31,48 @@ public class EspaciosDAO {
             this.DB_PASSWD="uC102*lPg";
         }
     }
-    
+        public int crearEspacio(Usuario par,Espacio Espacio){
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        try {
+            resultSet = null;
+            seleccionarUser(par.getTipoUsuario());
+            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
+            statement = connection.createStatement();
+            DB_USER= null;
+            DB_PASSWD=null;
+            
+            resultSet = statement.executeQuery("insert into ESPACIOS('"
+                    +Espacio.getNombre_tipoespacio()+",'"
+                    +Espacio.getNombre_espacio()+"',"
+                    +Espacio.getNum_Espacio()+","
+                    +Espacio.getNum_edificio()+",'"
+                    +Espacio.getNombre_edificio()+"','"
+                    +Espacio.getCorreo_encargado()+"','"
+                    +Espacio.getNombre_encargado()+"',"
+                    +Espacio.getEstado()+","
+                    +Espacio.getCapacidad()       
+                    +")");
+            if(resultSet.next()){               
+                return Integer.valueOf(resultSet.getString(1));
+            }else{
+                return -4;
+            }
+        } catch (Exception e) {
+            System.out.println("Error en SQL" + e);
+            return -4;
+        } finally {
+            try {
+                resultSet.close();
+                statement.close();
+                connection.close();
+                //return null;
+            } catch (Exception ex) {
+
+            }
+        }
+    }
 //    public boolean crear(Usuario object) {
 //        Connection connection = null;
 //        Statement statement = null;
@@ -290,7 +332,60 @@ public class EspaciosDAO {
         }
 
     }
-     
+    
+    public String[][] buscarEspacio(Usuario par, Espacio esp) throws SQLException{
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        //Espacio espacio =null;
+        try{
+            resultSet = null;
+            seleccionarUser(par.getTipoUsuario());
+            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
+            statement = connection.createStatement();
+            DB_USER = null;
+            DB_PASSWD = null;
+            resultSet = statement.executeQuery("SELECT ESPACIOS.NUM_ESPACIO, ESPACIOS.NOMBRE_ESPACIO, ESPACIOS.ID_EDIFICIO "
+                    + "FROM ESPACIOS"
+                    + "WHERE NUM_ESPACIO ='" + esp.getNum_Espacio() + "'" + "OR NOMBRE_ESPACIO='" + esp.getNombre_espacio() + "'");
+            if (resultSet.next()) {
+
+                return obtenerEspacios(resultSet);
+            } else {
+                return null;
+            }
+        } catch (Exception ex) {
+            System.out.println("Error en SQL" + ex);
+            return null;
+        } finally {
+            try {
+                resultSet.close();
+                statement.close();
+                connection.close();
+                //return null;
+            } catch (Exception ex) {
+
+            }
+        }
+    }
+    
+    public String[][] obtenerEspacios(ResultSet resultSet) throws SQLException{
+        int fila = 0;
+        resultSet.afterLast();
+        resultSet.previous();
+
+        int tamanio = resultSet.getRow();
+        resultSet.absolute(0);
+
+        String[][] tabla = new String[tamanio][1];
+        while (resultSet.next()) {
+            tabla[fila][0] = resultSet.getString(1) + "/" + resultSet.getString(2);
+            fila++;
+        }
+
+        return tabla;
+    
+    }
     
 
 }

@@ -519,7 +519,7 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
         int result = JOptionPane.showConfirmDialog(null, "¿Desea cerrar el esta ventana?","Exit",dialog);
         
         if(result == 0){
-            this.fraim.enable(true);            
+            this.fraim.setEnabled(true);            
             this.dispose();
             
         }

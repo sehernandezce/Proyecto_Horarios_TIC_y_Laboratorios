@@ -36,6 +36,42 @@ public class SolicitudDAO {
             this.DB_PASSWD="uC102*lPg";
         }
     }
+    
+    public String[][] leerSolicitudesEspacio(Usuario par, int idEspacio){// buscar las solicitudes activas dependiendo el estado, tipo de usuario y si están activas
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        
+        try {
+            resultSet = null;
+            seleccionarUser(par.getTipoUsuario());
+            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
+            statement = connection.createStatement();
+            DB_USER=null;
+            DB_PASSWD=null;
+            resultSet = statement.executeQuery("");//En proceso
+            if(resultSet.next()){
+                
+                return ObtenerData_solicitudes(resultSet);
+            }else{
+                return null;
+            }
+        } catch (Exception ex) {
+            System.out.println("Error en SQL" + ex);
+            return null;
+        } finally {
+            try {
+                resultSet.close();
+                statement.close();
+                connection.close();
+                //return null;
+            } catch (Exception ex) {
+
+            }
+        }
+        
+     
+    }
 
     public String[][] leerSolicitudes(Usuario par, int tipo_e) { // buscar las solicitudes dependiendo el estado y tipo de usuario
         Connection connection = null;

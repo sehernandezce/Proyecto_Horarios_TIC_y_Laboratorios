@@ -15,7 +15,7 @@ import java.sql.SQLException;
  */
 public class Validar_administrar_solicitud {
 
-    private SolicitudDAO solicitud= new SolicitudDAO();
+    private SolicitudDAO solicitud = new SolicitudDAO();
     
     public Validar_administrar_solicitud() {
     }

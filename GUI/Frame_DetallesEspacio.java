@@ -5,6 +5,7 @@ import Control.ValidarInventario;
 import Entidad.Espacio;
 import Entidad.Inventario;
 import Entidad.Usuario;
+import DAO.EspaciosDAO;
 import java.awt.Color;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -17,12 +18,15 @@ import javax.swing.table.DefaultTableModel;
 
 public class Frame_DetallesEspacio extends javax.swing.JFrame {
 
+    public Espacio espacioC = new Espacio();
     private int x,y;
     private Usuario usuario;
     private Frame_Main fraim;
     private String verifinv="0";
+    private ValidarEspacios  validarEspacio = new  ValidarEspacios ();
     private ValidarInventario validarInventario=new ValidarInventario();    
     private final ArrayList<String> invDelete = new ArrayList<String>();
+    private int crearE=fraim.crearE;
     
     public Frame_DetallesEspacio() {
         initComponents();
@@ -34,7 +38,26 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
         habtext(false);
       
     }
-
+    
+    void crearEspacio() throws SQLException{
+        boolean existe=false;
+        
+        jButtonGuardar.enable(existe);
+        espacioC.setId_espacio(Integer.valueOf(jTextField2.getText()));
+        espacioC.setNombre_espacio(jTextNombreEspacio2.getText());
+        espacioC.setNum_Espacio(jTextNumeroSalon1.getText());
+        espacioC.setNombre_edificio(jTextNombreEdificio.getText());
+        espacioC.setNum_edificio(Integer.valueOf(jTextNumeroEdificio3.getText()));
+        espacioC.setNombre_encargado(jTextCorreoEncargado1.getText());
+        espacioC.setCorreo_encargado(jTextCorreoEncargado.getText());
+        espacioC.setNombre_tipoespacio(jTextField3.getText());
+        existe = validarEspacio.verificaExistencia(usuario,espacioC);
+        if (existe==false){
+            jButtonGuardar.enable(existe);
+        }
+        else{JOptionPane.showMessageDialog(null, "El espacio ya esta creado",  "Valor no valido", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -422,8 +445,11 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
     
    
     private void guardar() throws SQLException{
-         boolean verif=false;
-          
+        boolean verif=false;
+        if(1==crearE){
+            EspaciosDAO espacioDao= new EspaciosDAO();
+            espacioDao.crearEspacio(usuario,espacioC);
+        }  
         try{
             Integer.valueOf(jTextNumeroEdificio3.getText());
             Integer.valueOf(jTextNumeroSalon1.getText());

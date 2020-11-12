@@ -24,6 +24,7 @@ import javax.swing.table.TableRowSorter;
 
 public class Frame_Main extends javax.swing.JFrame{
     
+    public int crearE=0;
     private int x,y;
     private Usuario usuario;
     private ValidarEspacios  validarEspacios = new  ValidarEspacios ();
@@ -116,7 +117,7 @@ public class Frame_Main extends javax.swing.JFrame{
         jCheckBox3 = new javax.swing.JCheckBox();
         jButtonPersonalizar = new javax.swing.JButton();
         jLabel28 = new javax.swing.JLabel();
-        jComboMotivos = new javax.swing.JComboBox<>();
+        jComboMotivos = new javax.swing.JComboBox<String>();
         jCalendar2 = new com.toedter.calendar.JCalendar();
         jButton3 = new javax.swing.JButton();
         jLabel36 = new javax.swing.JLabel();
@@ -126,6 +127,7 @@ public class Frame_Main extends javax.swing.JFrame{
         jLabelCargandoSE = new javax.swing.JLabel();
         jLabelRepeticion = new javax.swing.JLabel();
         jCheckBoxOtroMotivo = new javax.swing.JCheckBox();
+        crearEspacio = new javax.swing.JButton();
         Bienvenida = new javax.swing.JPanel();
         MensajeBienvenida = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -147,7 +149,7 @@ public class Frame_Main extends javax.swing.JFrame{
         Jcbox_aceptada = new javax.swing.JCheckBox();
         Jcbox_cancelada = new javax.swing.JCheckBox();
         Jcbox_rechazada = new javax.swing.JCheckBox();
-        Categorias = new javax.swing.JComboBox<>();
+        Categorias = new javax.swing.JComboBox<String>();
         jLabel9 = new javax.swing.JLabel();
         jLabelCargandoAS = new javax.swing.JLabel();
         Estadisticas = new javax.swing.JPanel();
@@ -162,7 +164,7 @@ public class Frame_Main extends javax.swing.JFrame{
         jMonthChooser2 = new com.toedter.calendar.JMonthChooser();
         jYearChooser2 = new com.toedter.calendar.JYearChooser();
         jScrollPane7 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        jList1 = new javax.swing.JList<String>();
         jButton8 = new javax.swing.JButton();
         jScrollPane8 = new javax.swing.JScrollPane();
         jTextArea3 = new javax.swing.JTextArea();
@@ -645,7 +647,7 @@ public class Frame_Main extends javax.swing.JFrame{
         jLabel28.setText("Motivo solicitud:");
 
         jComboMotivos.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jComboMotivos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccion" }));
+        jComboMotivos.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccion" }));
 
         jCalendar2.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
@@ -689,6 +691,13 @@ public class Frame_Main extends javax.swing.JFrame{
             }
         });
 
+        crearEspacio.setText("Crear Espacio");
+        crearEspacio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                crearEspacioActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -696,14 +705,6 @@ public class Frame_Main extends javax.swing.JFrame{
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jSeparator12)
                 .addGap(89, 89, 89))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(31, 31, 31)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 795, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton9)
-                .addGap(164, 164, 164))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -767,6 +768,17 @@ public class Frame_Main extends javax.swing.JFrame{
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabelCargandoSE, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(70, 70, 70))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton9)
+                        .addGap(18, 18, 18)
+                        .addComponent(crearEspacio))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(31, 31, 31)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 795, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -776,8 +788,10 @@ public class Frame_Main extends javax.swing.JFrame{
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton9)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton9)
+                    .addComponent(crearEspacio))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -982,7 +996,7 @@ public class Frame_Main extends javax.swing.JFrame{
             }
         });
 
-        Categorias.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ID_SOLICITUD", "USUARIOINTITUCIONAL", "FECHA_INICIO", "FECHA_TRMINA", "NOMBRE_ESPACIO", "ID_EDIFICIO", "ID_ESTADO", "FECHA_SOLICITUD" }));
+        Categorias.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "ID_SOLICITUD", "USUARIOINTITUCIONAL", "FECHA_INICIO", "FECHA_TRMINA", "NOMBRE_ESPACIO", "ID_EDIFICIO", "ID_ESTADO", "FECHA_SOLICITUD" }));
         Categorias.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CategoriasActionPerformed(evt);
@@ -1107,10 +1121,10 @@ public class Frame_Main extends javax.swing.JFrame{
 
         jLabel35.setText("Tipo de espacio:");
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
+        jList1.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
+            public Object getElementAt(int i) { return strings[i]; }
         });
         jScrollPane7.setViewportView(jList1);
 
@@ -1779,6 +1793,23 @@ public class Frame_Main extends javax.swing.JFrame{
         }  
     }//GEN-LAST:event_jCheckBoxOtroMotivoActionPerformed
 
+    private void crearEspacioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crearEspacioActionPerformed
+        jLabelCargandoSE.setText("Cargando...");
+        crearE=1;
+          try{
+            
+             Espacio espacio = new Espacio();
+             Frame_DetallesEspacio frame_DetallesEspacio= new Frame_DetallesEspacio();
+             frame_DetallesEspacio.setVisible(true);     
+             this.enable(false);
+             frame_DetallesEspacio.setVisible(true); 
+             jLabelCargandoSE.setText("");
+             frame_DetallesEspacio.crearEspacio();
+          }catch (Exception e){
+              System.out.println(e);
+          }
+    }//GEN-LAST:event_crearEspacioActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1837,6 +1868,7 @@ public class Frame_Main extends javax.swing.JFrame{
     private javax.swing.JPanel Solicitar_Espacio;
     private javax.swing.ButtonGroup Tipo_estados;
     private javax.swing.JLabel controlPanelTitle;
+    private javax.swing.JButton crearEspacio;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton6;

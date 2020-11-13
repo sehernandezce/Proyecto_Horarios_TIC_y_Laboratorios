@@ -34,8 +34,15 @@ public class Validar_administrar_solicitud {
     public int cambiarEstado(Usuario par, String tipo_e, String id_solicitud, String Observacion, String tipeA) {
 
         int tipoE = convertirTipo_e(tipo_e);
-        if(tipoE==convertirTipo_e(tipeA)){
+        int tipoEA=convertirTipo_e(tipeA);
+        if(tipoE==tipoEA){
              return -5;
+        }else if(tipoE==3 && tipoEA==1){
+            return -5;
+        }else if(tipoE==4 && tipoEA==3){
+            return -5;
+        }else if((tipoE==1 || tipoE==3) && tipoEA==4){
+            return -5;
         }else if (tipoE == 1) {
             return solicitud.cambiarEstado(par, tipoE, id_solicitud, Observacion);
         } else if (tipoE == 3) {

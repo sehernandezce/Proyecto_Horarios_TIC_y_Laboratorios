@@ -115,17 +115,34 @@ public class SolicitudDAO {
         int tamanio = resultSet.getRow();
         resultSet.absolute(0);
 
-        String[][] tabla = new String[tamanio][8];
+        String[][] tabla = new String[tamanio][10];
         while (resultSet.next()) {
 
-            for (int i = 1; i <= 8; i++) {
-                tabla[fila][i - 1] = resultSet.getString(i);
-
+            for (int i = 1; i < 10; i++) {
+                if(i!=3){
+                    tabla[fila][i - 1] = resultSet.getString(i);
+                }else{
+                    tabla[fila][i - 1] = convertirTipo_e(Integer.parseInt(resultSet.getString(i)));
+                }
             }
+            tabla[fila][9] ="Ver mas";
             fila++;
         }
 
         return tabla;
+    }
+    private String convertirTipo_e(int estado) {
+        if (estado==1) {
+            return "Aceptada";
+        } else if (estado==2) {
+            return "Espera";
+        } else if (estado==3) {
+            return "Rechazada";
+        } else if (estado==4) {
+            return "Cancelada";
+        } else {
+            return null;
+        }
     }
 
     public int cambiarEstado(Usuario par, int tipo_e, String id_solicitud, String obs) { // buscar las solicitudes dependiendo el estado y tipo de usuario

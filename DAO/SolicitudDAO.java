@@ -125,7 +125,7 @@ public class SolicitudDAO {
                     tabla[fila][i - 1] = convertirTipo_e(Integer.parseInt(resultSet.getString(i)));
                 }
             }
-            tabla[fila][9] ="Ver mas";
+            tabla[fila][9] ="Ver más";
             fila++;
         }
 

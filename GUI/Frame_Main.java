@@ -15,6 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.mail.internet.AddressException;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.RowFilter;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -701,7 +702,7 @@ public class Frame_Main extends javax.swing.JFrame{
         Administrar_Solicitudes.add(Jcbox_rechazada, new org.netbeans.lib.awtextra.AbsoluteConstraints(414, 275, -1, -1));
 
         Categorias.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        Categorias.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ID SOLICITUD ", "FECHA SOLICITUD", "ESTADO", "FECHA DE MODIFICACIÓN", "USUARIOINTITUCIONAL", "EDIFICIO", "FECHA INICIO", "FECHA TERMINA", "OBSERVACIONES" }));
+        Categorias.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selección", "ID Solicitud", "Fecha solicitud", "Estado", "Fecha de modificación", "Usuario institucional", "Edificio", "Fecha inicio", "Fecha termina", "Observaciones" }));
         Categorias.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CategoriasActionPerformed(evt);
@@ -1228,7 +1229,8 @@ public class Frame_Main extends javax.swing.JFrame{
     
     
     private void administrar_Solicitudes(){ //Para mostrar las solicitudes en el administrador
-        ocultar_todosPaneles();   
+        ocultar_todosPaneles(); 
+        Categorias.setSelectedIndex(0);   
         if(usuario.getTipoUsuario() == 1 || usuario.getTipoUsuario() == 4){
             Aceptar_sol_boton.setVisible(false);
             Rechazar_sol_boton.setVisible(false);
@@ -1274,10 +1276,11 @@ public class Frame_Main extends javax.swing.JFrame{
     }
       
        private void llenarTabla_solicitudes(String tipo_e) throws SQLException{//modelo tabla espacios
+        Categorias.setSelectedIndex(0);
         Object[][] tabla= validarSolicitudes.llenarMatriz(usuario, tipo_e);
         jTable2.setModel(new javax.swing.table.DefaultTableModel( //fechas con horas
         tabla, new String [] {
-        "ID SOLICITUD", "FECHA SOLICITUD", "ESTADO","FECHA DE MODIFICACIÓN","USUARIOINTITUCIONAL", "EDIFICIO","FECHA INICIO", "FECHA TERMINA", "OBSERVACIONES","INFORMACIÓN ADICIONAL"
+        "ID SOLICITUD", "FECHA SOLICITUD", "ESTADO","FECHA DE MODIFICACIÓN","USUARIO INTITUCIONAL", "EDIFICIO","FECHA INICIO", "FECHA TERMINA", "OBSERVACIONES","INFORMACIÓN ADICIONAL"
          
             }
         ));
@@ -1329,26 +1332,28 @@ public class Frame_Main extends javax.swing.JFrame{
       }
       
       public int categoria_fil(String categoria){
-          if(categoria.equals("ID SOLICITUD ")){
+          if(categoria.equals("ID Solicitud")){
               return 1;
-          }else if(categoria.equals("FECHA SOLICITUD")){
+          }else if(categoria.equals("Fecha solicitud")){
               return 2;
-          }else if(categoria.equals("ESTADO")){
+          }else if(categoria.equals("Estado")){
               return 3;
-          }else if(categoria.equals("FECHA DE MODIFICACIÓN")){
+          }else if(categoria.equals("Fecha de modificación")){
               return 4;
-          }else if(categoria.equals("USUARIOINTITUCIONAL")){
+          }else if(categoria.equals("Usuario institucional")){
               return 5;
-          }else if(categoria.equals("EDIFICIO")){
+          }else if(categoria.equals("Edificio")){
               return 6;
-          }else if(categoria.equals("FECHA INICIO")){
+          }else if(categoria.equals("Fecha inicio")){
               return 7;
-          }else if(categoria.equals("FECHA TERMINA")){
+          }else if(categoria.equals("Fecha termina")){
               return 8;
-          }else if(categoria.equals("OBSERVACIONES")){
+          }else if(categoria.equals("Observaciones")){
               return 9;
+          }else if (categoria.equals("Selección")){
+              return 10;
           }else{
-              return 0;
+               return 0;
           }
    
       }
@@ -1662,7 +1667,7 @@ public class Frame_Main extends javax.swing.JFrame{
     }//GEN-LAST:event_CategoriasActionPerformed
 
     private void Jcbox_rechazadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Jcbox_rechazadaActionPerformed
-        try {
+        try {          
             llenarTabla_solicitudes("Rechazada");
         } catch (SQLException ex) {
             Logger.getLogger(Frame_Main.class.getName()).log(Level.SEVERE, null, ex);
@@ -1690,20 +1695,32 @@ public class Frame_Main extends javax.swing.JFrame{
             llenarTabla_solicitudes("Aceptada");
         } catch (SQLException ex) {
             Logger.getLogger(Frame_Main.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }       
+       
     }//GEN-LAST:event_Jcbox_aceptadaActionPerformed
 
     private void BuscadorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BuscadorKeyTyped
-        String categoria=(String)Categorias.getSelectedItem();
-        System.out.println(categoria_fil(categoria));
-        Buscador.addKeyListener(new KeyAdapter(){
+        String categoria=(String)Categorias.getSelectedItem();       
+        if(categoria_fil(categoria)!=10){
+            Buscador.addKeyListener(new KeyAdapter(){
+             @Override
+             public void keyReleased(KeyEvent ke) {
+                 TRSFiltro.setRowFilter(RowFilter.regexFilter("(?i)"+Buscador.getText(), (categoria_fil(categoria))));
+             }
+         });
+         TRSFiltro = new TableRowSorter(jTable2.getModel());
+         jTable2.setRowSorter(TRSFiltro); 
+        }else{
+            Buscador.addKeyListener(new KeyAdapter(){
             @Override
             public void keyReleased(KeyEvent ke) {
-                TRSFiltro.setRowFilter(RowFilter.regexFilter("(?i)"+Buscador.getText(), (categoria_fil(categoria)-1)));
+                TRSFiltro.setRowFilter(RowFilter.regexFilter("(?i)"+"Ver más", (categoria_fil(categoria))));
             }
         });
         TRSFiltro = new TableRowSorter(jTable2.getModel());
         jTable2.setRowSorter(TRSFiltro);
+        }
+        
     }//GEN-LAST:event_BuscadorKeyTyped
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed

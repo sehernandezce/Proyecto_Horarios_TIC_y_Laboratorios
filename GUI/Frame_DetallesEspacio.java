@@ -26,7 +26,7 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
     private ValidarEspacios  validarEspacio = new  ValidarEspacios ();
     private ValidarInventario validarInventario=new ValidarInventario();    
     private final ArrayList<String> invDelete = new ArrayList<String>();
-    private int crearE=fraim.crearE;
+    //private int crearE=fraim.crearE;
     
     public Frame_DetallesEspacio() {
         initComponents();
@@ -446,10 +446,10 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
    
     private void guardar() throws SQLException{
         boolean verif=false;
-        if(1==crearE){
-            EspaciosDAO espacioDao= new EspaciosDAO();
-            espacioDao.crearEspacio(usuario,espacioC);
-        }  
+//        if(1==crearE){
+//            EspaciosDAO espacioDao= new EspaciosDAO();
+//            espacioDao.crearEspacio(usuario,espacioC);
+//        }  
         try{
             Integer.valueOf(jTextNumeroEdificio3.getText());
             Integer.valueOf(jTextNumeroSalon1.getText());

@@ -103,7 +103,7 @@ public class Frame_PersonalizarRepeticion extends javax.swing.JFrame {
         panelRepetición = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jComboSelectorDia = new javax.swing.JComboBox<>();
+        jComboSelectorDia = new javax.swing.JComboBox<String>();
         jCheckBoxLunes = new javax.swing.JCheckBox();
         jCheckBoxMartes = new javax.swing.JCheckBox();
         jCheckBoxMiercoles = new javax.swing.JCheckBox();
@@ -151,7 +151,7 @@ public class Frame_PersonalizarRepeticion extends javax.swing.JFrame {
         jLabel1.setText("Fecha termina: ");
         panelRepetición.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, -1, -1));
 
-        jComboSelectorDia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione uno...", "Diario", "Semanalmente", "Mensualmente" }));
+        jComboSelectorDia.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione uno...", "Diario", "Semanalmente", "Mensualmente" }));
         jComboSelectorDia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboSelectorDiaActionPerformed(evt);

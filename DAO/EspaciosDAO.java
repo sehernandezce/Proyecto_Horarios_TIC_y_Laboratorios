@@ -42,15 +42,13 @@ public class EspaciosDAO {
             statement = connection.createStatement();
             DB_USER= null;
             DB_PASSWD=null;
-            
-            resultSet = statement.executeQuery("insert into ESPACIOS('"
-                    +Espacio.getNombre_tipoespacio()+",'"
-                    +Espacio.getNombre_espacio()+"',"
-                    +Espacio.getNum_Espacio()+","
+            //VALUES ('453', '1', '2', 'lab prueba', '123', '1', '312');
+            resultSet = statement.executeQuery("INSERT INTO `Horarios_Tics_y_Laboratorios`.`ESPACIOS`(`ID_EDIFICIO`, `ID_TIPOESPACIO`, `ID_PERSONA`, `NOMBRE_ESPACIO`, `NUM_ESPACIO`, `ACTIVO`, `CAPACIDAD`) VALUES ('"
                     +Espacio.getNum_edificio()+",'"
-                    +Espacio.getNombre_edificio()+"','"
-                    +Espacio.getCorreo_encargado()+"','"
-                    +Espacio.getNombre_encargado()+"',"
+                    +Espacio.getNombre_tipoespacio()+"',"
+                    +Espacio.getNombre_encargado()+","
+                    +Espacio.getNombre_espacio()+",'"
+                    +Espacio.getNum_Espacio()+"',"
                     +Espacio.getEstado()+","
                     +Espacio.getCapacidad()       
                     +")");
@@ -333,59 +331,55 @@ public class EspaciosDAO {
 
     }
     
-    public String[][] buscarEspacio(Usuario par, Espacio esp) throws SQLException{
+    public int buscarEspacio(Usuario par, Espacio esp) throws SQLException {
         Connection connection = null;
         Statement statement = null;
-        ResultSet resultSet = null;
-        //Espacio espacio =null;
+        ResultSet res= null;
+        
+        String sql1 = "select count(ESPACIOS.NUM_ESPACIO)FROM ESPACIOS WHERE NUM_ESPACIO = '"+ esp.getNum_Espacio() + "' || NOMBRE_ESPACIO='" + esp.getNombre_espacio()+ "'";
+
         try{
-            resultSet = null;
             seleccionarUser(par.getTipoUsuario());
             connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
             statement = connection.createStatement();
+            res= statement.executeQuery(sql1);
             DB_USER = null;
             DB_PASSWD = null;
-            resultSet = statement.executeQuery("SELECT ESPACIOS.NUM_ESPACIO, ESPACIOS.NOMBRE_ESPACIO, ESPACIOS.ID_EDIFICIO "
-                    + "FROM ESPACIOS"
-                    + "WHERE NUM_ESPACIO ='" + esp.getNum_Espacio() + "'" + "OR NOMBRE_ESPACIO='" + esp.getNombre_espacio() + "'");
-            if (resultSet.next()) {
-
-                return obtenerEspacios(resultSet);
-            } else {
-                return null;
+            if (res.getInt(1) == 0) {
+                return res.getInt(1);
             }
+            
         } catch (Exception ex) {
-            System.out.println("Error en SQL" + ex);
-            return null;
+            System.out.println("Error: " + ex);
         } finally {
             try {
-                resultSet.close();
+                res.close();
                 statement.close();
                 connection.close();
                 //return null;
             } catch (Exception ex) {
-
+                System.out.println("Error: " + ex);
             }
         }
+        return res.getInt(1);
     }
     
-    public String[][] obtenerEspacios(ResultSet resultSet) throws SQLException{
-        int fila = 0;
-        resultSet.afterLast();
-        resultSet.previous();
-
-        int tamanio = resultSet.getRow();
-        resultSet.absolute(0);
-
-        String[][] tabla = new String[tamanio][1];
-        while (resultSet.next()) {
-            tabla[fila][0] = resultSet.getString(1) + "/" + resultSet.getString(2);
-            fila++;
-        }
-
-        return tabla;
     
-    }
-    
-
+//    public String[][] obtenerEspacios(ResultSet resultSet) throws SQLException{
+//        int fila = 0;
+//        resultSet.afterLast();
+//        resultSet.previous();
+//
+//        int tamanio = resultSet.getRow();
+//        resultSet.absolute(0);
+//
+//        String[][] tabla = new String[tamanio][1];
+//        while (resultSet.next()) {
+//            tabla[fila][0] = resultSet.getString(1) + "/" + resultSet.getString(2);
+//            fila++;
+//        }
+//
+//        return tabla;
+//    
+//    }
 }

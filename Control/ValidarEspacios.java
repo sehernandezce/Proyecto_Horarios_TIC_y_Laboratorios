@@ -65,23 +65,15 @@ public class ValidarEspacios {
     public void borrarEspacio(Usuario par, String idEspacio){
         espacioDao.borrarEspacio(par,idEspacio);
     }
-    public boolean verificaExistencia(Usuario par, Espacio esp) throws SQLException {
-        //Espacio espacio = new Espacio();
+    public boolean verificaExistencia(Usuario par, Espacio esp) throws SQLException{
+    //Espacio espacio = new Espacio();
         boolean resultado = false;
-        String r[][] = espacioDao.buscarEspacio(par, esp);
-        int i = 0;
-        while (i <= r.length) {
-            if (r[i][0] == esp.getNum_Espacio()) {
-                resultado = true;
-            } else {
-                if (r[i][1] == esp.getNombre_espacio()) {
-                    resultado = true;
-                } else {
-                    resultado = false;
-                }
-            }
-            i++;
+        if (espacioDao.buscarEspacio(par, esp) == 0) {
+            return false;
+        } else {
+            
+            System.out.print(resultado);
+            return true;
         }
-        return resultado;
     }
 }

@@ -264,6 +264,7 @@ public class Frame_DetalleSolicitud extends javax.swing.JFrame {
         }else{
              jTextNombreEspacio2.setText(esp.getNombre_espacio());
         }
+        
         jTextField2.setText(String.valueOf(esp.getId_espacio()));
         jTextField3.setText(esp.getNombre_tipoespacio());
         jTextCorreoEncargado.setText(esp.getCorreo_encargado());
@@ -271,7 +272,8 @@ public class Frame_DetalleSolicitud extends javax.swing.JFrame {
         jTextNumeroSalon1.setText(esp.getNum_Espacio());
         jTextNombreEdificio.setText(esp.getNombre_edificio());
         jTextNumeroEdificio3.setText(String.valueOf(esp.getNum_edificio()));     
-        jTextCapacidad.setText(String.valueOf(esp.getCapacidad()));  
+        jTextCapacidad.setText(String.valueOf(esp.getCapacidad())); 
+        
     }
     
       

@@ -20,13 +20,17 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
 
     public Espacio espacioC = new Espacio();
     private int x,y;
+    boolean existe=false;
+    String TipoC;
     private Usuario usuario;
     private Frame_Main fraim;
     private String verifinv="0";
     private ValidarEspacios  validarEspacio = new  ValidarEspacios ();
     private ValidarInventario validarInventario=new ValidarInventario();    
     private final ArrayList<String> invDelete = new ArrayList<String>();
-    //private int crearE=fraim.crearE;
+
+    private int Crear;
+
     
     public Frame_DetallesEspacio() {
         initComponents();
@@ -39,23 +43,18 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
       
     }
     
-    void crearEspacio() throws SQLException{
-        boolean existe=false;
+    void crearEspacio(String tipo) throws SQLException{
         
-        jButtonGuardar.enable(existe);
-        espacioC.setId_espacio(Integer.valueOf(jTextField2.getText()));
-        espacioC.setNombre_espacio(jTextNombreEspacio2.getText());
-        espacioC.setNum_Espacio(jTextNumeroSalon1.getText());
-        espacioC.setNombre_edificio(jTextNombreEdificio.getText());
-        espacioC.setNum_edificio(Integer.valueOf(jTextNumeroEdificio3.getText()));
-        espacioC.setNombre_encargado(jTextCorreoEncargado1.getText());
-        espacioC.setCorreo_encargado(jTextCorreoEncargado.getText());
-        espacioC.setNombre_tipoespacio(jTextField3.getText());
-        existe = validarEspacio.verificaExistencia(usuario,espacioC);
+        System.out.println(tipo + " espacio");
+        habtext(true);
+        jButtonGuardar.enable(true);
+        Crear=1;
+        TipoC=tipo;
         if (existe==false){
-            jButtonGuardar.enable(existe);
+            jButtonGuardar.enable(!existe);
         }
         else{JOptionPane.showMessageDialog(null, "El espacio ya esta creado",  "Valor no valido", JOptionPane.INFORMATION_MESSAGE);
+        Crear =0;
         }
     }
     /**
@@ -283,6 +282,11 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
 
         jTextField3.setDisabledTextColor(new java.awt.Color(69, 73, 74));
         jTextField3.setEnabled(false);
+        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField3ActionPerformed(evt);
+            }
+        });
         paneldetallesInventario.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 70, 150, 30));
         paneldetallesInventario.add(jLabelCargandoe, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 560, 100, 20));
 
@@ -357,11 +361,12 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
 //             return false;
 //         }
    
-     private void habtext(boolean b){          
+     void habtext(boolean b){          
         jButtonGuardar.setVisible(b);
         jLabelAñadir.setVisible(b);
         jLabelEliminar1.setVisible(b);         
          habilitarControles(jTextNombreEspacio2,b);
+         //habilitarControles(jTextField3,b);
          habilitarControles(jTextCorreoEncargado,b);
          habilitarControles(jTextCorreoEncargado1,b);
          habilitarControles(jTextCapacidad,b);
@@ -377,7 +382,7 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
         
         this.usuario=u;
         this.fraim = frame;
-        jTextCorreoEncargado.setText(esp.getNombre_tipoespacio());
+        jTextCorreoEncargado.setText(esp.getCorreo_encargado());
         if(esp.getNombre_espacio().equals(null)){
              jTextNombreEspacio2.setText(" ");
         }else{
@@ -390,7 +395,8 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
         jTextNumeroSalon1.setText(esp.getNum_Espacio());
         jTextNombreEdificio.setText(esp.getNombre_edificio());
         jTextNumeroEdificio3.setText(String.valueOf(esp.getNum_edificio()));     
-        jTextCapacidad.setText(String.valueOf(esp.getCapacidad()));       
+        jTextCapacidad.setText(String.valueOf(esp.getCapacidad())); 
+        
         
         if(esp.getEstado()){
             jRadioBActivo.setSelected(true);
@@ -414,7 +420,7 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
         }
     }
     
-    private void habilitarEdit(){
+    void habilitarEdit(){
         if(usuario.getTipoUsuario()==2){
           habtext(true);           
         }
@@ -446,10 +452,25 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
    
     private void guardar() throws SQLException{
         boolean verif=false;
-//        if(1==crearE){
-//            EspaciosDAO espacioDao= new EspaciosDAO();
-//            espacioDao.crearEspacio(usuario,espacioC);
-//        }  
+
+        if(Crear==1){
+            EspaciosDAO espacioDao= new EspaciosDAO();
+            espacioC.setId_espacio(0);
+            espacioC.setNombre_espacio(jTextNombreEspacio2.getText());
+            espacioC.setNum_Espacio(jTextNumeroSalon1.getText());
+            espacioC.setNombre_edificio(jTextNombreEdificio.getText());
+            espacioC.setNum_edificio(Integer.valueOf(jTextNumeroEdificio3.getText()));
+            espacioC.setNombre_encargado(jTextCorreoEncargado1.getText());
+            espacioC.setCorreo_encargado(jTextCorreoEncargado.getText());
+            espacioC.setNombre_tipoespacio(TipoC);
+            espacioC.setEstado(true);
+            
+            System.out.println();
+            existe = validarEspacio.verificaExistencia(usuario, espacioC);
+            System.out.println(existe);
+            espacioDao.crearEspacio(usuario, espacioC);
+        }
+
         try{
             Integer.valueOf(jTextNumeroEdificio3.getText());
             Integer.valueOf(jTextNumeroSalon1.getText());
@@ -601,6 +622,10 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
        }
               
     }//GEN-LAST:event_jLabelEliminar1MouseClicked
+
+    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField3ActionPerformed
 
     /**
      * @param args the command line arguments

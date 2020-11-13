@@ -5,6 +5,8 @@ import Control.ValidarEspacios;
 import Control.Validar_administrar_solicitud;
 import Entidad.Espacio;
 import Entidad.Usuario;
+import GUI.Frame_DetallesEspacio;
+import static com.sun.java.accessibility.util.AWTEventMonitor.addActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
@@ -24,8 +26,9 @@ import javax.swing.table.TableRowSorter;
 
 public class Frame_Main extends javax.swing.JFrame{
     
-    public int crearE=0;
+    
     private int x,y;
+    
     private Usuario usuario;
     private ValidarEspacios  validarEspacios = new  ValidarEspacios ();
     private Validar_administrar_solicitud validarSolIngresada = new Validar_administrar_solicitud();
@@ -33,6 +36,7 @@ public class Frame_Main extends javax.swing.JFrame{
     private boolean tablaTocada = false;
     private Validar_administrar_solicitud validarSolicitudes=new Validar_administrar_solicitud();
     private TableRowSorter TRSFiltro;  
+    public String Tipo;
     
     public Frame_Main() {
         initComponents();
@@ -48,6 +52,7 @@ public class Frame_Main extends javax.swing.JFrame{
     private void initComponents() {
 
         Tipo_estados = new javax.swing.ButtonGroup();
+        jLabelAñadir = new javax.swing.JLabel();
         panelCerrar = new javax.swing.JPanel();
         jlClose1 = new javax.swing.JLabel();
         jlMinimize1 = new javax.swing.JLabel();
@@ -97,25 +102,6 @@ public class Frame_Main extends javax.swing.JFrame{
         jLabel26 = new javax.swing.JLabel();
         userLabel2 = new javax.swing.JLabel();
         roleLabel1 = new javax.swing.JLabel();
-        Administrar_Solicitudes = new javax.swing.JPanel();
-        jLabel30 = new javax.swing.JLabel();
-        jScrollPane5 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
-        jLabel31 = new javax.swing.JLabel();
-        jLabel32 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        Aceptar_sol_boton = new javax.swing.JButton();
-        Rechazar_sol_boton = new javax.swing.JButton();
-        Buscador = new javax.swing.JTextField();
-        jButton10 = new javax.swing.JButton();
-        Jcbox_espera = new javax.swing.JCheckBox();
-        Jcbox_aceptada = new javax.swing.JCheckBox();
-        Jcbox_cancelada = new javax.swing.JCheckBox();
-        Jcbox_rechazada = new javax.swing.JCheckBox();
-        Categorias = new javax.swing.JComboBox<>();
-        jLabel9 = new javax.swing.JLabel();
-        jLabelCargandoAS = new javax.swing.JLabel();
-        jLabel38 = new javax.swing.JLabel();
         Solicitar_Espacio = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -136,7 +122,7 @@ public class Frame_Main extends javax.swing.JFrame{
         jCheckBox3 = new javax.swing.JCheckBox();
         jButtonPersonalizar = new javax.swing.JButton();
         jLabel28 = new javax.swing.JLabel();
-        jComboMotivos = new javax.swing.JComboBox<>();
+        jComboMotivos = new javax.swing.JComboBox<String>();
         jCalendar2 = new com.toedter.calendar.JCalendar();
         jButton3 = new javax.swing.JButton();
         jLabel36 = new javax.swing.JLabel();
@@ -146,7 +132,26 @@ public class Frame_Main extends javax.swing.JFrame{
         jLabelCargandoSE = new javax.swing.JLabel();
         jLabelRepeticion = new javax.swing.JLabel();
         jCheckBoxOtroMotivo = new javax.swing.JCheckBox();
-        crearEspacio = new javax.swing.JButton();
+        jLabelAñadir2 = new javax.swing.JLabel();
+        Administrar_Solicitudes = new javax.swing.JPanel();
+        jLabel30 = new javax.swing.JLabel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable();
+        jLabel31 = new javax.swing.JLabel();
+        jLabel32 = new javax.swing.JLabel();
+        jTextField2 = new javax.swing.JTextField();
+        Aceptar_sol_boton = new javax.swing.JButton();
+        Rechazar_sol_boton = new javax.swing.JButton();
+        Buscador = new javax.swing.JTextField();
+        jButton10 = new javax.swing.JButton();
+        Jcbox_espera = new javax.swing.JCheckBox();
+        Jcbox_aceptada = new javax.swing.JCheckBox();
+        Jcbox_cancelada = new javax.swing.JCheckBox();
+        Jcbox_rechazada = new javax.swing.JCheckBox();
+        Categorias = new javax.swing.JComboBox<String>();
+        jLabel9 = new javax.swing.JLabel();
+        jLabelCargandoAS = new javax.swing.JLabel();
+        jLabel38 = new javax.swing.JLabel();
         Bienvenida = new javax.swing.JPanel();
         MensajeBienvenida = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -164,10 +169,17 @@ public class Frame_Main extends javax.swing.JFrame{
         jMonthChooser2 = new com.toedter.calendar.JMonthChooser();
         jYearChooser2 = new com.toedter.calendar.JYearChooser();
         jScrollPane7 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        jList1 = new javax.swing.JList<String>();
         jButton8 = new javax.swing.JButton();
         jScrollPane8 = new javax.swing.JScrollPane();
         jTextArea3 = new javax.swing.JTextArea();
+
+        jLabelAñadir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/anadir.png"))); // NOI18N
+        jLabelAñadir.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabelAñadirMouseClicked(evt);
+            }
+        });
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1024, 550));
@@ -799,7 +811,7 @@ public class Frame_Main extends javax.swing.JFrame{
         jLabel28.setText("Motivo solicitud:");
 
         jComboMotivos.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jComboMotivos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccion" }));
+        jComboMotivos.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccion" }));
 
         jCalendar2.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
@@ -844,10 +856,10 @@ public class Frame_Main extends javax.swing.JFrame{
             }
         });
 
-        crearEspacio.setText("Crear Espacio");
-        crearEspacio.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                crearEspacioActionPerformed(evt);
+        jLabelAñadir2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/anadir.png"))); // NOI18N
+        jLabelAñadir2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabelAñadir2MouseClicked(evt);
             }
         });
 
@@ -855,9 +867,6 @@ public class Frame_Main extends javax.swing.JFrame{
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jSeparator12)
-                .addGap(89, 89, 89))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -922,14 +931,17 @@ public class Frame_Main extends javax.swing.JFrame{
                         .addComponent(jLabelCargandoSE, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(70, 70, 70))
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jButton9))
+                            .addComponent(jSeparator12))
+                        .addGap(25, 25, 25)
+                        .addComponent(jLabelAñadir2))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton9)
-                        .addGap(18, 18, 18)
-                        .addComponent(crearEspacio))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(31, 31, 31)
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 795, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -940,11 +952,11 @@ public class Frame_Main extends javax.swing.JFrame{
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton9)
-                    .addComponent(crearEspacio))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabelAñadir2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -997,6 +1009,158 @@ public class Frame_Main extends javax.swing.JFrame{
         Solicitar_Espacio.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         getContentPane().add(Solicitar_Espacio, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 30, -1, 520));
+
+        Administrar_Solicitudes.setBackground(new java.awt.Color(204, 204, 204));
+        Administrar_Solicitudes.setMinimumSize(new java.awt.Dimension(854, 520));
+        Administrar_Solicitudes.setPreferredSize(new java.awt.Dimension(854, 520));
+        Administrar_Solicitudes.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel30.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel30.setText("Administrar Solicitudes");
+        Administrar_Solicitudes.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, -1, -1));
+
+        jTable2 = new javax.swing.JTable(){
+            public boolean isCellEditable (int rowIndex, int colIndex){
+                return false;
+            }
+        };
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID_SOLICITUD", "USUARIOINTITUCIONAL", "FECHA_INICIO", "FECHA_TRMINA", "NOMBRE_ESPACIO", "ID_EDIFICIO", "ID_ESTADO", "FECHA_SOLICITUD"
+            }
+        ));
+        jTable2.getTableHeader().setReorderingAllowed(false);
+        jScrollPane5.setViewportView(jTable2);
+
+        Administrar_Solicitudes.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(43, 115, 768, 149));
+
+        jLabel31.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel31.setText("Aceptar, cancelar o rechazar solicitud");
+        Administrar_Solicitudes.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 300, -1, -1));
+
+        jLabel32.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel32.setText("Buscar: ");
+        Administrar_Solicitudes.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 70, -1, -1));
+
+        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField2ActionPerformed(evt);
+            }
+        });
+        Administrar_Solicitudes.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 350, 580, 120));
+
+        Aceptar_sol_boton.setBackground(new java.awt.Color(204, 204, 204));
+        Aceptar_sol_boton.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        Aceptar_sol_boton.setText("Aceptar");
+        Aceptar_sol_boton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Aceptar_sol_botonActionPerformed(evt);
+            }
+        });
+        Administrar_Solicitudes.add(Aceptar_sol_boton, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 340, 84, -1));
+
+        Rechazar_sol_boton.setBackground(new java.awt.Color(204, 204, 204));
+        Rechazar_sol_boton.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        Rechazar_sol_boton.setText("Rechazar");
+        Rechazar_sol_boton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Rechazar_sol_botonActionPerformed(evt);
+            }
+        });
+        Administrar_Solicitudes.add(Rechazar_sol_boton, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 390, -1, -1));
+
+        Buscador.setToolTipText("Buscar por nombre");
+        Buscador.setName(""); // NOI18N
+        Buscador.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BuscadorActionPerformed(evt);
+            }
+        });
+        Buscador.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                BuscadorKeyTyped(evt);
+            }
+        });
+        Administrar_Solicitudes.add(Buscador, new org.netbeans.lib.awtextra.AbsoluteConstraints(102, 68, 260, -1));
+
+        jButton10.setBackground(new java.awt.Color(204, 204, 204));
+        jButton10.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jButton10.setText("Cancelar");
+        jButton10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton10ActionPerformed(evt);
+            }
+        });
+        Administrar_Solicitudes.add(jButton10, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 440, 84, -1));
+
+        Jcbox_espera.setBackground(new java.awt.Color(204, 204, 204));
+        Tipo_estados.add(Jcbox_espera);
+        Jcbox_espera.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        Jcbox_espera.setText("En espera");
+        Jcbox_espera.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Jcbox_esperaActionPerformed(evt);
+            }
+        });
+        Administrar_Solicitudes.add(Jcbox_espera, new org.netbeans.lib.awtextra.AbsoluteConstraints(726, 275, -1, -1));
+
+        Jcbox_aceptada.setBackground(new java.awt.Color(204, 204, 204));
+        Tipo_estados.add(Jcbox_aceptada);
+        Jcbox_aceptada.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        Jcbox_aceptada.setText("Aceptada");
+        Jcbox_aceptada.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Jcbox_aceptadaActionPerformed(evt);
+            }
+        });
+        Administrar_Solicitudes.add(Jcbox_aceptada, new org.netbeans.lib.awtextra.AbsoluteConstraints(626, 275, -1, -1));
+
+        Jcbox_cancelada.setBackground(new java.awt.Color(204, 204, 204));
+        Tipo_estados.add(Jcbox_cancelada);
+        Jcbox_cancelada.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        Jcbox_cancelada.setText("Cancelada");
+        Jcbox_cancelada.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Jcbox_canceladaActionPerformed(evt);
+            }
+        });
+        Administrar_Solicitudes.add(Jcbox_cancelada, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 275, -1, -1));
+
+        Jcbox_rechazada.setBackground(new java.awt.Color(204, 204, 204));
+        Tipo_estados.add(Jcbox_rechazada);
+        Jcbox_rechazada.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        Jcbox_rechazada.setText("Rechazada");
+        Jcbox_rechazada.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Jcbox_rechazadaActionPerformed(evt);
+            }
+        });
+        Administrar_Solicitudes.add(Jcbox_rechazada, new org.netbeans.lib.awtextra.AbsoluteConstraints(414, 275, -1, -1));
+
+        Categorias.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        Categorias.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "ID SOLICITUD ", "FECHA SOLICITUD", "ESTADO", "FECHA DE MODIFICACIÓN", "USUARIOINTITUCIONAL", "EDIFICIO", "FECHA INICIO", "FECHA TERMINA", "OBSERVACIONES" }));
+        Categorias.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CategoriasActionPerformed(evt);
+            }
+        });
+        Administrar_Solicitudes.add(Categorias, new org.netbeans.lib.awtextra.AbsoluteConstraints(476, 67, 194, -1));
+
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel9.setText("Filtro:");
+        Administrar_Solicitudes.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 70, -1, -1));
+
+        jLabelCargandoAS.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
+        Administrar_Solicitudes.add(jLabelCargandoAS, new org.netbeans.lib.awtextra.AbsoluteConstraints(721, 596, 90, 20));
+
+        jLabel38.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel38.setText("Observaciones:");
+        Administrar_Solicitudes.add(jLabel38, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 330, -1, -1));
+
+        getContentPane().add(Administrar_Solicitudes, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 30, -1, -1));
 
         Bienvenida.setBackground(new java.awt.Color(204, 204, 204));
         Bienvenida.setMaximumSize(new java.awt.Dimension(854, 520));
@@ -1068,10 +1232,10 @@ public class Frame_Main extends javax.swing.JFrame{
 
         jLabel35.setText("Tipo de espacio:");
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
+        jList1.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
+            public Object getElementAt(int i) { return strings[i]; }
         });
         jScrollPane7.setViewportView(jList1);
 
@@ -1216,6 +1380,8 @@ public class Frame_Main extends javax.swing.JFrame{
             Solicitar_Espacio.setVisible(true);
             jLabelCargandoSE.setText("Cargando...");
              jLabel36.setText(Espacio);
+             Tipo=jLabel36.getText();
+             
              jLabel37.setText("");
              jTable3.setModel(new javax.swing.table.DefaultTableModel(
          new Object [][]{}, new String [] {" ID", "Nombre espacio", "Salon", "Edificio", "Encargado", "Estado","Información adicional"}) 
@@ -1319,6 +1485,7 @@ public class Frame_Main extends javax.swing.JFrame{
       }
       
       private void verDetalles(Object obj){
+          
           jLabelCargandoSE.setText("Cargando...");           
           try{
             
@@ -1760,23 +1927,26 @@ public class Frame_Main extends javax.swing.JFrame{
         }  
     }//GEN-LAST:event_jCheckBoxOtroMotivoActionPerformed
 
-    private void crearEspacioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crearEspacioActionPerformed
-        jLabelCargandoSE.setText("Cargando...");
-        crearE=1;
-          try{
-            
-             Espacio espacio = new Espacio();
-             Frame_DetallesEspacio frame_DetallesEspacio= new Frame_DetallesEspacio();
-             frame_DetallesEspacio.setVisible(true);     
-             this.enable(false);
-             frame_DetallesEspacio.setVisible(true); 
-             jLabelCargandoSE.setText("");
-             frame_DetallesEspacio.crearEspacio();
-          }catch (Exception e){
-              System.out.println(e);
-          }
-    }//GEN-LAST:event_crearEspacioActionPerformed
+    private void jLabelAñadirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelAñadirMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabelAñadirMouseClicked
 
+    private void jLabelAñadir2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelAñadir2MouseClicked
+        jLabelCargandoSE.setText("Cargando...");
+        Frame_DetallesEspacio frame_DetallesEspacio = new Frame_DetallesEspacio();
+        try {
+            
+            frame_DetallesEspacio.setVisible(true);
+            frame_DetallesEspacio.crearEspacio(Tipo);
+            this.setEnabled(false);
+            frame_DetallesEspacio.setVisible(true);
+            
+            jLabelCargandoSE.setText("");
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }//GEN-LAST:event_jLabelAñadir2MouseClicked
+    
     /**
      * @param args the command line arguments
      */
@@ -1835,7 +2005,6 @@ public class Frame_Main extends javax.swing.JFrame{
     private javax.swing.JPanel Solicitar_Espacio;
     private javax.swing.ButtonGroup Tipo_estados;
     private javax.swing.JLabel controlPanelTitle;
-    private javax.swing.JButton crearEspacio;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton7;
@@ -1882,6 +2051,8 @@ public class Frame_Main extends javax.swing.JFrame{
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel jLabelAñadir;
+    private javax.swing.JLabel jLabelAñadir2;
     private javax.swing.JLabel jLabelCargandoAS;
     private javax.swing.JLabel jLabelCargandoSE;
     private javax.swing.JLabel jLabelRepeticion;

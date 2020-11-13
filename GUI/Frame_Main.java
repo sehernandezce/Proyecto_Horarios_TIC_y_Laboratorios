@@ -1227,10 +1227,21 @@ public class Frame_Main extends javax.swing.JFrame{
             jLabelCargandoSE.setText("");  
     }
     
+    private void verTodoSolicitud(){
+          Buscador.addKeyListener(new KeyAdapter(){
+            @Override
+            public void keyReleased(KeyEvent ke) {
+                TRSFiltro.setRowFilter(RowFilter.regexFilter("(?i)"+"Ver más", (categoria_fil("Selección")-1)));
+            }
+        });
+        TRSFiltro = new TableRowSorter(jTable2.getModel());
+        jTable2.setRowSorter(TRSFiltro);
+    }
     
     private void administrar_Solicitudes(){ //Para mostrar las solicitudes en el administrador
         ocultar_todosPaneles(); 
         Categorias.setSelectedIndex(0);   
+        
         if(usuario.getTipoUsuario() == 1 || usuario.getTipoUsuario() == 4){
             Aceptar_sol_boton.setVisible(false);
             Rechazar_sol_boton.setVisible(false);
@@ -1276,7 +1287,9 @@ public class Frame_Main extends javax.swing.JFrame{
     }
       
        private void llenarTabla_solicitudes(String tipo_e) throws SQLException{//modelo tabla espacios
-        Categorias.setSelectedIndex(0);
+        Administrar_Solicitudes.setEnabled(false);
+        Categorias.setSelectedIndex(0);        
+        Buscador.setText("");
         Object[][] tabla= validarSolicitudes.llenarMatriz(usuario, tipo_e);
         jTable2.setModel(new javax.swing.table.DefaultTableModel( //fechas con horas
         tabla, new String [] {
@@ -1284,6 +1297,8 @@ public class Frame_Main extends javax.swing.JFrame{
          
             }
         ));
+        verTodoSolicitud();
+        Administrar_Solicitudes.setEnabled(true);
     }
       
       private String obtener_fecha(){
@@ -1698,29 +1713,19 @@ public class Frame_Main extends javax.swing.JFrame{
         }       
        
     }//GEN-LAST:event_Jcbox_aceptadaActionPerformed
-
+   
     private void BuscadorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BuscadorKeyTyped
         String categoria=(String)Categorias.getSelectedItem();       
         if(categoria_fil(categoria)!=10){
             Buscador.addKeyListener(new KeyAdapter(){
              @Override
              public void keyReleased(KeyEvent ke) {
-                 TRSFiltro.setRowFilter(RowFilter.regexFilter("(?i)"+Buscador.getText(), (categoria_fil(categoria))));
+                 TRSFiltro.setRowFilter(RowFilter.regexFilter("(?i)"+Buscador.getText(), (categoria_fil(categoria)-1)));
              }
          });
          TRSFiltro = new TableRowSorter(jTable2.getModel());
          jTable2.setRowSorter(TRSFiltro); 
-        }else{
-            Buscador.addKeyListener(new KeyAdapter(){
-            @Override
-            public void keyReleased(KeyEvent ke) {
-                TRSFiltro.setRowFilter(RowFilter.regexFilter("(?i)"+"Ver más", (categoria_fil(categoria))));
-            }
-        });
-        TRSFiltro = new TableRowSorter(jTable2.getModel());
-        jTable2.setRowSorter(TRSFiltro);
-        }
-        
+        }     
     }//GEN-LAST:event_BuscadorKeyTyped
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed

@@ -19,13 +19,13 @@ public class Frame_PersonalizarRepeticion extends javax.swing.JFrame {
     private Frame_Main Frame;
     private String fecha;
     private int[] DiasSeRepite = {0,0,0,0,0,0,0};
+    private int repeticion;
 
     public Frame_PersonalizarRepeticion() {
         initComponents();
         this.setLocationRelativeTo(null);
     }
-
-   
+ 
     
     private String repeticionDias() {
         String retorno = "";
@@ -81,6 +81,7 @@ public class Frame_PersonalizarRepeticion extends javax.swing.JFrame {
         ocultar = "Semanalmente".equals((String.valueOf(jComboSelectorDia.getSelectedItem())));
 
         if ("Seleccione uno...".equals(jComboSelectorDia.getItemAt(0)) && jComboSelectorDia.getSelectedIndex() != 0) {
+            
             jComboSelectorDia.removeItemAt(0);
         }
 
@@ -287,18 +288,34 @@ public class Frame_PersonalizarRepeticion extends javax.swing.JFrame {
     }//GEN-LAST:event_jlMinimize1MouseClicked
 
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
-        
-       
+
         this.setEnabled(false);
         this.Frame.setEnabled(true);
         this.Frame.setTextoMuestralabel(jLabelVisualizarRepetición.getText());
-        this.dispose();  
-        
-        
-        System.out.println(fecha);
-        for (int i : DiasSeRepite) {
-            System.out.println(i+",");
+   
+        String caso =  (String)jComboSelectorDia.getSelectedItem();
+        switch(caso){
+            case "Diario":
+                this.repeticion= 1;
+            break;
+            case "Semanalmente":
+                this.repeticion = 2;
+            break;
+                
+            case "Mensualmente":
+                this.repeticion = 3;
+            break;
+            
+            default:
+                this.repeticion = -1;
         }
+        
+        this.Frame.setDiasRepeticion(DiasSeRepite);
+        this.Frame.setFechaTermina(fecha);
+        this.Frame.setIndiceRepeticion(repeticion);
+        this.Frame.setNombreRepeticion(jComboSelectorDia.getItemAt(jComboSelectorDia.getSelectedIndex()));
+        
+        this.dispose(); 
     }//GEN-LAST:event_jButtonGuardarActionPerformed
 
     private void formMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMousePressed

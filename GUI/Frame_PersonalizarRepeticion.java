@@ -339,6 +339,9 @@ public class Frame_PersonalizarRepeticion extends javax.swing.JFrame {
                 this.repeticion = -1;
         }
         
+        int[] piv = {0,1,2,3,4,6,7};
+        
+        if(repeticion == 1){DiasSeRepite = piv;}
         this.Frame.setDiasRepeticion(DiasSeRepite);
         this.Frame.setFechaTermina(fecha);
         this.Frame.setIndiceRepeticion(repeticion);

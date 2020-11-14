@@ -1442,6 +1442,7 @@ public class Frame_Main extends javax.swing.JFrame{
         Frame_PersonalizarRepeticion personalizar = new Frame_PersonalizarRepeticion();
         personalizar.setVisible(true);
         personalizar.setFramePadre(this);
+        personalizar.setDia_Semana(obt_diaSemana()-2);
         personalizar.setFechaInicio(obtener_fecha());
         this.setEnabled(false);
 

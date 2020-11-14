@@ -5,7 +5,11 @@
  */
 package GUI;
 
+import java.time.DayOfWeek;
+import java.time.temporal.ChronoField;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.TimeZone;
 import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
 
@@ -22,6 +26,7 @@ public class Frame_PersonalizarRepeticion extends javax.swing.JFrame {
     private String fechaInicio;
     private int[] DiasSeRepite = {0,0,0,0,0,0,0};
     private int repeticion;
+    private int dia_Semana;
 
     public Frame_PersonalizarRepeticion() {
         initComponents();
@@ -38,9 +43,18 @@ public class Frame_PersonalizarRepeticion extends javax.swing.JFrame {
         javax.swing.JCheckBox[] dias = {jCheckBoxLunes, jCheckBoxMartes, jCheckBoxMiercoles, jCheckBoxJueves, jCheckBoxViernes, jCheckBoxSabado};
         int diaSeleccionado = jCalendar1.getCalendar().get(Calendar.DAY_OF_WEEK) - 2;
 
-        if (diaSeleccionado < 6 && diaSeleccionado >= 0) {
-            dias[diaSeleccionado].setSelected(true);
+        
+        
+        //System.out.print(dia_Semana);
+        
+        if (dia_Semana < 6 && dia_Semana >= 0) {
+            dias[dia_Semana].setSelected(true);
         }
+        
+        if (diaSeleccionado < 6 && diaSeleccionado >= 0) {
+            dias[diaSeleccionado].setSelected(true);     
+        }
+        
 
         for (int i = 0; i < 6; i++) {
             if (dias[i].isSelected()) {
@@ -62,6 +76,10 @@ public class Frame_PersonalizarRepeticion extends javax.swing.JFrame {
         
         
         return "los dias " + retorno.substring(1);
+    }
+
+    public void setDia_Semana(int dia_Semana) {
+        this.dia_Semana = dia_Semana;
     }
 
     private void mostrarPeriodicidad() {

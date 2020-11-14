@@ -275,8 +275,8 @@ public class SolicitudDAO {
                     "', '"+sol.getEvento().getHoraFinalEvento()+
                     "', "+sol.getEvento().getTipoRepetición()+
                     ", '"+sol.getEvento().getFechaEvento()+"', '"+sol.getEvento().getFechaTerminaEvento()+"', '"+diasString+"');");
-            */
             
+            */
             resultSet = statement.executeQuery("select Horarios_Tics_y_Laboratorios.compararEventos("+
                     sol.getEspacioidEspacio()+
                     ", '"+sol.getEvento().getHoraInicio()+

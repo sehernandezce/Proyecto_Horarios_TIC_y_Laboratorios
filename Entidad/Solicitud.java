@@ -11,6 +11,14 @@ public class Solicitud {
    private String espacioidEspacio;
    private Evento evento;
 
+    public Evento getEvento() {
+        return evento;
+    }
+
+    public void setEvento(Evento evento) {
+        this.evento = evento;
+    }
+
     public Solicitud(int idSolicitud, String fechaSolicitud, String Observaciones, String estadoSolicitud, String fechaModificacion, String espacioidEspacio, Evento evento) {
         this.idSolicitud = idSolicitud;
         this.fechaSolicitud = fechaSolicitud;

@@ -1,9 +1,10 @@
 package GUI;
 
-
 import Control.ValidarEspacios;
 import Control.Validar_administrar_solicitud;
 import Entidad.Espacio;
+import Entidad.Evento;
+import Entidad.Solicitud;
 import Entidad.Usuario;
 import GUI.Frame_DetallesEspacio;
 import static com.sun.java.accessibility.util.AWTEventMonitor.addActionListener;
@@ -30,23 +31,32 @@ public class Frame_Main extends javax.swing.JFrame{
     private int x,y;
     
     private Usuario usuario;
-    private ValidarEspacios  validarEspacios = new  ValidarEspacios ();
+    private Solicitud solicitud;
+    private Evento evento;
+    private ValidarEspacios validarEspacios = new ValidarEspacios();
     private Validar_administrar_solicitud validarSolIngresada = new Validar_administrar_solicitud();
     private String idEspacioSeleccionado;
     private boolean tablaTocada = false;
-    private Validar_administrar_solicitud validarSolicitudes=new Validar_administrar_solicitud();
-    private TableRowSorter TRSFiltro;  
+    private Validar_administrar_solicitud validarSolicitudes = new Validar_administrar_solicitud();
+    private TableRowSorter TRSFiltro;
+    private String fechaTermina;
+    private int[] diasRepeticion = {0, 0, 0, 0, 0, 0, 0};
+    private int indiceRepeticion;
+    private String nombreRepeticion = "Diariamente";
+
     public String Tipo;
-    
     public Frame_Main() {
         initComponents();
-        this.setLocationRelativeTo(null);  
-         ocultar_todosPaneles();
-         Paneles_Menu.setVisible(false);         
-         
+        this.setLocationRelativeTo(null);
+        ocultar_todosPaneles();
+        Paneles_Menu.setVisible(false);
+
     }
 
-    
+    public void setNombreRepeticion(String nombreRepeticion) {
+        this.nombreRepeticion = nombreRepeticion;
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -113,11 +123,7 @@ public class Frame_Main extends javax.swing.JFrame{
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
-        jSpinner5 = new javax.swing.JSpinner();
-        jSpinner6 = new javax.swing.JSpinner();
         jLabel15 = new javax.swing.JLabel();
-        jSpinner7 = new javax.swing.JSpinner();
-        jSpinner8 = new javax.swing.JSpinner();
         jLabel27 = new javax.swing.JLabel();
         jCheckBox3 = new javax.swing.JCheckBox();
         jButtonPersonalizar = new javax.swing.JButton();
@@ -131,27 +137,12 @@ public class Frame_Main extends javax.swing.JFrame{
         jButton9 = new javax.swing.JButton();
         jLabelCargandoSE = new javax.swing.JLabel();
         jLabelRepeticion = new javax.swing.JLabel();
-        jCheckBoxOtroMotivo = new javax.swing.JCheckBox();
+        jSpinnerHorainicio = new javax.swing.JSpinner();
+        crearEspacio = new javax.swing.JButton();
+        jSpinnerMinutosInicio = new javax.swing.JSpinner();
+        jSpinnerHorafinal = new javax.swing.JSpinner();
+        jSpinnerMinutosFinal = new javax.swing.JSpinner();
         jLabelAñadir2 = new javax.swing.JLabel();
-        Administrar_Solicitudes = new javax.swing.JPanel();
-        jLabel30 = new javax.swing.JLabel();
-        jScrollPane5 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
-        jLabel31 = new javax.swing.JLabel();
-        jLabel32 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        Aceptar_sol_boton = new javax.swing.JButton();
-        Rechazar_sol_boton = new javax.swing.JButton();
-        Buscador = new javax.swing.JTextField();
-        jButton10 = new javax.swing.JButton();
-        Jcbox_espera = new javax.swing.JCheckBox();
-        Jcbox_aceptada = new javax.swing.JCheckBox();
-        Jcbox_cancelada = new javax.swing.JCheckBox();
-        Jcbox_rechazada = new javax.swing.JCheckBox();
-        Categorias = new javax.swing.JComboBox<String>();
-        jLabel9 = new javax.swing.JLabel();
-        jLabelCargandoAS = new javax.swing.JLabel();
-        jLabel38 = new javax.swing.JLabel();
         Bienvenida = new javax.swing.JPanel();
         MensajeBienvenida = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -811,7 +802,12 @@ public class Frame_Main extends javax.swing.JFrame{
         jLabel28.setText("Motivo solicitud:");
 
         jComboMotivos.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jComboMotivos.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccion" }));
+        jComboMotivos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccion" }));
+        jComboMotivos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboMotivosActionPerformed(evt);
+            }
+        });
 
         jCalendar2.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
@@ -849,17 +845,10 @@ public class Frame_Main extends javax.swing.JFrame{
 
         jLabelRepeticion.setToolTipText("");
 
-        jCheckBoxOtroMotivo.setText("otro:");
-        jCheckBoxOtroMotivo.addActionListener(new java.awt.event.ActionListener() {
+        crearEspacio.setText("Crear Espacio");
+        crearEspacio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBoxOtroMotivoActionPerformed(evt);
-            }
-        });
-
-        jLabelAñadir2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/anadir.png"))); // NOI18N
-        jLabelAñadir2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabelAñadir2MouseClicked(evt);
+                crearEspacioActionPerformed(evt);
             }
         });
 
@@ -873,43 +862,39 @@ public class Frame_Main extends javax.swing.JFrame{
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addGap(41, 41, 41)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGap(23, 23, 23)
+                                        .addComponent(jLabel15)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jSpinnerHorafinal))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(jLabel13)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jSpinnerHorainicio, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                                .addComponent(jLabel27)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addComponent(jCheckBox3)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addComponent(jButtonPersonalizar))
-                                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                                .addGap(41, 41, 41)
-                                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                                        .addComponent(jLabel13)
-                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                        .addComponent(jSpinner5, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                        .addComponent(jSpinner6, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                                        .addGap(23, 23, 23)
-                                                        .addComponent(jLabel15)
-                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                        .addComponent(jSpinner7, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                        .addComponent(jSpinner8, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                                        .addGap(12, 12, 12))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(jLabel28)
-                                            .addComponent(jCheckBoxOtroMotivo))
+                                    .addComponent(jSpinnerMinutosInicio)
+                                    .addComponent(jSpinnerMinutosFinal))
+                                .addGap(28, 28, 28))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(jLabel27)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jTextMotivoSolicitud, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jComboMotivos, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))))
+                                        .addComponent(jCheckBox3)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jButtonPersonalizar)))
+                                .addGap(12, 12, 12))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel28)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jTextMotivoSolicitud, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jComboMotivos, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabelRepeticion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
@@ -927,7 +912,7 @@ public class Frame_Main extends javax.swing.JFrame{
                     .addComponent(jCalendar2, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jButton3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 161, Short.MAX_VALUE)
                         .addComponent(jLabelCargandoSE, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(70, 70, 70))
             .addGroup(jPanel2Layout.createSequentialGroup()
@@ -952,7 +937,11 @@ public class Frame_Main extends javax.swing.JFrame{
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton9)
+                    .addComponent(crearEspacio))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabelAñadir2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -971,14 +960,14 @@ public class Frame_Main extends javax.swing.JFrame{
                                 .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(12, 12, 12)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jSpinner6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jSpinner5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jSpinnerHorainicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jSpinnerMinutosInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(17, 17, 17)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jSpinner7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jSpinner8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jSpinnerHorafinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jSpinnerMinutosFinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(26, 26, 26)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -992,9 +981,7 @@ public class Frame_Main extends javax.swing.JFrame{
                                     .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jComboMotivos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jTextMotivoSolicitud, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jCheckBoxOtroMotivo)))))
+                                .addComponent(jTextMotivoSolicitud, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel37, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -1326,279 +1313,304 @@ public class Frame_Main extends javax.swing.JFrame{
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    
-    
-    
-    public void entrar_bienvenida(Usuario usuario2){ //Selecciona el tipo de menu segun el usuario        
-       ocultar_todosPaneles();
+
+    public void entrar_bienvenida(Usuario usuario2) { //Selecciona el tipo de menu segun el usuario        
+        ocultar_todosPaneles();
         Bienvenida.setVisible(true);
         Paneles_Menu.setVisible(true);
         this.usuario = usuario2;
-        if(usuario.getTipoUsuario() == 1 || usuario.getTipoUsuario() == 4){
-              Menu_UE.setVisible(false);
-              userLabel2.setText(usuario.getNombreusuarioInstitucional());
-              if(usuario.getTipoUsuario() == 4){
-                  roleLabel1.setText("Usuario Encargado");
-              }
-         }else if(usuario.getTipoUsuario() == 2 ){             
-              Menu_UC.setVisible(false);
-              userLabel1.setText(usuario.getNombreusuarioInstitucional());
-         }else{
-              Paneles_Menu.setVisible(false);
-         }
-        
+        if (usuario.getTipoUsuario() == 1 || usuario.getTipoUsuario() == 4) {
+            Menu_UE.setVisible(false);
+            userLabel2.setText(usuario.getNombreusuarioInstitucional());
+            if (usuario.getTipoUsuario() == 4) {
+                roleLabel1.setText("Usuario Encargado");
+            }
+        } else if (usuario.getTipoUsuario() == 2) {
+            Menu_UC.setVisible(false);
+            userLabel1.setText(usuario.getNombreusuarioInstitucional());
+        } else {
+            Paneles_Menu.setVisible(false);
+        }
+
     }
-    
-    private void ocultar_todosPaneles(){ // Oculta todos los paneles menos el menu
+
+    private void ocultar_todosPaneles() { // Oculta todos los paneles menos el menu
         Bienvenida.setVisible(false);
-        Solicitar_Espacio.setVisible(false);       
+        Solicitar_Espacio.setVisible(false);
         Administrar_Solicitudes.setVisible(false);
         Estadisticas.setVisible(false);
     }
-    
-    private void logOut(){ //Cerrar sesion        
-       Frame_Login frame_Login =new Frame_Login();  
-       this.setVisible(false);  
-       frame_Login.setVisible(true);
+
+    private void logOut() { //Cerrar sesion        
+        Frame_Login frame_Login = new Frame_Login();
+        this.setVisible(false);
+        frame_Login.setVisible(true);
     }
-    
-    public void llenarMotivos(Usuario us){
+
+    public void llenarMotivos(Usuario us) {
         String[] lista = validarSolicitudes.obtenerListaMotivos(us);
-        
+
         for (String lista1 : lista) {
             jComboMotivos.addItem(lista1);
         }
-        
-        
-        
+
     }
-    
-           
-    public void solicitar_Espacio(String Espacio) throws SQLException{ //Para mostrar la informacion en el panel de solicitar espacios     
-           
-            ocultar_todosPaneles();
-            Solicitar_Espacio.setVisible(true);
-            jLabelCargandoSE.setText("Cargando...");
-             jLabel36.setText(Espacio);
-             Tipo=jLabel36.getText();
-             
-             jLabel37.setText("");
-             jTable3.setModel(new javax.swing.table.DefaultTableModel(
-         new Object [][]{}, new String [] {" ID", "Nombre espacio", "Salon", "Edificio", "Encargado", "Estado","Información adicional"}) 
-                         );
-             jTable4.setModel(new javax.swing.table.DefaultTableModel(
-         new Object [][]{}, new String [] {"Horas ocupadas"}) 
-                         );
-             llenarTabla(Espacio);
-            jLabelCargandoSE.setText("");  
+
+    public void solicitar_Espacio(String Espacio) throws SQLException { //Para mostrar la informacion en el panel de solicitar espacios     
+
+        llenarMotivos(usuario);
+        ocultar_todosPaneles();
+        Solicitar_Espacio.setVisible(true);
+        jLabelCargandoSE.setText("Cargando...");
+        jLabel36.setText(Espacio);
+        jLabel37.setText("");
+        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+                new Object[][]{}, new String[]{" ID", "Nombre espacio", "Salon", "Edificio", "Encargado", "Estado", "Información adicional"})
+        );
+        jTable4.setModel(new javax.swing.table.DefaultTableModel(
+                new Object[][]{}, new String[]{"Horas ocupadas"})
+        );
+        llenarTabla(Espacio);
+        jLabelCargandoSE.setText("");
     }
-    
-    private void verTodoSolicitud(){
-          Buscador.addKeyListener(new KeyAdapter(){
+
+    private void verTodoSolicitud() {
+        Buscador.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent ke) {
-                TRSFiltro.setRowFilter(RowFilter.regexFilter("(?i)"+"Ver más", (categoria_fil("Selección")-1)));
+                TRSFiltro.setRowFilter(RowFilter.regexFilter("(?i)" + "Ver más", (categoria_fil("Selección") - 1)));
             }
         });
         TRSFiltro = new TableRowSorter(jTable2.getModel());
         jTable2.setRowSorter(TRSFiltro);
     }
-    
-    private void administrar_Solicitudes(){ //Para mostrar las solicitudes en el administrador
-        ocultar_todosPaneles(); 
-        Categorias.setSelectedIndex(0);   
-        
-        if(usuario.getTipoUsuario() == 1 || usuario.getTipoUsuario() == 4){
+
+    private void administrar_Solicitudes() { //Para mostrar las solicitudes en el administrador
+        ocultar_todosPaneles();
+        Categorias.setSelectedIndex(0);
+
+        if (usuario.getTipoUsuario() == 1 || usuario.getTipoUsuario() == 4) {
             Aceptar_sol_boton.setVisible(false);
             Rechazar_sol_boton.setVisible(false);
             Administrar_Solicitudes.setVisible(true);
             jLabel31.setText("Cancelar solicitud");
-        }else{
+        } else {
             Administrar_Solicitudes.setVisible(true);
         }
-        
-       try {
+
+        try {
             llenarTabla_solicitudes("Todos");
         } catch (SQLException ex) {
             Logger.getLogger(Frame_Main.class.getName()).log(Level.SEVERE, null, ex);
         }
-       Tipo_estados.clearSelection();
-      
+        Tipo_estados.clearSelection();
+
     }
-    
-     private void ver_Estadisticas(){ //Para ver estadisticas
+
+    private void ver_Estadisticas() { //Para ver estadisticas
         ocultar_todosPaneles();
-       Estadisticas.setVisible(true); 
-        
+        Estadisticas.setVisible(true);
+
     }
-     
-      private void llenarTabla(String tipo) throws SQLException{//modelo tabla
-        
-        Object[][] tabla=validarEspacios.llenarMatriz(tipo, usuario);        
+
+    private void llenarTabla(String tipo) throws SQLException {//modelo tabla
+
+        Object[][] tabla = validarEspacios.llenarMatriz(tipo, usuario);
         jTable3.setModel(new javax.swing.table.DefaultTableModel(
-         tabla, new String [] {" ID", "Nombre espacio", "Salon", "Edificio", "Encargado", "Estado","Información adicional" }) 
-                         );
+                tabla, new String[]{" ID", "Nombre espacio", "Salon", "Edificio", "Encargado", "Estado", "Información adicional"})
+        );
         DefaultTableCellRenderer render = new DefaultTableCellRenderer();
         render.setHorizontalAlignment(SwingConstants.CENTER);
         jTable3.getColumnModel().getColumn(5).setCellRenderer(render);
     }
-      
-      
-      private void llenarTabla_espacios(int id_espacio,String fecha, int day) throws SQLException{//modelo tabla espacios
+
+    private void llenarTabla_espacios(int id_espacio, String fecha, int day) throws SQLException {//modelo tabla espacios
         jLabelCargandoSE.setText("Cargando...");
-        Object[][] tabla=validarEspacios.llenarMatriz_horas(id_espacio, fecha, usuario, day);
+        Object[][] tabla = validarEspacios.llenarMatriz_horas(id_espacio, fecha, usuario, day);
         jTable4.setModel(new javax.swing.table.DefaultTableModel(
-        tabla, new String [] {"Horas ocupadas"}));
-         jLabelCargandoSE.setText("");
+                tabla, new String[]{"Horas ocupadas"}));
+        jLabelCargandoSE.setText("");
     }
-      
-       private void llenarTabla_solicitudes(String tipo_e) throws SQLException{//modelo tabla espacios
+
+    private void llenarTabla_solicitudes(String tipo_e) throws SQLException {//modelo tabla espacios
         Administrar_Solicitudes.setEnabled(false);
-        Categorias.setSelectedIndex(0);        
+        Categorias.setSelectedIndex(0);
         Buscador.setText("");
-        Object[][] tabla= validarSolicitudes.llenarMatriz(usuario, tipo_e);
+        Object[][] tabla = validarSolicitudes.llenarMatriz(usuario, tipo_e);
         jTable2.setModel(new javax.swing.table.DefaultTableModel( //fechas con horas
-        tabla, new String [] {
-        "ID SOLICITUD", "FECHA SOLICITUD", "ESTADO","FECHA DE MODIFICACIÓN","USUARIO INTITUCIONAL", "EDIFICIO","FECHA INICIO", "FECHA TERMINA", "OBSERVACIONES","INFORMACIÓN ADICIONAL"
-         
-            }
+                tabla, new String[]{
+                    "ID SOLICITUD", "FECHA SOLICITUD", "ESTADO", "FECHA DE MODIFICACIÓN", "USUARIO INTITUCIONAL", "EDIFICIO", "FECHA INICIO", "FECHA TERMINA", "OBSERVACIONES", "INFORMACIÓN ADICIONAL"
+
+                }
         ));
         verTodoSolicitud();
         Administrar_Solicitudes.setEnabled(true);
     }
-      
-      private String obtener_fecha(){
-          
-          int año = jCalendar2.getCalendar().get(Calendar.YEAR);
-          int mes = jCalendar2.getCalendar().get(Calendar.MONTH)+1;
-          int dia = jCalendar2.getCalendar().get(Calendar.DAY_OF_MONTH);
-          
-          return año+"-"+mes+"-"+dia;
-      }
-      
-      private int obt_diaSemana(){
-          TimeZone timezone = TimeZone.getDefault();
-         Calendar calendar = new GregorianCalendar(timezone);
-         calendar.set(jCalendar2.getCalendar().get(Calendar.YEAR), jCalendar2.getCalendar().get(Calendar.MONTH), jCalendar2.getCalendar().get(Calendar.DAY_OF_MONTH));
-         int nD=calendar.get(Calendar.DAY_OF_WEEK);
-         return nD;
-      }
-      
-      private void verDetalles(Object obj){
-          
-          jLabelCargandoSE.setText("Cargando...");           
-          try{
-            
-             Espacio espacio = new Espacio();
-             espacio = validarEspacios.BuscarInfoEspacio(usuario, Integer.valueOf(obj.toString()));
-             Frame_DetallesEspacio frame_DetallesEspacio= new Frame_DetallesEspacio();
-             frame_DetallesEspacio.setVisible(true); 
-             frame_DetallesEspacio.llenarFrame(usuario, espacio, this);    
-             this.setEnabled(false);
-             frame_DetallesEspacio.setVisible(true); 
-             jLabelCargandoSE.setText("");
-          }catch (Exception e){
-              System.out.println(e);
-          }
-          
-          
-          
-            // crear el frame
-      }
-      
-      public void limpiarTabla(){
-          
-            DefaultTableModel M = (DefaultTableModel)jTable2.getModel();
-            M.getDataVector().removeAllElements();
-            M.fireTableDataChanged();
-      }
-      
-      public int categoria_fil(String categoria){
-          if(categoria.equals("ID Solicitud")){
-              return 1;
-          }else if(categoria.equals("Fecha solicitud")){
-              return 2;
-          }else if(categoria.equals("Estado")){
-              return 3;
-          }else if(categoria.equals("Fecha de modificación")){
-              return 4;
-          }else if(categoria.equals("Usuario institucional")){
-              return 5;
-          }else if(categoria.equals("Edificio")){
-              return 6;
-          }else if(categoria.equals("Fecha inicio")){
-              return 7;
-          }else if(categoria.equals("Fecha termina")){
-              return 8;
-          }else if(categoria.equals("Observaciones")){
-              return 9;
-          }else if (categoria.equals("Selección")){
-              return 10;
-          }else{
-               return 0;
-          }
-   
-      }
-       
-     private void cambiarEstado(String tipE) throws AddressException{
-       jLabelCargandoAS.setText("Cargando...");
-         if(jTable2.getSelectedRow()!=-1 && jTable2.getSelectedColumn()!=-1){
-            
-            int res= validarSolicitudes.cambiarEstado(usuario, tipE, jTable2.getValueAt(jTable2.getSelectedRow(),0).toString(),jTextField2.getText(),jTable2.getValueAt(jTable2.getSelectedRow(),2).toString());
-                 if(res==1){
-                    JOptionPane.showMessageDialog(null, "Se han guardado los cambios",  "Cambiar estado de la solicitud", JOptionPane.INFORMATION_MESSAGE);  
-                     administrar_Solicitudes();
-                    if(!tipE.equals("Cancelada")){
-                       int dialog = JOptionPane.YES_NO_OPTION;
-                        int result = JOptionPane.showConfirmDialog(null, "¿Desea notificar por correo al usuario?","Exit",dialog);
-                        if(result ==0){
-                           String contrasenia=JOptionPane.showInputDialog(null,"Ingrese la contraseña del correo: horariosdesalastics@gmail.com","Enviar correo",JOptionPane.QUESTION_MESSAGE);
-                          if(!contrasenia.equals("")){
-                           boolean c=validarSolicitudes.verificarEnvio(contrasenia, jTable2.getValueAt(jTable2.getSelectedRow(),0).toString(), tipE, jTable2.getValueAt(jTable2.getSelectedRow(),4).toString(),jTextField2.getText());                         
-                             if(c){
-                                JOptionPane.showMessageDialog(null, "Se ha notificado al usuario: "+jTable2.getValueAt(jTable2.getSelectedRow(),4).toString()+"@unal.edu.co"); 
-                             }else{
-                              JOptionPane.showMessageDialog(null, "Ha ocurrido un error al intentar enviar el correo");  
-                             }
+
+    private String obtener_fecha() {
+
+        int año = jCalendar2.getCalendar().get(Calendar.YEAR);
+        int mes = jCalendar2.getCalendar().get(Calendar.MONTH) + 1;
+        int dia = jCalendar2.getCalendar().get(Calendar.DAY_OF_MONTH);
+
+        return año + "-" + mes + "-" + dia;
+    }
+
+    private int obt_diaSemana() {
+        TimeZone timezone = TimeZone.getDefault();
+        Calendar calendar = new GregorianCalendar(timezone);
+        calendar.set(jCalendar2.getCalendar().get(Calendar.YEAR), jCalendar2.getCalendar().get(Calendar.MONTH), jCalendar2.getCalendar().get(Calendar.DAY_OF_MONTH));
+        int nD = calendar.get(Calendar.DAY_OF_WEEK);
+        return nD;
+    }
+
+    private void verDetalles(Object obj) {
+        jLabelCargandoSE.setText("Cargando...");
+        try {
+
+            Espacio espacio = new Espacio();
+            espacio = validarEspacios.BuscarInfoEspacio(usuario, Integer.valueOf(obj.toString()));
+            Frame_DetallesEspacio frame_DetallesEspacio = new Frame_DetallesEspacio();
+            frame_DetallesEspacio.setVisible(true);
+            frame_DetallesEspacio.llenarFrame(usuario, espacio, this);
+            this.setEnabled(false);
+            frame_DetallesEspacio.setVisible(true);
+            jLabelCargandoSE.setText("");
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+        // crear el frame
+    }
+
+    public void limpiarTabla() {
+
+        DefaultTableModel M = (DefaultTableModel) jTable2.getModel();
+        M.getDataVector().removeAllElements();
+        M.fireTableDataChanged();
+    }
+
+    public int categoria_fil(String categoria) {
+        if (categoria.equals("ID Solicitud")) {
+            return 1;
+        } else if (categoria.equals("Fecha solicitud")) {
+            return 2;
+        } else if (categoria.equals("Estado")) {
+            return 3;
+        } else if (categoria.equals("Fecha de modificación")) {
+            return 4;
+        } else if (categoria.equals("Usuario institucional")) {
+            return 5;
+        } else if (categoria.equals("Edificio")) {
+            return 6;
+        } else if (categoria.equals("Fecha inicio")) {
+            return 7;
+        } else if (categoria.equals("Fecha termina")) {
+            return 8;
+        } else if (categoria.equals("Observaciones")) {
+            return 9;
+        } else if (categoria.equals("Selección")) {
+            return 10;
+        } else {
+            return 0;
+        }
+
+    }
+
+    private void cambiarEstado(String tipE) throws AddressException {
+        jLabelCargandoAS.setText("Cargando...");
+        if (jTable2.getSelectedRow() != -1 && jTable2.getSelectedColumn() != -1) {
+
+            int res = validarSolicitudes.cambiarEstado(usuario, tipE, jTable2.getValueAt(jTable2.getSelectedRow(), 0).toString(), jTextField2.getText(), jTable2.getValueAt(jTable2.getSelectedRow(), 2).toString());
+            if (res == 1) {
+                JOptionPane.showMessageDialog(null, "Se han guardado los cambios", "Cambiar estado de la solicitud", JOptionPane.INFORMATION_MESSAGE);
+                administrar_Solicitudes();
+                if (!tipE.equals("Cancelada")) {
+                    int dialog = JOptionPane.YES_NO_OPTION;
+                    int result = JOptionPane.showConfirmDialog(null, "¿Desea notificar por correo al usuario?", "Exit", dialog);
+                    if (result == 0) {
+                        String contrasenia = JOptionPane.showInputDialog(null, "Ingrese la contraseña del correo: horariosdesalastics@gmail.com", "Enviar correo", JOptionPane.QUESTION_MESSAGE);
+                        if (!contrasenia.equals("")) {
+                            boolean c = validarSolicitudes.verificarEnvio(contrasenia, jTable2.getValueAt(jTable2.getSelectedRow(), 0).toString(), tipE, jTable2.getValueAt(jTable2.getSelectedRow(), 4).toString(), jTextField2.getText());
+                            if (c) {
+                                JOptionPane.showMessageDialog(null, "Se ha notificado al usuario: " + jTable2.getValueAt(jTable2.getSelectedRow(), 4).toString() + "@unal.edu.co");
+                            } else {
+                                JOptionPane.showMessageDialog(null, "Ha ocurrido un error al intentar enviar el correo");
                             }
-                        } 
+                        }
                     }
-                }else if(res==-1 && res==-3 ){
-                     JOptionPane.showMessageDialog(null, "Accion no valida",  "Accion no valida", JOptionPane.INFORMATION_MESSAGE);
-                }else if(res==-2){
-                 JOptionPane.showMessageDialog(null, "Ha ocurrido un error al intentar conectar con el servidor",  "Error", JOptionPane.INFORMATION_MESSAGE);   
-                }else if(res==-4){
-                   JOptionPane.showMessageDialog(null, "No tiene permisos para cancelar solicitudes de otros usuarios",  "Accion no valida", JOptionPane.INFORMATION_MESSAGE);    
-                }else if(res == -5){
-                     JOptionPane.showMessageDialog(null, "No es posible cambiar de estado la solicitud",  "Accion no valida", JOptionPane.INFORMATION_MESSAGE);     
-                }else if(res ==-6){
-                     JOptionPane.showMessageDialog(null, "Ya existe un evento que se cruza con el evento de esta solicitud",  "Accion no valida", JOptionPane.INFORMATION_MESSAGE);     
                 }
+            } else if (res == -1 && res == -3) {
+                JOptionPane.showMessageDialog(null, "Accion no valida", "Accion no valida", JOptionPane.INFORMATION_MESSAGE);
+            } else if (res == -2) {
+                JOptionPane.showMessageDialog(null, "Ha ocurrido un error al intentar conectar con el servidor", "Error", JOptionPane.INFORMATION_MESSAGE);
+            } else if (res == -4) {
+                JOptionPane.showMessageDialog(null, "No tiene permisos para cancelar solicitudes de otros usuarios", "Accion no valida", JOptionPane.INFORMATION_MESSAGE);
+            } else if (res == -5) {
+                JOptionPane.showMessageDialog(null, "No es posible cambiar de estado la solicitud", "Accion no valida", JOptionPane.INFORMATION_MESSAGE);
+            } else if (res == -6) {
+                JOptionPane.showMessageDialog(null, "Ya existe un evento que se cruza con el evento de esta solicitud", "Accion no valida", JOptionPane.INFORMATION_MESSAGE);
+            } else if (res == -1 && res == -3) {
+                JOptionPane.showMessageDialog(null, "Accion no valida", "Accion no valida", JOptionPane.INFORMATION_MESSAGE);
+            } else if (res == -2) {
+                JOptionPane.showMessageDialog(null, "Ha ocurrido un error al intentar conectar con el servidor", "Error", JOptionPane.INFORMATION_MESSAGE);
+            } else if (res == -4) {
+                JOptionPane.showMessageDialog(null, "No tiene permisos para cancelar solicitudes de otros usuarios", "Accion no valida", JOptionPane.INFORMATION_MESSAGE);
             }
-         jLabelCargandoAS.setText("");
-        
-     }
-             
-      
-     private void abrirPersonalizacionHoras(Frame_Main frame){
-         Frame_PersonalizarRepeticion personalizar = new Frame_PersonalizarRepeticion();
-         personalizar.setVisible(true);
-         personalizar.setFramePadre(this);
-         this.setEnabled(false);
-         
-         
-     }
-     
+        }
+
+    }
+
+    public void setFechaTermina(String fechaTermina) {
+        this.fechaTermina = fechaTermina;
+    }
+
+    public void setDiasRepeticion(int[] diasRepeticion) {
+        this.diasRepeticion = diasRepeticion;
+    }
+
+    public void setIndiceRepeticion(int indiceRepeticion) {
+        this.indiceRepeticion = indiceRepeticion;
+    }
+
+    private void abrirPersonalizacionHoras(Frame_Main frame) {
+        Frame_PersonalizarRepeticion personalizar = new Frame_PersonalizarRepeticion();
+        personalizar.setVisible(true);
+        personalizar.setFramePadre(this);
+        this.setEnabled(false);
+
+    }
+
     public void setTextoMuestralabel(String text) {
         this.jLabelRepeticion.setText(text);
     }
-    
-    public void verificarDatosBusqueda(){
-        
+
+    public void verificarIngresoSolicitud() {
+
+        evento = new Evento(0,
+                (Integer) jSpinnerHorainicio.getValue() + ":" + (Integer) jSpinnerMinutosInicio.getValue() + ":00",
+                nombreRepeticion,
+                obtener_fecha(),
+                fechaTermina,
+                (Integer) jSpinnerHorafinal.getValue() + ":" + (Integer) jSpinnerMinutosFinal.getValue() + ":00",
+                (String) jComboMotivos.getSelectedItem(),
+                -1,
+                indiceRepeticion,
+                diasRepeticion);
+
+        solicitud = new Solicitud(0,
+                validarSolIngresada.fechaBD(usuario),
+                "",
+                "2",
+                "",
+                idEspacioSeleccionado,
+                evento);
+
+        int result = JOptionPane.showConfirmDialog(null, "¿Desea cerrar el programa?", "Exit", 1);
+
     }
- 
-     
-      /*
+
+    /*
       private String obtener_estado(){
           if(Jcbox_rechazada.isSelected()){
               return "Rechazada";
@@ -1614,32 +1626,30 @@ public class Frame_Main extends javax.swing.JFrame{
           }
       return null;    
       }
-      */
-    
+     */
     /// Acciones de los botones y labels
-    
+
     private void jLabel2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MousePressed
-       
+
         try {
-            
+
             solicitar_Espacio("Laboratorios");
 
         } catch (SQLException ex) {
-            Logger.getLogger(Frame_Main.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Frame_Main.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
-    
-        llenarMotivos(usuario);
-        
-        if(usuario.getTipoUsuario() != 2){  //Si el usuario no es coordinador, deshabilitar el botón para eliminar espacios.
+
+        if (usuario.getTipoUsuario() != 2) {  //Si el usuario no es coordinador, deshabilitar el botón para eliminar espacios.
             this.jButton9.setVisible(false);
         }
-        
+
     }//GEN-LAST:event_jLabel2MousePressed
 
     private void jlClose1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlClose1MouseClicked
         int dialog = JOptionPane.YES_NO_OPTION;
-        int result = JOptionPane.showConfirmDialog(null, "¿Desea cerrar el programa?","Exit",dialog);
-        if(result ==0){
+        int result = JOptionPane.showConfirmDialog(null, "¿Desea cerrar el programa?", "Exit", dialog);
+        if (result == 0) {
 
             System.exit(0);
         }
@@ -1650,105 +1660,112 @@ public class Frame_Main extends javax.swing.JFrame{
     }//GEN-LAST:event_jlMinimize1MouseClicked
 
     private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
-       logOut();
+        logOut();
     }//GEN-LAST:event_jLabel7MouseClicked
 
     private void jLabel24MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel24MouseClicked
-       logOut();
+        logOut();
     }//GEN-LAST:event_jLabel24MouseClicked
 
     private void formMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMousePressed
-        x= evt.getX();   
-        y= evt.getY(); 
+        x = evt.getX();
+        y = evt.getY();
     }//GEN-LAST:event_formMousePressed
 
     private void formMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseDragged
-       this.setLocation(this.getLocation().x + evt.getX()-x,this.getLocation().y+evt.getY()-y);
+        this.setLocation(this.getLocation().x + evt.getX() - x, this.getLocation().y + evt.getY() - y);
     }//GEN-LAST:event_formMouseDragged
 
     private void jCheckBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox3ActionPerformed
-        if(jCheckBox3.isSelected()){
-           jButtonPersonalizar.setEnabled(true);
-        }else{
+        if (jCheckBox3.isSelected()) {
+            jButtonPersonalizar.setEnabled(true);
+        } else {
             jButtonPersonalizar.setEnabled(false);
-        }    
+        }
     }//GEN-LAST:event_jCheckBox3ActionPerformed
 
     private void jLabel19MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel19MousePressed
-   
+
         try {
             solicitar_Espacio("Laboratorios");
         } catch (SQLException ex) {
-            Logger.getLogger(Frame_Main.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Frame_Main.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
-     
+
     }//GEN-LAST:event_jLabel19MousePressed
 
     private void jLabel20MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel20MousePressed
-      
+
         try {
             solicitar_Espacio("Sala de reuniones");
         } catch (SQLException ex) {
-            Logger.getLogger(Frame_Main.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Frame_Main.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
-       
+
     }//GEN-LAST:event_jLabel20MousePressed
 
     private void jLabel21MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel21MousePressed
-      
+
         try {
             solicitar_Espacio("Sala de computadores");
         } catch (SQLException ex) {
-            Logger.getLogger(Frame_Main.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Frame_Main.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
-       
+
     }//GEN-LAST:event_jLabel21MousePressed
 
     private void jLabel22MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel22MousePressed
-      
+
         try {
             solicitar_Espacio("Auditorios");
         } catch (SQLException ex) {
-            Logger.getLogger(Frame_Main.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Frame_Main.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
-      
+
     }//GEN-LAST:event_jLabel22MousePressed
 
     private void jLabel3MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MousePressed
-     
+
         try {
             solicitar_Espacio("Sala de reuniones");
         } catch (SQLException ex) {
-            Logger.getLogger(Frame_Main.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Frame_Main.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
-      llenarMotivos(usuario);
-        if(usuario.getTipoUsuario() != 2){  //Si el usuario no es coordinador, deshabilitar el botón para eliminar espacios.
+        llenarMotivos(usuario);
+        if (usuario.getTipoUsuario() != 2) {  //Si el usuario no es coordinador, deshabilitar el botón para eliminar espacios.
             this.jButton9.setVisible(false);
         }
     }//GEN-LAST:event_jLabel3MousePressed
 
     private void jLabel4MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MousePressed
-        
+
         try {
             solicitar_Espacio("Sala de computadores");
         } catch (SQLException ex) {
-            Logger.getLogger(Frame_Main.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Frame_Main.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
         llenarMotivos(usuario);
-        if(usuario.getTipoUsuario() != 2){  //Si el usuario no es coordinador, deshabilitar el botón para eliminar espacios.
+        if (usuario.getTipoUsuario() != 2) {  //Si el usuario no es coordinador, deshabilitar el botón para eliminar espacios.
             this.jButton9.setVisible(false);
         }
     }//GEN-LAST:event_jLabel4MousePressed
 
     private void jLabel5MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MousePressed
-       
+
         try {
             solicitar_Espacio("Auditorios");
         } catch (SQLException ex) {
-            Logger.getLogger(Frame_Main.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Frame_Main.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
-       llenarMotivos(usuario);
-        if(usuario.getTipoUsuario() != 2){  //Si el usuario no es coordinador, deshabilitar el botón para eliminar espacios.
+        llenarMotivos(usuario);
+        if (usuario.getTipoUsuario() != 2) {  //Si el usuario no es coordinador, deshabilitar el botón para eliminar espacios.
             this.jButton9.setVisible(false);
         }
     }//GEN-LAST:event_jLabel5MousePressed
@@ -1759,7 +1776,7 @@ public class Frame_Main extends javax.swing.JFrame{
 
     private void jLabel26MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel26MousePressed
         ocultar_todosPaneles();
-        Bienvenida.setVisible(true); 
+        Bienvenida.setVisible(true);
     }//GEN-LAST:event_jLabel26MousePressed
 
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
@@ -1770,7 +1787,8 @@ public class Frame_Main extends javax.swing.JFrame{
         try {
             cambiarEstado("Aceptada");
         } catch (AddressException ex) {
-            Logger.getLogger(Frame_Main.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Frame_Main.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_Aceptar_sol_botonActionPerformed
 
@@ -1791,7 +1809,7 @@ public class Frame_Main extends javax.swing.JFrame{
     }//GEN-LAST:event_jLabel6MousePressed
 
     private void jLabel8MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MousePressed
-       ver_Estadisticas();
+        ver_Estadisticas();
     }//GEN-LAST:event_jLabel8MousePressed
 
     private void jLabel18MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel18MousePressed
@@ -1802,46 +1820,48 @@ public class Frame_Main extends javax.swing.JFrame{
 
     private void jTable3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable3MouseClicked
         tablaTocada = true;
-        if(jTable3.getSelectedRow()!=-1 && jTable3.getSelectedColumn()!=-1){
-            if(jTable3.getSelectedColumn()==6){
-                     verDetalles(jTable3.getValueAt(jTable3.getSelectedRow(),0));
-             }
-              String edificio=(jTable3.getValueAt(jTable3.getSelectedRow(),3)).toString();
-              String Salon=(jTable3.getValueAt(jTable3.getSelectedRow(),2)).toString();
-              jLabel37.setText(Salon+" - "+edificio+"  ");
-              idEspacioSeleccionado = (jTable3.getValueAt(jTable3.getSelectedRow(), 0)).toString();
+        if (jTable3.getSelectedRow() != -1 && jTable3.getSelectedColumn() != -1) {
+            if (jTable3.getSelectedColumn() == 6) {
+                verDetalles(jTable3.getValueAt(jTable3.getSelectedRow(), 0));
+            }
+            String edificio = (jTable3.getValueAt(jTable3.getSelectedRow(), 3)).toString();
+            String Salon = (jTable3.getValueAt(jTable3.getSelectedRow(), 2)).toString();
+            jLabel37.setText(Salon + " - " + edificio + "  ");
+            idEspacioSeleccionado = (jTable3.getValueAt(jTable3.getSelectedRow(), 0)).toString();
         }
-      
-      
+
+
     }//GEN-LAST:event_jTable3MouseClicked
 
     private void jCalendar2PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jCalendar2PropertyChange
         // TODO add your handling code here:
-        if(jTable3.getSelectedRow()!=-1 && jTable3.getSelectedColumn()!=-1){
-            int id_espacio=Integer.valueOf(jTable3.getValueAt(jTable3.getSelectedRow(),0).toString());
+        if (jTable3.getSelectedRow() != -1 && jTable3.getSelectedColumn() != -1) {
+            int id_espacio = Integer.valueOf(jTable3.getValueAt(jTable3.getSelectedRow(), 0).toString());
             //jCalendar2.get
-            String fecha=obtener_fecha();
-            int day=obt_diaSemana();
+            String fecha = obtener_fecha();
+            fechaTermina = fecha;
+            int day = obt_diaSemana();
             System.out.println(day);
             try {
-                llenarTabla_espacios(id_espacio,fecha,day);
+                llenarTabla_espacios(id_espacio, fecha, day);
             } catch (SQLException ex) {
-                Logger.getLogger(Frame_Main.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Frame_Main.class
+                        .getName()).log(Level.SEVERE, null, ex);
             }
-        } 
+        }
     }//GEN-LAST:event_jCalendar2PropertyChange
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-      
-        if(!tablaTocada){
+
+        if (!tablaTocada) {
             JOptionPane.showMessageDialog(null, "No ha seleccionado un espacio para borrar.", "Error", JOptionPane.INFORMATION_MESSAGE);
-        }else{
-           jLabelCargandoSE.setText("Cargando...");
-            validarEspacios.borrarEspacio(usuario,idEspacioSeleccionado);
+        } else {
+            jLabelCargandoSE.setText("Cargando...");
+            validarEspacios.borrarEspacio(usuario, idEspacioSeleccionado);
             JOptionPane.showMessageDialog(null, "El espacio fue borrado.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-               jLabelCargandoSE.setText("");
+            jLabelCargandoSE.setText("");
         }
-        
+
     }//GEN-LAST:event_jButton9ActionPerformed
 
     private void CategoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CategoriasActionPerformed
@@ -1849,10 +1869,11 @@ public class Frame_Main extends javax.swing.JFrame{
     }//GEN-LAST:event_CategoriasActionPerformed
 
     private void Jcbox_rechazadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Jcbox_rechazadaActionPerformed
-        try {          
+        try {
             llenarTabla_solicitudes("Rechazada");
         } catch (SQLException ex) {
-            Logger.getLogger(Frame_Main.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Frame_Main.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_Jcbox_rechazadaActionPerformed
 
@@ -1860,7 +1881,8 @@ public class Frame_Main extends javax.swing.JFrame{
         try {
             llenarTabla_solicitudes("Espera");
         } catch (SQLException ex) {
-            Logger.getLogger(Frame_Main.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Frame_Main.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_Jcbox_esperaActionPerformed
 
@@ -1868,7 +1890,8 @@ public class Frame_Main extends javax.swing.JFrame{
         try {
             llenarTabla_solicitudes("Cancelada");
         } catch (SQLException ex) {
-            Logger.getLogger(Frame_Main.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Frame_Main.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_Jcbox_canceladaActionPerformed
 
@@ -1876,30 +1899,32 @@ public class Frame_Main extends javax.swing.JFrame{
         try {
             llenarTabla_solicitudes("Aceptada");
         } catch (SQLException ex) {
-            Logger.getLogger(Frame_Main.class.getName()).log(Level.SEVERE, null, ex);
-        }       
-       
+            Logger.getLogger(Frame_Main.class
+                    .getName()).log(Level.SEVERE, null, ex);
+        }
+
     }//GEN-LAST:event_Jcbox_aceptadaActionPerformed
-   
+
     private void BuscadorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BuscadorKeyTyped
-        String categoria=(String)Categorias.getSelectedItem();       
-        if(categoria_fil(categoria)!=10){
-            Buscador.addKeyListener(new KeyAdapter(){
-             @Override
-             public void keyReleased(KeyEvent ke) {
-                 TRSFiltro.setRowFilter(RowFilter.regexFilter("(?i)"+Buscador.getText(), (categoria_fil(categoria)-1)));
-             }
-         });
-         TRSFiltro = new TableRowSorter(jTable2.getModel());
-         jTable2.setRowSorter(TRSFiltro); 
-        }     
+        String categoria = (String) Categorias.getSelectedItem();
+        if (categoria_fil(categoria) != 10) {
+            Buscador.addKeyListener(new KeyAdapter() {
+                @Override
+                public void keyReleased(KeyEvent ke) {
+                    TRSFiltro.setRowFilter(RowFilter.regexFilter("(?i)" + Buscador.getText(), (categoria_fil(categoria) - 1)));
+                }
+            });
+            TRSFiltro = new TableRowSorter(jTable2.getModel());
+            jTable2.setRowSorter(TRSFiltro);
+        }
     }//GEN-LAST:event_BuscadorKeyTyped
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
         try {
             cambiarEstado("Cancelada");
         } catch (AddressException ex) {
-            Logger.getLogger(Frame_Main.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Frame_Main.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton10ActionPerformed
 
@@ -1907,7 +1932,8 @@ public class Frame_Main extends javax.swing.JFrame{
         try {
             cambiarEstado("Rechazada");
         } catch (AddressException ex) {
-            Logger.getLogger(Frame_Main.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Frame_Main.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_Rechazar_sol_botonActionPerformed
 
@@ -1916,16 +1942,16 @@ public class Frame_Main extends javax.swing.JFrame{
     }//GEN-LAST:event_jButtonPersonalizarActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+        verificarIngresoSolicitud();
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void jCheckBoxOtroMotivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxOtroMotivoActionPerformed
-        if(jCheckBoxOtroMotivo.isSelected()){
-           jTextMotivoSolicitud.setEnabled(true);
-        }else{
+    private void jComboMotivosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboMotivosActionPerformed
+        if ("Otro".equals(jComboMotivos.getItemAt(jComboMotivos.getSelectedIndex()))) {
+            jTextMotivoSolicitud.setEnabled(true);
+        } else {
             jTextMotivoSolicitud.setEnabled(false);
-        }  
-    }//GEN-LAST:event_jCheckBoxOtroMotivoActionPerformed
+        }
+    }//GEN-LAST:event_jComboMotivosActionPerformed
 
     private void jLabelAñadirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelAñadirMouseClicked
         // TODO add your handling code here:
@@ -1964,13 +1990,17 @@ public class Frame_Main extends javax.swing.JFrame{
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Frame_Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Frame_Main.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Frame_Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Frame_Main.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Frame_Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Frame_Main.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Frame_Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Frame_Main.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -2013,7 +2043,6 @@ public class Frame_Main extends javax.swing.JFrame{
     private javax.swing.JButton jButtonPersonalizar;
     private com.toedter.calendar.JCalendar jCalendar2;
     private javax.swing.JCheckBox jCheckBox3;
-    private javax.swing.JCheckBox jCheckBoxOtroMotivo;
     private javax.swing.JComboBox<String> jComboMotivos;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -2087,10 +2116,10 @@ public class Frame_Main extends javax.swing.JFrame{
     private javax.swing.JSeparator jSeparator7;
     private javax.swing.JSeparator jSeparator8;
     private javax.swing.JSeparator jSeparator9;
-    private javax.swing.JSpinner jSpinner5;
-    private javax.swing.JSpinner jSpinner6;
-    private javax.swing.JSpinner jSpinner7;
-    private javax.swing.JSpinner jSpinner8;
+    private javax.swing.JSpinner jSpinnerHorafinal;
+    private javax.swing.JSpinner jSpinnerHorainicio;
+    private javax.swing.JSpinner jSpinnerMinutosFinal;
+    private javax.swing.JSpinner jSpinnerMinutosInicio;
     private javax.swing.JTable jTable2;
     private javax.swing.JTable jTable3;
     private javax.swing.JTable jTable4;
@@ -2109,7 +2138,5 @@ public class Frame_Main extends javax.swing.JFrame{
     private javax.swing.JLabel userLabel1;
     private javax.swing.JLabel userLabel2;
     // End of variables declaration//GEN-END:variables
-
- 
 
 }

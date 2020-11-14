@@ -6,6 +6,7 @@
 package DAO;
 
 import static DAO.EspaciosDAO.DB_URL;
+import Entidad.Solicitud;
 import Entidad.Usuario;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -144,7 +145,78 @@ public class SolicitudDAO {
             return null;
         }
     }
+    
+    
+    
+    public String getfechaBD(Usuario par){
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        try {
+            resultSet = null;
+            seleccionarUser(par.getTipoUsuario());
+            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
+            statement = connection.createStatement();
+            DB_USER = null;
+            DB_PASSWD = null;
+            resultSet = statement.executeQuery("select curdate()");
+            
+            resultSet.next();
+            
+            return (resultSet.getString(1));
+            
+            
+        } catch (Exception ex) {
+            System.out.println("Error en SQL" + ex);
+            return null;
+        } finally {
+            try {
+                resultSet.close();
+                statement.close();
+                connection.close();
+                //return null;
+            } catch (Exception ex) {
 
+            }
+        }
+    
+    }
+
+    public boolean ComprobarfechaesMenorBD(Usuario par, String fechaIngresada){
+    
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        try {
+            resultSet = null;
+            seleccionarUser(par.getTipoUsuario());
+            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
+            statement = connection.createStatement();
+            DB_USER = null;
+            DB_PASSWD = null;
+            resultSet = statement.executeQuery("select curdate() >= '"+fechaIngresada+"'");
+            
+            resultSet.next();
+            
+            return (resultSet.getInt(1) == 1);
+            
+            
+        } catch (Exception ex) {
+            System.out.println("Error en SQL" + ex);
+            return true;
+        } finally {
+            try {
+                resultSet.close();
+                statement.close();
+                connection.close();
+                //return null;
+            } catch (Exception ex) {
+
+            }
+        }
+    }
+    
+    
     public int cambiarEstado(Usuario par, int tipo_e, String id_solicitud, String obs) { // buscar las solicitudes dependiendo el estado y tipo de usuario
         Connection connection = null;
         Statement statement = null;
@@ -177,6 +249,51 @@ public class SolicitudDAO {
         }
 
     }
+    
+    public boolean verificarConcurrenciaEventos(Usuario par, Solicitud sol){
+        boolean retorno = false;
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        ResultSet size = null;
+        try {
+            resultSet = null;
+            seleccionarUser(par.getTipoUsuario());
+            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
+            statement = connection.createStatement();
+            DB_USER = null;
+            DB_PASSWD = null;
+            
+            int[] dias = sol.getEvento().getDiasRepite();
+            String diasString  = "";
+            for (int dia : dias) {
+                diasString = diasString + dia;
+            }
+            
+            
+            resultSet = statement.executeQuery("select Horarios_Tics_y_Laboratorios.compararEventos("+
+                    sol.getEspacioidEspacio()+
+                    ", '"+sol.getEvento().getHoraInicio()+
+                    "', '"+sol.getEvento().getHoraFinalEvento()+
+                    "', "+sol.getEvento().getTipoRepetición()+
+                    ", '"+sol.getEvento().getFechaEvento()+"', '"+sol.getEvento().getFechaTerminaEvento()+"', '"+diasString+"');");
+            return retorno;
+        } catch (Exception ex) {
+            System.out.println("Error en SQL" + ex);
+            return false;
+        } finally {
+            try {
+
+                resultSet.close();
+                size.close();
+                statement.close();
+                connection.close();
+                //return null;
+            } catch (Exception ex) {
+
+            }
+        }
+    }
 
     public String[] obtenerMotivo(Usuario par) {
         String[] retorno;
@@ -203,7 +320,7 @@ public class SolicitudDAO {
             int i = 0;
 
             retorno = new String[tamanio];
-
+            
             while (resultSet.next()) {
                 retorno[i] = resultSet.getNString(2);
                 i++;

@@ -10,29 +10,40 @@ package Entidad;
  * @author Usuario
  */
 public class Evento {
-    private int idEvento;
-    private String horaInicio;
-    private String repeticion;
-    private String fechaEvento;
-    private String horaFinalEvento;
-    private String motivoEvento;
-    private int idEdificio;
-    private int tipoRepetición;
-    private int motivoRepetición;
+    int idEvento;
+    String horaInicio;
+    String repeticion;
+    String fechaEvento;
+    String fechaTerminaEvento;
+    String horaFinalEvento;
+    String motivoEvento;
+    int idEdificio;
+    int tipoRepetición;
+    int[] diasRepite;
+    
 
-    public Evento(int idEvento, String horaInicio, String repeticion, String fechaEvento, String horaFinalEvento, String motivoEvento, int idEdificio, int tipoRepetición, int motivoRepetición) {
+
+    public Evento(int idEvento, String horaInicio, String repeticion, String fechaEvento, String fechaTerminaEvento, String horaFinalEvento, String motivoEvento, int idEdificio, int tipoRepetición, int[] diasRepite) {
         this.idEvento = idEvento;
         this.horaInicio = horaInicio;
         this.repeticion = repeticion;
         this.fechaEvento = fechaEvento;
+        this.fechaTerminaEvento = fechaTerminaEvento;
         this.horaFinalEvento = horaFinalEvento;
         this.motivoEvento = motivoEvento;
         this.idEdificio = idEdificio;
         this.tipoRepetición = tipoRepetición;
-        this.motivoRepetición = motivoRepetición;
+        this.diasRepite = diasRepite;
     }
-    
-    
+
+    public String getFechaTerminaEvento() {
+        return fechaTerminaEvento;
+    }
+
+    public void setFechaTerminaEvento(String fechaTerminaEvento) {
+        this.fechaTerminaEvento = fechaTerminaEvento;
+    }
+
     public int getIdEvento() {
         return idEvento;
     }
@@ -97,13 +108,16 @@ public class Evento {
         this.tipoRepetición = tipoRepetición;
     }
 
-    public int getMotivoRepetición() {
-        return motivoRepetición;
+    public int[] getDiasRepite() {
+        return diasRepite;
     }
 
-    public void setMotivoRepetición(int motivoRepetición) {
-        this.motivoRepetición = motivoRepetición;
+    public void setDiasRepite(int[] diasRepite) {
+        this.diasRepite = diasRepite;
     }
+    
+    
+ 
     
     
     

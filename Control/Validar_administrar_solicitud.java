@@ -20,6 +20,15 @@ public class Validar_administrar_solicitud {
         return solicitud.leerSolicitudes(par, convertirTipo_e(tipo_e));
     }
 
+    
+    public String[] datos_solicitud(Usuario par, int id_sol){
+        return solicitud.leerunaSolicitud(par, id_sol);
+    }
+    
+    public String dias_sol(Usuario par, int id_sol){
+        return solicitud.leerdias_soli(par, id_sol);
+    }
+    
     private int convertirTipo_e(String estado) {
         if (estado.equals("Aceptada")) {
             return 1;

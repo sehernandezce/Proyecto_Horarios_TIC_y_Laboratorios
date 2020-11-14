@@ -549,7 +549,7 @@ public class Frame_Main extends javax.swing.JFrame{
             }
         });
 
-        jLabel6.setText("Administrar espacios");
+        jLabel6.setText("Administrar solicitudes");
         jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 jLabel6MousePressed(evt);
@@ -886,6 +886,11 @@ public class Frame_Main extends javax.swing.JFrame{
             }
         ));
         jTable2.getTableHeader().setReorderingAllowed(false);
+        jTable2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable2MouseClicked(evt);
+            }
+        });
         jScrollPane5.setViewportView(jTable2);
 
         Administrar_Solicitudes.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(43, 115, 768, 149));
@@ -1353,6 +1358,22 @@ public class Frame_Main extends javax.swing.JFrame{
         // crear el frame
     }
 
+    private void verDetalles_solicitudes(Object obj){           
+          try{
+             String[] datos=validarSolicitudes.datos_solicitud(usuario, Integer.valueOf(obj.toString()));
+             String dias=validarSolicitudes.dias_sol(usuario, Integer.valueOf(obj.toString()));
+             Frame_DetallesSolicitud frame_DetalleSolicitud= new Frame_DetallesSolicitud();
+             frame_DetalleSolicitud.setVisible(true); 
+             frame_DetalleSolicitud.llenar_frame(datos, dias, usuario,this);    
+             this.setEnabled(false);
+             frame_DetalleSolicitud.setVisible(true); 
+          }catch (Exception e){
+              System.out.println(e);
+          }
+                    
+            // crear el frame
+      }
+    
     public void limpiarTabla() {
 
         DefaultTableModel M = (DefaultTableModel) jTable2.getModel();
@@ -1918,6 +1939,14 @@ public class Frame_Main extends javax.swing.JFrame{
             System.out.println(e);
         }
     }//GEN-LAST:event_jLabelAñadir2MouseClicked
+
+    private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
+        if(jTable2.getSelectedRow()!=-1 && jTable2.getSelectedColumn()!=-1){
+            if(jTable2.getSelectedColumn()==9){
+                     verDetalles_solicitudes(jTable2.getValueAt(jTable2.getSelectedRow(),0));
+             }
+        }
+    }//GEN-LAST:event_jTable2MouseClicked
     
     /**
      * @param args the command line arguments

@@ -179,6 +179,19 @@ public class Validar_administrar_solicitud {
             return "Fecha terminacion con dia antes de fecha inicio";
         }
 
+        if (Integer.parseInt(splitFechaTer[1]) > 12 || Integer.parseInt(spliFechaEmp[1]) > 12 || Integer.parseInt(splitFechaTer[1]) < 0 || Integer.parseInt(spliFechaEmp[1]) < 0) {
+            return "Fecha de mes sin sentido";
+        }
+
+        if (Integer.parseInt(splitFechaTer[0]) < 2020 || Integer.parseInt(spliFechaEmp[0]) < 2020) {
+            return "No son permitidos años tan atrás";
+        }
+        
+        if (Integer.parseInt(splitFechaTer[2]) < 0 || Integer.parseInt(spliFechaEmp[2]) <0 || Integer.parseInt(splitFechaTer[2]) > 31 || Integer.parseInt(spliFechaEmp[2]) > 31) {
+            return "Fecha de mes sin sentido";
+        }
+        
+        
         if (solicitud.ComprobarfechaesMenorBD(par, fechaTermina) || solicitud.ComprobarfechaesMenorBD(par, fechaEmpieza)) {
             return "Alguna de las fechas ingresadas ya pasó";
         }

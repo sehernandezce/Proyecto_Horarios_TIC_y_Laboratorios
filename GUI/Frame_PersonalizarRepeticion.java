@@ -317,7 +317,7 @@ public class Frame_PersonalizarRepeticion extends javax.swing.JFrame {
     }//GEN-LAST:event_jlMinimize1MouseClicked
 
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
-
+        
         this.setEnabled(false);
         this.Frame.setEnabled(true);
         this.Frame.setTextoMuestralabel(jLabelVisualizarRepetición.getText());

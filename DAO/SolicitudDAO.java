@@ -250,6 +250,57 @@ public class SolicitudDAO {
 
     }
     
+    public boolean insertarSolicitud(Usuario par, Solicitud sol){
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        ResultSet size = null;
+        try {
+            resultSet = null;
+            seleccionarUser(par.getTipoUsuario());
+            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
+            statement = connection.createStatement();
+            DB_USER = null;
+            DB_PASSWD = null;
+            
+            int[] dias = sol.getEvento().getDiasRepite();
+            String diasString  = "";
+            for (int dia : dias) {
+                diasString = diasString + dia;
+            }
+            
+            resultSet = statement.executeQuery("call Horarios_Tics_y_Laboratorios.Ingresar_Solicitud("
+                    +sol.getEvento().getTipoRepetición()
+                    +", '"+sol.getEvento().getFechaEvento()
+                    +"', '"+sol.getEvento().getHoraInicio()
+                    +"', '"+sol.getEvento().getHoraFinalEvento()
+                    +"', '"+sol.getEvento().getFechaTerminaEvento()
+                    +"', '"+sol.getEvento().getMotivoEvento()
+                    +"', '"+sol.getEvento().getIdMotivoEvento()
+                    +"', '"+par.getNombreusuarioInstitucional()
+                    +"', '"+sol.getEspacioidEspacio()+
+                    "', '"+diasString+"');");
+            
+            
+            return true;
+        } catch (Exception ex) {
+            System.out.println("Error en SQL" + ex);
+            return false;
+        } finally {
+            try {
+
+                resultSet.close();
+                size.close();
+                statement.close();
+                connection.close();
+                //return null;
+            } catch (Exception ex) {
+
+            }
+        }
+    
+    }
+    
     public boolean verificarConcurrenciaEventos(Usuario par, Solicitud sol){
         Connection connection = null;
         Statement statement = null;

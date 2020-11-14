@@ -77,22 +77,6 @@ public class Validar_administrar_solicitud {
 
   public boolean verificarDatosSolicitudNueva(Usuario par, Solicitud sol, String motivo, String motivoOtro, String fechaTermina, String fechaEmpieza, int horaInicio, int MinutosInicio, int horaFinal, int MinutosFinal) {
         boolean validacion = false;
-
-        //Horas inicio y final con sentido+
-        //fecha termina superior a fecha actual y fecha seleccionada
-        //fecha seleccionada superior a fecha actual
-        //motivo de solicitud distinto de "seleccionar"
-        //si el motivo es otro que no sea muy largo o muy corto, ni vacio
-        //verificar con funcionBD si el evento no se cruza con otro
-        /*
-        System.out.println("Res veficar motivo solicitud: "+"Motivo ingresado correctamente".equals(verificarMotivoSolicitud(motivo, motivoOtro)));
-        System.out.println("Res fecha actual: "+"Fecha ingresada con exito".equals(verificarFechaActual(par, fechaTermina, fechaEmpieza)));
-        System.out.println("Res hora y minutos actual: "+"Las horas están correctas".equals(verificarHorasMinutosIngresadas(horaInicio, MinutosInicio, horaFinal, MinutosFinal)));
-        System.out.println("Verificacion BD: " +verificarCruceEventos( par,  sol));
-        
-        */
-        
-        
         
         if("Motivo ingresado correctamente".equals(verificarMotivoSolicitud(motivo, motivoOtro)) && 
                 "La fecha es valida".equals(verificarFechaActual(par, fechaTermina, fechaEmpieza)) && 
@@ -105,11 +89,15 @@ public class Validar_administrar_solicitud {
         }else{
             return false;
         }
-        
-        
-        
-        
         return validacion;
+    }
+  
+    public String ingresarSolicitudNueva(Usuario par, Solicitud sol){
+        if(solicitud.insertarSolicitud(par, sol)){
+            return "Ingreso completo";
+        }
+        
+        return "Problema ingreso SQL";
     }
 
     public boolean verificarCruceEventos(Usuario par, Solicitud sol){
@@ -151,6 +139,8 @@ public class Validar_administrar_solicitud {
     
         return solicitud.getfechaBD(par);
     }
+    
+    
     
     public String verificarFechaActual(Usuario par, String fechaTermina, String fechaEmpieza) {
         //fecha con formato aaaa-mm-dd

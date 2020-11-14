@@ -1468,7 +1468,8 @@ public class Frame_Main extends javax.swing.JFrame{
                 (String) jComboMotivos.getSelectedItem(),
                 -1,
                 indiceRepeticion,
-                diasRepeticion);
+                diasRepeticion,
+                jComboMotivos.getSelectedIndex());
         
         solicitud = new Solicitud(0,
                 validarSolIngresada.fechaBD(usuario),
@@ -1513,6 +1514,7 @@ public class Frame_Main extends javax.swing.JFrame{
                 +"</table>" + "</html>");
         
         }else{
+            validarSolIngresada.ingresarSolicitudNueva(usuario, solicitud);
             JOptionPane.showMessageDialog(null, "Solicitud ingresada con exito");
         }
 

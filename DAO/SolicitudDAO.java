@@ -404,4 +404,111 @@ public class SolicitudDAO {
         }
     }
 
+    public String[] leerunaSolicitud(Usuario par, int id_solicitud) { // buscar datos en especifico de una solicitud
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        try {
+            resultSet = null;
+            seleccionarUser(par.getTipoUsuario());
+            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
+            statement = connection.createStatement();
+            DB_USER = null;
+            DB_PASSWD = null;
+            resultSet = statement.executeQuery("CALL infoporSolicitud("+ id_solicitud+")");
+            String [] datos= new String [10];
+            if (resultSet.next()) {
+                for(int i=1;i<=10;i++){
+                    datos[i-1]=resultSet.getString(i);
+                }
+            } else {
+                return null;
+            }
+            return datos;
+        } catch (Exception ex) {
+            System.out.println("Error en SQL" + ex);
+            return null;
+        } finally {
+            try {
+                resultSet.close();
+                statement.close();
+                connection.close();
+                //return null;
+            } catch (Exception ex) {
+
+            }
+        }
+
+    }
+    
+     public String leerdias_soli(Usuario par, int id_solicitud) { // buscar las solicitudes dependiendo el estado y tipo de usuario
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        try {
+            resultSet = null;
+            seleccionarUser(par.getTipoUsuario());
+            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
+            statement = connection.createStatement();
+            DB_USER = null;
+            DB_PASSWD = null;
+            resultSet = statement.executeQuery("SELECT dias_del_evento("+ id_solicitud +")");
+            if (resultSet.next()) {
+                return ObtenerDias_solicitud(resultSet);
+            } else {
+                return null;
+            }
+        } catch (Exception ex) {
+            System.out.println("Error en SQL" + ex);
+            return null;
+        } finally {
+            try {
+                resultSet.close();
+                statement.close();
+                connection.close();
+                //return null;
+            } catch (Exception ex) {
+
+            }
+        }
+
+    }
+    
+  
+    private String ObtenerDias_solicitud(ResultSet resultSet) throws SQLException {
+        String dias="";
+        String [] dias_A=null;
+        
+         dias_A=resultSet.getString(1).split(",");
+        
+        for(int i=0;i< dias_A.length;i++){
+            if(dias_A[i].equals("")){
+                continue;
+            }else{
+                dias=dias+"-"+convertir_Dia(Integer.parseInt(dias_A[i]));
+            }
+        }
+      return dias;
+   
+    }
+    
+    public String convertir_Dia(int dia){
+        if(dia==1){
+            return "Domingo";
+        }else if(dia==2){
+            return "Lunes";
+        }else if(dia==3){
+            return "Martes";
+        }else if(dia==4){
+            return "Miercoles";
+        }else if(dia==5){
+            return "Jueves";
+        }else if(dia==6){
+            return "Viernes";
+        }else if(dia==7){
+            return "Sabado";
+        }else{
+            return null;
+        }
+    }
 }

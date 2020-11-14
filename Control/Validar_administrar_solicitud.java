@@ -75,7 +75,7 @@ public class Validar_administrar_solicitud {
         return solicitud.obtenerMotivo(par);
     }
 
-    public boolean verificarDatosSolicitudNueva(Usuario par, Solicitud sol, String motivo, String motivoOtro, String fechaTermina, String fechaEmpieza, int horaInicio, int MinutosInicio, int horaFinal, int MinutosFinal) {
+  public boolean verificarDatosSolicitudNueva(Usuario par, Solicitud sol, String motivo, String motivoOtro, String fechaTermina, String fechaEmpieza, int horaInicio, int MinutosInicio, int horaFinal, int MinutosFinal) {
         boolean validacion = false;
 
         //Horas inicio y final con sentido+
@@ -84,12 +84,26 @@ public class Validar_administrar_solicitud {
         //motivo de solicitud distinto de "seleccionar"
         //si el motivo es otro que no sea muy largo o muy corto, ni vacio
         //verificar con funcionBD si el evento no se cruza con otro
+        /*
+        System.out.println("Res veficar motivo solicitud: "+"Motivo ingresado correctamente".equals(verificarMotivoSolicitud(motivo, motivoOtro)));
+        System.out.println("Res fecha actual: "+"Fecha ingresada con exito".equals(verificarFechaActual(par, fechaTermina, fechaEmpieza)));
+        System.out.println("Res hora y minutos actual: "+"Las horas están correctas".equals(verificarHorasMinutosIngresadas(horaInicio, MinutosInicio, horaFinal, MinutosFinal)));
+        System.out.println("Verificacion BD: " +verificarCruceEventos( par,  sol));
         
-        if(verificarCruceEventos( par,  sol) && "Motivo funcional".equals(verificarMotivoSolicitud(motivo, motivoOtro)) && 
-                "Fecha ingresada con exito".equals(verificarFechaActual(par, fechaTermina, fechaEmpieza)) && 
+        */
+        
+        
+        
+        if("Motivo ingresado correctamente".equals(verificarMotivoSolicitud(motivo, motivoOtro)) && 
+                "La fecha es valida".equals(verificarFechaActual(par, fechaTermina, fechaEmpieza)) && 
                         "Las horas están correctas".equals(verificarHorasMinutosIngresadas(horaInicio, MinutosInicio, horaFinal, MinutosFinal))){
         
-            return true;
+            if(verificarCruceEventos( par,  sol)){
+                return true;
+            }
+             
+        }else{
+            return false;
         }
         
         
@@ -98,11 +112,16 @@ public class Validar_administrar_solicitud {
         return validacion;
     }
 
-    private boolean verificarCruceEventos(Usuario par, Solicitud sol){
+    public boolean verificarCruceEventos(Usuario par, Solicitud sol){
+            
+        if(sol.getEspacioidEspacio() == null){
+            return false;
+        }
+        
         return solicitud.verificarConcurrenciaEventos(par, sol) ;
     }
     
-    private String verificarMotivoSolicitud(String motivo, String motivoOtro) {
+    public String verificarMotivoSolicitud(String motivo, String motivoOtro) {
         Pattern p = Pattern.compile("[a-zA-Z ]+");
         Matcher m = p.matcher(motivoOtro);
         boolean b = m.matches();
@@ -112,7 +131,7 @@ public class Validar_administrar_solicitud {
         }
 
         if ("Otro".equals(motivo)) {
-            if (motivoOtro.length() > 2) {
+            if (motivoOtro.length() < 2) {
                 return "Motivo muy corto";
             }
 
@@ -125,7 +144,7 @@ public class Validar_administrar_solicitud {
             }
         }
 
-        return "Motivo funcional";
+        return "Motivo ingresado correctamente";
     }
 
     public String fechaBD(Usuario par){
@@ -133,14 +152,14 @@ public class Validar_administrar_solicitud {
         return solicitud.getfechaBD(par);
     }
     
-    private String verificarFechaActual(Usuario par, String fechaTermina, String fechaEmpieza) {
+    public String verificarFechaActual(Usuario par, String fechaTermina, String fechaEmpieza) {
         //fecha con formato aaaa-mm-dd
 
         String[] splitFechaTer = fechaTermina.split("-");
         String[] spliFechaEmp = fechaEmpieza.split("-");
 
         if (Integer.parseInt(splitFechaTer[0]) < Integer.parseInt(spliFechaEmp[0])) {
-            return "Fecha terminacion con anio antes de fecha inicio";
+            return "Fecha terminacion con año antes de fecha inicio";
         }
 
         if (Integer.parseInt(splitFechaTer[1]) < Integer.parseInt(spliFechaEmp[1])) {
@@ -152,20 +171,20 @@ public class Validar_administrar_solicitud {
         }
 
         if (solicitud.ComprobarfechaesMenorBD(par, fechaTermina) || solicitud.ComprobarfechaesMenorBD(par, fechaEmpieza)) {
-            return "Fecha ingresada ya pasada";
+            return "Alguna de las fechas ingresadas ya pasó";
         }
 
-        return "Fecha ingresada con exito";
+        return "La fecha es valida";
     }
 
-    private String verificarHorasMinutosIngresadas(int horaInicio, int MinutosInicio, int horaFinal, int MinutosFinal) {
+    public String verificarHorasMinutosIngresadas(int horaInicio, int MinutosInicio, int horaFinal, int MinutosFinal) {
 
-        if (horaInicio >= horaFinal) {
-            return "La hora de inicio es mayor a la hora final";
+        if ( (horaFinal-horaInicio) != 2) {
+            return "Deben haber 2 horas entre las horas de inicio y final";
         }
 
-        if (horaInicio > 25 || horaFinal > 25 || horaInicio < 0 || horaFinal < 0) {
-            return "La hora de inicio o de final no tienen sentido";
+        if (horaInicio > 23 || horaFinal > 23 || horaInicio < 6 || horaFinal < 0) {
+            return "La hora de inicio o de final no están en el horario adecuado";
         }
 
         if (MinutosFinal < 0 || MinutosInicio > 59 || MinutosInicio > 59 || MinutosInicio < 0) {

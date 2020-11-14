@@ -194,7 +194,7 @@ public class SolicitudDAO {
             statement = connection.createStatement();
             DB_USER = null;
             DB_PASSWD = null;
-            resultSet = statement.executeQuery("select curdate() >= '"+fechaIngresada+"'");
+            resultSet = statement.executeQuery("select curdate() > '"+fechaIngresada+"'");
             
             resultSet.next();
             
@@ -251,7 +251,6 @@ public class SolicitudDAO {
     }
     
     public boolean verificarConcurrenciaEventos(Usuario par, Solicitud sol){
-        boolean retorno = false;
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
@@ -270,6 +269,13 @@ public class SolicitudDAO {
                 diasString = diasString + dia;
             }
             
+            System.out.println("select Horarios_Tics_y_Laboratorios.compararEventos("+
+                    sol.getEspacioidEspacio()+
+                    ", '"+sol.getEvento().getHoraInicio()+
+                    "', '"+sol.getEvento().getHoraFinalEvento()+
+                    "', "+sol.getEvento().getTipoRepetición()+
+                    ", '"+sol.getEvento().getFechaEvento()+"', '"+sol.getEvento().getFechaTerminaEvento()+"', '"+diasString+"');");
+            
             
             resultSet = statement.executeQuery("select Horarios_Tics_y_Laboratorios.compararEventos("+
                     sol.getEspacioidEspacio()+
@@ -277,7 +283,10 @@ public class SolicitudDAO {
                     "', '"+sol.getEvento().getHoraFinalEvento()+
                     "', "+sol.getEvento().getTipoRepetición()+
                     ", '"+sol.getEvento().getFechaEvento()+"', '"+sol.getEvento().getFechaTerminaEvento()+"', '"+diasString+"');");
-            return retorno;
+            
+            resultSet.next();
+            
+            return (resultSet.getInt(1) == 1);
         } catch (Exception ex) {
             System.out.println("Error en SQL" + ex);
             return false;

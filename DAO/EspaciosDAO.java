@@ -144,7 +144,8 @@ public class EspaciosDAO {
             statement = connection.createStatement();
             DB_USER=null;
             DB_PASSWD=null;
-            resultSet = statement.executeQuery("CALL Espacios_horas('"+id_espacio+"','"+fecha+"','"+day+"')");
+            resultSet = statement.executeQuery("call Horarios_Tics_y_Laboratorios.Obtener_Horas_espacio('"+id_espacio+"','"+fecha+"','"+day+"')");
+            System.out.println("call Horarios_Tics_y_Laboratorios.Obtener_Horas_espacio('"+id_espacio+"','"+fecha+"','"+day+"')");
             if(resultSet.next()){
                 
                 return ObtenerData_Horas(resultSet);

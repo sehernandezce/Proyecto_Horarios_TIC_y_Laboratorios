@@ -43,7 +43,11 @@ public class Frame_Main extends javax.swing.JFrame{
     private int[] diasRepeticion = {0, 0, 0, 0, 0, 0, 0};
     private int indiceRepeticion;
     private String nombreRepeticion = "Diariamente";
-
+    private boolean tipo_rechazada=false;
+    private boolean tipo_espera=false;
+    private boolean tipo_aceptada=false;
+    private boolean tipo_cancelada=false;
+    
     public String Tipo;
     public Frame_Main() {
         initComponents();
@@ -1253,7 +1257,8 @@ public class Frame_Main extends javax.swing.JFrame{
     private void administrar_Solicitudes() { //Para mostrar las solicitudes en el administrador
         ocultar_todosPaneles();
         Categorias.setSelectedIndex(0);
-
+       
+       
         if (usuario.getTipoUsuario() == 1 || usuario.getTipoUsuario() == 4) {
             Aceptar_sol_boton.setVisible(false);
             Rechazar_sol_boton.setVisible(false);
@@ -1298,7 +1303,7 @@ public class Frame_Main extends javax.swing.JFrame{
     }
 
     private void llenarTabla_solicitudes(String tipo_e) throws SQLException {//modelo tabla espacios
-        Administrar_Solicitudes.setEnabled(false);
+        Administrar_Solicitudes.setEnabled(false);              
         Categorias.setSelectedIndex(0);
         Buscador.setText("");
         Object[][] tabla = validarSolicitudes.llenarMatriz(usuario, tipo_e);
@@ -1782,8 +1787,16 @@ public class Frame_Main extends javax.swing.JFrame{
 
     private void Jcbox_rechazadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Jcbox_rechazadaActionPerformed
         try {
-            llenarTabla_solicitudes("Rechazada");
-        } catch (SQLException ex) {
+            if(tipo_rechazada){              
+               llenarTabla_solicitudes("Todos"); 
+               tipo_rechazada=false;
+                Tipo_estados.clearSelection();
+            }else{
+                tipo_rechazada=true;
+                llenarTabla_solicitudes("Rechazada");         
+            }
+                     
+            } catch (SQLException ex) {
             Logger.getLogger(Frame_Main.class
                     .getName()).log(Level.SEVERE, null, ex);
         }
@@ -1791,7 +1804,14 @@ public class Frame_Main extends javax.swing.JFrame{
 
     private void Jcbox_esperaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Jcbox_esperaActionPerformed
         try {
-            llenarTabla_solicitudes("Espera");
+            if(tipo_espera){              
+               llenarTabla_solicitudes("Todos"); 
+               tipo_espera=false;
+                Tipo_estados.clearSelection();
+            }else{
+                 tipo_espera=true;
+               llenarTabla_solicitudes("Espera");
+            }
         } catch (SQLException ex) {
             Logger.getLogger(Frame_Main.class
                     .getName()).log(Level.SEVERE, null, ex);
@@ -1800,7 +1820,14 @@ public class Frame_Main extends javax.swing.JFrame{
 
     private void Jcbox_canceladaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Jcbox_canceladaActionPerformed
         try {
-            llenarTabla_solicitudes("Cancelada");
+             if(tipo_cancelada){              
+               llenarTabla_solicitudes("Todos"); 
+               tipo_cancelada=false;
+                Tipo_estados.clearSelection();
+            }else{
+             tipo_cancelada=true;
+               llenarTabla_solicitudes("Cancelada");
+             }
         } catch (SQLException ex) {
             Logger.getLogger(Frame_Main.class
                     .getName()).log(Level.SEVERE, null, ex);
@@ -1809,7 +1836,14 @@ public class Frame_Main extends javax.swing.JFrame{
 
     private void Jcbox_aceptadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Jcbox_aceptadaActionPerformed
         try {
+            if(tipo_aceptada){              
+               llenarTabla_solicitudes("Todos"); 
+               tipo_aceptada=false;
+                Tipo_estados.clearSelection();
+            }else{
+            tipo_aceptada=true;
             llenarTabla_solicitudes("Aceptada");
+            }
         } catch (SQLException ex) {
             Logger.getLogger(Frame_Main.class
                     .getName()).log(Level.SEVERE, null, ex);

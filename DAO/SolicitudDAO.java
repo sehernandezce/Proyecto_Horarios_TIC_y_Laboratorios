@@ -195,7 +195,7 @@ public class SolicitudDAO {
             DB_USER = null;
             DB_PASSWD = null;
             
-            System.out.print("select curdate() > '"+fechaIngresada+"'");
+            
             resultSet = statement.executeQuery("select curdate() > '"+fechaIngresada+"'");
             
             resultSet.next();

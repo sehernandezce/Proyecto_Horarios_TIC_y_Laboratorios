@@ -117,25 +117,34 @@ public class Validar_administrar_solicitud {
     }
 
     public String verificarMotivoSolicitud(String motivo, String motivoOtro) {
-        Pattern p = Pattern.compile("[a-zA-Z ]+");
+        Pattern p = Pattern.compile("^[\\s]+.+[\\s].+");
         Matcher m = p.matcher(motivoOtro);
         boolean b = m.matches();
+        
+        Pattern d = Pattern.compile("^.+[\\s]{2,}");
+        Matcher f = d.matcher(motivoOtro);
+        boolean g = f.matches();
+        
+        Pattern r = Pattern.compile("^.+[\\s]{2,}.+");
+        Matcher t = r.matcher(motivoOtro);
+        boolean w = t.matches();
 
         if ("Seleccion".equals(motivo)) {
             return "No se selecciono un motivo";
         }
 
         if ("Otro".equals(motivo)) {
-            if (motivoOtro.length() < 2) {
+            if (motivoOtro.length() <= 2) {
                 return "Motivo muy corto";
             }
 
-            if (motivo.length() > 50) {
+            if (motivoOtro.length() > 50) {
                 return "Motivo muy largo";
             }
 
-            if (!b) {
-                return "Escriba algo por favor";
+           
+            if (b || g || w || "".equals(motivoOtro)) {
+                return "Motivo mal redactado";
             }
         }
 

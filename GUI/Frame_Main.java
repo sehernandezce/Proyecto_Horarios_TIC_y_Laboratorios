@@ -102,6 +102,7 @@ public class Frame_Main extends javax.swing.JFrame{
         jLabel39 = new javax.swing.JLabel();
         jLabel40 = new javax.swing.JLabel();
         jLabel41 = new javax.swing.JLabel();
+        jLabel42 = new javax.swing.JLabel();
         panelCerrar = new javax.swing.JPanel();
         jlClose1 = new javax.swing.JLabel();
         jlMinimize1 = new javax.swing.JLabel();
@@ -385,8 +386,8 @@ public class Frame_Main extends javax.swing.JFrame{
         jPanel2.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 180, -1, -1));
 
         jLabel39.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel39.setText("Hora de inicio:");
-        jPanel2.add(jLabel39, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 240, -1, 20));
+        jLabel39.setText("Fecha de inicio:");
+        jPanel2.add(jLabel39, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 210, -1, 20));
 
         jLabel40.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel40.setText("Salon - Edificio");
@@ -395,6 +396,10 @@ public class Frame_Main extends javax.swing.JFrame{
         jLabel41.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel41.setText("Motivo solicitud:");
         jPanel2.add(jLabel41, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 380, -1, 20));
+
+        jLabel42.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel42.setText("Hora de inicio:");
+        jPanel2.add(jLabel42, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 240, -1, 20));
 
         Solicitar_Espacio.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
@@ -1690,6 +1695,15 @@ public class Frame_Main extends javax.swing.JFrame{
             String Salon = (jTable3.getValueAt(jTable3.getSelectedRow(), 2)).toString();
             jLabel37.setText(Salon + " - " + edificio + "  ");
             idEspacioSeleccionado = (jTable3.getValueAt(jTable3.getSelectedRow(), 0)).toString();
+            
+            String fecha = obtener_fecha();
+            int day = obt_diaSemana();            
+            try {
+                llenarTabla_espacios((Integer)jTable3.getValueAt(jTable3.getSelectedRow(), 0), fecha, day);
+            } catch (SQLException ex) {
+                Logger.getLogger(Frame_Main.class
+                        .getName()).log(Level.SEVERE, null, ex);
+            }
         }
 
 
@@ -1705,7 +1719,7 @@ public class Frame_Main extends javax.swing.JFrame{
         
         if (jTable3.getSelectedRow() != -1 && jTable3.getSelectedColumn() != -1) {
             int id_espacio = Integer.valueOf(jTable3.getValueAt(jTable3.getSelectedRow(), 0).toString());
-            //jCalendar2.get
+            
             String fecha = obtener_fecha();
             
             int day = obt_diaSemana();
@@ -1996,6 +2010,7 @@ public class Frame_Main extends javax.swing.JFrame{
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel40;
     private javax.swing.JLabel jLabel41;
+    private javax.swing.JLabel jLabel42;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;

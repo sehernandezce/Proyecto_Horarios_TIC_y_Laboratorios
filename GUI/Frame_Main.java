@@ -1136,9 +1136,13 @@ public class Frame_Main extends javax.swing.JFrame{
     }
 
     private void logOut() { //Cerrar sesion        
+        int dialog = JOptionPane.YES_NO_OPTION;
+        int result = JOptionPane.showConfirmDialog(null, "¿Desea cerrar sesión?","Cerrar sesión",dialog);
+        if(result == 0){
         Frame_Login frame_Login = new Frame_Login();
-        this.setVisible(false);
         frame_Login.setVisible(true);
+        this.dispose();
+        }
     }
 
     public void llenarMotivos(Usuario us) {
@@ -1374,6 +1378,8 @@ public class Frame_Main extends javax.swing.JFrame{
                 JOptionPane.showMessageDialog(null, "No tiene permisos para cancelar solicitudes de otros usuarios", "Accion no valida", JOptionPane.INFORMATION_MESSAGE);
             }
             jLabelCargandoSE.setText("");
+        }else{
+             JOptionPane.showMessageDialog(null, "No ha seleccionado una solicitud para gestionar", "Accion no valida", JOptionPane.INFORMATION_MESSAGE);
         }
 
     }
@@ -1889,14 +1895,31 @@ public class Frame_Main extends javax.swing.JFrame{
     }//GEN-LAST:event_jTable2MouseClicked
 
     private void jLabelEliminar1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelEliminar1MouseClicked
-        
-        if (!tablaTocada) {
-            JOptionPane.showMessageDialog(null, "No ha seleccionado un espacio para borrar.", "Error", JOptionPane.INFORMATION_MESSAGE);
-        } else {
-            jLabelCargandoSE.setText("Cargando...");
-            validarEspacios.borrarEspacio(usuario, idEspacioSeleccionado);
-            JOptionPane.showMessageDialog(null, "El espacio fue borrado.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-            jLabelCargandoSE.setText("");
+      
+        if (jTable3.getSelectedRow() != -1 && jTable3.getSelectedColumn() != -1) {
+        String edificio = (jTable3.getValueAt(jTable3.getSelectedRow(), 3)).toString();
+        String Salon = (jTable3.getValueAt(jTable3.getSelectedRow(), 2)).toString();
+        int dialog = JOptionPane.YES_NO_OPTION;
+        int result = JOptionPane.showConfirmDialog(null, "¿Esta seguro que desea eliminar el espacio: "+Salon+" - "+edificio+"?", "Exit", dialog);
+          if (result == 0) {
+           
+                jLabelCargandoSE.setText("Cargando...");
+                int n= validarEspacios.borrarEspacio(usuario, idEspacioSeleccionado);
+
+                if(n==1){
+                  JOptionPane.showMessageDialog(null, "El espacio fue borrado.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                }else if(n==-1){
+                  JOptionPane.showMessageDialog(null, "Ha ocurrido un error al conectar con la base de datos.", "Error", JOptionPane.INFORMATION_MESSAGE); 
+                }else if(n==-2){
+                   JOptionPane.showMessageDialog(null, "No es posible eliminar el espacio ya que tiene solicitudes en espera o aceptadas.", "Acción no valida", JOptionPane.INFORMATION_MESSAGE);  
+                }else if(n==-3){
+                   JOptionPane.showMessageDialog(null, "No tiene permisos para ejecutar esta acción", "Acción no valida", JOptionPane.INFORMATION_MESSAGE);    
+                }
+                jLabelCargandoSE.setText("");
+                 
+             }
+                    }else{
+              JOptionPane.showMessageDialog(null, "No ha seleccionado un espacio para borrar.", "Error", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_jLabelEliminar1MouseClicked
     

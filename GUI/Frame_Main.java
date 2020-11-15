@@ -1360,7 +1360,7 @@ public class Frame_Main extends javax.swing.JFrame{
                     }
                 }
                 administrar_Solicitudes();                
-            } else if (res == -1 && res == -3) {
+            } else if (res == -1 || res == -3) {
                 JOptionPane.showMessageDialog(null, "Accion no valida", "Accion no valida", JOptionPane.INFORMATION_MESSAGE);
             } else if (res == -2) {
                 JOptionPane.showMessageDialog(null, "Ha ocurrido un error al intentar conectar con el servidor", "Error", JOptionPane.INFORMATION_MESSAGE);
@@ -1370,13 +1370,7 @@ public class Frame_Main extends javax.swing.JFrame{
                 JOptionPane.showMessageDialog(null, "No es posible cambiar de estado la solicitud", "Accion no valida", JOptionPane.INFORMATION_MESSAGE);
             } else if (res == -6) {
                 JOptionPane.showMessageDialog(null, "Ya existe un evento que se cruza con el evento de esta solicitud", "Accion no valida", JOptionPane.INFORMATION_MESSAGE);
-            } else if (res == -1 && res == -3) {
-                JOptionPane.showMessageDialog(null, "Accion no valida", "Accion no valida", JOptionPane.INFORMATION_MESSAGE);
-            } else if (res == -2) {
-                JOptionPane.showMessageDialog(null, "Ha ocurrido un error al intentar conectar con el servidor", "Error", JOptionPane.INFORMATION_MESSAGE);
-            } else if (res == -4) {
-                JOptionPane.showMessageDialog(null, "No tiene permisos para cancelar solicitudes de otros usuarios", "Accion no valida", JOptionPane.INFORMATION_MESSAGE);
-            }
+            } 
             jLabelCargandoSE.setText("");
         }else{
              JOptionPane.showMessageDialog(null, "No ha seleccionado una solicitud para gestionar", "Accion no valida", JOptionPane.INFORMATION_MESSAGE);

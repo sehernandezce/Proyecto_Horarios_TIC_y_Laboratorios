@@ -62,8 +62,13 @@ public class ValidarEspacios {
       private boolean verificarLongitudName (String nombre){
         return (nombre.length()>4 && nombre.length() <=20);        
     }
-    public void borrarEspacio(Usuario par, String idEspacio){
-        espacioDao.borrarEspacio(par,idEspacio);
+    public int borrarEspacio(Usuario par, String idEspacio){
+        if(par.getTipoUsuario()!=2){
+             return -3;
+        }else{
+           return espacioDao.borrarEspacio(par,idEspacio);    
+        }
+               
     }
     public boolean verificaExistencia(Usuario par, Espacio esp) throws SQLException{
     //Espacio espacio = new Espacio();

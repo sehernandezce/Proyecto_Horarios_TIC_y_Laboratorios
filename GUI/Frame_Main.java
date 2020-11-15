@@ -66,7 +66,6 @@ public class Frame_Main extends javax.swing.JFrame{
     private void initComponents() {
 
         Tipo_estados = new javax.swing.ButtonGroup();
-        jLabelAñadir = new javax.swing.JLabel();
         Solicitar_Espacio = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -102,6 +101,7 @@ public class Frame_Main extends javax.swing.JFrame{
         jLabel39 = new javax.swing.JLabel();
         jLabel40 = new javax.swing.JLabel();
         jLabel41 = new javax.swing.JLabel();
+        jLabel42 = new javax.swing.JLabel();
         panelCerrar = new javax.swing.JPanel();
         jlClose1 = new javax.swing.JLabel();
         jlMinimize1 = new javax.swing.JLabel();
@@ -191,13 +191,6 @@ public class Frame_Main extends javax.swing.JFrame{
         jButton8 = new javax.swing.JButton();
         jScrollPane8 = new javax.swing.JScrollPane();
         jTextArea3 = new javax.swing.JTextArea();
-
-        jLabelAñadir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/anadir.png"))); // NOI18N
-        jLabelAñadir.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabelAñadirMouseClicked(evt);
-            }
-        });
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1024, 550));
@@ -329,12 +322,10 @@ public class Frame_Main extends javax.swing.JFrame{
         });
         jPanel2.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 470, -1, -1));
 
-        jLabel36.setBackground(new java.awt.Color(240, 240, 240));
         jLabel36.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel36.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 1, true));
         jPanel2.add(jLabel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 250, 158, 20));
 
-        jLabel37.setBackground(new java.awt.Color(240, 240, 240));
         jLabel37.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel37.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 1, true));
         jPanel2.add(jLabel37, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 290, 160, 20));
@@ -342,13 +333,13 @@ public class Frame_Main extends javax.swing.JFrame{
         jTextMotivoSolicitud.setEnabled(false);
         jPanel2.add(jTextMotivoSolicitud, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 410, 168, 50));
 
-        jButton9.setText("Borrar El Espacio Seleccionado");
+        jButton9.setText("(se eliminara este boton)Borrar El Espacio Seleccionado");
         jButton9.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton9ActionPerformed(evt);
             }
         });
-        jPanel2.add(jButton9, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 10, -1, 30));
+        jPanel2.add(jButton9, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 10, -1, 30));
 
         jLabelCargandoSE.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
         jPanel2.add(jLabelCargandoSE, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 480, 90, 20));
@@ -385,8 +376,8 @@ public class Frame_Main extends javax.swing.JFrame{
         jPanel2.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 180, -1, -1));
 
         jLabel39.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel39.setText("Hora de inicio:");
-        jPanel2.add(jLabel39, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 240, -1, 20));
+        jLabel39.setText("Fecha de inicio");
+        jPanel2.add(jLabel39, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 220, -1, 20));
 
         jLabel40.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel40.setText("Salon - Edificio");
@@ -395,6 +386,10 @@ public class Frame_Main extends javax.swing.JFrame{
         jLabel41.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel41.setText("Motivo solicitud:");
         jPanel2.add(jLabel41, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 380, -1, 20));
+
+        jLabel42.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel42.setText("Hora de inicio:");
+        jPanel2.add(jLabel42, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 240, -1, 20));
 
         Solicitar_Espacio.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
@@ -1141,9 +1136,13 @@ public class Frame_Main extends javax.swing.JFrame{
     }
 
     private void logOut() { //Cerrar sesion        
+        int dialog = JOptionPane.YES_NO_OPTION;
+        int result = JOptionPane.showConfirmDialog(null, "¿Desea cerrar sesión?","Cerrar sesión",dialog);
+        if(result == 0){
         Frame_Login frame_Login = new Frame_Login();
-        this.setVisible(false);
         frame_Login.setVisible(true);
+        this.dispose();
+        }
     }
 
     public void llenarMotivos(Usuario us) {
@@ -1342,8 +1341,9 @@ public class Frame_Main extends javax.swing.JFrame{
 
             int res = validarSolicitudes.cambiarEstado(usuario, tipE, jTable2.getValueAt(jTable2.getSelectedRow(), 0).toString(), jTextField2.getText(), jTable2.getValueAt(jTable2.getSelectedRow(), 2).toString());
             if (res == 1) {
+                jLabelCargandoSE.setText("Cargando...");
                 JOptionPane.showMessageDialog(null, "Se han guardado los cambios", "Cambiar estado de la solicitud", JOptionPane.INFORMATION_MESSAGE);
-                administrar_Solicitudes();
+                
                 if (!tipE.equals("Cancelada")) {
                     int dialog = JOptionPane.YES_NO_OPTION;
                     int result = JOptionPane.showConfirmDialog(null, "¿Desea notificar por correo al usuario?", "Exit", dialog);
@@ -1359,6 +1359,7 @@ public class Frame_Main extends javax.swing.JFrame{
                         }
                     }
                 }
+                administrar_Solicitudes();                
             } else if (res == -1 && res == -3) {
                 JOptionPane.showMessageDialog(null, "Accion no valida", "Accion no valida", JOptionPane.INFORMATION_MESSAGE);
             } else if (res == -2) {
@@ -1376,6 +1377,9 @@ public class Frame_Main extends javax.swing.JFrame{
             } else if (res == -4) {
                 JOptionPane.showMessageDialog(null, "No tiene permisos para cancelar solicitudes de otros usuarios", "Accion no valida", JOptionPane.INFORMATION_MESSAGE);
             }
+            jLabelCargandoSE.setText("");
+        }else{
+             JOptionPane.showMessageDialog(null, "No ha seleccionado una solicitud para gestionar", "Accion no valida", JOptionPane.INFORMATION_MESSAGE);
         }
 
     }
@@ -1690,6 +1694,17 @@ public class Frame_Main extends javax.swing.JFrame{
             String Salon = (jTable3.getValueAt(jTable3.getSelectedRow(), 2)).toString();
             jLabel37.setText(Salon + " - " + edificio + "  ");
             idEspacioSeleccionado = (jTable3.getValueAt(jTable3.getSelectedRow(), 0)).toString();
+            jLabelCargandoSE.setText("Cargando...");
+            String fecha = obtener_fecha();
+            int day = obt_diaSemana();     
+            
+            try {
+                llenarTabla_espacios(Integer.valueOf(jTable3.getValueAt(jTable3.getSelectedRow(), 0).toString()), fecha, day);
+            } catch (SQLException ex) {
+                Logger.getLogger(Frame_Main.class
+                        .getName()).log(Level.SEVERE, null, ex);
+            }
+            jLabelCargandoSE.setText("");
         }
 
 
@@ -1705,8 +1720,9 @@ public class Frame_Main extends javax.swing.JFrame{
         diasRepeticion = d;
         
         if (jTable3.getSelectedRow() != -1 && jTable3.getSelectedColumn() != -1) {
+            jLabelCargandoSE.setText("Cargando...");
             int id_espacio = Integer.valueOf(jTable3.getValueAt(jTable3.getSelectedRow(), 0).toString());
-            //jCalendar2.get
+            
             String fecha = obtener_fecha();
             
             int day = obt_diaSemana();
@@ -1717,6 +1733,7 @@ public class Frame_Main extends javax.swing.JFrame{
                 Logger.getLogger(Frame_Main.class
                         .getName()).log(Level.SEVERE, null, ex);
             }
+            jLabelCargandoSE.setText("");
         }
     }//GEN-LAST:event_jCalendar2PropertyChange
 
@@ -1840,7 +1857,9 @@ public class Frame_Main extends javax.swing.JFrame{
     }//GEN-LAST:event_jButtonPersonalizarActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        verificarIngresoSolicitud();
+            jLabelCargandoSE.setText("Cargando...");
+            verificarIngresoSolicitud();
+            jLabelCargandoSE.setText("");
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jComboMotivosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboMotivosActionPerformed
@@ -1850,10 +1869,6 @@ public class Frame_Main extends javax.swing.JFrame{
             jTextMotivoSolicitud.setEnabled(false);
         }
     }//GEN-LAST:event_jComboMotivosActionPerformed
-
-    private void jLabelAñadirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelAñadirMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabelAñadirMouseClicked
 
     private void jLabelAñadir2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelAñadir2MouseClicked
         jLabelCargandoSE.setText("Cargando...");
@@ -1880,14 +1895,31 @@ public class Frame_Main extends javax.swing.JFrame{
     }//GEN-LAST:event_jTable2MouseClicked
 
     private void jLabelEliminar1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelEliminar1MouseClicked
-        
-        if (!tablaTocada) {
-            JOptionPane.showMessageDialog(null, "No ha seleccionado un espacio para borrar.", "Error", JOptionPane.INFORMATION_MESSAGE);
-        } else {
-            jLabelCargandoSE.setText("Cargando...");
-            validarEspacios.borrarEspacio(usuario, idEspacioSeleccionado);
-            JOptionPane.showMessageDialog(null, "El espacio fue borrado.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-            jLabelCargandoSE.setText("");
+      
+        if (jTable3.getSelectedRow() != -1 && jTable3.getSelectedColumn() != -1) {
+        String edificio = (jTable3.getValueAt(jTable3.getSelectedRow(), 3)).toString();
+        String Salon = (jTable3.getValueAt(jTable3.getSelectedRow(), 2)).toString();
+        int dialog = JOptionPane.YES_NO_OPTION;
+        int result = JOptionPane.showConfirmDialog(null, "¿Esta seguro que desea eliminar el espacio: "+Salon+" - "+edificio+"?", "Exit", dialog);
+          if (result == 0) {
+           
+                jLabelCargandoSE.setText("Cargando...");
+                int n= validarEspacios.borrarEspacio(usuario, idEspacioSeleccionado);
+
+                if(n==1){
+                  JOptionPane.showMessageDialog(null, "El espacio fue borrado.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                }else if(n==-1){
+                  JOptionPane.showMessageDialog(null, "Ha ocurrido un error al conectar con la base de datos.", "Error", JOptionPane.INFORMATION_MESSAGE); 
+                }else if(n==-2){
+                   JOptionPane.showMessageDialog(null, "No es posible eliminar el espacio ya que tiene solicitudes en espera o aceptadas.", "Acción no valida", JOptionPane.INFORMATION_MESSAGE);  
+                }else if(n==-3){
+                   JOptionPane.showMessageDialog(null, "No tiene permisos para ejecutar esta acción", "Acción no valida", JOptionPane.INFORMATION_MESSAGE);    
+                }
+                jLabelCargandoSE.setText("");
+                 
+             }
+                    }else{
+              JOptionPane.showMessageDialog(null, "No ha seleccionado un espacio para borrar.", "Error", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_jLabelEliminar1MouseClicked
     
@@ -1997,12 +2029,12 @@ public class Frame_Main extends javax.swing.JFrame{
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel40;
     private javax.swing.JLabel jLabel41;
+    private javax.swing.JLabel jLabel42;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JLabel jLabelAñadir;
     private javax.swing.JLabel jLabelAñadir2;
     private javax.swing.JLabel jLabelCargandoAS;
     private javax.swing.JLabel jLabelCargandoSE;

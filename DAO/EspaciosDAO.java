@@ -168,23 +168,34 @@ public class EspaciosDAO {
 
     }
 
-    public void borrarEspacio(Usuario par, String idEspacio) {
+    public int borrarEspacio(Usuario par, String idEspacio) {
         Connection connection = null;
         Statement statement = null;
-        ResultSet resultSet = null;
-        try {
-            resultSet = null;
+        int resultSet =-1;
+        ResultSet resultSet2 = null;
+        try {            
             seleccionarUser(par.getTipoUsuario());
             connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
             statement = connection.createStatement();
             DB_USER=null;
             DB_PASSWD=null;
-            int update = statement.executeUpdate("update ESPACIOS set VIVO = false, ACTIVO = false where ID_ESPACIO = "+ idEspacio + ";");
+            resultSet2 = statement.executeQuery("Select * from SOLICITUDES where ID_ESPACIO='"+ idEspacio + " ' AND (ID_ESTADO =1  OR ID_ESTADO =2);");
+            if(!resultSet2.next()){
+                resultSet = statement.executeUpdate("update ESPACIOS set VIVO = false, ACTIVO = false where ID_ESPACIO = "+ idEspacio + ";");
+                if(resultSet>0){
+                return 1;
+                }else{
+                return -1;
+                }
+            }else{
+                return -2;
+            }
         } catch (Exception ex) {
             System.out.println("Error en SQL" + ex);
+            return -1;
         } finally {
             try {
-                resultSet.close();
+                resultSet2.close();
                 statement.close();
                 connection.close();
                 //return null;

@@ -1700,7 +1700,8 @@ public class Frame_Main extends javax.swing.JFrame{
         fechaTermina = obtener_fecha();
         indiceRepeticion = 4;
         jLabelRepeticion.setText("No se repite");
-        int[] d ={0, 0, 0, 0, 0, 0, 0}; 
+        int[] d ={0, 0, 0, 0, 0, 0, 0};
+        d[obt_diaSemana()] = 1;
         diasRepeticion = d;
         
         if (jTable3.getSelectedRow() != -1 && jTable3.getSelectedColumn() != -1) {

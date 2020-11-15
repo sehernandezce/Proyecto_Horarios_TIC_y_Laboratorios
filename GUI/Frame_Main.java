@@ -333,13 +333,13 @@ public class Frame_Main extends javax.swing.JFrame{
         jTextMotivoSolicitud.setEnabled(false);
         jPanel2.add(jTextMotivoSolicitud, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 410, 168, 50));
 
-        jButton9.setText("Borrar El Espacio Seleccionado");
+        jButton9.setText("(se eliminara este boton)Borrar El Espacio Seleccionado");
         jButton9.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton9ActionPerformed(evt);
             }
         });
-        jPanel2.add(jButton9, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 10, -1, 30));
+        jPanel2.add(jButton9, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 10, -1, 30));
 
         jLabelCargandoSE.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
         jPanel2.add(jLabelCargandoSE, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 480, 90, 20));

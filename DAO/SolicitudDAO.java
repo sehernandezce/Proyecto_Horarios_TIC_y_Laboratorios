@@ -485,7 +485,12 @@ public class SolicitudDAO {
             if(dias_A[i].equals("")){
                 continue;
             }else{
-                dias=dias+"-"+convertir_Dia(Integer.parseInt(dias_A[i]));
+                if(dias.length()==0){
+                    dias=convertir_Dia(Integer.parseInt(dias_A[i])); 
+                }else{
+                   dias=dias+"-"+convertir_Dia(Integer.parseInt(dias_A[i])); 
+                }
+                
             }
         }
       return dias;

@@ -115,7 +115,6 @@ public class Frame_DetallesSolicitud extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(770, 617));
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(770, 630));
         setSize(new java.awt.Dimension(770, 617));
         addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
@@ -222,7 +221,7 @@ public class Frame_DetallesSolicitud extends javax.swing.JFrame {
         jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(438, 322, -1, -1));
         jPanel1.add(jF_motivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(492, 313, 248, 32));
 
-        jLabel12.setText("Onservaciones:");
+        jLabel12.setText("Observaciones:");
         jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(407, 393, -1, -1));
         jPanel1.add(jF_obs, new org.netbeans.lib.awtextra.AbsoluteConstraints(492, 390, 248, 95));
 

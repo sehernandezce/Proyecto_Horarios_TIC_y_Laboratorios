@@ -101,6 +101,7 @@ public class Frame_Main extends javax.swing.JFrame{
         jLabel29 = new javax.swing.JLabel();
         jLabel39 = new javax.swing.JLabel();
         jLabel40 = new javax.swing.JLabel();
+        jLabel41 = new javax.swing.JLabel();
         panelCerrar = new javax.swing.JPanel();
         jlClose1 = new javax.swing.JLabel();
         jlMinimize1 = new javax.swing.JLabel();
@@ -298,17 +299,18 @@ public class Frame_Main extends javax.swing.JFrame{
         jPanel2.add(jButtonPersonalizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 320, -1, -1));
 
         jLabel28.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel28.setText("Motivo solicitud:");
-        jPanel2.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 370, -1, 20));
+        jLabel28.setText("Observaciones:");
+        jPanel2.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 410, 100, 20));
 
         jComboMotivos.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jComboMotivos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccion" }));
+        jComboMotivos.setToolTipText("");
         jComboMotivos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboMotivosActionPerformed(evt);
             }
         });
-        jPanel2.add(jComboMotivos, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 370, 168, -1));
+        jPanel2.add(jComboMotivos, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 380, 168, -1));
 
         jCalendar2.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
@@ -352,7 +354,7 @@ public class Frame_Main extends javax.swing.JFrame{
         jPanel2.add(jLabelCargandoSE, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 480, 90, 20));
 
         jLabelRepeticion.setToolTipText("");
-        jPanel2.add(jLabelRepeticion, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 350, 272, 24));
+        jPanel2.add(jLabelRepeticion, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 350, 260, 24));
         jPanel2.add(jSpinnerHorainicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 240, 56, -1));
 
         jLabelAñadir2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/anadir.png"))); // NOI18N
@@ -389,6 +391,10 @@ public class Frame_Main extends javax.swing.JFrame{
         jLabel40.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel40.setText("Salon - Edificio");
         jPanel2.add(jLabel40, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 270, 90, 20));
+
+        jLabel41.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel41.setText("Motivo solicitud:");
+        jPanel2.add(jLabel41, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 380, -1, 20));
 
         Solicitar_Espacio.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
@@ -915,7 +921,7 @@ public class Frame_Main extends javax.swing.JFrame{
         Administrar_Solicitudes.add(Jcbox_rechazada, new org.netbeans.lib.awtextra.AbsoluteConstraints(414, 275, -1, -1));
 
         Categorias.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        Categorias.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selección", "ID Solicitud", "Fecha solicitud", "Estado", "Fecha de modificación", "Usuario institucional", "Edificio", "Fecha inicio", "Fecha termina", "Observaciones" }));
+        Categorias.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selección", "ID Solicitud", "Fecha solicitud", "Estado", "Fecha de modificación", "Usuario institucional", "Salon/Edificio", "Fecha inicio", "Fecha termina", "Observaciones" }));
         Categorias.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CategoriasActionPerformed(evt);
@@ -1236,7 +1242,7 @@ public class Frame_Main extends javax.swing.JFrame{
         Object[][] tabla = validarSolicitudes.llenarMatriz(usuario, tipo_e);
         jTable2.setModel(new javax.swing.table.DefaultTableModel( //fechas con horas
                 tabla, new String[]{
-                    "ID SOLICITUD", "FECHA SOLICITUD", "ESTADO", "FECHA DE MODIFICACIÓN", "USUARIO INTITUCIONAL", "EDIFICIO", "FECHA INICIO", "FECHA TERMINA", "OBSERVACIONES", "INFORMACIÓN ADICIONAL"
+                    "ID SOLICITUD", "FECHA SOLICITUD", "ESTADO", "FECHA DE MODIFICACIÓN", "USUARIO INTITUCIONAL", "SALON/EDIFICIO", "FECHA INICIO", "FECHA TERMINA", "OBSERVACIONES", "INFORMACIÓN ADICIONAL"
 
                 }
         ));
@@ -1314,7 +1320,7 @@ public class Frame_Main extends javax.swing.JFrame{
             return 4;
         } else if (categoria.equals("Usuario institucional")) {
             return 5;
-        } else if (categoria.equals("Edificio")) {
+        } else if (categoria.equals("Salon/Edificio")) {
             return 6;
         } else if (categoria.equals("Fecha inicio")) {
             return 7;
@@ -1408,7 +1414,7 @@ public class Frame_Main extends javax.swing.JFrame{
                 obtener_fecha(),
                 fechaTermina,
                 (Integer) jSpinnerHorafinal.getValue() + ":0" + (Integer) jSpinnerMinutosFinal.getValue() + ":00",
-                (String) jComboMotivos.getSelectedItem(),
+                jTextMotivoSolicitud.getText(),
                 -1,
                 indiceRepeticion,
                 diasRepeticion,
@@ -1837,7 +1843,7 @@ public class Frame_Main extends javax.swing.JFrame{
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jComboMotivosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboMotivosActionPerformed
-        if ("Otro".equals(jComboMotivos.getItemAt(jComboMotivos.getSelectedIndex()))) {
+        if (!"Seleccion".equals(jComboMotivos.getItemAt(jComboMotivos.getSelectedIndex()))) {
             jTextMotivoSolicitud.setEnabled(true);
         } else {
             jTextMotivoSolicitud.setEnabled(false);
@@ -1989,6 +1995,7 @@ public class Frame_Main extends javax.swing.JFrame{
     private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel40;
+    private javax.swing.JLabel jLabel41;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;

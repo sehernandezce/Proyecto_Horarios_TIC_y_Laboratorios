@@ -41,22 +41,8 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
         jButtonEditar.setVisible(false);
         habtext(false);
       
-    }
-    
-    void crearEspacio(String tipo) throws SQLException{
-        
-        System.out.println(tipo + " espacio");
-        habtext(true);
-        jButtonGuardar.enable(true);
-        Crear=1;
-        TipoC=tipo;
-        if (existe==false){
-            jButtonGuardar.enable(!existe);
-        }
-        else{JOptionPane.showMessageDialog(null, "El espacio ya esta creado",  "Valor no valido", JOptionPane.INFORMATION_MESSAGE);
-        Crear =0;
-        }
-    }
+    }    
+  
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -97,6 +83,7 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
         jTextCorreoEncargado1 = new javax.swing.JTextField();
         jTextField3 = new javax.swing.JTextField();
         jLabelCargandoe = new javax.swing.JLabel();
+        jButtonNuevo = new javax.swing.JButton();
         panelCerrar = new javax.swing.JPanel();
         jlClose1 = new javax.swing.JLabel();
         jlMinimize1 = new javax.swing.JLabel();
@@ -229,7 +216,7 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
                 jButtonGuardarActionPerformed(evt);
             }
         });
-        paneldetallesInventario.add(jButtonGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 550, 100, 30));
+        paneldetallesInventario.add(jButtonGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 550, 100, 30));
 
         jTextCorreoEncargado.setEnabled(false);
         paneldetallesInventario.add(jTextCorreoEncargado, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 120, 150, 30));
@@ -288,7 +275,16 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
             }
         });
         paneldetallesInventario.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 70, 150, 30));
-        paneldetallesInventario.add(jLabelCargandoe, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 560, 100, 20));
+        paneldetallesInventario.add(jLabelCargandoe, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 560, 100, 20));
+
+        jButtonNuevo.setBackground(new java.awt.Color(204, 204, 204));
+        jButtonNuevo.setText("Nuevo");
+        jButtonNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonNuevoActionPerformed(evt);
+            }
+        });
+        paneldetallesInventario.add(jButtonNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 550, 100, 30));
 
         getContentPane().add(paneldetallesInventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 770, 600));
 
@@ -327,7 +323,38 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
     
-    
+      public void crearEspacio(String tipo, Frame_Main frame, Usuario u) throws SQLException{
+        
+        this.usuario=u;
+        this.fraim = frame;
+        if(u.getTipoUsuario()==2){
+            
+            //Crear espacios (Sebastian H)
+            jTextField3.setText(tipo);
+            jTextField2.setText("-1");
+            jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object[][] {}, new String [] {"Id inventario", "Nombre", "Descripción" }){                              
+                      } 
+                         );
+            habtext(true);
+            Crear=1; // Esto de crear=1 si sirve
+            //hasta aqui Crear espacios (Sebastian H)
+            
+            // Crear espacio (Diego)
+            //jButtonGuardar.enable(true);
+            System.out.println(tipo + " espacio");
+            TipoC=tipo;
+            if (existe==false){
+                jButtonGuardar.enable(!existe);
+            }
+            else{JOptionPane.showMessageDialog(null, "El espacio ya esta creado",  "Valor no valido", JOptionPane.INFORMATION_MESSAGE);
+            Crear =0;
+            } 
+            // hasta aqui Crear espacios (Diego)
+        }
+            
+        
+    }
      private void habilitarControles(JTextField text, boolean b) {
           if (b) {
               
@@ -364,7 +391,8 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
      void habtext(boolean b){          
         jButtonGuardar.setVisible(b);
         jLabelAñadir.setVisible(b);
-        jLabelEliminar1.setVisible(b);         
+        jLabelEliminar1.setVisible(b);
+        jButtonNuevo.setVisible(b);
          habilitarControles(jTextNombreEspacio2,b);
          //habilitarControles(jTextField3,b);
          habilitarControles(jTextCorreoEncargado,b);
@@ -453,24 +481,6 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
     private void guardar() throws SQLException{
         boolean verif=false;
 
-        if(Crear==1){
-            EspaciosDAO espacioDao= new EspaciosDAO();
-            espacioC.setId_espacio(0);
-            espacioC.setNombre_espacio(jTextNombreEspacio2.getText());
-            espacioC.setNum_Espacio(jTextNumeroSalon1.getText());
-            espacioC.setNombre_edificio(jTextNombreEdificio.getText());
-            espacioC.setNum_edificio(Integer.valueOf(jTextNumeroEdificio3.getText()));
-            espacioC.setNombre_encargado(jTextCorreoEncargado1.getText());
-            espacioC.setCorreo_encargado(jTextCorreoEncargado.getText());
-            espacioC.setNombre_tipoespacio(TipoC);
-            espacioC.setEstado(true);
-            
-            System.out.println();
-            existe = validarEspacio.verificaExistencia(usuario, espacioC);
-            System.out.println(existe);
-            espacioDao.crearEspacio(usuario, espacioC);
-        }
-
         try{
             Integer.valueOf(jTextNumeroEdificio3.getText());
             Integer.valueOf(jTextNumeroSalon1.getText());
@@ -479,12 +489,38 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
         }catch(Exception e){
              JOptionPane.showMessageDialog(null, "Ha ingresado un valor no valido",  "Valor no valido", JOptionPane.INFORMATION_MESSAGE);
         }
+        //Crear espacios (De Diego) 
+//        if(Crear==1){
+//            EspaciosDAO espacioDao= new EspaciosDAO();
+//            espacioC.setId_espacio(0);
+//            espacioC.setNombre_espacio(jTextNombreEspacio2.getText());
+//            espacioC.setNum_Espacio(jTextNumeroSalon1.getText());
+//            espacioC.setNombre_edificio(jTextNombreEdificio.getText());
+//            espacioC.setNum_edificio(Integer.valueOf(jTextNumeroEdificio3.getText()));
+//            espacioC.setNombre_encargado(jTextCorreoEncargado1.getText());
+//            espacioC.setCorreo_encargado(jTextCorreoEncargado.getText());
+//            espacioC.setNombre_tipoespacio(TipoC);
+//            espacioC.setEstado(true);
+//            
+//            System.out.println();
+//            existe = validarEspacio.verificaExistencia(usuario, espacioC);
+//            System.out.println(existe);
+//            espacioDao.crearEspacio(usuario, espacioC);
+//        }
+        //hasta aqui Crear espacios (De Diego)
+        
         ArrayList<Inventario> inventario=saveInv();
         
         if(verif && !jTextCorreoEncargado.getText().equals(usuario.getNombreusuarioInstitucional())&& !verifinv.equals("-7")){
             ValidarEspacios validarEspacios = new ValidarEspacios ();
              int n= validarEspacios.ValidarInfoEspacio(usuario, capturarE()); 
-             if(n==1){
+             if(n>=1){
+                     //Toma el id para crear el inventario. (Sebastian H)
+                     if(Crear==1){
+                         jTextField2.setText(String.valueOf(n));
+                         Crear=0;
+                     }
+                     //Lo demas se hace solo. Por lo que la parte de nuevo inventario ya esta. 
                      
                      if(validarInventario.ValidarInfoInventario(usuario, jTextField2.getText(),inventario,invDelete)){
                         JOptionPane.showMessageDialog(null, "Se han actualizado los datos correctamente",  "Guardado", JOptionPane.INFORMATION_MESSAGE);    
@@ -627,6 +663,21 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField3ActionPerformed
 
+    private void jButtonNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevoActionPerformed
+         // Aqui sera para poder crear otro espacio sin tener que cerrar el frame 
+         Frame_DetallesEspacio frame_DetallesEspacio = new Frame_DetallesEspacio();
+         try {
+            frame_DetallesEspacio.setVisible(true);
+            frame_DetallesEspacio.crearEspacio(jTextField3.getText(),fraim,usuario);
+            this.setEnabled(false);
+            frame_DetallesEspacio.setVisible(true);
+          
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+         this.dispose();
+    }//GEN-LAST:event_jButtonNuevoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -668,6 +719,7 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jButtonEditar;
     private javax.swing.JButton jButtonGuardar;
+    private javax.swing.JButton jButtonNuevo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

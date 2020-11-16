@@ -167,7 +167,7 @@ public class EspaciosDAO {
 
     }
 
-    public void borrarEspacio(Usuario par, String idEspacio) {
+    public int borrarEspacio(Usuario par, String idEspacio, boolean tablatocada) {
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
@@ -178,20 +178,26 @@ public class EspaciosDAO {
             statement = connection.createStatement();
             DB_USER=null;
             DB_PASSWD=null;
-            int update = statement.executeUpdate("update ESPACIOS set VIVO = false, ACTIVO = false where ID_ESPACIO = "+ idEspacio + ";");
+            if(!tablatocada){
+                return -1;
+            }else{
+                int update = statement.executeUpdate("update ESPACIOS set VIVO = false, ACTIVO = false where ID_ESPACIO = "+ idEspacio + ";");
+            }
         } catch (Exception ex) {
             System.out.println("Error en SQL" + ex);
+            return -2;
         } finally {
             try {
                 resultSet.close();
                 statement.close();
                 connection.close();
-                //return null;
             } catch (Exception ex) {
 
             }
         }
+        return 1;
     }
+    
             
     private String[][] ObtenerData(ResultSet resultSet) throws SQLException{
        

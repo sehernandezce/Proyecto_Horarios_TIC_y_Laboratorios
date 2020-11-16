@@ -1502,9 +1502,7 @@ public class Frame_Main extends javax.swing.JFrame{
                     .getName()).log(Level.SEVERE, null, ex);
         }
 
-        if (usuario.getTipoUsuario() != 2) {  //Si el usuario no es coordinador, deshabilitar el botón para eliminar espacios.
-            this.jButton9.setVisible(false);
-        }
+
 
     }//GEN-LAST:event_jLabel2MousePressed
 
@@ -1599,9 +1597,6 @@ public class Frame_Main extends javax.swing.JFrame{
                     .getName()).log(Level.SEVERE, null, ex);
         }
         llenarMotivos(usuario);
-        if (usuario.getTipoUsuario() != 2) {  //Si el usuario no es coordinador, deshabilitar el botón para eliminar espacios.
-            this.jButton9.setVisible(false);
-        }
     }//GEN-LAST:event_jLabel3MousePressed
 
     private void jLabel4MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MousePressed
@@ -1613,9 +1608,6 @@ public class Frame_Main extends javax.swing.JFrame{
                     .getName()).log(Level.SEVERE, null, ex);
         }
         llenarMotivos(usuario);
-        if (usuario.getTipoUsuario() != 2) {  //Si el usuario no es coordinador, deshabilitar el botón para eliminar espacios.
-            this.jButton9.setVisible(false);
-        }
     }//GEN-LAST:event_jLabel4MousePressed
 
     private void jLabel5MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MousePressed
@@ -1627,9 +1619,6 @@ public class Frame_Main extends javax.swing.JFrame{
                     .getName()).log(Level.SEVERE, null, ex);
         }
         llenarMotivos(usuario);
-        if (usuario.getTipoUsuario() != 2) {  //Si el usuario no es coordinador, deshabilitar el botón para eliminar espacios.
-            this.jButton9.setVisible(false);
-        }
     }//GEN-LAST:event_jLabel5MousePressed
 
     private void jLabel23MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel23MousePressed
@@ -1714,16 +1703,20 @@ public class Frame_Main extends javax.swing.JFrame{
     }//GEN-LAST:event_jCalendar2PropertyChange
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-
-        if (!tablaTocada) {
-            JOptionPane.showMessageDialog(null, "No ha seleccionado un espacio para borrar.", "Error", JOptionPane.INFORMATION_MESSAGE);
-        } else {
-            jLabelCargandoSE.setText("Cargando...");
-            validarEspacios.borrarEspacio(usuario, idEspacioSeleccionado);
-            JOptionPane.showMessageDialog(null, "El espacio fue borrado.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-            jLabelCargandoSE.setText("");
+        int resultado = validarEspacios.borrarEspacio(usuario, idEspacioSeleccionado, tablaTocada);
+        if(resultado == -1){
+                JOptionPane.showMessageDialog(null, "No ha seleccionado un espacio.", "Error", JOptionPane.INFORMATION_MESSAGE);                
+        }else{
+            if(resultado == 1){
+                jLabelCargandoSE.setText("Cargando...");
+                JOptionPane.showMessageDialog(null, "El espacio fue borrado.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                jLabelCargandoSE.setText("");
+            }else{
+                if(resultado == -2){
+                    JOptionPane.showMessageDialog(null, "Hubo un problema con el servidor SQL", "Error", JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
         }
-
     }//GEN-LAST:event_jButton9ActionPerformed
 
     private void CategoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CategoriasActionPerformed

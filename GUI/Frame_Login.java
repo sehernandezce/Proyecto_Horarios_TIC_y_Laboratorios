@@ -35,10 +35,10 @@ public class Frame_Login extends javax.swing.JFrame {
             usuario.setContrasenia("1234567890"); // esto sera para que luego de logearse, el hash se borre
             
             if( usuario.getTipoUsuario()>0 && usuario.getTipoUsuario()!=3){
-                this.setVisible(false);
                 frame_Main.entrar_bienvenida(usuario);
                 frame_Main.setVisible(true);
-            }else if(usuario.getTipoUsuario() == -1){
+                this.dispose();
+            }else if(usuario.getTipoUsuario() == -1 || usuario.getTipoUsuario() == 3){
                 JOptionPane.showMessageDialog(null, "Usuario no Valido",  "Longitud nombre", JOptionPane.INFORMATION_MESSAGE);
             }else if(usuario.getTipoUsuario() == -2){
                 JOptionPane.showMessageDialog(null, "Contraseña no Valida",  "Longitud contraseña", JOptionPane.INFORMATION_MESSAGE);

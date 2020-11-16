@@ -67,8 +67,8 @@ public class UsuarioDAO {
  //                   + "' AND CONTRASENIA='" + par.getContrasenia() + "'");
             
             if(resultSet.next()){
-                if(contraseniahasheada.check(par.getContrasenia(), resultSet.getString(4))){
-                    int tipUser=Integer.valueOf(resultSet.getString(2));
+                if(contraseniahasheada.check(par.getContrasenia(), resultSet.getString(3))){
+                    int tipUser=Integer.valueOf(resultSet.getString(1));
                     return tipUser;
                 }else{
                     return 0;  
@@ -85,7 +85,7 @@ public class UsuarioDAO {
                 statement.close();
                 connection.close();
                     if(resultSet.next()){
-                        return Integer.valueOf(resultSet.getString(2));
+                        return Integer.valueOf(resultSet.getString(1));
                     }else{
                         return 0;
                     }                
@@ -112,7 +112,7 @@ public class UsuarioDAO {
            //         + "AND CONTRASENIA='" + cod + "'");
             
             if(resultSet.next()){                    
-                if(contraseniahasheada.check(cod, resultSet.getString(4))){
+                if(contraseniahasheada.check(cod, resultSet.getString(3))){
                    
                     return true;
                 }else{

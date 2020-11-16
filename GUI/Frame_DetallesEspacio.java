@@ -1,25 +1,48 @@
 package GUI;
 
+import Control.ValidarEspacios;
 import Control.ValidarInventario;
 import Entidad.Espacio;
+import Entidad.Inventario;
 import Entidad.Usuario;
+import DAO.EspaciosDAO;
+import java.awt.Color;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
+
 
 public class Frame_DetallesEspacio extends javax.swing.JFrame {
 
+    public Espacio espacioC = new Espacio();
     private int x,y;
+    boolean existe=false;
+    String TipoC;
     private Usuario usuario;
-    Frame_Main fraim;
-    private ValidarInventario validarInventario=new ValidarInventario();
+    private Frame_Main fraim;
+    private String verifinv="0";
+    private ValidarEspacios  validarEspacio = new  ValidarEspacios ();
+    private ValidarInventario validarInventario=new ValidarInventario();    
+    private final ArrayList<String> invDelete = new ArrayList<String>();
+
+    private int Crear;
+
+    
     public Frame_DetallesEspacio() {
         initComponents();
         this.setLocationRelativeTo(null);  
         buttonGroup1.add(jRadioBActivo);
-        buttonGroup1.add(jRadioBInactivo); 
-        
-    }
-
+        buttonGroup1.add(jRadioBInactivo);
+        habilitarControles(jTextField3,false);
+        jButtonEditar.setVisible(false);
+        habtext(false);
+      
+    }    
+  
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -35,7 +58,6 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -49,11 +71,19 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
         jLabelEliminar1 = new javax.swing.JLabel();
         jButtonEditar = new javax.swing.JButton();
         jButtonGuardar = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
+        jTextCorreoEncargado = new javax.swing.JTextField();
         jTextNombreEspacio2 = new javax.swing.JTextField();
         jTextCapacidad = new javax.swing.JTextField();
-        jTextNumeroEdificio2 = new javax.swing.JTextField();
+        jTextNombreEdificio = new javax.swing.JTextField();
         jTextNumeroSalon1 = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
+        jTextNumeroEdificio3 = new javax.swing.JTextField();
+        jTextField2 = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
+        jTextCorreoEncargado1 = new javax.swing.JTextField();
+        jTextField3 = new javax.swing.JTextField();
+        jLabelCargandoe = new javax.swing.JLabel();
+        jButtonNuevo = new javax.swing.JButton();
         panelCerrar = new javax.swing.JPanel();
         jlClose1 = new javax.swing.JLabel();
         jlMinimize1 = new javax.swing.JLabel();
@@ -63,7 +93,6 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
         setLocationByPlatform(true);
         setMinimumSize(new java.awt.Dimension(770, 617));
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(770, 617));
         setResizable(false);
         setSize(new java.awt.Dimension(770, 617));
         addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
@@ -85,8 +114,8 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
         paneldetallesInventario.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel1.setText("Encargado:");
-        paneldetallesInventario.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 130, -1, -1));
+        jLabel1.setText("Correo Encargado:");
+        paneldetallesInventario.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 120, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel2.setText("Detalles de inventario:");
@@ -94,77 +123,168 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel3.setText("Capacidad:");
-        paneldetallesInventario.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 200, -1, -1));
+        paneldetallesInventario.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 210, -1, -1));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel4.setText("Tipo de espacio:");
         paneldetallesInventario.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 70, -1, -1));
-
-        paneldetallesInventario.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 130, 150, 30));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel5.setText("Nombre del Espacio:");
         paneldetallesInventario.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 70, -1, -1));
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel6.setText("Edificio:");
-        paneldetallesInventario.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 130, -1, -1));
+        jLabel6.setText("Nombre Edificio:");
+        paneldetallesInventario.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 180, 110, 20));
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel7.setText("Estado:");
-        paneldetallesInventario.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 200, -1, -1));
+        paneldetallesInventario.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 230, -1, -1));
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel8.setText("Salón:");
         paneldetallesInventario.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 130, -1, -1));
 
         jRadioBActivo.setBackground(new java.awt.Color(204, 204, 204));
+        jRadioBActivo.setForeground(new java.awt.Color(60, 63, 65));
         jRadioBActivo.setSelected(true);
         jRadioBActivo.setText("Activo");
-        jRadioBActivo.setEnabled(false);
-        paneldetallesInventario.add(jRadioBActivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 200, -1, -1));
+        paneldetallesInventario.add(jRadioBActivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 230, -1, -1));
 
         jRadioBInactivo.setBackground(new java.awt.Color(204, 204, 204));
+        jRadioBInactivo.setForeground(new java.awt.Color(60, 63, 65));
         jRadioBInactivo.setText("Inactivo");
-        jRadioBInactivo.setEnabled(false);
-        paneldetallesInventario.add(jRadioBInactivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 200, -1, -1));
+        paneldetallesInventario.add(jRadioBInactivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 230, -1, -1));
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel9.setText("Información del espacio:");
         paneldetallesInventario.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 10, -1, -1));
 
+        jTable1 = new javax.swing.JTable(){
+            public boolean isCellEditable (int rowIndex, int colIndex){
+                if(colIndex==1 || colIndex== 2){
+                    return true;
+                }else{
+                    return false;
+                }
+
+            }
+        };
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        jTable1.setEnabled(false);
+        jTable1.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(jTable1);
 
         paneldetallesInventario.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 310, 700, 230));
 
         jLabelAñadir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/anadir.png"))); // NOI18N
+        jLabelAñadir.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabelAñadirMouseClicked(evt);
+            }
+        });
         paneldetallesInventario.add(jLabelAñadir, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 270, -1, -1));
 
         jLabelEliminar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cancelar.png"))); // NOI18N
+        jLabelEliminar1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabelEliminar1MouseClicked(evt);
+            }
+        });
         paneldetallesInventario.add(jLabelEliminar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 270, -1, -1));
 
         jButtonEditar.setBackground(new java.awt.Color(204, 204, 204));
         jButtonEditar.setText("Editar");
-        paneldetallesInventario.add(jButtonEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 550, 90, 30));
+        jButtonEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEditarActionPerformed(evt);
+            }
+        });
+        paneldetallesInventario.add(jButtonEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 550, 90, 30));
 
         jButtonGuardar.setBackground(new java.awt.Color(204, 204, 204));
         jButtonGuardar.setText("Guardar");
-        paneldetallesInventario.add(jButtonGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 550, 100, 30));
+        jButtonGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonGuardarActionPerformed(evt);
+            }
+        });
+        paneldetallesInventario.add(jButtonGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 550, 100, 30));
 
-        jTextField1.setEnabled(false);
-        paneldetallesInventario.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 70, 150, 30));
+        jTextCorreoEncargado.setEnabled(false);
+        paneldetallesInventario.add(jTextCorreoEncargado, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 120, 150, 30));
 
         jTextNombreEspacio2.setEnabled(false);
-        paneldetallesInventario.add(jTextNombreEspacio2, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 70, 220, 30));
+        paneldetallesInventario.add(jTextNombreEspacio2, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 70, 220, 30));
 
         jTextCapacidad.setEnabled(false);
-        paneldetallesInventario.add(jTextCapacidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 190, 70, 30));
+        paneldetallesInventario.add(jTextCapacidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 210, 70, 30));
 
-        jTextNumeroEdificio2.setEnabled(false);
-        paneldetallesInventario.add(jTextNumeroEdificio2, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 130, 130, 30));
+        jTextNombreEdificio.setEnabled(false);
+        jTextNombreEdificio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextNombreEdificioActionPerformed(evt);
+            }
+        });
+        paneldetallesInventario.add(jTextNombreEdificio, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 180, 260, 30));
 
         jTextNumeroSalon1.setEnabled(false);
-        paneldetallesInventario.add(jTextNumeroSalon1, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 130, 110, 30));
+        paneldetallesInventario.add(jTextNumeroSalon1, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 130, 70, 30));
+
+        jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel10.setText("Numero Edificio:");
+        paneldetallesInventario.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 130, 110, 20));
+
+        jTextNumeroEdificio3.setEnabled(false);
+        jTextNumeroEdificio3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextNumeroEdificio3ActionPerformed(evt);
+            }
+        });
+        paneldetallesInventario.add(jTextNumeroEdificio3, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 130, 110, 30));
+
+        jTextField2.setBackground(new java.awt.Color(204, 204, 204));
+        jTextField2.setForeground(new java.awt.Color(204, 204, 204));
+        jTextField2.setBorder(null);
+        jTextField2.setCaretColor(new java.awt.Color(204, 204, 204));
+        jTextField2.setDisabledTextColor(new java.awt.Color(204, 204, 204));
+        jTextField2.setEnabled(false);
+        jTextField2.setSelectedTextColor(new java.awt.Color(204, 204, 204));
+        jTextField2.setSelectionColor(new java.awt.Color(204, 204, 204));
+        paneldetallesInventario.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 20, 150, 30));
+
+        jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel11.setText("Nombre Encargado:");
+        paneldetallesInventario.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 170, -1, -1));
+
+        jTextCorreoEncargado1.setEnabled(false);
+        paneldetallesInventario.add(jTextCorreoEncargado1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 170, 140, 30));
+
+        jTextField3.setDisabledTextColor(new java.awt.Color(69, 73, 74));
+        jTextField3.setEnabled(false);
+        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField3ActionPerformed(evt);
+            }
+        });
+        paneldetallesInventario.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 70, 150, 30));
+        paneldetallesInventario.add(jLabelCargandoe, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 560, 100, 20));
+
+        jButtonNuevo.setBackground(new java.awt.Color(204, 204, 204));
+        jButtonNuevo.setText("Nuevo");
+        jButtonNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonNuevoActionPerformed(evt);
+            }
+        });
+        paneldetallesInventario.add(jButtonNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 550, 100, 30));
 
         getContentPane().add(paneldetallesInventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 770, 600));
 
@@ -202,21 +322,109 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    public void llenarFrame(Usuario u, Espacio esp, Frame_Main frame) throws SQLException{
+    
+      public void crearEspacio(String tipo, Frame_Main frame, Usuario u) throws SQLException{
+        
         this.usuario=u;
         this.fraim = frame;
-        jTextField1.setText(esp.getNombre_tipoespacio());
+        if(u.getTipoUsuario()==2){
+            
+            //Crear espacios (Sebastian H)
+            jTextField3.setText(tipo);
+            jTextField2.setText("-1");
+            jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object[][] {}, new String [] {"Id inventario", "Nombre", "Descripción" }){                              
+                      } 
+                         );
+            habtext(true);
+            Crear=1; // Esto de crear=1 si sirve
+            //hasta aqui Crear espacios (Sebastian H)
+            
+            // Crear espacio (Diego)
+            //jButtonGuardar.enable(true);
+            System.out.println(tipo + " espacio");
+            TipoC=tipo;
+            if (existe==false){
+                jButtonGuardar.enable(!existe);
+            }
+            else{JOptionPane.showMessageDialog(null, "El espacio ya esta creado",  "Valor no valido", JOptionPane.INFORMATION_MESSAGE);
+            Crear =0;
+            } 
+            // hasta aqui Crear espacios (Diego)
+        }
+            
+        
+    }
+     private void habilitarControles(JTextField text, boolean b) {
+          if (b) {
+              
+                  text.setDisabledTextColor(new Color(0, 0, 0));
+                  text.setBackground(new Color(255, 255, 255));
+                  text.setEnabled(b);
+            } else {
+                  text.setDisabledTextColor(new Color(60, 63, 65));
+                  text.setBackground(new Color(240, 240, 240));
+                  text.setEnabled(b);
+           }
+              
+        }
+     
+    private void cargando(boolean b){
+        if(b){
+           jLabelCargandoe.setText("Cargando..."); 
+        }else{
+           jLabelCargandoe.setText(""); 
+        }
+    }
+    
+    private void actualizando(boolean b){
+        if(b){
+           jLabelCargandoe.setText("Actualizando..."); 
+        }else{
+           jLabelCargandoe.setText(""); 
+        }
+    }
+//    public boolean isCellEditable (int rowIndex, int colIndex){
+//             return false;
+//         }
+   
+     void habtext(boolean b){          
+        jButtonGuardar.setVisible(b);
+        jLabelAñadir.setVisible(b);
+        jLabelEliminar1.setVisible(b);
+        jButtonNuevo.setVisible(b);
+         habilitarControles(jTextNombreEspacio2,b);
+         //habilitarControles(jTextField3,b);
+         habilitarControles(jTextCorreoEncargado,b);
+         habilitarControles(jTextCorreoEncargado1,b);
+         habilitarControles(jTextCapacidad,b);
+         habilitarControles(jTextNumeroSalon1,b);
+         habilitarControles(jTextNumeroEdificio3,b);
+         habilitarControles(jTextNombreEdificio,b); 
+         jRadioBActivo.setEnabled(b);
+         jRadioBInactivo.setEnabled(b);
+         jTable1.setEnabled(b);                  
+         
+     }
+    public void llenarFrame(Usuario u, Espacio esp, Frame_Main frame) throws SQLException{
+        
+        this.usuario=u;
+        this.fraim = frame;
+        jTextCorreoEncargado.setText(esp.getCorreo_encargado());
         if(esp.getNombre_espacio().equals(null)){
              jTextNombreEspacio2.setText(" ");
         }else{
              jTextNombreEspacio2.setText(esp.getNombre_espacio());
         }
-       
-        jComboBox1.addItem(esp.getNombre_encargado());
+        jTextField2.setText(String.valueOf(esp.getId_espacio()));
+        jTextField3.setText(esp.getNombre_tipoespacio());
+        jTextCorreoEncargado.setText(esp.getCorreo_encargado());
+        jTextCorreoEncargado1.setText(esp.getNombre_encargado());        
         jTextNumeroSalon1.setText(esp.getNum_Espacio());
-        jTextNumeroEdificio2.setText(esp.getNombre_edificio());
-        jTextCapacidad.setText(String.valueOf(esp.getCapacidad()));       
+        jTextNombreEdificio.setText(esp.getNombre_edificio());
+        jTextNumeroEdificio3.setText(String.valueOf(esp.getNum_edificio()));     
+        jTextCapacidad.setText(String.valueOf(esp.getCapacidad())); 
+        
         
         if(esp.getEstado()){
             jRadioBActivo.setSelected(true);
@@ -224,11 +432,169 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
         }else{
              jRadioBActivo.setSelected(false);
             jRadioBInactivo.setSelected(true);
-        }
-       Object[][] tabla=validarInventario.llenarMatrizInv(esp.getId_espacio(), u);        
+        }          
+       llenartableInv(esp.getId_espacio());
+    }
+    
+    private void llenartableInv(int idesp) throws SQLException{
+        
+        Object[][] tabla=validarInventario.llenarMatrizInv(idesp, usuario);   
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
-         tabla, new String [] {"Id inventario", "Nombre", "Descripción" }) 
+         tabla, new String [] {"Id inventario", "Nombre", "Descripción" }){                              
+                      } 
                          );
+          if(usuario.getTipoUsuario()==2){
+            jButtonEditar.setVisible(true);
+        }
+    }
+    
+    void habilitarEdit(){
+        if(usuario.getTipoUsuario()==2){
+          habtext(true);           
+        }
+        
+    }
+    
+    private Espacio capturarE(){
+        Espacio espacio= new Espacio();
+                espacio.setId_espacio(Integer.valueOf(jTextField2.getText()));
+                espacio.setNombre_espacio(jTextNombreEspacio2.getText());
+                espacio.setNum_Espacio(jTextNumeroSalon1.getText());
+                espacio.setNombre_edificio(jTextNombreEdificio.getText());
+                espacio.setNum_edificio(Integer.valueOf(jTextNumeroEdificio3.getText()));
+                espacio.setNombre_encargado(jTextCorreoEncargado1.getText());
+                 espacio.setCorreo_encargado(jTextCorreoEncargado.getText());
+                if(jRadioBActivo.isSelected()){
+                    espacio.setEstado(true);
+                }else{
+                   espacio.setEstado(false);
+                } 
+                espacio.setCapacidad(Integer.valueOf(jTextCapacidad.getText()));  
+                
+                espacio.setNombre_tipoespacio(jTextField3.getText());
+                
+        
+        return espacio;
+    }
+    
+   
+    private void guardar() throws SQLException{
+        boolean verif=false;
+
+        try{
+            Integer.valueOf(jTextNumeroEdificio3.getText());
+            Integer.valueOf(jTextNumeroSalon1.getText());
+            Integer.valueOf(jTextCapacidad.getText());
+            verif=true;
+        }catch(Exception e){
+             JOptionPane.showMessageDialog(null, "Ha ingresado un valor no valido",  "Valor no valido", JOptionPane.INFORMATION_MESSAGE);
+        }
+        //Crear espacios (De Diego) 
+//        if(Crear==1){
+//            EspaciosDAO espacioDao= new EspaciosDAO();
+//            espacioC.setId_espacio(0);
+//            espacioC.setNombre_espacio(jTextNombreEspacio2.getText());
+//            espacioC.setNum_Espacio(jTextNumeroSalon1.getText());
+//            espacioC.setNombre_edificio(jTextNombreEdificio.getText());
+//            espacioC.setNum_edificio(Integer.valueOf(jTextNumeroEdificio3.getText()));
+//            espacioC.setNombre_encargado(jTextCorreoEncargado1.getText());
+//            espacioC.setCorreo_encargado(jTextCorreoEncargado.getText());
+//            espacioC.setNombre_tipoespacio(TipoC);
+//            espacioC.setEstado(true);
+//            
+//            System.out.println();
+//            existe = validarEspacio.verificaExistencia(usuario, espacioC);
+//            System.out.println(existe);
+//            espacioDao.crearEspacio(usuario, espacioC);
+//        }
+        //hasta aqui Crear espacios (De Diego)
+        
+        ArrayList<Inventario> inventario=saveInv();
+        
+        if(verif && !jTextCorreoEncargado.getText().equals(usuario.getNombreusuarioInstitucional())&& !verifinv.equals("-7")){
+            ValidarEspacios validarEspacios = new ValidarEspacios ();
+             int n= validarEspacios.ValidarInfoEspacio(usuario, capturarE()); 
+             if(n>=1){
+                     //Toma el id para crear el inventario. (Sebastian H)
+                     if(Crear==1){
+                         jTextField2.setText(String.valueOf(n));
+                         Crear=0;
+                     }
+                     //Lo demas se hace solo. Por lo que la parte de nuevo inventario ya esta. 
+                     
+                     if(validarInventario.ValidarInfoInventario(usuario, jTextField2.getText(),inventario,invDelete)){
+                        JOptionPane.showMessageDialog(null, "Se han actualizado los datos correctamente",  "Guardado", JOptionPane.INFORMATION_MESSAGE);    
+                        invDelete.clear();
+                         Espacio espacio = new Espacio();
+                        espacio = validarEspacios.BuscarInfoEspacio(usuario, Integer.valueOf(jTextField2.getText()));
+                        actualizando(true);
+                        llenarFrame(usuario, espacio, fraim);
+                         try {
+                            fraim.solicitar_Espacio(jTextField3.getText());
+                        } catch (SQLException ex) {
+                            Logger.getLogger(Frame_DetallesEspacio.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                     }else{
+                          JOptionPane.showMessageDialog(null, "Se ha actualizado los datos del espacio. Ha ocurrido un error al actualizar el inventario",  "Error", JOptionPane.INFORMATION_MESSAGE);  
+                     }                     
+                               
+                 
+              }else if(n==-1 || n==-5){
+                 JOptionPane.showMessageDialog(null, "El usuario "+usuario.getNombreusuarioInstitucional()+" no tiene permisos para modificar los espacios" ,  "Accion invalida", JOptionPane.INFORMATION_MESSAGE);   
+              }else if(n==-2){
+                 JOptionPane.showMessageDialog(null, "Ya existe un espacio con el edificio y salon : "+ jTextNumeroEdificio3.getText() +" " + jTextNumeroSalon1.getText(),  "Accion invalida", JOptionPane.INFORMATION_MESSAGE);   
+              }else if(n==-3){
+                 JOptionPane.showMessageDialog(null, "El usuario "+jTextCorreoEncargado.getText() +" no es valido" ,  "Accion invalida", JOptionPane.INFORMATION_MESSAGE);   
+              }else if(n==-4){
+                 JOptionPane.showMessageDialog(null, "Ha ocurrido un error al intentar conectar con el servidor" ,  "Error", JOptionPane.INFORMATION_MESSAGE);   
+              }else if(n==-6){
+                 JOptionPane.showMessageDialog(null, "Usuario de encargado invalido" ,  "Accion invalida", JOptionPane.INFORMATION_MESSAGE);   
+              }else if(n==-8){
+                 JOptionPane.showMessageDialog(null, "Nombre de espacio invalido" ,  "Accion invalida", JOptionPane.INFORMATION_MESSAGE);   
+              }else if(n==-9){
+                  JOptionPane.showMessageDialog(null, "El espacio ha sido eliminado" ,  "Accion invalida", JOptionPane.INFORMATION_MESSAGE);   
+              }         
+        }else{
+            if(jTextCorreoEncargado.getText().equals(usuario.getNombreusuarioInstitucional())){
+               JOptionPane.showMessageDialog(null, "No es posible asignar el rol coordinador como encargado" ,  "Accion invalida", JOptionPane.INFORMATION_MESSAGE);      
+            }            
+            if(verifinv.equals("-7")){
+                 verifinv="0";
+              JOptionPane.showMessageDialog(null, "Por favor, ingrese el nombre de atributo a cada item del inventario" ,  "Accion invalida", JOptionPane.INFORMATION_MESSAGE);        
+            }
+        }
+        
+     }
+    
+    private void deletInv(){
+        if(jTable1.getSelectedRow()!=-1 && jTable1.getSelectedColumn()!=-1){
+           if(!jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString().equals("")){
+               invDelete.add(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString());
+           }
+       }
+    }
+    
+    private ArrayList<Inventario> saveInv(){
+        ArrayList<Inventario> inventario = new ArrayList<Inventario>();
+        for(int i=0; i<jTable1.getRowCount(); i++){
+            Inventario e=new Inventario ();
+            if(jTable1.getValueAt(i, 1).toString().equals("")){               
+                verifinv="-7";
+                break;
+            }
+            else if(!jTable1.getValueAt(i, 1).toString().equals("")){
+                if(jTable1.getValueAt(i, 0).toString().equals("")){
+                     e.setId_inventario("-1");
+                }else{
+                   e.setId_inventario(jTable1.getValueAt(i, 0).toString()); 
+                }               
+                e.setNombreAtributo(jTable1.getValueAt(i, 1).toString());
+                e.setDescripcion(jTable1.getValueAt(i, 2).toString());
+                inventario.add(e);               
+            }            
+         }
+                 
+        return inventario;
     }
     
     private void jlClose1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlClose1MouseClicked
@@ -236,10 +602,11 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
         int result = JOptionPane.showConfirmDialog(null, "¿Desea cerrar el esta ventana?","Exit",dialog);
         
         if(result == 0){
-            this.fraim.enable(true);
+            this.fraim.setEnabled(true);            
             this.dispose();
             
         }
+      
     }//GEN-LAST:event_jlClose1MouseClicked
 
     private void jlMinimize1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlMinimize1MouseClicked
@@ -254,6 +621,62 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
         x= evt.getX();   
         y= evt.getY(); 
     }//GEN-LAST:event_formMousePressed
+
+    private void jTextNombreEdificioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextNombreEdificioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextNombreEdificioActionPerformed
+
+    private void jTextNumeroEdificio3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextNumeroEdificio3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextNumeroEdificio3ActionPerformed
+
+    private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
+         habilitarEdit();
+    }//GEN-LAST:event_jButtonEditarActionPerformed
+
+    private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
+        try {
+            cargando(true);
+            guardar();
+             cargando(false);
+        } catch (SQLException ex) {
+            Logger.getLogger(Frame_DetallesEspacio.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       
+    }//GEN-LAST:event_jButtonGuardarActionPerformed
+
+    private void jLabelAñadirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelAñadirMouseClicked
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.addRow(new Object[]{"", "", ""});
+    }//GEN-LAST:event_jLabelAñadirMouseClicked
+
+    private void jLabelEliminar1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelEliminar1MouseClicked
+       if(jTable1.getSelectedRow()!=-1 && jTable1.getSelectedColumn()!=-1){
+            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+             deletInv();
+            model.removeRow(jTable1.getSelectedRow());           
+       }
+              
+    }//GEN-LAST:event_jLabelEliminar1MouseClicked
+
+    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField3ActionPerformed
+
+    private void jButtonNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevoActionPerformed
+         // Aqui sera para poder crear otro espacio sin tener que cerrar el frame 
+         Frame_DetallesEspacio frame_DetallesEspacio = new Frame_DetallesEspacio();
+         try {
+            frame_DetallesEspacio.setVisible(true);
+            frame_DetallesEspacio.crearEspacio(jTextField3.getText(),fraim,usuario);
+            this.setEnabled(false);
+            frame_DetallesEspacio.setVisible(true);
+          
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+         this.dispose();
+    }//GEN-LAST:event_jButtonNuevoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -296,8 +719,10 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jButtonEditar;
     private javax.swing.JButton jButtonGuardar;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JButton jButtonNuevo;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -307,15 +732,20 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabelAñadir;
+    private javax.swing.JLabel jLabelCargandoe;
     private javax.swing.JLabel jLabelEliminar1;
     private javax.swing.JRadioButton jRadioBActivo;
     private javax.swing.JRadioButton jRadioBInactivo;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextCapacidad;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextCorreoEncargado;
+    private javax.swing.JTextField jTextCorreoEncargado1;
+    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField jTextNombreEdificio;
     private javax.swing.JTextField jTextNombreEspacio2;
-    private javax.swing.JTextField jTextNumeroEdificio2;
+    private javax.swing.JTextField jTextNumeroEdificio3;
     private javax.swing.JTextField jTextNumeroSalon1;
     private javax.swing.JLabel jlClose1;
     private javax.swing.JLabel jlMinimize1;

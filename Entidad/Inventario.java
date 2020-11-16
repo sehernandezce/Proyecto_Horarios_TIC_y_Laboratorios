@@ -4,16 +4,16 @@ package Entidad;
 
 public class Inventario {
     
-    private int id_inventario;
+    private String id_inventario;
     private int id_Espacio;
     private String nombreAtributo;
     private String descripcion;
 
-    public int getId_inventario() {
+    public String getId_inventario() {
         return id_inventario;
     }
 
-    public void setId_inventario(int id_inventario) {
+    public void setId_inventario(String id_inventario) {
         this.id_inventario = id_inventario;
     }
 

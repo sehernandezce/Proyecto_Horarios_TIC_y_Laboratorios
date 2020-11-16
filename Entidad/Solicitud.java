@@ -10,6 +10,17 @@ public class Solicitud {
    private String fechaModificacion;
    private String espacioidEspacio;
    private Evento evento;
+   private int idMotivoEvento;
+
+    public int getIdMotivoEvento() {
+        return idMotivoEvento;
+    }
+
+    public void setIdMotivoEvento(int idMotivoEvento) {
+        this.idMotivoEvento = idMotivoEvento;
+    }
+   
+   
 
     public Evento getEvento() {
         return evento;

@@ -5,7 +5,11 @@
  */
 package GUI;
 
+import java.time.DayOfWeek;
+import java.time.temporal.ChronoField;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.TimeZone;
 import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
 
@@ -15,15 +19,22 @@ import javax.swing.JOptionPane;
  */
 public class Frame_PersonalizarRepeticion extends javax.swing.JFrame {
 
+
     private int x, y;
     private Frame_Main Frame;
     private String fecha;
+    private String fechaInicio;
     private int[] DiasSeRepite = {0,0,0,0,0,0,0};
     private int repeticion;
+    private int dia_Semana;
 
     public Frame_PersonalizarRepeticion() {
         initComponents();
         this.setLocationRelativeTo(null);
+    }
+
+    public void setFechaInicio(String fechaInicio) {
+        this.fechaInicio = fechaInicio;
     }
  
     
@@ -32,9 +43,18 @@ public class Frame_PersonalizarRepeticion extends javax.swing.JFrame {
         javax.swing.JCheckBox[] dias = {jCheckBoxLunes, jCheckBoxMartes, jCheckBoxMiercoles, jCheckBoxJueves, jCheckBoxViernes, jCheckBoxSabado};
         int diaSeleccionado = jCalendar1.getCalendar().get(Calendar.DAY_OF_WEEK) - 2;
 
-        if (diaSeleccionado < 6 && diaSeleccionado >= 0) {
-            dias[diaSeleccionado].setSelected(true);
+        
+        
+        //System.out.print(dia_Semana);
+        
+        if (dia_Semana < 6 && dia_Semana >= 0) {
+            dias[dia_Semana].setSelected(true);
         }
+        
+        if (diaSeleccionado < 6 && diaSeleccionado >= 0) {
+            dias[diaSeleccionado].setSelected(true);     
+        }
+        
 
         for (int i = 0; i < 6; i++) {
             if (dias[i].isSelected()) {
@@ -48,7 +68,9 @@ public class Frame_PersonalizarRepeticion extends javax.swing.JFrame {
 
         for (int i = 1; i < 7; i++) {
             if (dias[i-1].isSelected()) {
-                DiasSeRepite[i] = 1;
+                DiasSeRepite[i] = i+1;
+            }else{
+                DiasSeRepite[i] = 0;
             }
         }
         
@@ -56,19 +78,25 @@ public class Frame_PersonalizarRepeticion extends javax.swing.JFrame {
         return "los dias " + retorno.substring(1);
     }
 
+    public void setDia_Semana(int dia_Semana) {
+        this.dia_Semana = dia_Semana;
+    }
+
     private void mostrarPeriodicidad() {
+        
+  
         String text = "";
 
         int año = jCalendar1.getCalendar().get(Calendar.YEAR);
-        int mes = jCalendar1.getCalendar().get(Calendar.MARCH);
+        int mes = jCalendar1.getCalendar().get(Calendar.MARCH)+1;
         int dia = jCalendar1.getCalendar().get(Calendar.DAY_OF_MONTH);
 
         fecha = (año + "-" + mes + "-" + dia);
 
         if ("Semanalmente".equals(String.valueOf(jComboSelectorDia.getSelectedItem()))) {
-            text = "Se repite semanalmente " + repeticionDias() + " hasta el día " + fecha;
+            text = "Se repite semanalmente " + repeticionDias() + " desde el dia "+fechaInicio+" hasta el día " + fecha;
         } else if (!"Seleccione uno...".equals(String.valueOf(jComboSelectorDia.getSelectedItem()))) {
-            text = "Se repite " + String.valueOf(jComboSelectorDia.getSelectedItem())
+            text = "Se repite " + String.valueOf(jComboSelectorDia.getSelectedItem())+" desde el dia "+fechaInicio
                     + " hasta el día " + fecha;
         }
 
@@ -104,7 +132,7 @@ public class Frame_PersonalizarRepeticion extends javax.swing.JFrame {
         panelRepetición = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jComboSelectorDia = new javax.swing.JComboBox<String>();
+        jComboSelectorDia = new javax.swing.JComboBox<>();
         jCheckBoxLunes = new javax.swing.JCheckBox();
         jCheckBoxMartes = new javax.swing.JCheckBox();
         jCheckBoxMiercoles = new javax.swing.JCheckBox();
@@ -152,7 +180,7 @@ public class Frame_PersonalizarRepeticion extends javax.swing.JFrame {
         jLabel1.setText("Fecha termina: ");
         panelRepetición.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, -1, -1));
 
-        jComboSelectorDia.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccione uno...", "Diario", "Semanalmente", "Mensualmente" }));
+        jComboSelectorDia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione uno...", "Diario", "Semanalmente", "Mensualmente" }));
         jComboSelectorDia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboSelectorDiaActionPerformed(evt);
@@ -281,6 +309,7 @@ public class Frame_PersonalizarRepeticion extends javax.swing.JFrame {
             this.Frame.setEnabled(true);
             this.dispose();  
         }
+        
     }//GEN-LAST:event_jlClose1MouseClicked
 
     private void jlMinimize1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlMinimize1MouseClicked
@@ -288,7 +317,7 @@ public class Frame_PersonalizarRepeticion extends javax.swing.JFrame {
     }//GEN-LAST:event_jlMinimize1MouseClicked
 
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
-
+        
         this.setEnabled(false);
         this.Frame.setEnabled(true);
         this.Frame.setTextoMuestralabel(jLabelVisualizarRepetición.getText());
@@ -308,6 +337,12 @@ public class Frame_PersonalizarRepeticion extends javax.swing.JFrame {
             
             default:
                 this.repeticion = -1;
+        }
+        
+        
+        int[] diasDIARIOS = {0,1,2,3,4,5,6};
+        if(repeticion == 1){
+            DiasSeRepite = diasDIARIOS;
         }
         
         this.Frame.setDiasRepeticion(DiasSeRepite);

@@ -20,10 +20,9 @@ public class Evento {
     int idEdificio;
     int tipoRepetición;
     int[] diasRepite;
-    
+    private int idMotivoEvento;
 
-
-    public Evento(int idEvento, String horaInicio, String repeticion, String fechaEvento, String fechaTerminaEvento, String horaFinalEvento, String motivoEvento, int idEdificio, int tipoRepetición, int[] diasRepite) {
+    public Evento(int idEvento, String horaInicio, String repeticion, String fechaEvento, String fechaTerminaEvento, String horaFinalEvento, String motivoEvento, int idEdificio, int tipoRepetición, int[] diasRepite, int idMotivoEvento) {
         this.idEvento = idEvento;
         this.horaInicio = horaInicio;
         this.repeticion = repeticion;
@@ -34,7 +33,21 @@ public class Evento {
         this.idEdificio = idEdificio;
         this.tipoRepetición = tipoRepetición;
         this.diasRepite = diasRepite;
+        this.idMotivoEvento = idMotivoEvento;
     }
+
+    public int getIdMotivoEvento() {
+        return idMotivoEvento;
+    }
+
+    public void setIdMotivoEvento(int idMotivoEvento) {
+        this.idMotivoEvento = idMotivoEvento;
+    }
+   
+   
+
+
+
 
     public String getFechaTerminaEvento() {
         return fechaTerminaEvento;

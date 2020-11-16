@@ -144,7 +144,8 @@ public class EspaciosDAO {
             statement = connection.createStatement();
             DB_USER=null;
             DB_PASSWD=null;
-            resultSet = statement.executeQuery("CALL Espacios_horas('"+id_espacio+"','"+fecha+"','"+day+"')");
+            resultSet = statement.executeQuery("call Horarios_Tics_y_Laboratorios.Obtener_Horas_espacio('"+id_espacio+"','"+fecha+"','"+day+"')");
+            System.out.println("call Horarios_Tics_y_Laboratorios.Obtener_Horas_espacio('"+id_espacio+"','"+fecha+"','"+day+"')");
             if(resultSet.next()){
                 
                 return ObtenerData_Horas(resultSet);
@@ -167,28 +168,34 @@ public class EspaciosDAO {
 
     }
 
-    public int borrarEspacio(Usuario par, String idEspacio, boolean tablatocada) {
+    public int borrarEspacio(Usuario par, String idEspacio) {
         Connection connection = null;
         Statement statement = null;
-        ResultSet resultSet = null;
-        try {
-            resultSet = null;
+        int resultSet =-1;
+        ResultSet resultSet2 = null;
+        try {            
             seleccionarUser(par.getTipoUsuario());
             connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
             statement = connection.createStatement();
             DB_USER=null;
             DB_PASSWD=null;
-            if(!tablatocada){
+            resultSet2 = statement.executeQuery("Select * from SOLICITUDES where ID_ESPACIO='"+ idEspacio + " ' AND (ID_ESTADO =1  OR ID_ESTADO =2);");
+            if(!resultSet2.next()){
+                resultSet = statement.executeUpdate("update ESPACIOS set VIVO = false, ACTIVO = false where ID_ESPACIO = "+ idEspacio + ";");
+                if(resultSet>0){
+                return 1;
+                }else{
                 return -1;
+                }
             }else{
-                int update = statement.executeUpdate("update ESPACIOS set VIVO = false, ACTIVO = false where ID_ESPACIO = "+ idEspacio + ";");
+                return -2;
             }
         } catch (Exception ex) {
             System.out.println("Error en SQL" + ex);
-            return -2;
+            return -1;
         } finally {
             try {
-                resultSet.close();
+                resultSet2.close();
                 statement.close();
                 connection.close();
             } catch (Exception ex) {

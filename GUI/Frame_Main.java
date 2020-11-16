@@ -36,7 +36,6 @@ public class Frame_Main extends javax.swing.JFrame{
     private ValidarEspacios validarEspacios = new ValidarEspacios();
     private Validar_administrar_solicitud validarSolIngresada = new Validar_administrar_solicitud();
     private String idEspacioSeleccionado;
-    private boolean tablaTocada = false;
     private Validar_administrar_solicitud validarSolicitudes = new Validar_administrar_solicitud();
     private TableRowSorter TRSFiltro;
     private String fechaTermina;
@@ -87,7 +86,6 @@ public class Frame_Main extends javax.swing.JFrame{
         jLabel36 = new javax.swing.JLabel();
         jLabel37 = new javax.swing.JLabel();
         jTextMotivoSolicitud = new javax.swing.JTextField();
-        jButton9 = new javax.swing.JButton();
         jLabelCargandoSE = new javax.swing.JLabel();
         jLabelRepeticion = new javax.swing.JLabel();
         jSpinnerHorainicio = new javax.swing.JSpinner();
@@ -332,14 +330,6 @@ public class Frame_Main extends javax.swing.JFrame{
 
         jTextMotivoSolicitud.setEnabled(false);
         jPanel2.add(jTextMotivoSolicitud, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 410, 168, 50));
-
-        jButton9.setText("(se eliminara este boton)Borrar El Espacio Seleccionado");
-        jButton9.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton9ActionPerformed(evt);
-            }
-        });
-        jPanel2.add(jButton9, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 10, -1, 30));
 
         jLabelCargandoSE.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
         jPanel2.add(jLabelCargandoSE, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 480, 90, 20));
@@ -1720,23 +1710,6 @@ public class Frame_Main extends javax.swing.JFrame{
         }
     }//GEN-LAST:event_jCalendar2PropertyChange
 
-    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-        int resultado = validarEspacios.borrarEspacio(usuario, idEspacioSeleccionado, tablaTocada);
-        if(resultado == -1){
-                JOptionPane.showMessageDialog(null, "No ha seleccionado un espacio.", "Error", JOptionPane.INFORMATION_MESSAGE);                
-        }else{
-            if(resultado == 1){
-                jLabelCargandoSE.setText("Cargando...");
-                JOptionPane.showMessageDialog(null, "El espacio fue borrado.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-                jLabelCargandoSE.setText("");
-            }else{
-                if(resultado == -2){
-                    JOptionPane.showMessageDialog(null, "Hubo un problema con el servidor SQL", "Error", JOptionPane.INFORMATION_MESSAGE);
-                }
-            }
-        }
-    }//GEN-LAST:event_jButton9ActionPerformed
-
     private void CategoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CategoriasActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_CategoriasActionPerformed
@@ -1976,7 +1949,6 @@ public class Frame_Main extends javax.swing.JFrame{
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
     private javax.swing.JButton jButtonPersonalizar;
     private com.toedter.calendar.JCalendar jCalendar2;
     private javax.swing.JCheckBox jCheckBox3;

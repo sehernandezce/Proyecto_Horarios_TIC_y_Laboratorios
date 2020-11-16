@@ -1102,7 +1102,6 @@ public class Frame_Main extends javax.swing.JFrame{
             userLabel2.setText(usuario.getNombreusuarioInstitucional());
             jLabelEliminar1.setVisible(false);
             jLabelAñadir2.setVisible(false);
-            jButton9.setVisible(false); // Borrar luego
             if (usuario.getTipoUsuario() == 4) {
                 roleLabel1.setText("Usuario Encargado");
             }
@@ -1110,7 +1109,6 @@ public class Frame_Main extends javax.swing.JFrame{
             Menu_UC.setVisible(false);
             jLabelEliminar1.setVisible(true);
             jLabelAñadir2.setVisible(true);
-            jButton9.setVisible(true); // Borrar luego
             userLabel1.setText(usuario.getNombreusuarioInstitucional());
         } else {
             Paneles_Menu.setVisible(false);
@@ -1652,13 +1650,13 @@ public class Frame_Main extends javax.swing.JFrame{
     }//GEN-LAST:event_jLabel8MousePressed
 
     private void jLabel18MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel18MousePressed
-        tablaTocada = false;
+
         ocultar_todosPaneles();
         Bienvenida.setVisible(true);
     }//GEN-LAST:event_jLabel18MousePressed
 
     private void jTable3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable3MouseClicked
-        tablaTocada = true;
+
         if (jTable3.getSelectedRow() != -1 && jTable3.getSelectedColumn() != -1) {
             if (jTable3.getSelectedColumn() == 6) {
                 verDetalles(jTable3.getValueAt(jTable3.getSelectedRow(), 0));

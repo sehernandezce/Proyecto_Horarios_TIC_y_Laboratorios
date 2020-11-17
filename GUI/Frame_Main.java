@@ -8,6 +8,9 @@ import Entidad.Solicitud;
 import Entidad.Usuario;
 import GUI.Frame_DetallesEspacio;
 import static com.sun.java.accessibility.util.AWTEventMonitor.addActionListener;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Rectangle;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
@@ -17,7 +20,10 @@ import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.mail.internet.AddressException;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.RowFilter;
 import javax.swing.SwingConstants;
@@ -1325,6 +1331,7 @@ public class Frame_Main extends javax.swing.JFrame{
 
     private void cambiarEstado(String tipE) throws AddressException {
         jLabelCargandoAS.setText("Cargando...");
+        
         if (jTable2.getSelectedRow() != -1 && jTable2.getSelectedColumn() != -1) {
 
             int res = validarSolicitudes.cambiarEstado(usuario, tipE, jTable2.getValueAt(jTable2.getSelectedRow(), 0).toString(), jTextField2.getText(), jTable2.getValueAt(jTable2.getSelectedRow(), 2).toString());
@@ -1333,11 +1340,17 @@ public class Frame_Main extends javax.swing.JFrame{
                 JOptionPane.showMessageDialog(null, "Se han guardado los cambios", "Cambiar estado de la solicitud", JOptionPane.INFORMATION_MESSAGE);
                 
                 if (!tipE.equals("Cancelada")) {
-                    int dialog = JOptionPane.YES_NO_OPTION;
+                    int dialog = JOptionPane.YES_NO_OPTION;                                       
                     int result = JOptionPane.showConfirmDialog(null, "¿Desea notificar por correo al usuario?", "Exit", dialog);
                     if (result == 0) {
-                        String contrasenia = JOptionPane.showInputDialog(null, "Ingrese la contraseña del correo: horariosdesalastics@gmail.com", "Enviar correo", JOptionPane.QUESTION_MESSAGE);
-                        if (!contrasenia.equals("")) {
+                         JPanel panel = new JPanel();
+                        JPasswordField contrasenia2= new JPasswordField();        
+                        contrasenia2.setPreferredSize(new Dimension(155,20));
+                        panel.add(new JLabel("Ingrese la contraseña del Correo: horariosdesalastics@gmail.com"));
+                        panel.add(contrasenia2);
+                        int a=JOptionPane.showConfirmDialog( null, panel, "Enviar correo", JOptionPane.OK_CANCEL_OPTION); 
+                        String contrasenia = contrasenia2.getText();
+                        if (!contrasenia.equals("") && a==0) {
                             boolean c = validarSolicitudes.verificarEnvio(contrasenia, jTable2.getValueAt(jTable2.getSelectedRow(), 0).toString(), tipE, jTable2.getValueAt(jTable2.getSelectedRow(), 4).toString(), jTextField2.getText());
                             if (c) {
                                 JOptionPane.showMessageDialog(null, "Se ha notificado al usuario: " + jTable2.getValueAt(jTable2.getSelectedRow(), 4).toString() + "@unal.edu.co");

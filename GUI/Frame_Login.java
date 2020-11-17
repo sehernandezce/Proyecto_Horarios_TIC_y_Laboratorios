@@ -4,7 +4,12 @@ package GUI;
 import Control.Validar_Login;
 import Control.Validar_Registro;
 import Entidad.Usuario;
+import java.awt.Dimension;
+import java.awt.Rectangle;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 
 
 public class Frame_Login extends javax.swing.JFrame {
@@ -334,7 +339,7 @@ public class Frame_Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void IngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IngresarActionPerformed
-        logIn();
+       logIn();
     }//GEN-LAST:event_IngresarActionPerformed
 
     private void LbRegistrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LbRegistrarMouseClicked

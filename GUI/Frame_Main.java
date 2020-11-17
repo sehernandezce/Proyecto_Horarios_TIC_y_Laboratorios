@@ -1239,6 +1239,9 @@ public class Frame_Main extends javax.swing.JFrame{
 
                 }
         ));
+        if(jTable2.getRowCount()==0){
+          JOptionPane.showMessageDialog(null, "No tiene registros de solicitudes", "Sin registros", JOptionPane.INFORMATION_MESSAGE);
+        }
         verTodoSolicitud();
         Administrar_Solicitudes.setEnabled(true);
     }
@@ -1342,22 +1345,32 @@ public class Frame_Main extends javax.swing.JFrame{
                 if (!tipE.equals("Cancelada")) {
                     int dialog = JOptionPane.YES_NO_OPTION;                                       
                     int result = JOptionPane.showConfirmDialog(null, "¿Desea notificar por correo al usuario?", "Exit", dialog);
-                    if (result == 0) {
-                         JPanel panel = new JPanel();
+                    if (result == 0) {                        
+                       int a=-1;
+                        while(true){
+                           JPanel panel = new JPanel();
                         JPasswordField contrasenia2= new JPasswordField();        
                         contrasenia2.setPreferredSize(new Dimension(155,20));
                         panel.add(new JLabel("Ingrese la contraseña del Correo: horariosdesalastics@gmail.com"));
                         panel.add(contrasenia2);
-                        int a=JOptionPane.showConfirmDialog( null, panel, "Enviar correo", JOptionPane.OK_CANCEL_OPTION); 
+                        a=JOptionPane.showConfirmDialog( null, panel, "Enviar correo", JOptionPane.OK_CANCEL_OPTION); 
                         String contrasenia = contrasenia2.getText();
                         if (!contrasenia.equals("") && a==0) {
+                            
                             boolean c = validarSolicitudes.verificarEnvio(contrasenia, jTable2.getValueAt(jTable2.getSelectedRow(), 0).toString(), tipE, jTable2.getValueAt(jTable2.getSelectedRow(), 4).toString(), jTextField2.getText());
                             if (c) {
                                 JOptionPane.showMessageDialog(null, "Se ha notificado al usuario: " + jTable2.getValueAt(jTable2.getSelectedRow(), 4).toString() + "@unal.edu.co");
                             } else {
                                 JOptionPane.showMessageDialog(null, "Ha ocurrido un error al intentar enviar el correo");
                             }
+                            break;
+                        }else if(a==0){
+                             JOptionPane.showMessageDialog(null, "Valor no valido para la contraseña.");
+                        }else{
+                            break;
                         }
+                        }
+                         
                     }
                 }
                 administrar_Solicitudes();                

@@ -1891,7 +1891,12 @@ public class Frame_Main extends javax.swing.JFrame{
                 int n= validarEspacios.borrarEspacio(usuario, idEspacioSeleccionado);
 
                 if(n==1){
-                  JOptionPane.showMessageDialog(null, "El espacio fue borrado.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                    try {
+                        solicitar_Espacio(jLabel36.getText());
+                    } catch (SQLException ex) {
+                        Logger.getLogger(Frame_Main.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    JOptionPane.showMessageDialog(null, "El espacio fue borrado.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
                 }else if(n==-1){
                   JOptionPane.showMessageDialog(null, "Ha ocurrido un error al conectar con la base de datos.", "Error", JOptionPane.INFORMATION_MESSAGE); 
                 }else if(n==-2){

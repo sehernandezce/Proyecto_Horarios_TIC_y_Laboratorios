@@ -40,34 +40,30 @@ public class Frame_PersonalizarRepeticion extends javax.swing.JFrame {
     
     private String repeticionDias() {
         String retorno = "";
-        javax.swing.JCheckBox[] dias = {jCheckBoxLunes, jCheckBoxMartes, jCheckBoxMiercoles, jCheckBoxJueves, jCheckBoxViernes, jCheckBoxSabado};
-        int diaSeleccionado = jCalendar1.getCalendar().get(Calendar.DAY_OF_WEEK) - 2;
-
+        javax.swing.JCheckBox[] dias = {null,jCheckBoxLunes, jCheckBoxMartes, jCheckBoxMiercoles, jCheckBoxJueves, jCheckBoxViernes, jCheckBoxSabado};
+        int diaSeleccionado = jCalendar1.getCalendar().get(Calendar.DAY_OF_WEEK)-1;
         
-        
-        //System.out.print(dia_Semana);
-        
-        if (dia_Semana < 6 && dia_Semana >= 0) {
-            dias[dia_Semana].setSelected(true);
+        if (dia_Semana <= 7 && dia_Semana >= 1) {
+            dias[dia_Semana-1].setSelected(true);
         }
         
-        if (diaSeleccionado < 6 && diaSeleccionado >= 0) {
+        if (diaSeleccionado <= 6 && diaSeleccionado >= 0) {
             dias[diaSeleccionado].setSelected(true);     
         }
         
 
-        for (int i = 0; i < 6; i++) {
+        for (int i = 1; i < 7; i++) {
             if (dias[i].isSelected()) {
                 retorno = retorno + ", " + dias[i].getText();
             }
         }
-
+        
         if ("".equals(retorno)) {
             return "pero no se ha seleccionado ningún dia, por favor, seleccione al menos uno.";
         }
 
         for (int i = 1; i < 7; i++) {
-            if (dias[i-1].isSelected()) {
+            if (dias[i].isSelected()) {
                 DiasSeRepite[i] = i+1;
             }else{
                 DiasSeRepite[i] = 0;
@@ -83,8 +79,6 @@ public class Frame_PersonalizarRepeticion extends javax.swing.JFrame {
     }
 
     private void mostrarPeriodicidad() {
-        
-  
         String text = "";
 
         int año = jCalendar1.getCalendar().get(Calendar.YEAR);
@@ -340,9 +334,12 @@ public class Frame_PersonalizarRepeticion extends javax.swing.JFrame {
         }
         
         
-        int[] diasDIARIOS = {0,1,2,3,4,5,6};
+        int[] diasDIARIOS = {1,2,3,4,5,6,7};
+        
         if(repeticion == 1){
             DiasSeRepite = diasDIARIOS;
+        }else if(repeticion == 3){
+            DiasSeRepite[dia_Semana-1] = dia_Semana; 
         }
         
         this.Frame.setDiasRepeticion(DiasSeRepite);

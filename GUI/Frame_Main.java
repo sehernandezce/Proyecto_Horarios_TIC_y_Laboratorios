@@ -36,7 +36,6 @@ public class Frame_Main extends javax.swing.JFrame{
     private ValidarEspacios validarEspacios = new ValidarEspacios();
     private Validar_administrar_solicitud validarSolIngresada = new Validar_administrar_solicitud();
     private String idEspacioSeleccionado;
-    private boolean tablaTocada = false;
     private Validar_administrar_solicitud validarSolicitudes = new Validar_administrar_solicitud();
     private TableRowSorter TRSFiltro;
     private String fechaTermina;
@@ -87,7 +86,6 @@ public class Frame_Main extends javax.swing.JFrame{
         jLabel36 = new javax.swing.JLabel();
         jLabel37 = new javax.swing.JLabel();
         jTextMotivoSolicitud = new javax.swing.JTextField();
-        jButton9 = new javax.swing.JButton();
         jLabelCargandoSE = new javax.swing.JLabel();
         jLabelRepeticion = new javax.swing.JLabel();
         jSpinnerHorainicio = new javax.swing.JSpinner();
@@ -332,14 +330,6 @@ public class Frame_Main extends javax.swing.JFrame{
 
         jTextMotivoSolicitud.setEnabled(false);
         jPanel2.add(jTextMotivoSolicitud, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 410, 168, 50));
-
-        jButton9.setText("(se eliminara este boton)Borrar El Espacio Seleccionado");
-        jButton9.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton9ActionPerformed(evt);
-            }
-        });
-        jPanel2.add(jButton9, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 10, -1, 30));
 
         jLabelCargandoSE.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
         jPanel2.add(jLabelCargandoSE, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 480, 90, 20));
@@ -1112,7 +1102,6 @@ public class Frame_Main extends javax.swing.JFrame{
             userLabel2.setText(usuario.getNombreusuarioInstitucional());
             jLabelEliminar1.setVisible(false);
             jLabelAñadir2.setVisible(false);
-            jButton9.setVisible(false); // Borrar luego
             if (usuario.getTipoUsuario() == 4) {
                 roleLabel1.setText("Usuario Encargado");
             }
@@ -1120,7 +1109,6 @@ public class Frame_Main extends javax.swing.JFrame{
             Menu_UC.setVisible(false);
             jLabelEliminar1.setVisible(true);
             jLabelAñadir2.setVisible(true);
-            jButton9.setVisible(true); // Borrar luego
             userLabel1.setText(usuario.getNombreusuarioInstitucional());
         } else {
             Paneles_Menu.setVisible(false);
@@ -1497,9 +1485,7 @@ public class Frame_Main extends javax.swing.JFrame{
                     .getName()).log(Level.SEVERE, null, ex);
         }
 
-        if (usuario.getTipoUsuario() != 2) {  //Si el usuario no es coordinador, deshabilitar el botón para eliminar espacios.
-            this.jButton9.setVisible(false);
-        }
+
 
     }//GEN-LAST:event_jLabel2MousePressed
 
@@ -1597,9 +1583,6 @@ public class Frame_Main extends javax.swing.JFrame{
                     .getName()).log(Level.SEVERE, null, ex);
         }
         llenarMotivos(usuario);
-        if (usuario.getTipoUsuario() != 2) {  //Si el usuario no es coordinador, deshabilitar el botón para eliminar espacios.
-            this.jButton9.setVisible(false);
-        }
     }//GEN-LAST:event_jLabel3MousePressed
 
     private void jLabel4MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MousePressed
@@ -1611,9 +1594,6 @@ public class Frame_Main extends javax.swing.JFrame{
                     .getName()).log(Level.SEVERE, null, ex);
         }
         llenarMotivos(usuario);
-        if (usuario.getTipoUsuario() != 2) {  //Si el usuario no es coordinador, deshabilitar el botón para eliminar espacios.
-            this.jButton9.setVisible(false);
-        }
     }//GEN-LAST:event_jLabel4MousePressed
 
     private void jLabel5MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MousePressed
@@ -1625,9 +1605,6 @@ public class Frame_Main extends javax.swing.JFrame{
                     .getName()).log(Level.SEVERE, null, ex);
         }
         llenarMotivos(usuario);
-        if (usuario.getTipoUsuario() != 2) {  //Si el usuario no es coordinador, deshabilitar el botón para eliminar espacios.
-            this.jButton9.setVisible(false);
-        }
     }//GEN-LAST:event_jLabel5MousePressed
 
     private void jLabel23MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel23MousePressed
@@ -1673,13 +1650,13 @@ public class Frame_Main extends javax.swing.JFrame{
     }//GEN-LAST:event_jLabel8MousePressed
 
     private void jLabel18MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel18MousePressed
-        tablaTocada = false;
+
         ocultar_todosPaneles();
         Bienvenida.setVisible(true);
     }//GEN-LAST:event_jLabel18MousePressed
 
     private void jTable3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable3MouseClicked
-        tablaTocada = true;
+
         if (jTable3.getSelectedRow() != -1 && jTable3.getSelectedColumn() != -1) {
             if (jTable3.getSelectedColumn() == 6) {
                 verDetalles(jTable3.getValueAt(jTable3.getSelectedRow(), 0));
@@ -1730,19 +1707,6 @@ public class Frame_Main extends javax.swing.JFrame{
             jLabelCargandoSE.setText("");
         }
     }//GEN-LAST:event_jCalendar2PropertyChange
-
-    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-
-        if (!tablaTocada) {
-            JOptionPane.showMessageDialog(null, "No ha seleccionado un espacio para borrar.", "Error", JOptionPane.INFORMATION_MESSAGE);
-        } else {
-            jLabelCargandoSE.setText("Cargando...");
-            validarEspacios.borrarEspacio(usuario, idEspacioSeleccionado);
-            JOptionPane.showMessageDialog(null, "El espacio fue borrado.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-            jLabelCargandoSE.setText("");
-        }
-
-    }//GEN-LAST:event_jButton9ActionPerformed
 
     private void CategoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CategoriasActionPerformed
         // TODO add your handling code here:
@@ -1997,7 +1961,6 @@ public class Frame_Main extends javax.swing.JFrame{
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
     private javax.swing.JButton jButtonPersonalizar;
     private com.toedter.calendar.JCalendar jCalendar2;
     private javax.swing.JCheckBox jCheckBox3;

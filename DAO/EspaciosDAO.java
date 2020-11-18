@@ -198,12 +198,12 @@ public class EspaciosDAO {
                 resultSet2.close();
                 statement.close();
                 connection.close();
-                //return null;
             } catch (Exception ex) {
 
             }
         }
     }
+    
             
     private String[][] ObtenerData(ResultSet resultSet) throws SQLException{
        

@@ -71,7 +71,7 @@ public class Validar_administrar_solicitud {
         Correo correo = new Correo();
         correo.setAsunto("Respuesta a su solicitud con ID: " + id);
         correo.setMensaje("Estimado/a <b>Usuario</b>,<br> Queremos informale que su solicitud con id: " + id
-                + "Ha cambiado al estado:<b> " + tipE + "</b>. A continuación se muestra la/s observacion/es indicadas por el coordinador:<br>" + obs + "<br>Muchas gracias por su atención.<br>Por favor, no reponder ha este correo.");
+                + "Ha cambiado al estado:<b> " + tipE + "</b>. A continuación se muestra la observación indicada por el coordinador:<br>" + obs + "<br>Muchas gracias por su atención.<br>Por favor, no responder a este correo.");
         correo.setCorreoReceptor(correoU + "@unal.edu.co");
         correo.setPasswordRemitente(contrasenia);
         EnviarCorreo enviarCorreo = new EnviarCorreo();

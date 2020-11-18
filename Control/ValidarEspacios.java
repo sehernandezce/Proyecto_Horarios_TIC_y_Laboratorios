@@ -60,7 +60,7 @@ public class ValidarEspacios {
     }
     
       private boolean verificarLongitudName (String nombre){
-        return (nombre.length()>4 && nombre.length() <=20);        
+        return (nombre.length()>4 && nombre.length() <=100);        
     }
     public int borrarEspacio(Usuario par, String idEspacio){
         if(par.getTipoUsuario()!=2){

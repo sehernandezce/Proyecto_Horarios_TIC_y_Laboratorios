@@ -1394,7 +1394,7 @@ public class Frame_Main extends javax.swing.JFrame{
         Frame_PersonalizarRepeticion personalizar = new Frame_PersonalizarRepeticion();
         personalizar.setVisible(true);
         personalizar.setFramePadre(this);
-        personalizar.setDia_Semana(obt_diaSemana()-2);
+        personalizar.setDia_Semana(obt_diaSemana());
         personalizar.setFechaInicio(obtener_fecha());
         this.setEnabled(false);
 
@@ -1461,7 +1461,7 @@ public class Frame_Main extends javax.swing.JFrame{
                 +"</table>" + "</html>");
         
         }else{
-            validarSolIngresada.ingresarSolicitudNueva(usuario, solicitud);
+           validarSolIngresada.ingresarSolicitudNueva(usuario, solicitud);
             JOptionPane.showMessageDialog(null, "Solicitud ingresada con exito");
         }
 
@@ -1710,7 +1710,7 @@ public class Frame_Main extends javax.swing.JFrame{
         indiceRepeticion = 4;
         jLabelRepeticion.setText("No se repite");
         int[] d ={0, 0, 0, 0, 0, 0, 0};
-        d[obt_diaSemana()] = obt_diaSemana();
+        d[obt_diaSemana()-1] = obt_diaSemana();
         diasRepeticion = d;
         
         if (jTable3.getSelectedRow() != -1 && jTable3.getSelectedColumn() != -1) {
@@ -1851,9 +1851,23 @@ public class Frame_Main extends javax.swing.JFrame{
     }//GEN-LAST:event_jButtonPersonalizarActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-            jLabelCargandoSE.setText("Cargando...");
-            verificarIngresoSolicitud();
-            jLabelCargandoSE.setText("");
+        jLabelCargandoSE.setText("Cargando...");
+        verificarIngresoSolicitud();
+        jLabelCargandoSE.setText("");
+          
+           /* 
+        System.out.println(solicitud.getEspacioidEspacio()+"\n"
+        +solicitud.getEstadoSolicitud()+"\n"
+        +solicitud.getEvento().getFechaEvento()+"\n"
+        +solicitud.getEvento().getFechaTerminaEvento()+"\n"
+        +solicitud.getEvento().getDiasRepite()[0]
+        +solicitud.getEvento().getDiasRepite()[1]
+        +solicitud.getEvento().getDiasRepite()[2]
+        +solicitud.getEvento().getDiasRepite()[3]
+        +solicitud.getEvento().getDiasRepite()[4]
+        +solicitud.getEvento().getDiasRepite()[5]
+        +solicitud.getEvento().getDiasRepite()[6]);
+        */
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jComboMotivosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboMotivosActionPerformed

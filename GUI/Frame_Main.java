@@ -1914,7 +1914,7 @@ public class Frame_Main extends javax.swing.JFrame{
                 }else if(n==-1){
                   JOptionPane.showMessageDialog(null, "Ha ocurrido un error al conectar con la base de datos.", "Error", JOptionPane.INFORMATION_MESSAGE); 
                 }else if(n==-2){
-                   JOptionPane.showMessageDialog(null, "No es posible eliminar el espacio ya que tiene solicitudes en espera o aceptadas.", "Acción no valida", JOptionPane.INFORMATION_MESSAGE);  
+                   JOptionPane.showMessageDialog(null, "No es posible eliminar el espacio ya que tiene solicitudes en espera.", "Acción no valida", JOptionPane.INFORMATION_MESSAGE);  
                 }else if(n==-3){
                    JOptionPane.showMessageDialog(null, "No tiene permisos para ejecutar esta acción", "Acción no valida", JOptionPane.INFORMATION_MESSAGE);    
                 }

@@ -469,7 +469,6 @@ public class Frame_Login extends javax.swing.JFrame {
 
         jPanelCam.setBackground(new java.awt.Color(204, 204, 204));
         jPanelCam.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 102, 102)));
-        jPanelCam.setEnabled(false);
         jPanelCam.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         signInTitle3.setBackground(new java.awt.Color(203, 203, 204));
@@ -619,8 +618,7 @@ public class Frame_Login extends javax.swing.JFrame {
     }//GEN-LAST:event_registrarse2ActionPerformed
 
     private void LbRegistrar2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LbRegistrar2MouseClicked
-        panelRecupararCon.setVisible(true);     
-        jPanelCam.setEnabled(false);
+        panelRecupararCon.setVisible(true);            
         panelIniciarSesion.setVisible(false);
     }//GEN-LAST:event_LbRegistrar2MouseClicked
 

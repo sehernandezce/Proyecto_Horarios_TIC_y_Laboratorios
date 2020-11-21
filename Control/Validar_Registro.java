@@ -13,7 +13,7 @@ import org.apache.commons.codec.binary.Base64;
 
 public class Validar_Registro {
     
-    private UsuarioDAO dao = new UsuarioDAO();
+    private UsuarioDAO dao = new UsuarioDAO();    
     Usuario usuario =new Usuario (); 
     
     public Validar_Registro(){
@@ -134,4 +134,57 @@ public class Validar_Registro {
          {
              return (cod.length()>3 && cod.length()<= 6);
          }
+    
+    public int cambiarcontrasenia(Usuario u, String pass1, String pass2) throws Exception{
+        if(!verificarLongitudNombre(u.getNombreusuarioInstitucional())){
+            return(-1); // "Longitud nombre incorreta"
+        }
+        else if (!verificarLongitudPassword(u.getContrasenia())){
+            return(-2); // "Longitud contraseña incorreta"
+        }else if (!verificarLongitudPassword(pass1)){
+            return(-2); // "Longitud contraseña incorreta"
+        }
+         else if (!verificarContrasenias(pass1,pass2)){
+            return(-3);//"Las contraseñas no coinciden"
+        }else if (!verificarSeguridadContrasenias(pass1)){
+            return(-4);//"La contraseña no es segura. Debe tener al menos un numero, una mayuscula y una minuscula "
+        }else if(dao.leer(u)<=0){
+             return(0);//datos incorrectos
+        }else{
+            u.setContrasenia(pass1);
+             if(dao.actualizarPASS(u)){
+                  return 1;  
+              }else{
+                  return -5;
+              }  
+        }
+    
+    }
+    
+    
+    public int cambiarCod(Usuario u, String codigo) throws Exception{
+        if(!verificarLongitudNombre(u.getNombreusuarioInstitucional())){
+            return(-1); // "Longitud nombre incorreta"
+        }
+        else if (!verificarLongitudPassword(u.getContrasenia())){
+            return(-2); // "Longitud contraseña incorreta"
+        }else if (!verificarLongitudPassword(codigo)){
+            return(-3); // "Longitud contraseña incorreta"
+        } else if (!verificarSeguridadContrasenias(codigo)){
+            return(-4);//"La contraseña no es segura. Debe tener al menos un numero, una mayuscula y una minuscula "
+        }else if(dao.leer(u)<=0){
+             return(0);//datos incorrectos
+        }else{
+            u.setNombreusuarioInstitucional("UserCode");
+            u.setNombreusuarioInstitucional(codigo);
+             if(dao.actualizarPASS(u)){
+                  return 1;  
+              }else{
+                  return -5;
+              }  
+        }
+        
+    }
+    
+    
 }

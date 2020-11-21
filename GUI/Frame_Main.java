@@ -1896,6 +1896,8 @@ public class Frame_Main extends javax.swing.JFrame{
                  JOptionPane.showMessageDialog(null, "El código no es seguro.", "Acción no valida", JOptionPane.INFORMATION_MESSAGE);
              }else if(val==-5){
                 JOptionPane.showMessageDialog(null, "Ha ocurrido un error al intentar conectar con la base de datos", "Error", JOptionPane.INFORMATION_MESSAGE);  
+             }else if(val==-6){
+                JOptionPane.showMessageDialog(null, "No tiene permisos para ejecutar esta acción", "Acción no valida", JOptionPane.INFORMATION_MESSAGE);  
              }
             
             usuario.setContrasenia("1234567890");   

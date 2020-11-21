@@ -163,7 +163,11 @@ public class Validar_Registro {
     
     
     public int cambiarCod(Usuario u, String codigo) throws Exception{
-        if(!verificarLongitudNombre(u.getNombreusuarioInstitucional())){
+        
+        if(u.getTipoUsuario()!=2){
+             return(-6);
+        }
+        else if(!verificarLongitudNombre(u.getNombreusuarioInstitucional())){
             return(-1); // "Longitud nombre incorreta"
         }
         else if (!verificarLongitudPassword(u.getContrasenia())){

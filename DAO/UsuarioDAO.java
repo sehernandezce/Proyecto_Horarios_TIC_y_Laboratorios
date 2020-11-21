@@ -2,12 +2,15 @@ package DAO;
 
 
 import Control.ContraseniaHasheada;
+import Control.EnviarCorreo;
+import Entidad.Correo;
 import Entidad.Usuario;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Random;
 
 public class UsuarioDAO {
     
@@ -135,6 +138,169 @@ public class UsuarioDAO {
                                   
             } catch (SQLException ex) {
 
+            }
+        }
+
+    }
+    
+      public String existir(String user) throws Exception { // Buscar un usuario en la base de datos. 0=Usuario no existe
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        try {
+            resultSet = null;
+            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery("SELECT * FROM USUARIOS "
+                    + "WHERE USUARIOINSTITUCIONAL = '" + user + "'" );           
+            if(resultSet.next()){
+               return "true";         
+            }else{
+                return "false";
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error en SQL" + ex);
+             return "false";
+        } finally {
+            try {
+                resultSet.close();
+                statement.close();
+                connection.close();
+                    if(resultSet.next()){
+                      return "true";       
+                    }else{
+                         return "false";
+                    }                
+            } catch (SQLException ex) {
+
+            }
+        }
+
+    }
+      
+      
+        public int AgreCod(String u, Correo correo, String cod) throws Exception { // Ingresar un usuario en la base de datos
+        Connection connection = null;
+        Statement statement = null;   
+        ResultSet resultSet2 = null;
+        int resultSet;      
+        
+        try {
+            resultSet = -1;
+            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
+            statement = connection.createStatement();   
+            resultSet2 =statement.executeQuery("SELECT COUNT(*) FROM CODIGOS_SEGURIDAD WHERE USUARIOINSTITUCIONAL='"
+                    +u
+                    + "' AND DATE_ADD(Fecha_de_creacion_codigo,INTERVAL 24 HOUR) >= NOW( )"
+                   +  "AND utilizado_codigo=0;");
+            
+            if(resultSet2.next()){                
+                if(resultSet2.getString(1).equals("0")){
+                    resultSet = statement.executeUpdate("CALL CrearCod('"+u+"','"
+                         + contraseniahasheada.getSaltedHash(cod) + "')" );
+                 if( resultSet > 0){
+                     EnviarCorreo enviarCorreo =new EnviarCorreo();
+                     if(enviarCorreo.enviarC(correo)){
+                         return 1;
+                     }else{
+                         return -3;
+                     }                      
+                 }else {
+                      return -4; 
+                 }
+                }else{
+                    return -2; 
+                }                 
+            }
+            
+            return -1;
+        } catch (SQLException ex) {
+            System.out.println("Error en SQL" + ex);
+             return -1;
+        } finally {
+            try {
+                statement.close();
+                connection.close();
+            } catch (SQLException ex) {
+                System.out.println("Error en SQL" + ex);
+            }
+        }
+
+    }
+        
+    public boolean VerificarCode(String cod, String U) throws Exception { // Verifica el codigo
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+         
+        try {
+            
+             int resultSet2 =-1;
+            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
+            statement = connection.createStatement(); 
+            resultSet = statement.executeQuery("select now();"); 
+              if(existir(U).equals("false")){
+                  System.out.println("entreo no existe");
+                  return false; 
+              }else{                  
+                 System.out.println(existir(U));
+            resultSet = statement.executeQuery("CALL verifCode('"+U+ "')"); 
+            boolean verifcod=false;
+             resultSet.afterLast(); 
+             if(resultSet.previous()){
+                if(contraseniahasheada.check(cod, resultSet.getString(2))){ 
+                    //;
+                    resultSet2 = statement.executeUpdate("update CODIGOS_SEGURIDAD set utilizado_codigo=1 where idCODIGOS_SEGURIDAD="+resultSet.getString(1)+";"); 
+                        if(resultSet2>0){
+                         verifcod= true;   
+                        }
+                } 
+             }         
+             return verifcod;
+                
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error en SQL" + ex);
+            return false;
+        } finally {
+            try {
+                resultSet.close();
+                statement.close();
+                connection.close();    
+                                  
+            } catch (SQLException ex) {
+
+            }
+        }
+
+    }
+    
+      public boolean actualizarPASS(Usuario object) throws Exception { // Ingresar un usuario en la base de datos
+        Connection connection = null;
+        Statement statement = null;
+                
+        
+        try {
+            int resultSet2=-1;
+            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
+            statement = connection.createStatement();
+            resultSet2 = statement.executeUpdate("UPDATE USUARIOS "
+                    + "SET contrasenia='" + contraseniahasheada.getSaltedHash(object.getContrasenia()) + "' WHERE USUARIOINSTITUCIONAL = '"+object.getNombreusuarioInstitucional() +"';" );
+            if(resultSet2>0){                
+                return true;
+            }else{
+               return false;
+            }           
+           
+        } catch (SQLException ex) {
+            System.out.println("Error en SQL" + ex);
+            return false;
+        } finally {
+            try {
+                statement.close();
+                connection.close();
+            } catch (SQLException ex) {
+                System.out.println("Error en SQL" + ex);
             }
         }
 

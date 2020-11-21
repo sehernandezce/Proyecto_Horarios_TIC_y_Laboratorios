@@ -101,5 +101,37 @@ public class Validar_Registro {
 
     }
      
-    
+      public int camPass(String U, String pass1, String pass2, String cod) throws Exception{
+         if(!verificarLongitudNombre(U)){
+            return(-1); // "Longitud nombre incorreta"
+        }
+        else if (!verificarLongitudPassword(pass1)){
+            return(-2); // "Longitud contraseña incorreta"
+        }
+         else if (!verificarContrasenias(pass1,pass2)){
+            return(-3);//"Las contraseñas no coinciden"
+        }
+         else if (!verificarSeguridadContrasenias(pass1)){
+            return(-4);//"La contraseña no es segura. Debe tener al menos un numero, una mayuscula y una minuscula "
+        } else if (!verificarLongitudCode(cod)){
+            return(-5);//"Codigo incorrecto "
+        }else if(dao.VerificarCode(cod,U)){           
+              usuario.setNombreusuarioInstitucional(U);
+              usuario.setContrasenia(pass1);              
+               if(dao.actualizarPASS(usuario)){
+                  return 1;  //"Usuario registrado"
+              }else{
+                  return -6;
+              }                         
+        }else{
+             return -5;
+        }
+        
+         
+    }
+     
+    public boolean verificarLongitudCode(String cod)
+         {
+             return (cod.length()>3 && cod.length()<= 6);
+         }
 }

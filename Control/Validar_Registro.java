@@ -139,6 +139,9 @@ public class Validar_Registro {
         if(!verificarLongitudNombre(u.getNombreusuarioInstitucional())){
             return(-1); // "Longitud nombre incorreta"
         }
+        else if(verificarContrasenias(u.getContrasenia(),pass1)){
+            return(-6);
+        }
         else if (!verificarLongitudPassword(u.getContrasenia())){
             return(-2); // "Longitud contraseña incorreta"
         }else if (!verificarLongitudPassword(pass1)){
@@ -179,15 +182,43 @@ public class Validar_Registro {
         }else if(dao.leer(u)<=0){
              return(0);//datos incorrectos
         }else{
-            u.setNombreusuarioInstitucional("UserCode");
-            u.setNombreusuarioInstitucional(codigo);
-             if(dao.actualizarPASS(u)){
+            Usuario code=new Usuario();
+            code.setNombreusuarioInstitucional("UserCode");
+            code.setContrasenia(codigo);
+             if(dao.actualizarPASS(code)){
                   return 1;  
               }else{
                   return -5;
               }  
         }
         
+    }
+    
+    public int camCorreoNot(Usuario u, String correo, String pass, String pass2) throws Exception{
+        if(u.getTipoUsuario()!=2){
+             return(-6);
+        }
+        else if(!verificarLongitudNombre(u.getNombreusuarioInstitucional())){
+            return(-1); // "Longitud nombre incorreta"
+        }
+        else if (!verificarLongitudPassword(u.getContrasenia())){
+            return(-2); // "Longitud contraseña incorreta"
+        }else if (!verificarContrasenias(pass,pass2)){
+            return(-3);//"Las contraseñas no coinciden"
+        }else if(correo.length()==0 || pass.length()==0){
+            return(-4);
+        }else if(dao.leer(u)<=0){
+             return(0);//datos incorrectos
+        }else{
+            Usuario corre=new Usuario();
+            corre.setNombreusuarioInstitucional(correo);
+            corre.setContrasenia(pass);           
+            if(dao.actualizarCorreoNot(corre)){
+                  return 1;  
+              }else{
+                  return -5;
+              }
+        }
     }
     
     

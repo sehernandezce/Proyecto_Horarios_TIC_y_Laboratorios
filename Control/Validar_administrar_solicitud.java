@@ -66,16 +66,15 @@ public class Validar_administrar_solicitud {
 
     }
 
-    public boolean verificarEnvio(String contrasenia, String id, String tipE, String correoU, String obs) throws AddressException {
+    public boolean verificarEnvio(String contrasenia, String id, String tipE, String correoU, String obs) throws AddressException, Exception {
 
         Correo correo = new Correo();
         correo.setAsunto("Respuesta a su solicitud con ID: " + id);
         correo.setMensaje("Estimado/a <b>Usuario</b>,<br> Queremos informale que su solicitud con id: " + id
                 + "Ha cambiado al estado:<b> " + tipE + "</b>. A continuación se muestra la observación indicada por el coordinador:<br>" + obs + "<br>Muchas gracias por su atención.<br>Por favor, no responder a este correo.");
-        correo.setCorreoReceptor(correoU + "@unal.edu.co");
-        correo.setPasswordRemitente(contrasenia);
+        correo.setCorreoReceptor(correoU + "@unal.edu.co");           
         EnviarCorreo enviarCorreo = new EnviarCorreo();
-        return enviarCorreo.enviarC(correo);
+        return enviarCorreo.enviarC(correo);          
     }
 
     public String[] obtenerListaMotivos(Usuario par) {

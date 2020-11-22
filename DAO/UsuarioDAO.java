@@ -68,7 +68,8 @@ public class UsuarioDAO {
             resultSet = statement.executeQuery("SELECT * FROM USUARIOS "
                     + "WHERE USUARIOINSTITUCIONAL = '" + par.getNombreusuarioInstitucional() + "'" );
  //                   + "' AND CONTRASENIA='" + par.getContrasenia() + "'");
-            
+            System.out.println(par.getNombreusuarioInstitucional());
+            System.out.println(par.getContrasenia());
             if(resultSet.next()){
                 if(contraseniahasheada.check(par.getContrasenia(), resultSet.getString(3))){
                     int tipUser=Integer.valueOf(resultSet.getString(1));
@@ -301,6 +302,74 @@ public class UsuarioDAO {
                 connection.close();
             } catch (SQLException ex) {
                 System.out.println("Error en SQL" + ex);
+            }
+        }
+
+    }
+      
+    
+      public boolean actualizarCorreoNot(Usuario object) throws Exception { // Ingresar un usuario en la base de datos
+        Connection connection = null;
+        Statement statement = null;
+                
+        
+        try {
+            int resultSet2=-1;
+            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
+            statement = connection.createStatement();
+            resultSet2 = statement.executeUpdate("UPDATE USUARIOS "
+                    + "SET contrasenia='" + object.getContrasenia()
+                    + "', USUARIOINSTITUCIONAL='" + object.getNombreusuarioInstitucional()
+                     +"' WHERE ID_TIPOUSUARIO =5;" );
+            if(resultSet2>0){                
+                return true;
+            }else{
+               return false;
+            }           
+           
+        } catch (SQLException ex) {
+            System.out.println("Error en SQL" + ex);
+            return false;
+        } finally {
+            try {
+                statement.close();
+                connection.close();
+            } catch (SQLException ex) {
+                System.out.println("Error en SQL" + ex);
+            }
+        }
+
+    }
+     
+    public Usuario leerCorreoNotificar() throws Exception { // Buscar un usuario en la base de datos. 0=Usuario no existe
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        try {
+            resultSet = null;
+            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery("SELECT * FROM USUARIOS "
+                    + "WHERE ID_TIPOUSUARIO = 5; " );
+            
+            if(resultSet.next()){
+                Usuario u=new Usuario();
+                u.setNombreusuarioInstitucional(resultSet.getString(2));
+                u.setContrasenia(resultSet.getString(3));
+                return u;
+            }else{
+                return null;
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error en SQL" + ex);
+            return null;
+        } finally {
+            try {
+                resultSet.close();
+                statement.close();
+                connection.close();                                  
+            } catch (SQLException ex) {
+
             }
         }
 

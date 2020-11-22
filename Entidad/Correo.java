@@ -2,7 +2,7 @@ package Entidad;
 
 public class Correo {
     
-    private String correoRemitente="horariosdesalastics@gmail.com";
+    private String correoRemitente;
     private String passwordRemitente;
     private String correoReceptor;
     private String asunto;

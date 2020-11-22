@@ -34,11 +34,12 @@ public class ContraseniaHasheada {
         a un hash previo */
     public static boolean check(String password, String stored) throws Exception{
         String[] saltAndHash = stored.split("\\$");
+        
         if (saltAndHash.length != 2) {
             throw new IllegalStateException(
                 "La contraseña almacenada debe tener la forma 'salt$hash'");
-        }
-        String hashOfInput = hash(password, Base64.decodeBase64(saltAndHash[0]));
+        }         
+        String hashOfInput = hash(password, Base64.decodeBase64(saltAndHash[0]));        
         return hashOfInput.equals(saltAndHash[1]);
     }
 
@@ -50,4 +51,6 @@ public class ContraseniaHasheada {
             password.toCharArray(), salt, iterations, desiredKeyLen));
         return Base64.encodeBase64String(key.getEncoded());
     }
+    
+
 }

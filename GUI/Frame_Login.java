@@ -42,7 +42,7 @@ public class Frame_Login extends javax.swing.JFrame {
             usuario.setTipoUsuario(validar_Login.verificarLogin(usuario));
             usuario.setContrasenia("1234567890"); // esto sera para que luego de logearse, el hash se borre
             
-            if( usuario.getTipoUsuario()>0 && usuario.getTipoUsuario()!=3){
+            if( usuario.getTipoUsuario()>0 && usuario.getTipoUsuario()!=3 && usuario.getTipoUsuario()!=5){
                 frame_Main.entrar_bienvenida(usuario);
                 frame_Main.setVisible(true);
                 this.dispose();

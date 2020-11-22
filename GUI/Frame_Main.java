@@ -126,6 +126,7 @@ public class Frame_Main extends javax.swing.JFrame{
         jLabel48 = new javax.swing.JLabel();
         jLabel49 = new javax.swing.JLabel();
         jLabel50 = new javax.swing.JLabel();
+        LbContraseña7 = new javax.swing.JLabel();
         Paneles_Menu = new javax.swing.JPanel();
         Menu_UE = new javax.swing.JPanel();
         jSeparator1 = new javax.swing.JSeparator();
@@ -299,6 +300,7 @@ public class Frame_Main extends javax.swing.JFrame{
         getContentPane().add(panelCerrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         Configuraciones.setBackground(new java.awt.Color(255, 255, 255));
+        Configuraciones.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         Configuraciones.setMaximumSize(new java.awt.Dimension(854, 520));
         Configuraciones.setMinimumSize(new java.awt.Dimension(854, 520));
         Configuraciones.setPreferredSize(new java.awt.Dimension(854, 520));
@@ -507,8 +509,8 @@ public class Frame_Main extends javax.swing.JFrame{
         notificaciones.add(LbContraseña5, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 320, 130, -1));
 
         LbContraseña6.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        LbContraseña6.setText("Código nuevo:");
-        notificaciones.add(LbContraseña6, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 200, 90, -1));
+        LbContraseña6.setText("NOTA:Para modificar los datos es necesario que ingrese su contraseña.");
+        notificaciones.add(LbContraseña6, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 330, 390, 50));
 
         jPasswordField7.setText("Contraseña");
         jPasswordField7.setMinimumSize(new java.awt.Dimension(15, 20));
@@ -548,6 +550,10 @@ public class Frame_Main extends javax.swing.JFrame{
 
         jLabel50.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/aplicacion-de-bandeja-de-entrada-de-correo (1).png"))); // NOI18N
         notificaciones.add(jLabel50, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 90, 70, 80));
+
+        LbContraseña7.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        LbContraseña7.setText("Código nuevo:");
+        notificaciones.add(LbContraseña7, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 200, 90, -1));
 
         Configuraciones.add(notificaciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(24, 54, 806, 446));
 
@@ -1667,7 +1673,7 @@ public class Frame_Main extends javax.swing.JFrame{
 
     }
 
-    private void cambiarEstado(String tipE) throws AddressException {
+    private void cambiarEstado(String tipE) throws AddressException, Exception {
         jLabelCargandoAS.setText("Cargando...");
         
         if (jTable2.getSelectedRow() != -1 && jTable2.getSelectedColumn() != -1) {
@@ -1675,36 +1681,42 @@ public class Frame_Main extends javax.swing.JFrame{
             int res = validarSolicitudes.cambiarEstado(usuario, tipE, jTable2.getValueAt(jTable2.getSelectedRow(), 0).toString(), jTextField2.getText(), jTable2.getValueAt(jTable2.getSelectedRow(), 2).toString());
             if (res == 1) {
                 jLabelCargandoSE.setText("Cargando...");
-                JOptionPane.showMessageDialog(null, "Se han guardado los cambios", "Cambiar estado de la solicitud", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Se han guardado los cambios.", "Cambiar estado de la solicitud", JOptionPane.INFORMATION_MESSAGE);
                 
                 if (!tipE.equals("Cancelada")) {
-                    int dialog = JOptionPane.YES_NO_OPTION;                                       
+                   int dialog = JOptionPane.YES_NO_OPTION;                                       
                     int result = JOptionPane.showConfirmDialog(null, "¿Desea notificar por correo al usuario?", "Exit", dialog);
-                    if (result == 0) {                        
-                       int a=-1;
-                        while(true){
-                           JPanel panel = new JPanel();
-                        JPasswordField contrasenia2= new JPasswordField();        
-                        contrasenia2.setPreferredSize(new Dimension(155,20));
-                        panel.add(new JLabel("Ingrese la contraseña del Correo: horariosdesalastics@gmail.com"));
-                        panel.add(contrasenia2);
-                        a=JOptionPane.showConfirmDialog( null, panel, "Enviar correo", JOptionPane.OK_CANCEL_OPTION); 
-                        String contrasenia = contrasenia2.getText();
-                        if (!contrasenia.equals("") && a==0) {
-                            
-                            boolean c = validarSolicitudes.verificarEnvio(contrasenia, jTable2.getValueAt(jTable2.getSelectedRow(), 0).toString(), tipE, jTable2.getValueAt(jTable2.getSelectedRow(), 4).toString(), jTextField2.getText());
+                    if (result == 0) { 
+                         boolean c = validarSolicitudes.verificarEnvio("", jTable2.getValueAt(jTable2.getSelectedRow(), 0).toString(), tipE, jTable2.getValueAt(jTable2.getSelectedRow(), 4).toString(), jTextField2.getText());
                             if (c) {
                                 JOptionPane.showMessageDialog(null, "Se ha notificado al usuario: " + jTable2.getValueAt(jTable2.getSelectedRow(), 4).toString() + "@unal.edu.co");
                             } else {
                                 JOptionPane.showMessageDialog(null, "Ha ocurrido un error al intentar enviar el correo");
                             }
-                            break;
-                        }else if(a==0){
-                             JOptionPane.showMessageDialog(null, "Valor no valido para la contraseña.");
-                        }else{
-                            break;
-                        }
-                        }
+//                       int a=-1;
+//                        while(true){
+//                           JPanel panel = new JPanel();
+//                        JPasswordField contrasenia2= new JPasswordField();        
+//                        contrasenia2.setPreferredSize(new Dimension(155,20));
+//                        panel.add(new JLabel("Ingrese la contraseña del Correo: horariosdesalastics@gmail.com"));
+//                        panel.add(contrasenia2);
+//                        a=JOptionPane.showConfirmDialog( null, panel, "Enviar correo", JOptionPane.OK_CANCEL_OPTION); 
+//                        String contrasenia = contrasenia2.getText();
+//                        if (!contrasenia.equals("") && a==0) {
+//                            
+//                            boolean c = validarSolicitudes.verificarEnvio(contrasenia, jTable2.getValueAt(jTable2.getSelectedRow(), 0).toString(), tipE, jTable2.getValueAt(jTable2.getSelectedRow(), 4).toString(), jTextField2.getText());
+//                            if (c) {
+//                                JOptionPane.showMessageDialog(null, "Se ha notificado al usuario: " + jTable2.getValueAt(jTable2.getSelectedRow(), 4).toString() + "@unal.edu.co");
+//                            } else {
+//                                JOptionPane.showMessageDialog(null, "Ha ocurrido un error al intentar enviar el correo");
+//                            }
+//                            break;
+//                        }else if(a==0){
+//                             JOptionPane.showMessageDialog(null, "Valor no valido para la contraseña.");
+//                        }else{
+//                            break;
+//                        }
+//                        }
                          
                     }
                 }
@@ -1827,6 +1839,8 @@ public class Frame_Main extends javax.swing.JFrame{
          ocultar_todosPanelesconfig();
          Configuraciones.setVisible(true);
          CambiarContraseña.setVisible(true);
+         jPasswordField4.setText("Contraseña");
+         jPasswordField1.setText("Contraseña");
          pintartodos();
          opcion2.setOpaque(true);
          if(usuario.getTipoUsuario()!=2){
@@ -1865,9 +1879,11 @@ public class Frame_Main extends javax.swing.JFrame{
              }else if(val==-3){
                  JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden para la nueva contraseña", "Acción no valida", JOptionPane.INFORMATION_MESSAGE);
              }else if(val==-4){
-                 JOptionPane.showMessageDialog(null, "La nueva contraseña no es segura", "Acción no valida", JOptionPane.INFORMATION_MESSAGE);
+                 JOptionPane.showMessageDialog(null, "La nueva contraseña no es segura.Debe tener minimo 8 caracteres con minimo una letra en mayucula, minucula y un numero", "Acción no valida", JOptionPane.INFORMATION_MESSAGE);
              }else if(val==-5){
                 JOptionPane.showMessageDialog(null, "Ha ocurrido un error al intentar conectar con la base de datos", "Error", JOptionPane.INFORMATION_MESSAGE);  
+             }else if(val==-6){
+                JOptionPane.showMessageDialog(null, "La nueva contraseña coincide con la contraseña actual", "Acción no valida", JOptionPane.INFORMATION_MESSAGE);  
              }
             usuario.setContrasenia("1234567890");  
         }catch(Exception e){
@@ -1879,11 +1895,12 @@ public class Frame_Main extends javax.swing.JFrame{
     private void camCodig(){
         
         try{
-           usuario.setContrasenia(jPasswordField1.getText());
+           usuario.setContrasenia(jPasswordField4.getText());
             Validar_Registro validar_Registro =new Validar_Registro();
             int val=validar_Registro.cambiarCod(usuario,jPasswordField7.getText());
              if(val==1){
                   JOptionPane.showMessageDialog(null, "Se ha cambiado el código satisfactoriamente", "Guardado", JOptionPane.INFORMATION_MESSAGE);
+                  usuario.setContrasenia("1234567890"); 
              }else if(val==0){
                  JOptionPane.showMessageDialog(null, "Contraseña incorrecta", "Acción no valida", JOptionPane.INFORMATION_MESSAGE);
              }else if(val==-1){
@@ -1891,7 +1908,7 @@ public class Frame_Main extends javax.swing.JFrame{
              }else if(val==-2){
                 JOptionPane.showMessageDialog(null, "Contraseña no Valida", "Acción no valida", JOptionPane.INFORMATION_MESSAGE); 
              }else if(val==-3){
-                 JOptionPane.showMessageDialog(null, "Código no valido", "Acción no valida", JOptionPane.INFORMATION_MESSAGE);
+                 JOptionPane.showMessageDialog(null, "Código no valido. Debe tener minimo 8 caracteres con minimo una letra en mayucula, minucula y un numero", "Acción no valida", JOptionPane.INFORMATION_MESSAGE);
              }else if(val==-4){
                  JOptionPane.showMessageDialog(null, "El código no es seguro.", "Acción no valida", JOptionPane.INFORMATION_MESSAGE);
              }else if(val==-5){
@@ -1899,12 +1916,42 @@ public class Frame_Main extends javax.swing.JFrame{
              }else if(val==-6){
                 JOptionPane.showMessageDialog(null, "No tiene permisos para ejecutar esta acción", "Acción no valida", JOptionPane.INFORMATION_MESSAGE);  
              }
-            
-            usuario.setContrasenia("1234567890");   
+              
         }catch(Exception e){
              JOptionPane.showMessageDialog(this,"A ocurrido un error: "+e); 
         }
         
+        
+        
+    }
+    
+    private void camCorreoNotificar(){
+        try{
+           usuario.setContrasenia(jPasswordField4.getText());
+            Validar_Registro validar_Registro =new Validar_Registro(); 
+            int val=validar_Registro.camCorreoNot(usuario, JtfUsuario2.getText(), jPasswordField5.getText(), jPasswordField6.getText());
+            if(val==1){
+                  JOptionPane.showMessageDialog(null, "Se ha cambiado los datos satisfactoriamente", "Guardado", JOptionPane.INFORMATION_MESSAGE);
+                  usuario.setContrasenia("1234567890");
+            }else if(val==0){
+                 JOptionPane.showMessageDialog(null, "Contraseña incorrecta", "Acción no valida", JOptionPane.INFORMATION_MESSAGE);
+             }else if(val==-1){
+                 JOptionPane.showMessageDialog(null, "Usuario no Valido", "Acción no valida", JOptionPane.INFORMATION_MESSAGE);
+             }else if(val==-2){
+                JOptionPane.showMessageDialog(null, "Contraseña no Valida", "Acción no valida", JOptionPane.INFORMATION_MESSAGE); 
+             }else if(val==-3){
+                 JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden", "Acción no valida", JOptionPane.INFORMATION_MESSAGE);
+             }else if(val==-4){
+                 JOptionPane.showMessageDialog(null, "Correo y/o contraseña no valida", "Acción no valida", JOptionPane.INFORMATION_MESSAGE);
+             }else if(val==-5){
+                JOptionPane.showMessageDialog(null, "Ha ocurrido un error al intentar conectar con la base de datos", "Error", JOptionPane.INFORMATION_MESSAGE);  
+             }else if(val==-6){
+                JOptionPane.showMessageDialog(null, "No tiene permisos para ejecutar esta acción", "Acción no valida", JOptionPane.INFORMATION_MESSAGE);  
+             }
+               
+        }catch(Exception e){
+             JOptionPane.showMessageDialog(this,"A ocurrido un error: "+e);  
+        }
     }
     /*
       private String obtener_estado(){
@@ -2077,6 +2124,8 @@ public class Frame_Main extends javax.swing.JFrame{
         } catch (AddressException ex) {
             Logger.getLogger(Frame_Main.class
                     .getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(Frame_Main.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_Aceptar_sol_botonActionPerformed
 
@@ -2249,6 +2298,8 @@ public class Frame_Main extends javax.swing.JFrame{
         } catch (AddressException ex) {
             Logger.getLogger(Frame_Main.class
                     .getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(Frame_Main.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton10ActionPerformed
 
@@ -2258,6 +2309,8 @@ public class Frame_Main extends javax.swing.JFrame{
         } catch (AddressException ex) {
             Logger.getLogger(Frame_Main.class
                     .getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(Frame_Main.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_Rechazar_sol_botonActionPerformed
 
@@ -2376,7 +2429,7 @@ public class Frame_Main extends javax.swing.JFrame{
     }//GEN-LAST:event_jButton12ActionPerformed
 
     private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
-        // TODO add your handling code here:
+        camCorreoNotificar();
     }//GEN-LAST:event_jButton13ActionPerformed
 
     private void jLabel49MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel49MousePressed
@@ -2480,6 +2533,7 @@ public class Frame_Main extends javax.swing.JFrame{
     private javax.swing.JLabel LbContraseña4;
     private javax.swing.JLabel LbContraseña5;
     private javax.swing.JLabel LbContraseña6;
+    private javax.swing.JLabel LbContraseña7;
     private javax.swing.JLabel LbUsuario;
     private javax.swing.JLabel LbUsuario1;
     private javax.swing.JLabel LbUsuario2;

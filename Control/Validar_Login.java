@@ -45,7 +45,7 @@ public class Validar_Login {
        
     }
      
-       public int enviarCod(String u) throws Exception{
+    public int enviarCod(String u) throws Exception{
          Random aleatorio = new Random(System.currentTimeMillis());
         aleatorio.setSeed(System.currentTimeMillis()); 
         String cod=String.valueOf(aleatorio.nextInt(99999)+1001); 
@@ -54,10 +54,13 @@ public class Validar_Login {
             correo.setAsunto("Restablezca la contraseña. Horarios de salasTIC's y laboratorios");
             correo.setMensaje("Estimado/a <b>u</b>,<br> ¿Ha olvidado la contraseña?<br> Restablesca su contraseña ingresando el código: "+cod
                                 +"<br>El código es valido durante 24 horas y solo podra ser usado una vez. No se podran generar más codigo hasta pasar 24 horas o haber usado este código."+"<br> Si no desea cambiar la contraseña o no lo ha solicitado, ignore este mensaje y bórrelo. Gracias.<br>");
-            correo.setCorreoReceptor(u + "@unal.edu.co");
-            correo.setPasswordRemitente("iodU78+*OpH");        
-          System.out.println("correo");         
-         return dao.AgreCod(u, correo, cod);
+            correo.setCorreoReceptor(u + "@unal.edu.co");           
+            System.out.println("correo");         
+            return dao.AgreCod(u, correo, cod);  
     }
     
+    public Usuario leerCorreoNot() throws Exception{
+        return dao.leerCorreoNotificar();
+    }   
+       
 }

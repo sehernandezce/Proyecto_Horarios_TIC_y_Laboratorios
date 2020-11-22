@@ -330,7 +330,8 @@ public class Frame_PersonalizarRepeticion extends javax.swing.JFrame {
             break;
             
             default:
-                this.repeticion = -1;
+                this.repeticion = 4;
+                this.Frame.setTextoMuestralabel("No se repite");
         }
         
         
@@ -338,7 +339,7 @@ public class Frame_PersonalizarRepeticion extends javax.swing.JFrame {
         
         if(repeticion == 1){
             DiasSeRepite = diasDIARIOS;
-        }else if(repeticion == 3){
+        }else if(repeticion == 3 ){
             DiasSeRepite[dia_Semana-1] = dia_Semana; 
         }
         

@@ -43,11 +43,11 @@ public class Frame_PersonalizarRepeticion extends javax.swing.JFrame {
         javax.swing.JCheckBox[] dias = {null,jCheckBoxLunes, jCheckBoxMartes, jCheckBoxMiercoles, jCheckBoxJueves, jCheckBoxViernes, jCheckBoxSabado};
         int diaSeleccionado = jCalendar1.getCalendar().get(Calendar.DAY_OF_WEEK)-1;
         
-        if (dia_Semana <= 7 && dia_Semana >= 1) {
+        if (dia_Semana <= 7 && dia_Semana > 1) {
             dias[dia_Semana-1].setSelected(true);
         }
         
-        if (diaSeleccionado <= 6 && diaSeleccionado >= 0) {
+        if (diaSeleccionado <= 6 && diaSeleccionado > 0) {
             dias[diaSeleccionado].setSelected(true);     
         }
         

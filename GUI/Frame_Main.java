@@ -4,11 +4,14 @@ import Control.ValidarEspacios;
 import Control.Validar_administrar_solicitud;
 import Entidad.Espacio;
 import Entidad.Evento;
+import Entidad.HiloCargando;
+import Entidad.HiloFrameMain;
 import Entidad.Solicitud;
 import Entidad.Usuario;
 import GUI.Frame_DetallesEspacio;
 import static com.sun.java.accessibility.util.AWTEventMonitor.addActionListener;
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Rectangle;
 import java.awt.event.KeyAdapter;
@@ -52,14 +55,18 @@ public class Frame_Main extends javax.swing.JFrame{
     private boolean tipo_espera=false;
     private boolean tipo_aceptada=false;
     private boolean tipo_cancelada=false;
-    
+    private HiloCargando hiloCargando = new HiloCargando();
+    private HiloFrameMain hiloFrameMain = new HiloFrameMain();
     public String Tipo;
+    
     public Frame_Main() {
         initComponents();
         this.setLocationRelativeTo(null);
         ocultar_todosPaneles();
-        Paneles_Menu.setVisible(false);
-
+        Paneles_Menu.setVisible(false); 
+       
+      //hiloCargando.crearEIniciar("cargando", this.jLabelCargandoSE, "");
+        
     }
 
     public void setNombreRepeticion(String nombreRepeticion) {
@@ -338,7 +345,7 @@ public class Frame_Main extends javax.swing.JFrame{
         jPanel2.add(jTextMotivoSolicitud, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 410, 168, 50));
 
         jLabelCargandoSE.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
-        jPanel2.add(jLabelCargandoSE, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 480, 90, 20));
+        jPanel2.add(jLabelCargandoSE, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 480, 190, 20));
 
         jLabelRepeticion.setToolTipText("");
         jPanel2.add(jLabelRepeticion, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 350, 260, 24));
@@ -1099,6 +1106,11 @@ public class Frame_Main extends javax.swing.JFrame{
     }// </editor-fold>//GEN-END:initComponents
 
     public void entrar_bienvenida(Usuario usuario2) { //Selecciona el tipo de menu segun el usuario        
+       hiloCargando= new HiloCargando(this.jLabelCargandoSE, "***"); 
+       hiloCargando.Iniciar("Cargando"); 
+       
+       
+      // hiloCargando.finalizarhilo();
         ocultar_todosPaneles();
         Bienvenida.setVisible(true);
         Paneles_Menu.setVisible(true);
@@ -1149,7 +1161,7 @@ public class Frame_Main extends javax.swing.JFrame{
     }
 
     public void solicitar_Espacio(String Espacio) throws SQLException { //Para mostrar la informacion en el panel de solicitar espacios     
-        
+        hiloCargando.renaudarhilo("Actualizando tabla...");       
         jLabelRepeticion.setText("No se repite");
         fechaTermina = obtener_fecha();
         indiceRepeticion = 4;
@@ -1167,6 +1179,7 @@ public class Frame_Main extends javax.swing.JFrame{
         );
         llenarTabla(Espacio);
         jLabelCargandoSE.setText("");
+        hiloCargando.renaudarhilo("");
     }
 
     private void verTodoSolicitud() {
@@ -1419,7 +1432,7 @@ public class Frame_Main extends javax.swing.JFrame{
     }
 
     public void verificarIngresoSolicitud() {
-
+        hiloCargando.renaudarhilo("Cargando...");       
         evento = new Evento(0,
                 (Integer) jSpinnerHorainicio.getValue() + ":0" + (Integer) jSpinnerMinutosInicio.getValue() + ":00",
                 nombreRepeticion,
@@ -1440,13 +1453,17 @@ public class Frame_Main extends javax.swing.JFrame{
                 idEspacioSeleccionado,
                 evento);
         
+        hiloCargando.renaudarhilo("Validando fecha y hora"); 
         String validacionFecha = validarSolIngresada.verificarFechaActual(usuario, fechaTermina, obtener_fecha());
+        
         String validacionHoras = validarSolIngresada.verificarHorasMinutosIngresadas((Integer) jSpinnerHorainicio.getValue(), 
                 (Integer) jSpinnerMinutosInicio.getValue(), 
                 (Integer) jSpinnerHorafinal.getValue(), 
                 (Integer) jSpinnerMinutosFinal.getValue());
+        
         String valicacionMotivoSolicitud = validarSolIngresada.verificarMotivoSolicitud(jComboMotivos.getItemAt(jComboMotivos.getSelectedIndex()), 
                 jTextMotivoSolicitud.getText());
+        hiloCargando.renaudarhilo("Validando información del Evento y cruce de eventos");
         String verificacionConcurrencia = (validarSolIngresada.verificarCruceEventos(usuario, solicitud))? "El evento se puede registrar" :"Un evento ya aceptado se cruza con este o no seleccionó ningún espacio donde hacer la solicitud";
         
         boolean validado = validarSolIngresada.verificarDatosSolicitudNueva(usuario, 
@@ -1473,10 +1490,13 @@ public class Frame_Main extends javax.swing.JFrame{
                 +valicacionMotivoSolicitud
                 +verificacionConcurrencia
                 +"</table>" + "</html>");
+            
+             hiloCargando.renaudarhilo(""); 
         
         }else{
            validarSolIngresada.ingresarSolicitudNueva(usuario, solicitud);
             JOptionPane.showMessageDialog(null, "Solicitud ingresada con exito");
+            hiloCargando.renaudarhilo(""); 
         }
 
     }
@@ -1841,9 +1861,12 @@ public class Frame_Main extends javax.swing.JFrame{
     }//GEN-LAST:event_jButtonPersonalizarActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        jLabelCargandoSE.setText("Cargando...");
-        verificarIngresoSolicitud();
-        jLabelCargandoSE.setText("");
+        hiloCargando.renaudarhilo("Cargando...");         
+        hiloFrameMain= new HiloFrameMain(this);
+        hiloFrameMain.Iniciar("Solicitar"); 
+         
+       // verificarIngresoSolicitud();    
+     
           
            /* 
         System.out.println(solicitud.getEspacioidEspacio()+"\n"
@@ -2039,7 +2062,7 @@ public class Frame_Main extends javax.swing.JFrame{
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabelAñadir2;
     private javax.swing.JLabel jLabelCargandoAS;
-    private javax.swing.JLabel jLabelCargandoSE;
+    public javax.swing.JLabel jLabelCargandoSE;
     private javax.swing.JLabel jLabelEliminar1;
     private javax.swing.JLabel jLabelRepeticion;
     private javax.swing.JList<String> jList1;

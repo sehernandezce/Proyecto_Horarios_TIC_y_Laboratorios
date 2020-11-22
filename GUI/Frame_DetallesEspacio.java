@@ -6,6 +6,8 @@ import Entidad.Espacio;
 import Entidad.Inventario;
 import Entidad.Usuario;
 import DAO.EspaciosDAO;
+import Entidad.HiloCargando;
+import Entidad.HiloDetallesEspacio;
 import java.awt.Color;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -28,7 +30,9 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
     private ValidarEspacios  validarEspacio = new  ValidarEspacios ();
     private ValidarInventario validarInventario=new ValidarInventario();    
     private final ArrayList<String> invDelete = new ArrayList<String>();
-
+    private HiloCargando hiloCargando = new HiloCargando();
+    private HiloDetallesEspacio hiloDetallesEspacio = new HiloDetallesEspacio();
+    
     private int Crear;
 
     
@@ -324,7 +328,8 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
     
       public void crearEspacio(String tipo, Frame_Main frame, Usuario u) throws SQLException{
-        
+        hiloCargando= new HiloCargando(this.jLabelCargandoe, ""); 
+        hiloCargando.Iniciar("Cargando"); 
         this.usuario=u;
         this.fraim = frame;
         if(u.getTipoUsuario()==2){
@@ -407,7 +412,8 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
          
      }
     public void llenarFrame(Usuario u, Espacio esp, Frame_Main frame) throws SQLException{
-        
+        hiloCargando= new HiloCargando(this.jLabelCargandoe, ""); 
+        hiloCargando.Iniciar("Cargando"); 
         this.usuario=u;
         this.fraim = frame;
         jTextCorreoEncargado.setText(esp.getCorreo_encargado());
@@ -478,9 +484,9 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
     }
     
    
-    private void guardar() throws SQLException{
+    public void guardar() throws SQLException{
         boolean verif=false;
-
+        hiloCargando.renaudarhilo("Cargando...");   
         try{
             Integer.valueOf(jTextNumeroEdificio3.getText());
             Integer.valueOf(jTextNumeroSalon1.getText());
@@ -513,6 +519,7 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
         
         if(verif && !jTextCorreoEncargado.getText().equals(usuario.getNombreusuarioInstitucional())&& !verifinv.equals("-7")){
             ValidarEspacios validarEspacios = new ValidarEspacios ();
+            
              int n= validarEspacios.ValidarInfoEspacio(usuario, capturarE()); 
              if(n>=1){
                      //Toma el id para crear el inventario. (Sebastian H)
@@ -528,6 +535,7 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
                          Espacio espacio = new Espacio();
                         espacio = validarEspacios.BuscarInfoEspacio(usuario, Integer.valueOf(jTextField2.getText()));
                         actualizando(true);
+                        hiloCargando.renaudarhilo("Actualizando..."); 
                         llenarFrame(usuario, espacio, fraim);
                          try {
                             fraim.solicitar_Espacio(jTextField3.getText());
@@ -563,7 +571,7 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
               JOptionPane.showMessageDialog(null, "Por favor, ingrese el nombre de atributo a cada item del inventario" ,  "Accion invalida", JOptionPane.INFORMATION_MESSAGE);        
             }
         }
-        
+       hiloCargando.renaudarhilo("");    
      }
     
     private void deletInv(){
@@ -636,6 +644,9 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
 
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
         try {
+            hiloCargando.renaudarhilo("Cargando...");   
+            hiloDetallesEspacio= new HiloDetallesEspacio(this);
+            hiloDetallesEspacio.Iniciar("Guardar");
             cargando(true);
             guardar();
              cargando(false);

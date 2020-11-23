@@ -157,8 +157,8 @@ public class InventariosDAO {
             statement = connection.createStatement();
             
              for(int i=0; i<idinventarioList.size(); i++){
-            resultSet = statement.executeUpdate("UPDATE FROM INVENTARIOS SET VIVO_INV=FALSE"
-                    + "WHERE ID_INVENTARIO="+idinventarioList.get(i)+ ";");
+            resultSet = statement.executeUpdate("UPDATE INVENTARIOS SET VIVO_INV=FALSE"
+                    + " WHERE ID_INVENTARIO="+idinventarioList.get(i)+ ";");
             
              }
             return resultSet > 0;

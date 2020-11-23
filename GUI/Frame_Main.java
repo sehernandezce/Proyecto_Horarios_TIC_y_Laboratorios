@@ -99,7 +99,6 @@ public class Frame_Main extends javax.swing.JFrame{
         jLabel36 = new javax.swing.JLabel();
         jLabel37 = new javax.swing.JLabel();
         jTextMotivoSolicitud = new javax.swing.JTextField();
-        jLabelCargandoSE = new javax.swing.JLabel();
         jLabelRepeticion = new javax.swing.JLabel();
         jSpinnerHorainicio = new javax.swing.JSpinner();
         jLabelAñadir2 = new javax.swing.JLabel();
@@ -113,6 +112,7 @@ public class Frame_Main extends javax.swing.JFrame{
         jLabel40 = new javax.swing.JLabel();
         jLabel41 = new javax.swing.JLabel();
         jLabel42 = new javax.swing.JLabel();
+        jLabelCargandoSE1 = new javax.swing.JLabel();
         panelCerrar = new javax.swing.JPanel();
         jlClose1 = new javax.swing.JLabel();
         jlMinimize1 = new javax.swing.JLabel();
@@ -344,9 +344,6 @@ public class Frame_Main extends javax.swing.JFrame{
         jTextMotivoSolicitud.setEnabled(false);
         jPanel2.add(jTextMotivoSolicitud, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 410, 168, 50));
 
-        jLabelCargandoSE.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
-        jPanel2.add(jLabelCargandoSE, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 480, 190, 20));
-
         jLabelRepeticion.setToolTipText("");
         jPanel2.add(jLabelRepeticion, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 350, 260, 24));
         jPanel2.add(jSpinnerHorainicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 240, 56, -1));
@@ -393,6 +390,9 @@ public class Frame_Main extends javax.swing.JFrame{
         jLabel42.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel42.setText("Hora de inicio:");
         jPanel2.add(jLabel42, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 240, -1, 20));
+
+        jLabelCargandoSE1.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
+        jPanel2.add(jLabelCargandoSE1, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 480, 320, 20));
 
         Solicitar_Espacio.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
@@ -1105,10 +1105,10 @@ public class Frame_Main extends javax.swing.JFrame{
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public void entrar_bienvenida(Usuario usuario2) { //Selecciona el tipo de menu segun el usuario        
-       hiloCargando= new HiloCargando(this.jLabelCargandoSE, "***"); 
-       hiloCargando.Iniciar("Cargando"); 
-       
+    public void entrar_bienvenida(Usuario usuario2) { //Selecciona el tipo de menu segun el usuario       
+      
+        hiloCargando= new HiloCargando(this.jLabelCargandoSE1, ""); 
+        hiloCargando.Iniciar("Cargando1"); 
        
       // hiloCargando.finalizarhilo();
         ocultar_todosPaneles();
@@ -1168,7 +1168,7 @@ public class Frame_Main extends javax.swing.JFrame{
         llenarMotivos(usuario);
         ocultar_todosPaneles();
         Solicitar_Espacio.setVisible(true);
-        jLabelCargandoSE.setText("Cargando...");
+        jLabelCargandoSE1.setText("Actualizando tabla...");
         jLabel36.setText(Espacio);
         jLabel37.setText("");
         jTable3.setModel(new javax.swing.table.DefaultTableModel(
@@ -1178,7 +1178,7 @@ public class Frame_Main extends javax.swing.JFrame{
                 new Object[][]{}, new String[]{"Horas ocupadas"})
         );
         llenarTabla(Espacio);
-        jLabelCargandoSE.setText("");
+        jLabelCargandoSE1.setText("");
         hiloCargando.renaudarhilo("");
     }
 
@@ -1234,11 +1234,11 @@ public class Frame_Main extends javax.swing.JFrame{
     }
 
     private void llenarTabla_espacios(int id_espacio, String fecha, int day) throws SQLException {//modelo tabla espacios
-        jLabelCargandoSE.setText("Cargando...");
+        //jLabelCargandoSE.setText("Cargando...");
         Object[][] tabla = validarEspacios.llenarMatriz_horas(id_espacio, fecha, usuario, day);
         jTable4.setModel(new javax.swing.table.DefaultTableModel(
                 tabla, new String[]{"Horas ocupadas"}));
-        jLabelCargandoSE.setText("");
+      //  jLabelCargandoSE.setText("");
     }
 
     private void llenarTabla_solicitudes(String tipo_e) throws SQLException {//modelo tabla espacios
@@ -1277,7 +1277,7 @@ public class Frame_Main extends javax.swing.JFrame{
     }
 
     private void verDetalles(Object obj) {
-        jLabelCargandoSE.setText("Cargando...");
+       // jLabelCargandoSE.setText("Cargando...");
         try {
 
             Espacio espacio = new Espacio();
@@ -1287,7 +1287,7 @@ public class Frame_Main extends javax.swing.JFrame{
             frame_DetallesEspacio.llenarFrame(usuario, espacio, this);
             this.setEnabled(false);
             frame_DetallesEspacio.setVisible(true);
-            jLabelCargandoSE.setText("");
+//            jLabelCargandoSE.setText("");
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -1352,7 +1352,7 @@ public class Frame_Main extends javax.swing.JFrame{
 
             int res = validarSolicitudes.cambiarEstado(usuario, tipE, jTable2.getValueAt(jTable2.getSelectedRow(), 0).toString(), jTextField2.getText(), jTable2.getValueAt(jTable2.getSelectedRow(), 2).toString());
             if (res == 1) {
-                jLabelCargandoSE.setText("Cargando...");
+         //       jLabelCargandoSE.setText("Cargando...");
                 JOptionPane.showMessageDialog(null, "Se han guardado los cambios", "Cambiar estado de la solicitud", JOptionPane.INFORMATION_MESSAGE);
                 
                 if (!tipE.equals("Cancelada")) {
@@ -1398,7 +1398,7 @@ public class Frame_Main extends javax.swing.JFrame{
             } else if (res == -6) {
                 JOptionPane.showMessageDialog(null, "Ya existe un evento que se cruza con el evento de esta solicitud", "Accion no valida", JOptionPane.INFORMATION_MESSAGE);
             } 
-            jLabelCargandoSE.setText("");
+          //  jLabelCargandoSE.setText("");
         }else{
              JOptionPane.showMessageDialog(null, "No ha seleccionado una solicitud para gestionar", "Accion no valida", JOptionPane.INFORMATION_MESSAGE);
         }
@@ -1455,12 +1455,12 @@ public class Frame_Main extends javax.swing.JFrame{
         
         hiloCargando.renaudarhilo("Validando fecha y hora"); 
         String validacionFecha = validarSolIngresada.verificarFechaActual(usuario, fechaTermina, obtener_fecha());
-        
+         hiloCargando.renaudarhilo("Validando fecha y hora"); 
         String validacionHoras = validarSolIngresada.verificarHorasMinutosIngresadas((Integer) jSpinnerHorainicio.getValue(), 
                 (Integer) jSpinnerMinutosInicio.getValue(), 
                 (Integer) jSpinnerHorafinal.getValue(), 
                 (Integer) jSpinnerMinutosFinal.getValue());
-        
+        hiloCargando.renaudarhilo("Validando información del Evento y cruce de eventos");
         String valicacionMotivoSolicitud = validarSolIngresada.verificarMotivoSolicitud(jComboMotivos.getItemAt(jComboMotivos.getSelectedIndex()), 
                 jTextMotivoSolicitud.getText());
         hiloCargando.renaudarhilo("Validando información del Evento y cruce de eventos");
@@ -1492,11 +1492,12 @@ public class Frame_Main extends javax.swing.JFrame{
                 +"</table>" + "</html>");
             
              hiloCargando.renaudarhilo(""); 
-        
+           //  jLabelCargandoSE1.setText("");
         }else{
            validarSolIngresada.ingresarSolicitudNueva(usuario, solicitud);
             JOptionPane.showMessageDialog(null, "Solicitud ingresada con exito");
             hiloCargando.renaudarhilo(""); 
+           // jLabelCargandoSE1.setText("");
         }
 
     }
@@ -1711,7 +1712,7 @@ public class Frame_Main extends javax.swing.JFrame{
             String Salon = (jTable3.getValueAt(jTable3.getSelectedRow(), 2)).toString();
             jLabel37.setText(Salon + " - " + edificio + "  ");
             idEspacioSeleccionado = (jTable3.getValueAt(jTable3.getSelectedRow(), 0)).toString();
-            jLabelCargandoSE.setText("Cargando...");
+        //    jLabelCargandoSE.setText("Cargando...");
             String fecha = obtener_fecha();
             int day = obt_diaSemana();     
             
@@ -1721,7 +1722,7 @@ public class Frame_Main extends javax.swing.JFrame{
                 Logger.getLogger(Frame_Main.class
                         .getName()).log(Level.SEVERE, null, ex);
             }
-            jLabelCargandoSE.setText("");
+//            jLabelCargandoSE.setText("");
         }
 
 
@@ -1737,7 +1738,7 @@ public class Frame_Main extends javax.swing.JFrame{
         diasRepeticion = d;
         
         if (jTable3.getSelectedRow() != -1 && jTable3.getSelectedColumn() != -1) {
-            jLabelCargandoSE.setText("Cargando...");
+        //    jLabelCargandoSE.setText("Cargando...");
             int id_espacio = Integer.valueOf(jTable3.getValueAt(jTable3.getSelectedRow(), 0).toString());
             
             String fecha = obtener_fecha();
@@ -1750,7 +1751,7 @@ public class Frame_Main extends javax.swing.JFrame{
                 Logger.getLogger(Frame_Main.class
                         .getName()).log(Level.SEVERE, null, ex);
             }
-            jLabelCargandoSE.setText("");
+         //   jLabelCargandoSE.setText("");
         }
     }//GEN-LAST:event_jCalendar2PropertyChange
 
@@ -1861,7 +1862,10 @@ public class Frame_Main extends javax.swing.JFrame{
     }//GEN-LAST:event_jButtonPersonalizarActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        hiloCargando.renaudarhilo("Cargando...");         
+        hiloCargando= new HiloCargando(this.jLabelCargandoSE1, ""); 
+        hiloCargando.Iniciar("Cargando1"); 
+        hiloCargando.renaudarhilo("Cargando...");
+        
         hiloFrameMain= new HiloFrameMain(this);
         hiloFrameMain.Iniciar("Solicitar"); 
          
@@ -1892,7 +1896,7 @@ public class Frame_Main extends javax.swing.JFrame{
     }//GEN-LAST:event_jComboMotivosActionPerformed
 
     private void jLabelAñadir2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelAñadir2MouseClicked
-        jLabelCargandoSE.setText("Cargando...");
+     //   jLabelCargandoSE.setText("Cargando...");
         Frame_DetallesEspacio frame_DetallesEspacio = new Frame_DetallesEspacio();
         try {
             Tipo=jLabel36.getText();
@@ -1901,7 +1905,7 @@ public class Frame_Main extends javax.swing.JFrame{
             this.setEnabled(false);
             frame_DetallesEspacio.setVisible(true);
             
-            jLabelCargandoSE.setText("");
+      //      jLabelCargandoSE.setText("");
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -1924,7 +1928,7 @@ public class Frame_Main extends javax.swing.JFrame{
         int result = JOptionPane.showConfirmDialog(null, "¿Esta seguro que desea eliminar el espacio: "+Salon+" - "+edificio+"?", "Exit", dialog);
           if (result == 0) {
            
-                jLabelCargandoSE.setText("Cargando...");
+           //     jLabelCargandoSE.setText("Cargando...");
                 int n= validarEspacios.borrarEspacio(usuario, idEspacioSeleccionado);
 
                 if(n==1){
@@ -1941,7 +1945,7 @@ public class Frame_Main extends javax.swing.JFrame{
                 }else if(n==-3){
                    JOptionPane.showMessageDialog(null, "No tiene permisos para ejecutar esta acción", "Acción no valida", JOptionPane.INFORMATION_MESSAGE);    
                 }
-                jLabelCargandoSE.setText("");
+            //    jLabelCargandoSE.setText("");
                  
              }
                     }else{
@@ -2062,7 +2066,7 @@ public class Frame_Main extends javax.swing.JFrame{
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabelAñadir2;
     private javax.swing.JLabel jLabelCargandoAS;
-    public javax.swing.JLabel jLabelCargandoSE;
+    public javax.swing.JLabel jLabelCargandoSE1;
     private javax.swing.JLabel jLabelEliminar1;
     private javax.swing.JLabel jLabelRepeticion;
     private javax.swing.JList<String> jList1;

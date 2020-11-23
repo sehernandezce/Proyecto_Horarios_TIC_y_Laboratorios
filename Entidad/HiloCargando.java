@@ -47,7 +47,7 @@ public class HiloCargando extends Thread{
                     jlabel.revalidate();
                     jlabel.repaint();                     
                     
-                    Thread.sleep(1000);                    
+                    Thread.sleep(2000);                    
                     wait();
                 }
                System.out.println(suspender); 
@@ -65,7 +65,7 @@ public class HiloCargando extends Thread{
     public synchronized void finalizarhilo(){
         this.finalizar=true;
         //lo siguiente garantiza que un hilo suspendido puede detenerse.
-        this.suspender=false;
+       // this.suspender=false;
          notify();
     }
 

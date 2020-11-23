@@ -44,7 +44,8 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
         habilitarControles(jTextField3,false);
         jButtonEditar.setVisible(false);
         habtext(false);
-      
+        hiloCargando= new HiloCargando(this.jLabelCargandoe, ""); 
+        hiloCargando.Iniciar("Cargando2"); 
     }    
   
     /**
@@ -328,8 +329,7 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
     
       public void crearEspacio(String tipo, Frame_Main frame, Usuario u) throws SQLException{
-        hiloCargando= new HiloCargando(this.jLabelCargandoe, ""); 
-        hiloCargando.Iniciar("Cargando"); 
+        
         this.usuario=u;
         this.fraim = frame;
         if(u.getTipoUsuario()==2){
@@ -412,8 +412,7 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
          
      }
     public void llenarFrame(Usuario u, Espacio esp, Frame_Main frame) throws SQLException{
-        hiloCargando= new HiloCargando(this.jLabelCargandoe, ""); 
-        hiloCargando.Iniciar("Cargando"); 
+         hiloCargando.renaudarhilo("Actualizando...");
         this.usuario=u;
         this.fraim = frame;
         jTextCorreoEncargado.setText(esp.getCorreo_encargado());
@@ -440,6 +439,7 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
             jRadioBInactivo.setSelected(true);
         }          
        llenartableInv(esp.getId_espacio());
+        hiloCargando.renaudarhilo(""); 
     }
     
     private void llenartableInv(int idesp) throws SQLException{
@@ -492,8 +492,10 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
             Integer.valueOf(jTextNumeroSalon1.getText());
             Integer.valueOf(jTextCapacidad.getText());
             verif=true;
+            
         }catch(Exception e){
-             JOptionPane.showMessageDialog(null, "Ha ingresado un valor no valido",  "Valor no valido", JOptionPane.INFORMATION_MESSAGE);
+            hiloCargando.renaudarhilo("");   
+            JOptionPane.showMessageDialog(null, "Ha ingresado un valor no valido",  "Valor no valido", JOptionPane.INFORMATION_MESSAGE);
         }
         //Crear espacios (De Diego) 
 //        if(Crear==1){
@@ -537,8 +539,10 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
                         actualizando(true);
                         hiloCargando.renaudarhilo("Actualizando..."); 
                         llenarFrame(usuario, espacio, fraim);
+                          
                          try {
                             fraim.solicitar_Espacio(jTextField3.getText());
+                            hiloCargando.renaudarhilo("");
                         } catch (SQLException ex) {
                             Logger.getLogger(Frame_DetallesEspacio.class.getName()).log(Level.SEVERE, null, ex);
                         }
@@ -562,6 +566,7 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
               }else if(n==-9){
                   JOptionPane.showMessageDialog(null, "El espacio ha sido eliminado" ,  "Accion invalida", JOptionPane.INFORMATION_MESSAGE);   
               }         
+         
         }else{
             if(jTextCorreoEncargado.getText().equals(usuario.getNombreusuarioInstitucional())){
                JOptionPane.showMessageDialog(null, "No es posible asignar el rol coordinador como encargado" ,  "Accion invalida", JOptionPane.INFORMATION_MESSAGE);      
@@ -570,8 +575,9 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
                  verifinv="0";
               JOptionPane.showMessageDialog(null, "Por favor, ingrese el nombre de atributo a cada item del inventario" ,  "Accion invalida", JOptionPane.INFORMATION_MESSAGE);        
             }
+            hiloCargando.renaudarhilo("");  
         }
-       hiloCargando.renaudarhilo("");    
+       jLabelCargandoe.setText("");
      }
     
     private void deletInv(){
@@ -610,6 +616,7 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
         int result = JOptionPane.showConfirmDialog(null, "¿Desea cerrar el esta ventana?","Exit",dialog);
         
         if(result == 0){
+            hiloCargando.finalizarhilo();
             this.fraim.setEnabled(true);            
             this.dispose();
             
@@ -643,17 +650,13 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonEditarActionPerformed
 
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
-        try {
-            hiloCargando.renaudarhilo("Cargando...");   
-            hiloDetallesEspacio= new HiloDetallesEspacio(this);
-            hiloDetallesEspacio.Iniciar("Guardar");
-            cargando(true);
-            guardar();
-             cargando(false);
-        } catch (SQLException ex) {
-            Logger.getLogger(Frame_DetallesEspacio.class.getName()).log(Level.SEVERE, null, ex);
-        }
-       
+        hiloCargando.renaudarhilo("Cargando...");
+        hiloDetallesEspacio= new HiloDetallesEspacio(this);
+        hiloDetallesEspacio.Iniciar("Guardar");
+        //cargando(true);
+        //  guardar();
+//        cargando(false);
+//       hiloCargando.renaudarhilo("");  
     }//GEN-LAST:event_jButtonGuardarActionPerformed
 
     private void jLabelAñadirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelAñadirMouseClicked

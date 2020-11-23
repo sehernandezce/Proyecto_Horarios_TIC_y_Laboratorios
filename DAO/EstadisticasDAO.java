@@ -18,7 +18,8 @@ import DAO.UsuarioDAO;
  * @author brukm
  */
 public class EstadisticasDAO {
-     static final String DB_URL
+
+    static final String DB_URL
             = "jdbc:mysql://database-1.cjxw1f4bh3ms.us-east-1.rds.amazonaws.com:3306/Horarios_Tics_y_Laboratorios"; //Endpoint
     static final String DB_DRV
             = "com.mysql.jdbc.Driver";
@@ -26,33 +27,34 @@ public class EstadisticasDAO {
     private static String DB_USER;
     private static String DB_PASSWD;
 
-    private void seleccionarUser(int tipUser){
-        
-        if(tipUser==1 ||  tipUser==2){
-            this.DB_USER="UserStandard";
-            this.DB_PASSWD="Us58*uQL";
-        }else if(tipUser==2){
-            this.DB_USER="horariosdesalastics";
-            this.DB_PASSWD="123456789Qw";
+    private void seleccionarUser(int tipUser) {
+
+        if (tipUser == 1 || tipUser == 4) {
+            this.DB_USER = "UserStandard";
+            this.DB_PASSWD = "Us58*uQL";
+        } else if (tipUser == 2) {
+            this.DB_USER = "horariosdesalastics";
+            this.DB_PASSWD = "123456789Qw";
         }
-        
-        public int obtenerGrafica(int tipoEspacio, String mes, String anio ){
+    }
+
+    public int obtenerGrafica(Usuario par, int tipoEspacio, int mes, int anio) {
         Connection connection = null;
         Statement statement = null;
-        ResultSet resultSet = null;           
-        
-                try {
+        ResultSet resultSet = null;
+
+        try {
             resultSet = null;
             seleccionarUser(par.getTipoUsuario());
             connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
             statement = connection.createStatement();
-            DB_USER= null;
-            DB_PASSWD=null;
+            DB_USER = null;
+            DB_PASSWD = null;
             //VALUES ('453', '1', '2', 'lab prueba', '123', '1', '312');
-            resultSet = statement.executeQuery("SELECT * from SOLICITUDES, ESPACIOS WHERE mesREGEX and ESPACIOS.ID_TIPOESPACIO ="+ tipoEspacio + ";");
-            if(resultSet.next()){               
+            resultSet = statement.executeQuery("SELECT * from SOLICITUDES, ESPACIOS WHERE mesREGEX and ESPACIOS.ID_TIPOESPACIO =" + tipoEspacio + ";");
+            if (resultSet.next()) {
                 return Integer.valueOf(resultSet.getString(1));
-            }else{
+            } else {
                 return -4;
             }
         } catch (Exception e) {
@@ -66,8 +68,8 @@ public class EstadisticasDAO {
                 //return null;
             } catch (Exception ex) {
 
-                }
             }
         }
     }
 }
+

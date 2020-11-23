@@ -32,6 +32,7 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
+import Control.GraficarEstadisticas;
 
 public class Frame_Main extends javax.swing.JFrame{
     
@@ -45,6 +46,7 @@ public class Frame_Main extends javax.swing.JFrame{
     private Validar_administrar_solicitud validarSolIngresada = new Validar_administrar_solicitud();
     private String idEspacioSeleccionado;
     private Validar_administrar_solicitud validarSolicitudes = new Validar_administrar_solicitud();
+    private GraficarEstadisticas graficar = new GraficarEstadisticas();
     private TableRowSorter TRSFiltro;
     private String fechaTermina;
     private int[] diasRepeticion = {0, 0, 0, 0, 0, 0, 0};
@@ -54,7 +56,7 @@ public class Frame_Main extends javax.swing.JFrame{
     private boolean tipo_espera=false;
     private boolean tipo_aceptada=false;
     private boolean tipo_cancelada=false;
-    private int Estadisticas;
+    private int EstadisticasSeleccion;
     
     public String Tipo;
     public Frame_Main() {
@@ -2189,11 +2191,11 @@ public class Frame_Main extends javax.swing.JFrame{
     }//GEN-LAST:event_BuscadorActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        graficarEspecifico (jMonthChooser1, jYearChooser1 );
+        graficar.graficarGeneral (usuario, jMonthChooser1.getMonth(), jYearChooser1.getYear() );
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        graficarEspecifico (Estadisticas, jMonthChooser2, jYearChooser2 );
+        graficar.graficarEspecifico (usuario, EstadisticasSeleccion, jMonthChooser2.getMonth(), jYearChooser2.getYear() );
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jLabel6MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MousePressed
@@ -2524,19 +2526,19 @@ public class Frame_Main extends javax.swing.JFrame{
     }//GEN-LAST:event_jLabel45MouseClicked
 
     private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
-        Estadisticas = 1;
+        EstadisticasSeleccion = 1;
     }//GEN-LAST:event_jRadioButton1ActionPerformed
 
     private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
-        Estadisticas = 4;
+        EstadisticasSeleccion = 4;
     }//GEN-LAST:event_jRadioButton2ActionPerformed
 
     private void jRadioButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton4ActionPerformed
-        Estadisticas = 3;
+        EstadisticasSeleccion = 3;
     }//GEN-LAST:event_jRadioButton4ActionPerformed
 
     private void jRadioButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton3ActionPerformed
-        Estadisticas = 2;
+        EstadisticasSeleccion = 2;
     }//GEN-LAST:event_jRadioButton3ActionPerformed
     
     /**

@@ -22,14 +22,14 @@ public class GraficarEstadisticas {
     private EstadisticasDAO daoEstadisticas = new EstadisticasDAO();
     
     public int graficarGeneral(Usuario user, int mes, int anio){
-
+        return 0;
     }
     
     public int graficarEspecifico (Usuario user, int tipoEspacio, int mes, int anio ){
-        daoEstadisticas.obtenerGrafica(user, tipoEspacio, mes, anio );
-;
+        return daoEstadisticas.obtenerGrafica(user, tipoEspacio, mes, anio );
+
     }
     public int generarGrafica(ResultSet rs){
-        
+        return 0;
     }
 }

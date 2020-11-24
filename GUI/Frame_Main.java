@@ -1844,16 +1844,7 @@ public class Frame_Main extends javax.swing.JFrame{
                 idEspacioSeleccionado,
                 evento);
         
-        String validacionFecha = validarSolIngresada.verificarFechaActual(usuario, fechaTermina, obtener_fecha());
-        String validacionHoras = validarSolIngresada.verificarHorasMinutosIngresadas((Integer) jSpinnerHorainicio.getValue(), 
-                (Integer) jSpinnerMinutosInicio.getValue(), 
-                (Integer) jSpinnerHorafinal.getValue(), 
-                (Integer) jSpinnerMinutosFinal.getValue());
-        String valicacionMotivoSolicitud = validarSolIngresada.verificarMotivoSolicitud(jComboMotivos.getItemAt(jComboMotivos.getSelectedIndex()), 
-                jTextMotivoSolicitud.getText());
-        String verificacionConcurrencia = (validarSolIngresada.verificarCruceEventos(usuario, solicitud))? "El evento se puede registrar" :"Un evento ya aceptado se cruza con este o no seleccionó ningún espacio donde hacer la solicitud";
-        
-        boolean validado = validarSolIngresada.verificarDatosSolicitudNueva(usuario, 
+        String validado = validarSolIngresada.verificarDatosSolicitudNueva(usuario, 
                 solicitud, 
                 jComboMotivos.getItemAt(jComboMotivos.getSelectedIndex()), 
                 jTextMotivoSolicitud.getText(), 
@@ -1864,23 +1855,12 @@ public class Frame_Main extends javax.swing.JFrame{
                 (Integer) jSpinnerHorafinal.getValue(), 
                 (Integer) jSpinnerMinutosFinal.getValue());
         
-        validacionFecha = ("La fecha es valida".equals(validacionFecha)) ? "" : " <tr><td>"+validacionFecha+"</td></tr>";
-        validacionHoras = ("Las horas están correctas".equals(validacionHoras)) ? "" : "<tr><td>"+validacionHoras+"</td></tr>";
-        valicacionMotivoSolicitud = ("Motivo ingresado correctamente".equals(valicacionMotivoSolicitud)) ? "" : "<tr><td>"+valicacionMotivoSolicitud+"</td></tr>";
-        verificacionConcurrencia = ("El evento se puede registrar".equals(verificacionConcurrencia)) ? "" : "<tr><td>"+verificacionConcurrencia+"</td></tr>";
         
         
-        if(validado == false){
-            JOptionPane.showMessageDialog(null, "<html>Se observan los siguientes detalles, por favor verifique: <br><br> " + "<table class=\"egt\" border=\"1\">"
-                +validacionFecha
-                +validacionHoras
-                +valicacionMotivoSolicitud
-                +verificacionConcurrencia
-                +"</table>" + "</html>");
-        
-        }else{
-           validarSolIngresada.ingresarSolicitudNueva(usuario, solicitud);
+        if(validado.equals("ok")){
             JOptionPane.showMessageDialog(null, "Solicitud ingresada con exito");
+        }else{
+            JOptionPane.showMessageDialog(null, validado);
         }
 
     }

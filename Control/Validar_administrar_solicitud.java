@@ -81,21 +81,44 @@ public class Validar_administrar_solicitud {
         return solicitud.obtenerMotivo(par);
     }
 
-    public boolean verificarDatosSolicitudNueva(Usuario par, Solicitud sol, String motivo, String motivoOtro, String fechaTermina, String fechaEmpieza, int horaInicio, int MinutosInicio, int horaFinal, int MinutosFinal) {
-        boolean validacion = false;
+    public String verificarDatosSolicitudNueva(Usuario par, Solicitud sol, String motivo, String motivoOtro, String fechaTermina, String fechaEmpieza, int horaInicio, int MinutosInicio, int horaFinal, int MinutosFinal) {
+        
+        String validacionFecha = verificarFechaActual(par, fechaTermina, fechaEmpieza);
+        String validacionHoras = verificarHorasMinutosIngresadas(horaInicio, MinutosInicio, horaFinal, MinutosFinal);
+        String valicacionMotivoSolicitud = verificarMotivoSolicitud(motivo, motivoOtro);
+        String verificacionConcurrencia = (verificarCruceEventos(par, sol))? "El evento se puede registrar" :"<tr><td>Un evento ya aceptado se cruza con este o no seleccionó ningún espacio donde hacer la solicitud</td></tr>";
+       
 
-        if ("Motivo ingresado correctamente".equals(verificarMotivoSolicitud(motivo, motivoOtro))
-                && "La fecha es valida".equals(verificarFechaActual(par, fechaTermina, fechaEmpieza))
-                && "Las horas están correctas".equals(verificarHorasMinutosIngresadas(horaInicio, MinutosInicio, horaFinal, MinutosFinal))) {
+        if ("Motivo ingresado correctamente".equals(valicacionMotivoSolicitud)
+                && "La fecha es valida".equals(validacionFecha)
+                && "Las horas están correctas".equals(validacionHoras)
+                && "El evento se puede registrar".equals(verificacionConcurrencia)) {
 
-            if (verificarCruceEventos(par, sol)) {
-                return true;
+            String ingreso_bd =ingresarSolicitudNueva(par, sol);
+            
+            if("Ingreso completo".equals(ingreso_bd)){
+                return "ok";
+            }else{
+                return ingreso_bd;
             }
-
-        } else {
-            return false;
+            
+            
+        }else {
+            
+            validacionFecha = (validacionFecha.equals("La fecha es valida"))?"" : validacionFecha;
+            validacionHoras = (validacionHoras.equals("Las horas están correctas"))?"" : validacionHoras;
+            valicacionMotivoSolicitud = (valicacionMotivoSolicitud.equals("Motivo ingresado correctamente"))?"" : valicacionMotivoSolicitud;
+            verificacionConcurrencia = (verificacionConcurrencia.equals("El evento se puede registrar"))?"" : verificacionConcurrencia;
+            
+            
+            return "<html>Se observan los siguientes detalles, por favor verifique: <br><br> " + "<table class=\"egt\" border=\"1\">"
+                +validacionFecha
+                +validacionHoras
+                +valicacionMotivoSolicitud
+                +verificacionConcurrencia
+                +"</table>" + "</html>";
         }
-        return validacion;
+        
     }
 
     public String ingresarSolicitudNueva(Usuario par, Solicitud sol) {
@@ -103,7 +126,7 @@ public class Validar_administrar_solicitud {
             return "Ingreso completo";
         }
 
-        return "Problema ingreso SQL";
+        return "<tr><td>Problema ingreso SQL</td></tr>";
     }
 
     public boolean verificarCruceEventos(Usuario par, Solicitud sol) {
@@ -129,21 +152,21 @@ public class Validar_administrar_solicitud {
         boolean w = t.matches();
 
         if ("Seleccion".equals(motivo)) {
-            return "No se selecciono un motivo";
+            return "<tr><td>No se selecciono un motivo</td></tr>";
         }
 
         if ("Otro".equals(motivo)) {
             if (motivoOtro.length() <= 2) {
-                return "Motivo muy corto";
+                return "<tr><td>Motivo muy corto</td></tr>";
             }
 
             if (motivoOtro.length() > 50) {
-                return "Motivo muy largo";
+                return "<tr><td>Motivo muy largo</td></tr>";
             }
 
            
             if (b || g || w || "".equals(motivoOtro)) {
-                return "Motivo mal redactado";
+                return "<tr><td>Motivo mal redactado</td></tr>";
             }
         }
 
@@ -162,28 +185,28 @@ public class Validar_administrar_solicitud {
         String[] spliFechaEmp = fechaEmpieza.split("-");
 
         if (Integer.parseInt(splitFechaTer[1]) > 12 || Integer.parseInt(spliFechaEmp[1]) > 12 || Integer.parseInt(splitFechaTer[1]) < 0 || Integer.parseInt(spliFechaEmp[1]) < 0) {
-            return "Fecha de mes sin sentido";
+            return "<tr><td>Fecha de mes sin sentido</td></tr>";
         }
 
         if (Integer.parseInt(splitFechaTer[2]) < 0 || Integer.parseInt(spliFechaEmp[2]) < 0 || Integer.parseInt(splitFechaTer[2]) > 31 || Integer.parseInt(spliFechaEmp[2]) > 31) {
-            return "Fecha de dia sin sentido";
+            return "<tr><td>Fecha de dia sin sentido</td></tr>";
         }
 
         if (Integer.parseInt(splitFechaTer[0]) < Integer.parseInt(spliFechaEmp[0])) {
-            return "Fecha terminacion con año antes de fecha inicio";
+            return "<tr><td>Fecha terminacion con año antes de fecha inicio</td></tr>";
         } else if (Integer.parseInt(splitFechaTer[0]) == Integer.parseInt(spliFechaEmp[0])) {
             if (Integer.parseInt(splitFechaTer[1]) < Integer.parseInt(spliFechaEmp[1])) {
-                return "Fecha terminacion con mes antes de fecha inicio";
+                return "<tr><td>Fecha terminacion con mes antes de fecha inicio</td></tr>";
             } else if (Integer.parseInt(splitFechaTer[1]) == Integer.parseInt(spliFechaEmp[1])) {
                 if (Integer.parseInt(splitFechaTer[2]) < Integer.parseInt(spliFechaEmp[2])) {
-                    return "Fecha terminacion con dia antes de fecha inicio";
+                    return "<tr><td>Fecha terminacion con dia antes de fecha inicio</td></tr>";
                 }
             }
 
         }
 
         if (solicitud.ComprobarfechaesMenorBD(par, fechaTermina) || solicitud.ComprobarfechaesMenorBD(par, fechaEmpieza)) {
-            return "Alguna de las fechas ingresadas ya pasó";
+            return "<tr><td>Alguna de las fechas ingresadas ya pasó</td></tr>";
         }
 
         return "La fecha es valida";
@@ -192,15 +215,15 @@ public class Validar_administrar_solicitud {
     public String verificarHorasMinutosIngresadas(int horaInicio, int MinutosInicio, int horaFinal, int MinutosFinal) {
 
         if (horaInicio > 23 || horaFinal > 23 || horaInicio < 6 || horaFinal < 0) {
-            return "La hora de inicio o de final no están en el horario adecuado";
+            return "<tr><td>La hora de inicio o de final no están en el horario adecuado</td></tr>";
         }
 
         if (MinutosFinal < 0 || MinutosInicio > 59 || MinutosInicio > 59 || MinutosInicio < 0) {
-            return "Los minutos de inicio o final no tienen sentido";
+            return "<tr><td>Los minutos de inicio o final no tienen sentido</td></tr>";
         }
 
         if ((horaFinal - horaInicio) != 2) {
-            return "Deben haber 2 horas entre las horas de inicio y final";
+            return "<tr><td>Deben haber 2 horas entre las horas de inicio y final</td></tr>";
         }
 
         return "Las horas están correctas";

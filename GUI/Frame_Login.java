@@ -141,7 +141,7 @@ public class Frame_Login extends javax.swing.JFrame {
             }else if(valReg == -5){
                 JOptionPane.showMessageDialog(null, "El codigo y/o usuario no validos",  "Validar datos", JOptionPane.INFORMATION_MESSAGE);
             }else if(valReg == -6){
-                JOptionPane.showMessageDialog(null, "Ha ocurrido un error con el servidor",  "Usuario ya existe", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Ha ocurrido un error con el servidor",  "Error", JOptionPane.INFORMATION_MESSAGE);
             }
          
     }

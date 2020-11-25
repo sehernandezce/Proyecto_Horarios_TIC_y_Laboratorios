@@ -1,6 +1,8 @@
 package Control;
 
+import DAO.UsuarioDAO;
 import Entidad.Correo;
+import Entidad.Usuario;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,7 +19,7 @@ import javax.swing.JOptionPane;
 
 public class EnviarCorreo {
         
-    public boolean enviarC(Correo correo) throws AddressException{
+    public boolean enviarC(Correo correo) throws AddressException, Exception{
             Properties props =new Properties ();
             props.setProperty("mail.smtp.host","smtp.gmail.com");
             props.setProperty("mail.smtp.starttls.enable","true");
@@ -25,10 +27,14 @@ public class EnviarCorreo {
             props.setProperty("mail.smtp.auth","true");
             
             Session session= Session.getDefaultInstance(props);
+            Usuario u=leerCorreoNot();
+            if(u==null){
+                return false;
+            }
+            String correoRemitente =u.getNombreusuarioInstitucional(); // va el corre;
+            String passwordRemitente=u.getContrasenia();
             
-            String correoRemitente =correo.getCorreoRemitente(); // va el corre;
-            String passwordRemitente=correo.getPasswordRemitente();
-            String correoReceptor=correo.getCorreoReceptor();
+            String correoReceptor=correo.getCorreoReceptor();            
             String asunto=correo.getAsunto();
             String mensaje=correo.getMensaje();//Hola <br>  <b>java></b><br><br>       b en negrita br salto de linea             
             
@@ -56,4 +62,9 @@ public class EnviarCorreo {
         }
          
     }
+    
+      public Usuario leerCorreoNot() throws Exception{
+        UsuarioDAO dao = new UsuarioDAO();
+        return dao.leerCorreoNotificar();
+    } 
 }

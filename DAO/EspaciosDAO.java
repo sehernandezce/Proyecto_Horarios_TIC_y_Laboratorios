@@ -179,7 +179,7 @@ public class EspaciosDAO {
             statement = connection.createStatement();
             DB_USER=null;
             DB_PASSWD=null;
-            resultSet2 = statement.executeQuery("Select * from SOLICITUDES where ID_ESPACIO='"+ idEspacio + " ' AND (ID_ESTADO =1  OR ID_ESTADO =2);");
+            resultSet2 = statement.executeQuery("Select * from SOLICITUDES where ID_ESPACIO='"+ idEspacio + " ' AND (ID_ESTADO =2);");
             if(!resultSet2.next()){
                 resultSet = statement.executeUpdate("update ESPACIOS set VIVO = false, ACTIVO = false where ID_ESPACIO = "+ idEspacio + ";");
                 if(resultSet>0){

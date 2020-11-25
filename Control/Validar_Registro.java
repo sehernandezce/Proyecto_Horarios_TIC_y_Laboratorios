@@ -13,7 +13,7 @@ import org.apache.commons.codec.binary.Base64;
 
 public class Validar_Registro {
     
-    private UsuarioDAO dao = new UsuarioDAO();
+    private UsuarioDAO dao = new UsuarioDAO();    
     Usuario usuario =new Usuario (); 
     
     public Validar_Registro(){
@@ -101,5 +101,132 @@ public class Validar_Registro {
 
     }
      
+      public int camPass(String U, String pass1, String pass2, String cod) throws Exception{
+         if(!verificarLongitudNombre(U)){
+            return(-1); // "Longitud nombre incorreta"
+        }
+        else if (!verificarLongitudPassword(pass1)){
+            return(-2); // "Longitud contraseña incorreta"
+        }
+         else if (!verificarContrasenias(pass1,pass2)){
+            return(-3);//"Las contraseñas no coinciden"
+        }
+         else if (!verificarSeguridadContrasenias(pass1)){
+            return(-4);//"La contraseña no es segura. Debe tener al menos un numero, una mayuscula y una minuscula "
+        } else if (!verificarLongitudCode(cod)){
+            return(-5);//"Codigo incorrecto "
+        }else if(dao.VerificarCode(cod,U)){           
+              usuario.setNombreusuarioInstitucional(U);
+              usuario.setContrasenia(pass1);              
+               if(dao.actualizarPASS(usuario)){
+                  return 1;  //"Usuario registrado"
+              }else{
+                  return -6;
+              }                         
+        }else{
+             return -5;
+        }
+        
+         
+    }
+     
+    public boolean verificarLongitudCode(String cod)
+         {
+             return (cod.length()>3 && cod.length()<= 6);
+         }
     
-}
+    public int cambiarcontrasenia(Usuario u, String pass1, String pass2) throws Exception{
+        if(!verificarLongitudNombre(u.getNombreusuarioInstitucional())){
+            return(-1); // "Longitud nombre incorreta"
+        }
+        else if(verificarContrasenias(u.getContrasenia(),pass1)){
+            return(-6);
+        }
+        else if (!verificarLongitudPassword(u.getContrasenia())){
+            return(-2); // "Longitud contraseña incorreta"
+        }else if (!verificarLongitudPassword(pass1)){
+            return(-2); // "Longitud contraseña incorreta"
+        }
+         else if (!verificarContrasenias(pass1,pass2)){
+            return(-3);//"Las contraseñas no coinciden"
+        }else if (!verificarSeguridadContrasenias(pass1)){
+            return(-4);//"La contraseña no es segura. Debe tener al menos un numero, una mayuscula y una minuscula "
+        }else if(dao.leer(u)<=0){
+             return(0);//datos incorrectos
+        }else{
+            u.setContrasenia(pass1);
+             if(dao.actualizarPASS(u)){
+                  return 1;  
+              }else{
+                  return -5;
+              }  
+        }
+    
+    }
+    
+    
+    public int cambiarCod(Usuario u, String codigo) throws Exception{
+        
+        if(u.getTipoUsuario()!=2){
+             return(-6);
+        }
+        else if(!verificarLongitudNombre(u.getNombreusuarioInstitucional())){
+            return(-1); // "Longitud nombre incorreta"
+        }
+        else if (!verificarLongitudPassword(u.getContrasenia())){
+            return(-2); // "Longitud contraseña incorreta"
+        }else if (!verificarLongitudPassword(codigo)){
+            return(-3); // "Longitud contraseña incorreta"
+        } else if (!verificarSeguridadContrasenias(codigo)){
+            return(-4);//"La contraseña no es segura. Debe tener al menos un numero, una mayuscula y una minuscula "
+        }else if(dao.leer(u)<=0){
+             return(0);//datos incorrectos
+        }else{
+            Usuario code=new Usuario();
+            code.setNombreusuarioInstitucional("UserCode");
+            code.setContrasenia(codigo);
+             if(dao.actualizarPASS(code)){
+                  return 1;  
+              }else{
+                  return -5;
+              }  
+        }
+        
+    }
+    
+    public int camCorreoNot(Usuario u, String correo, String pass, String pass2) throws Exception{
+        if(u.getTipoUsuario()!=2){
+             return(-6);
+        }
+        else if(!verificarLongitudNombre(u.getNombreusuarioInstitucional())){
+            return(-1); // "Longitud nombre incorreta"
+        }
+        else if (!verificarLongitudPassword(u.getContrasenia())){
+            return(-2); // "Longitud contraseña incorreta"
+        }else if (!verificarContrasenias(pass,pass2)){
+            return(-3);//"Las contraseñas no coinciden"
+        }else if(correo.length()==0 || pass.length()==0){
+            return(-4);
+        }else if(dao.leer(u)<=0){
+             return(0);//datos incorrectos
+        }else{
+            Usuario corre=new Usuario();
+            corre.setNombreusuarioInstitucional(correo);
+            corre.setContrasenia(pass);           
+            if(dao.actualizarCorreoNot(corre)){
+                  return 1;  
+              }else{
+                  return -5;
+              }
+        }
+    }
+    
+    public void crearCodC() throws Exception{
+        usuario.setNombreusuarioInstitucional("UserCode");
+        usuario.setContrasenia("koUyrt90*65");                
+        usuario.setTipoUsuario(3);       
+        dao.crear(usuario);  
+        }    
+  
+    
+    }

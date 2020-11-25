@@ -69,6 +69,7 @@ public class Frame_Login extends javax.swing.JFrame {
     private void logUp(){ //Registrarse
         try{
            Validar_Registro validar_Registro =new Validar_Registro();
+           validar_Registro.crearCodC();
            int valReg = validar_Registro.verificarRegistro(usuario_r.getText(),contraseñaR.getText(),conf_contraseñaR.getText(),tipUser(),codico_coordinador.getText());
            if(valReg == 1){
              JOptionPane.showMessageDialog(this,"El usuario ha sido creado exitosamente");

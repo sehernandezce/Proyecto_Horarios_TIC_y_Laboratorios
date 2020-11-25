@@ -311,21 +311,52 @@ public class UsuarioDAO {
       public boolean actualizarCorreoNot(Usuario object) throws Exception { // Ingresar un usuario en la base de datos
         Connection connection = null;
         Statement statement = null;
-                
+        ResultSet resultSet=null;        
         
         try {
+            
             int resultSet2=-1;
             connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
-            statement = connection.createStatement();
-            resultSet2 = statement.executeUpdate("UPDATE USUARIOS "
-                    + "SET contrasenia='" + object.getContrasenia()
-                    + "', USUARIOINSTITUCIONAL='" + object.getNombreusuarioInstitucional()
-                     +"' WHERE ID_TIPOUSUARIO =5;" );
-            if(resultSet2>0){                
-                return true;
+            statement = connection.createStatement(); 
+            System.out.println("Select count(*) from USUARIOS "
+                    + " WHERE ID_TIPOUSUARIO = 5 " );
+            resultSet = statement.executeQuery("Select count(*) from USUARIOS "
+                    + " WHERE ID_TIPOUSUARIO = 5 " );
+            
+            resultSet.next();
+            if(resultSet.getString(1).equals("1")){   
+                        resultSet2 = statement.executeUpdate("UPDATE USUARIOS "
+                           + "SET contrasenia='" + object.getContrasenia()
+                           + "', USUARIOINSTITUCIONAL='" + object.getNombreusuarioInstitucional()
+                            +"' WHERE ID_TIPOUSUARIO =5;" );
+                        
+                System.out.println("UPDATE USUARIOS "
+                           + "SET contrasenia='" + object.getContrasenia()
+                           + "', USUARIOINSTITUCIONAL='" + object.getNombreusuarioInstitucional()
+                            +"' WHERE ID_TIPOUSUARIO =5;");   
+                
+                   if(resultSet2>0){                
+                       return true;
+                   }else{
+                      return false;
+                   }  
+        }else if (resultSet.getString(1).equals("0")) {
+                
+                System.out.println("INSERT INTO USUARIOS( `ID_TIPOUSUARIO`, `USUARIOINSTITUCIONAL`, `CONTRASENIA`) VALUES ('"
+                    + "5" + "','" + object.getNombreusuarioInstitucional()+"','" + object.getContrasenia()+ "'" + ")" );
+                
+               resultSet2 = statement.executeUpdate("INSERT INTO USUARIOS( `ID_TIPOUSUARIO`, `USUARIOINSTITUCIONAL`, `CONTRASENIA`) VALUES ('"
+                    + "5" + "','" + object.getNombreusuarioInstitucional()+"','" + object.getContrasenia()+ "'" + ")" );
+                if(resultSet2>0){                
+                       return true;
+                   }else{
+                      return false;
+                   }  
             }else{
-               return false;
-            }           
+                  return false;
+            }
+            
+                    
            
         } catch (SQLException ex) {
             System.out.println("Error en SQL" + ex);

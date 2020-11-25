@@ -205,6 +205,7 @@ public class UsuarioDAO {
                      if(enviarCorreo.enviarC(correo)){
                          return 1;
                      }else{
+                         VerificarCode(cod, u);
                          return -3;
                      }                      
                  }else {

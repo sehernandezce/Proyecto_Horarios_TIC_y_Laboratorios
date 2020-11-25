@@ -1,8 +1,8 @@
-
 package GUI;
 
 import Control.Validar_Login;
 import Control.Validar_Registro;
+import Control.ManipularConecciones;
 import Entidad.Usuario;
 import java.awt.Dimension;
 import java.awt.Rectangle;
@@ -13,137 +13,152 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 
-
 public class Frame_Login extends javax.swing.JFrame {
 
-   
-    private Frame_Main frame_Main =new Frame_Main();
-    private int x,y;
-    
+    private Frame_Main frame_Main = new Frame_Main();
+    private ManipularConecciones datosConexion = new ManipularConecciones();
+
+    private ManipularConecciones datosConexionTemporal = new ManipularConecciones();
+    private int x, y;
+
     public Frame_Login() {
-       initComponents();
-       this.setLocationRelativeTo(null);  
-       grupo_botones.add(jRBYes);
-       grupo_botones.add(jRBNo);
-       panelRegistrase.setVisible(false);  
-       panelRecupararCon.setVisible(false);  
-      
+        initComponents();
+        this.setLocationRelativeTo(null);
+        grupo_botones.add(jRBYes);
+        grupo_botones.add(jRBNo);
+        panelRegistrase.setVisible(false);
+        panelRecupararCon.setVisible(false);
+
     }
-    
-    
-    private void logIn(){ //Iniciar Sesion
-        
-       try{
-            Usuario usuario =new Usuario();      
+
+    private void creaConexionTemporal() {
+        Usuario us = new Usuario();
+        us.setTipoUsuario(2);
+        datosConexionTemporal.crearConeccion(us);
+    }
+
+    private void logIn() { //Iniciar Sesion
+            
+        try {
+            creaConexionTemporal();
+            Usuario usuario = new Usuario();
             //Aqui va lo de ingresar datos usuario
-            Validar_Login validar_Login=new Validar_Login();    
+
             usuario.setNombreusuarioInstitucional(JtfUsuario.getText());
-            usuario.setContrasenia(jPasswordField1.getText());  // Falta el hash       
+            usuario.setContrasenia(jPasswordField1.getText());  // Falta el hash    
+
+            Validar_Login validar_Login = new Validar_Login(datosConexionTemporal);
             usuario.setTipoUsuario(validar_Login.verificarLogin(usuario));
             usuario.setContrasenia("1234567890"); // esto sera para que luego de logearse, el hash se borre
-            
-            if( usuario.getTipoUsuario()>0 && usuario.getTipoUsuario()!=3 && usuario.getTipoUsuario()!=5){
+
+            datosConexion.crearConeccion(usuario);
+            if (usuario.getTipoUsuario() > 0 && usuario.getTipoUsuario() != 3 && usuario.getTipoUsuario() != 5) {
                 frame_Main.entrar_bienvenida(usuario);
                 frame_Main.setVisible(true);
+                frame_Main.setdataConexiones(datosConexion);
                 this.dispose();
-            }else if(usuario.getTipoUsuario() == -1 || usuario.getTipoUsuario() == 3){
-                JOptionPane.showMessageDialog(null, "Usuario no Valido",  "Longitud nombre", JOptionPane.INFORMATION_MESSAGE);
-            }else if(usuario.getTipoUsuario() == -2){
-                JOptionPane.showMessageDialog(null, "Contraseña no Valida",  "Longitud contraseña", JOptionPane.INFORMATION_MESSAGE);
-            }else if(usuario.getTipoUsuario() == 0){
-                JOptionPane.showMessageDialog(null, "Usuario y/o contraseña incorrectos",  "Datos incorrectos", JOptionPane.INFORMATION_MESSAGE);
-            }else if(usuario.getTipoUsuario() == -3){
-                JOptionPane.showMessageDialog(null, "Ha ocurrido un error al intentar conectar con el servidor de base de datos",  "Error", JOptionPane.INFORMATION_MESSAGE);
-            }
-  
 
-            
+            } else if (usuario.getTipoUsuario() == -1 || usuario.getTipoUsuario() == 3) {
+                JOptionPane.showMessageDialog(null, "Usuario no Valido", "Longitud nombre", JOptionPane.INFORMATION_MESSAGE);
+            } else if (usuario.getTipoUsuario() == -2) {
+                JOptionPane.showMessageDialog(null, "Contraseña no Valida", "Longitud contraseña", JOptionPane.INFORMATION_MESSAGE);
+            } else if (usuario.getTipoUsuario() == 0) {
+                JOptionPane.showMessageDialog(null, "Usuario y/o contraseña incorrectos", "Datos incorrectos", JOptionPane.INFORMATION_MESSAGE);
+            } else if (usuario.getTipoUsuario() == -3) {
+                JOptionPane.showMessageDialog(null, "Ha ocurrido un error al intentar conectar con el servidor de base de datos", "Error", JOptionPane.INFORMATION_MESSAGE);
+            }
+
             //
-       }catch(Exception e){
-            JOptionPane.showMessageDialog(this,"A ocurrido un error: "+e); 
-       }
-       
-       
+        } catch (ExceptionInInitializerError e) {
+            JOptionPane.showMessageDialog(this, "A ocurrido un error: " + e.getClass());
+        } catch (Exception ex) {
+            Logger.getLogger(Frame_Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
-    
-    private void logUp(){ //Registrarse
-        try{
-           Validar_Registro validar_Registro =new Validar_Registro();
-           int valReg = validar_Registro.verificarRegistro(usuario_r.getText(),contraseñaR.getText(),conf_contraseñaR.getText(),tipUser(),codico_coordinador.getText());
-           if(valReg == 1){
-             JOptionPane.showMessageDialog(this,"El usuario ha sido creado exitosamente");
-           }else if(valReg == -1){
-                JOptionPane.showMessageDialog(null, "Usuario no Valido",  "Usuario no Valido", JOptionPane.INFORMATION_MESSAGE);
-            }else if(valReg == -2){
-                JOptionPane.showMessageDialog(null, "Contraseña no Valida",  "Contraseña no Valida", JOptionPane.INFORMATION_MESSAGE);
-            }else if(valReg == -3){
-                JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden",  "Problema con Contraseñas", JOptionPane.INFORMATION_MESSAGE);
-            }else if(valReg == -4){
-                JOptionPane.showMessageDialog(null, "La contraseña no es segura. Debe tener al menos un numero, una mayuscula, una minuscula y minimo 9 caracteres",  "Contraseña no segura", JOptionPane.INFORMATION_MESSAGE);
-            }else if(valReg == -5){
-                JOptionPane.showMessageDialog(null, "El codigo de coordinador no es correcto",  "Codigo incorrecto", JOptionPane.INFORMATION_MESSAGE);
-            }else if(valReg == -6){
-                JOptionPane.showMessageDialog(null, "El usuario ya existe",  "Usuario ya existe", JOptionPane.INFORMATION_MESSAGE);
+
+    private void logUp() { //Registrarse
+        try {
+            creaConexionTemporal();
+            Validar_Registro validar_Registro = new Validar_Registro(datosConexionTemporal);
+            int valReg = validar_Registro.verificarRegistro(usuario_r.getText(), contraseñaR.getText(), conf_contraseñaR.getText(), tipUser(), codico_coordinador.getText());
+            if (valReg == 1) {
+                JOptionPane.showMessageDialog(this, "El usuario ha sido creado exitosamente");
+            } else if (valReg == -1) {
+                JOptionPane.showMessageDialog(null, "Usuario no Valido", "Usuario no Valido", JOptionPane.INFORMATION_MESSAGE);
+            } else if (valReg == -2) {
+                JOptionPane.showMessageDialog(null, "Contraseña no Valida", "Contraseña no Valida", JOptionPane.INFORMATION_MESSAGE);
+            } else if (valReg == -3) {
+                JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden", "Problema con Contraseñas", JOptionPane.INFORMATION_MESSAGE);
+            } else if (valReg == -4) {
+                JOptionPane.showMessageDialog(null, "La contraseña no es segura. Debe tener al menos un numero, una mayuscula, una minuscula y minimo 9 caracteres", "Contraseña no segura", JOptionPane.INFORMATION_MESSAGE);
+            } else if (valReg == -5) {
+                JOptionPane.showMessageDialog(null, "El codigo de coordinador no es correcto", "Codigo incorrecto", JOptionPane.INFORMATION_MESSAGE);
+            } else if (valReg == -6) {
+                JOptionPane.showMessageDialog(null, "El usuario ya existe", "Usuario ya existe", JOptionPane.INFORMATION_MESSAGE);
             }
 
-        }catch(Exception e){
-            JOptionPane.showMessageDialog(this,"A ocurrido un error, nombre del error: "+e); 
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "A ocurrido un error, nombre del error: " + e);
         }
-       
+
     }
-    
-    private int tipUser(){
-        if(grupo_botones.isSelected(jRBYes.getModel())){
+
+    private int tipUser() {
+        if (grupo_botones.isSelected(jRBYes.getModel())) {
             return 2; //User estandar
-        }else if(grupo_botones.isSelected(jRBNo.getModel())){
+        } else if (grupo_botones.isSelected(jRBNo.getModel())) {
             return 1; // User Coordinador
-        }else{
+        } else {
             return -1;
         }
     }
-    
-     private void forgetPass() throws Exception{
-         Validar_Login validar_Login=new Validar_Login();
-         int val=validar_Login.existeUser(usuario_r3.getText());
-         if(val==-1){
-             JOptionPane.showMessageDialog(null, "Valide el usuario ingresado",  "Error", JOptionPane.INFORMATION_MESSAGE);
-         }else if(val==1){           
-            JOptionPane.showMessageDialog(null, "El correo ha sido enviado.",  "Enviar codigo", JOptionPane.INFORMATION_MESSAGE);
-            jPanelCam.setEnabled(true);
-         }else if(val==-2){           
-            JOptionPane.showMessageDialog(null, "Ya se ha generado un código, por favor valide el correo.",  "Acción no valida", JOptionPane.INFORMATION_MESSAGE);
-            
-         }else if(val==-3){           
-            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al enviar el correo, por favor intente más tarde.",  "Error", JOptionPane.INFORMATION_MESSAGE);
-            
-         }else if(val==-4){           
-            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al generar el código, por favor intente más tarde.",  "Error", JOptionPane.INFORMATION_MESSAGE);
-            
-         }
-             
+
+    private void forgetPass() throws Exception {
+        creaConexionTemporal(); 
+        Validar_Login validar_Login = new Validar_Login(datosConexionTemporal);
         
+        int val = validar_Login.existeUser(usuario_r3.getText());
+        if (val == -1) {
+            JOptionPane.showMessageDialog(null, "Valide el usuario ingresado", "Error", JOptionPane.INFORMATION_MESSAGE);
+        } else if (val == 1) {
+            JOptionPane.showMessageDialog(null, "El correo ha sido enviado.", "Enviar codigo", JOptionPane.INFORMATION_MESSAGE);
+            jPanelCam.setEnabled(true);
+        } else if (val == -2) {
+            JOptionPane.showMessageDialog(null, "Ya se ha generado un código, por favor valide el correo.", "Acción no valida", JOptionPane.INFORMATION_MESSAGE);
+
+        } else if (val == -3) {
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al enviar el correo, por favor intente más tarde.", "Error", JOptionPane.INFORMATION_MESSAGE);
+
+        } else if (val == -4) {
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al generar el código, por favor intente más tarde.", "Error", JOptionPane.INFORMATION_MESSAGE);
+
+        }
+
     }
-    
-    private void CamPass() throws Exception{
-         Validar_Registro validar_Registro =new Validar_Registro();
-           int valReg = validar_Registro.camPass(usuario_r2.getText(),contraseñaR1.getText(),conf_contraseñaR1.getText(),conf_contraseñaR2.getText());
-           if(valReg == 1){ // Falta el trigger
-             JOptionPane.showMessageDialog(this,"La contraseña se ha cambiado exitosamente");
-           }else if(valReg == -1){
-                JOptionPane.showMessageDialog(null, "Usuario no Valido",  "Usuario no Valido", JOptionPane.INFORMATION_MESSAGE);
-            }else if(valReg == -2){
-                JOptionPane.showMessageDialog(null, "Contraseña no Valida",  "Contraseña no Valida", JOptionPane.INFORMATION_MESSAGE);
-            }else if(valReg == -3){
-                JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden",  "Problema con Contraseñas", JOptionPane.INFORMATION_MESSAGE);
-            }else if(valReg == -4){
-                JOptionPane.showMessageDialog(null, "La contraseña no es segura. Debe tener al menos un numero, una mayuscula, una minuscula y minimo 9 caracteres",  "Contraseña no segura", JOptionPane.INFORMATION_MESSAGE);
-            }else if(valReg == -5){
-                JOptionPane.showMessageDialog(null, "El codigo y/o usuario no validos",  "Validar datos", JOptionPane.INFORMATION_MESSAGE);
-            }else if(valReg == -6){
-                JOptionPane.showMessageDialog(null, "Ha ocurrido un error con el servidor",  "Usuario ya existe", JOptionPane.INFORMATION_MESSAGE);
-            }
-         
+
+    private void CamPass() throws Exception {
+        creaConexionTemporal();
+        Validar_Registro validar_Registro = new Validar_Registro(datosConexionTemporal);
+        int valReg = validar_Registro.camPass(usuario_r2.getText(), contraseñaR1.getText(), conf_contraseñaR1.getText(), conf_contraseñaR2.getText());
+        if (valReg == 1) { // Falta el trigger
+            JOptionPane.showMessageDialog(this, "La contraseña se ha cambiado exitosamente");
+        } else if (valReg == -1) {
+            JOptionPane.showMessageDialog(null, "Usuario no Valido", "Usuario no Valido", JOptionPane.INFORMATION_MESSAGE);
+        } else if (valReg == -2) {
+            JOptionPane.showMessageDialog(null, "Contraseña no Valida", "Contraseña no Valida", JOptionPane.INFORMATION_MESSAGE);
+        } else if (valReg == -3) {
+            JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden", "Problema con Contraseñas", JOptionPane.INFORMATION_MESSAGE);
+        } else if (valReg == -4) {
+            JOptionPane.showMessageDialog(null, "La contraseña no es segura. Debe tener al menos un numero, una mayuscula, una minuscula y minimo 9 caracteres", "Contraseña no segura", JOptionPane.INFORMATION_MESSAGE);
+        } else if (valReg == -5) {
+            JOptionPane.showMessageDialog(null, "El codigo y/o usuario no validos", "Validar datos", JOptionPane.INFORMATION_MESSAGE);
+        } else if (valReg == -6) {
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error con el servidor", "Usuario ya existe", JOptionPane.INFORMATION_MESSAGE);
+        }
+
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -164,6 +179,7 @@ public class Frame_Login extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JSeparator();
         LbUsuario1 = new javax.swing.JLabel();
         LbRegistrar2 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
         panelRegistrase = new javax.swing.JPanel();
         usuario_r = new javax.swing.JTextField();
         usuario_institucional_r = new javax.swing.JLabel();
@@ -318,6 +334,7 @@ public class Frame_Login extends javax.swing.JFrame {
             }
         });
         panelIniciarSesion.add(LbRegistrar2, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 330, 160, -1));
+        panelIniciarSesion.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 440, -1, -1));
 
         getContentPane().add(panelIniciarSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, -1, -1));
 
@@ -537,14 +554,14 @@ public class Frame_Login extends javax.swing.JFrame {
 
     private void LbRegistrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LbRegistrarMouseClicked
         panelIniciarSesion.setVisible(false);
-        panelRegistrase.setVisible(true);           
+        panelRegistrase.setVisible(true);
     }//GEN-LAST:event_LbRegistrarMouseClicked
 
     private void jlClose1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlClose1MouseClicked
         int dialog = JOptionPane.YES_NO_OPTION;
-        int result = JOptionPane.showConfirmDialog(null, "¿Desea cerrar el programa?","Exit",dialog);
-        if(result ==0){
-            
+        int result = JOptionPane.showConfirmDialog(null, "¿Desea cerrar el programa?", "Exit", dialog);
+        if (result == 0) {
+
             System.exit(0);
         }
     }//GEN-LAST:event_jlClose1MouseClicked
@@ -554,21 +571,21 @@ public class Frame_Login extends javax.swing.JFrame {
     }//GEN-LAST:event_jlMinimize1MouseClicked
 
     private void registrarseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrarseActionPerformed
-       logUp();        
+        logUp();
     }//GEN-LAST:event_registrarseActionPerformed
 
     private void formMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMousePressed
-        x= evt.getX();   
-        y= evt.getY(); 
+        x = evt.getX();
+        y = evt.getY();
     }//GEN-LAST:event_formMousePressed
 
     private void formMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseDragged
-        this.setLocation(this.getLocation().x    + evt.getX()-x,this.getLocation().y+evt.getY()-y);
+        this.setLocation(this.getLocation().x + evt.getX() - x, this.getLocation().y + evt.getY() - y);
     }//GEN-LAST:event_formMouseDragged
 
     private void LbRegistrar1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LbRegistrar1MouseClicked
         panelIniciarSesion.setVisible(true);
-        panelRegistrase.setVisible(false);  
+        panelRegistrase.setVisible(false);
     }//GEN-LAST:event_LbRegistrar1MouseClicked
 
     private void jRBYesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRBYesActionPerformed
@@ -577,8 +594,8 @@ public class Frame_Login extends javax.swing.JFrame {
     }//GEN-LAST:event_jRBYesActionPerformed
 
     private void jRBNoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRBNoActionPerformed
-       codico_coordinador.setFocusable(false);
-       codico_coordinador.setEnabled(false);
+        codico_coordinador.setFocusable(false);
+        codico_coordinador.setEnabled(false);
     }//GEN-LAST:event_jRBNoActionPerformed
 
     private void JtfUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JtfUsuarioActionPerformed
@@ -586,13 +603,13 @@ public class Frame_Login extends javax.swing.JFrame {
     }//GEN-LAST:event_JtfUsuarioActionPerformed
 
     private void registrarse1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrarse1ActionPerformed
-     
+
         try {
             forgetPass();
         } catch (Exception ex) {
             Logger.getLogger(Frame_Login.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }//GEN-LAST:event_registrarse1ActionPerformed
 
     private void LbRegistrar3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LbRegistrar3MouseClicked
@@ -618,7 +635,7 @@ public class Frame_Login extends javax.swing.JFrame {
     }//GEN-LAST:event_registrarse2ActionPerformed
 
     private void LbRegistrar2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LbRegistrar2MouseClicked
-        panelRecupararCon.setVisible(true);            
+        panelRecupararCon.setVisible(true);
         panelIniciarSesion.setVisible(false);
     }//GEN-LAST:event_LbRegistrar2MouseClicked
 
@@ -662,10 +679,9 @@ public class Frame_Login extends javax.swing.JFrame {
                 new Frame_Login().setVisible(true);
             }
         });
-        
-        
+
     }
-   
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Ingresar;
     private javax.swing.JTextField JtfUsuario;
@@ -692,6 +708,7 @@ public class Frame_Login extends javax.swing.JFrame {
     private javax.swing.JLabel dominioUn;
     private javax.swing.JLabel dominioUn1;
     private javax.swing.ButtonGroup grupo_botones;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanelCam;
     private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JRadioButton jRBNo;

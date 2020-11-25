@@ -33,32 +33,33 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import Control.GraficarEstadisticas;
+import Control.ManipularConecciones;
 
-public class Frame_Main extends javax.swing.JFrame{
-    
-    
-    private int x,y;
-    
+public class Frame_Main extends javax.swing.JFrame {
+
+    private int x, y;
+
     private Usuario usuario;
     private Solicitud solicitud;
     private Evento evento;
-    private ValidarEspacios validarEspacios = new ValidarEspacios();
-    private Validar_administrar_solicitud validarSolIngresada = new Validar_administrar_solicitud();
+    private ValidarEspacios validarEspacios;
+    private ManipularConecciones manipulacionConexiones;
     private String idEspacioSeleccionado;
-    private Validar_administrar_solicitud validarSolicitudes = new Validar_administrar_solicitud();
+    private Validar_administrar_solicitud validarSolicitudes;
     private GraficarEstadisticas graficar = new GraficarEstadisticas();
     private TableRowSorter TRSFiltro;
     private String fechaTermina;
     private int[] diasRepeticion = {0, 0, 0, 0, 0, 0, 0};
     private int indiceRepeticion;
     private String nombreRepeticion = "Diariamente";
-    private boolean tipo_rechazada=false;
-    private boolean tipo_espera=false;
-    private boolean tipo_aceptada=false;
-    private boolean tipo_cancelada=false;
+    private boolean tipo_rechazada = false;
+    private boolean tipo_espera = false;
+    private boolean tipo_aceptada = false;
+    private boolean tipo_cancelada = false;
     private int EstadisticasSeleccion;
-    
+
     public String Tipo;
+
     public Frame_Main() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -1491,6 +1492,13 @@ public class Frame_Main extends javax.swing.JFrame{
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public void setdataConexiones(ManipularConecciones con){
+        this.manipulacionConexiones = con;
+        validarEspacios = new ValidarEspacios(con);
+        validarSolicitudes = new Validar_administrar_solicitud(con);           
+    }
+    
+    
     public void entrar_bienvenida(Usuario usuario2) { //Selecciona el tipo de menu segun el usuario        
         ocultar_todosPaneles();
         Bienvenida.setVisible(true);
@@ -1529,11 +1537,11 @@ public class Frame_Main extends javax.swing.JFrame{
 
     private void logOut() { //Cerrar sesion        
         int dialog = JOptionPane.YES_NO_OPTION;
-        int result = JOptionPane.showConfirmDialog(null, "¿Desea cerrar sesión?","Cerrar sesión",dialog);
-        if(result == 0){
-        Frame_Login frame_Login = new Frame_Login();
-        frame_Login.setVisible(true);
-        this.dispose();
+        int result = JOptionPane.showConfirmDialog(null, "¿Desea cerrar sesión?", "Cerrar sesión", dialog);
+        if (result == 0) {
+            Frame_Login frame_Login = new Frame_Login();
+            frame_Login.setVisible(true);
+            this.dispose();
         }
     }
 
@@ -1547,7 +1555,7 @@ public class Frame_Main extends javax.swing.JFrame{
     }
 
     public void solicitar_Espacio(String Espacio) throws SQLException { //Para mostrar la informacion en el panel de solicitar espacios     
-        
+
         jLabelRepeticion.setText("No se repite");
         fechaTermina = obtener_fecha();
         indiceRepeticion = 4;
@@ -1581,7 +1589,7 @@ public class Frame_Main extends javax.swing.JFrame{
     private void administrar_Solicitudes() { //Para mostrar las solicitudes en el administrador
         ocultar_todosPaneles();
         Categorias.setSelectedIndex(0);
-       
+
        
         if (usuario.getTipoUsuario() == 1 || usuario.getTipoUsuario() == 4) {
             Aceptar_sol_boton.setVisible(false);
@@ -1627,7 +1635,7 @@ public class Frame_Main extends javax.swing.JFrame{
     }
 
     private void llenarTabla_solicitudes(String tipo_e) throws SQLException {//modelo tabla espacios
-        Administrar_Solicitudes.setEnabled(false);              
+        Administrar_Solicitudes.setEnabled(false);
         Categorias.setSelectedIndex(0);
         Buscador.setText("");
         Object[][] tabla = validarSolicitudes.llenarMatriz(usuario, tipo_e);
@@ -1637,8 +1645,8 @@ public class Frame_Main extends javax.swing.JFrame{
 
                 }
         ));
-        if(jTable2.getRowCount()==0){
-          JOptionPane.showMessageDialog(null, "No tiene registros de solicitudes", "Sin registros", JOptionPane.INFORMATION_MESSAGE);
+        if (jTable2.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(null, "No tiene registros de solicitudes", "Sin registros", JOptionPane.INFORMATION_MESSAGE);
         }
         verTodoSolicitud();
         Administrar_Solicitudes.setEnabled(true);
@@ -1668,6 +1676,7 @@ public class Frame_Main extends javax.swing.JFrame{
             Espacio espacio = new Espacio();
             espacio = validarEspacios.BuscarInfoEspacio(usuario, Integer.valueOf(obj.toString()));
             Frame_DetallesEspacio frame_DetallesEspacio = new Frame_DetallesEspacio();
+            frame_DetallesEspacio.setDataConexiones(manipulacionConexiones);
             frame_DetallesEspacio.setVisible(true);
             frame_DetallesEspacio.llenarFrame(usuario, espacio, this);
             this.setEnabled(false);
@@ -1680,22 +1689,22 @@ public class Frame_Main extends javax.swing.JFrame{
         // crear el frame
     }
 
-    private void verDetalles_solicitudes(Object obj){           
-          try{
-             String[] datos=validarSolicitudes.datos_solicitud(usuario, Integer.valueOf(obj.toString()));
-             String dias=validarSolicitudes.dias_sol(usuario, Integer.valueOf(obj.toString()));
-             Frame_DetallesSolicitud frame_DetalleSolicitud= new Frame_DetallesSolicitud();
-             frame_DetalleSolicitud.setVisible(true); 
-             frame_DetalleSolicitud.llenar_frame(datos, dias, usuario,this);    
-             this.setEnabled(false);
-             frame_DetalleSolicitud.setVisible(true); 
-          }catch (Exception e){
-              System.out.println(e);
-          }
-                    
-            // crear el frame
-      }
-    
+    private void verDetalles_solicitudes(Object obj) {
+        try {
+            String[] datos = validarSolicitudes.datos_solicitud(usuario, Integer.valueOf(obj.toString()));
+            String dias = validarSolicitudes.dias_sol(usuario, Integer.valueOf(obj.toString()));
+            Frame_DetallesSolicitud frame_DetalleSolicitud = new Frame_DetallesSolicitud();
+            frame_DetalleSolicitud.setVisible(true);
+            frame_DetalleSolicitud.llenar_frame(datos, dias, usuario, this);
+            this.setEnabled(false);
+            frame_DetalleSolicitud.setVisible(true);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+        // crear el frame
+    }
+
     public void limpiarTabla() {
 
         DefaultTableModel M = (DefaultTableModel) jTable2.getModel();
@@ -1732,24 +1741,24 @@ public class Frame_Main extends javax.swing.JFrame{
 
     private void cambiarEstado(String tipE) throws AddressException, Exception {
         jLabelCargandoAS.setText("Cargando...");
-        
+
         if (jTable2.getSelectedRow() != -1 && jTable2.getSelectedColumn() != -1) {
 
             int res = validarSolicitudes.cambiarEstado(usuario, tipE, jTable2.getValueAt(jTable2.getSelectedRow(), 0).toString(), jTextField2.getText(), jTable2.getValueAt(jTable2.getSelectedRow(), 2).toString());
             if (res == 1) {
                 jLabelCargandoSE.setText("Cargando...");
                 JOptionPane.showMessageDialog(null, "Se han guardado los cambios.", "Cambiar estado de la solicitud", JOptionPane.INFORMATION_MESSAGE);
-                
+
                 if (!tipE.equals("Cancelada")) {
-                   int dialog = JOptionPane.YES_NO_OPTION;                                       
+                    int dialog = JOptionPane.YES_NO_OPTION;
                     int result = JOptionPane.showConfirmDialog(null, "¿Desea notificar por correo al usuario?", "Exit", dialog);
-                    if (result == 0) { 
-                         boolean c = validarSolicitudes.verificarEnvio("", jTable2.getValueAt(jTable2.getSelectedRow(), 0).toString(), tipE, jTable2.getValueAt(jTable2.getSelectedRow(), 4).toString(), jTextField2.getText());
-                            if (c) {
-                                JOptionPane.showMessageDialog(null, "Se ha notificado al usuario: " + jTable2.getValueAt(jTable2.getSelectedRow(), 4).toString() + "@unal.edu.co");
-                            } else {
-                                JOptionPane.showMessageDialog(null, "Ha ocurrido un error al intentar enviar el correo");
-                            }
+                    if (result == 0) {
+                        boolean c = validarSolicitudes.verificarEnvio("", jTable2.getValueAt(jTable2.getSelectedRow(), 0).toString(), tipE, jTable2.getValueAt(jTable2.getSelectedRow(), 4).toString(), jTextField2.getText());
+                        if (c) {
+                            JOptionPane.showMessageDialog(null, "Se ha notificado al usuario: " + jTable2.getValueAt(jTable2.getSelectedRow(), 4).toString() + "@unal.edu.co");
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al intentar enviar el correo");
+                        }
 //                       int a=-1;
 //                        while(true){
 //                           JPanel panel = new JPanel();
@@ -1774,10 +1783,10 @@ public class Frame_Main extends javax.swing.JFrame{
 //                            break;
 //                        }
 //                        }
-                         
+
                     }
                 }
-                administrar_Solicitudes();                
+                administrar_Solicitudes();
             } else if (res == -1 || res == -3) {
                 JOptionPane.showMessageDialog(null, "Accion no valida", "Accion no valida", JOptionPane.INFORMATION_MESSAGE);
             } else if (res == -2) {
@@ -1788,10 +1797,10 @@ public class Frame_Main extends javax.swing.JFrame{
                 JOptionPane.showMessageDialog(null, "No es posible cambiar de estado la solicitud", "Accion no valida", JOptionPane.INFORMATION_MESSAGE);
             } else if (res == -6) {
                 JOptionPane.showMessageDialog(null, "Ya existe un evento que se cruza con el evento de esta solicitud", "Accion no valida", JOptionPane.INFORMATION_MESSAGE);
-            } 
+            }
             jLabelCargandoSE.setText("");
-        }else{
-             JOptionPane.showMessageDialog(null, "No ha seleccionado una solicitud para gestionar", "Accion no valida", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, "No ha seleccionado una solicitud para gestionar", "Accion no valida", JOptionPane.INFORMATION_MESSAGE);
         }
 
     }
@@ -1835,161 +1844,160 @@ public class Frame_Main extends javax.swing.JFrame{
                 indiceRepeticion,
                 diasRepeticion,
                 jComboMotivos.getSelectedIndex());
-        
+
         solicitud = new Solicitud(0,
-                validarSolIngresada.fechaBD(usuario),
+                validarSolicitudes.fechaBD(usuario),
                 "",
                 "2",
                 "",
                 idEspacioSeleccionado,
                 evento);
-        
-        String validado = validarSolIngresada.verificarDatosSolicitudNueva(usuario, 
-                solicitud, 
-                jComboMotivos.getItemAt(jComboMotivos.getSelectedIndex()), 
-                jTextMotivoSolicitud.getText(), 
-                fechaTermina, 
-                obtener_fecha(), 
-                (Integer) jSpinnerHorainicio.getValue(), 
-                (Integer) jSpinnerMinutosInicio.getValue(), 
-                (Integer) jSpinnerHorafinal.getValue(), 
+
+        String validado = validarSolicitudes.verificarDatosSolicitudNueva(usuario,
+                solicitud,
+                jComboMotivos.getItemAt(jComboMotivos.getSelectedIndex()),
+                jTextMotivoSolicitud.getText(),
+                fechaTermina,
+                obtener_fecha(),
+                (Integer) jSpinnerHorainicio.getValue(),
+                (Integer) jSpinnerMinutosInicio.getValue(),
+                (Integer) jSpinnerHorafinal.getValue(),
                 (Integer) jSpinnerMinutosFinal.getValue());
-        
-        
-        
-        if(validado.equals("ok")){
+
+        if (validado.equals("ok")) {
             JOptionPane.showMessageDialog(null, "Solicitud ingresada con exito");
-        }else{
+        } else {
             JOptionPane.showMessageDialog(null, validado);
         }
 
     }
-    
-    private void ocultar_todosPanelesconfig(){
+
+    private void ocultar_todosPanelesconfig() {
         about.setVisible(false);
         CambiarContraseña.setVisible(false);
         notificaciones.setVisible(false);
-       
+
     }
-    private void configurar(){
-         ocultar_todosPaneles();
-         ocultar_todosPanelesconfig();
-         Configuraciones.setVisible(true);
-         CambiarContraseña.setVisible(true);
-         jPasswordField4.setText("Contraseña");
-         jPasswordField1.setText("Contraseña");
-         pintartodos();
-         opcion2.setOpaque(true);
-         if(usuario.getTipoUsuario()!=2){
-            habilitar_notificar(false);           
-         } 
-         Menu_confg.repaint();          
-        
+
+    private void configurar() {
+        ocultar_todosPaneles();
+        ocultar_todosPanelesconfig();
+        Configuraciones.setVisible(true);
+        CambiarContraseña.setVisible(true);
+        jPasswordField4.setText("Contraseña");
+        jPasswordField1.setText("Contraseña");
+        pintartodos();
+        opcion2.setOpaque(true);
+        if (usuario.getTipoUsuario() != 2) {
+            habilitar_notificar(false);
+        }
+        Menu_confg.repaint();
+
     }
-    
-    private void pintartodos(){
-         opcion1.setOpaque(false);
-         opcion2.setOpaque(false);
-         opcion3.setOpaque(false);  
+
+    private void pintartodos() {
+        opcion1.setOpaque(false);
+        opcion2.setOpaque(false);
+        opcion3.setOpaque(false);
     }
-    
-    private void habilitar_notificar(boolean b){
+
+    private void habilitar_notificar(boolean b) {
         jLabel45.setVisible(b);
         jSeparator14.setVisible(b);
         jSeparator15.setVisible(b);
-        
+
     }
-    
-    private void guardarCamContrasenia(){
-        try{
-           usuario.setContrasenia(jPasswordField1.getText());
-           Validar_Registro validar_Registro =new Validar_Registro();
-           int val=validar_Registro.cambiarcontrasenia(usuario, jPasswordField3.getText(), jPasswordField2.getText());
-             if(val==1){
-                  JOptionPane.showMessageDialog(null, "Se ha cambiado la contraseña satisfactoriamente", "Guardado", JOptionPane.INFORMATION_MESSAGE);
-             }else if(val==0){
-                 JOptionPane.showMessageDialog(null, "Contraseña actual incorrecta", "Acción no valida", JOptionPane.INFORMATION_MESSAGE);
-             }else if(val==-1){
-                 JOptionPane.showMessageDialog(null, "Usuario no Valido", "Acción no valida", JOptionPane.INFORMATION_MESSAGE);
-             }else if(val==-2){
-                JOptionPane.showMessageDialog(null, "Contraseña actual o nueva no Valida", "Acción no valida", JOptionPane.INFORMATION_MESSAGE); 
-             }else if(val==-3){
-                 JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden para la nueva contraseña", "Acción no valida", JOptionPane.INFORMATION_MESSAGE);
-             }else if(val==-4){
-                 JOptionPane.showMessageDialog(null, "La nueva contraseña no es segura.Debe tener minimo 8 caracteres con minimo una letra en mayucula, minucula y un numero", "Acción no valida", JOptionPane.INFORMATION_MESSAGE);
-             }else if(val==-5){
-                JOptionPane.showMessageDialog(null, "Ha ocurrido un error al intentar conectar con la base de datos", "Error", JOptionPane.INFORMATION_MESSAGE);  
-             }else if(val==-6){
-                JOptionPane.showMessageDialog(null, "La nueva contraseña coincide con la contraseña actual", "Acción no valida", JOptionPane.INFORMATION_MESSAGE);  
-             }
-            usuario.setContrasenia("1234567890");  
-        }catch(Exception e){
-             JOptionPane.showMessageDialog(this,"A ocurrido un error: "+e); 
+
+    private void guardarCamContrasenia() {
+        try {
+            usuario.setContrasenia(jPasswordField1.getText());
+            
+            Validar_Registro validar_Registro = new Validar_Registro(manipulacionConexiones);
+            int val = validar_Registro.cambiarcontrasenia(usuario, jPasswordField3.getText(), jPasswordField2.getText());
+            if (val == 1) {
+                JOptionPane.showMessageDialog(null, "Se ha cambiado la contraseña satisfactoriamente", "Guardado", JOptionPane.INFORMATION_MESSAGE);
+            } else if (val == 0) {
+                JOptionPane.showMessageDialog(null, "Contraseña actual incorrecta", "Acción no valida", JOptionPane.INFORMATION_MESSAGE);
+            } else if (val == -1) {
+                JOptionPane.showMessageDialog(null, "Usuario no Valido", "Acción no valida", JOptionPane.INFORMATION_MESSAGE);
+            } else if (val == -2) {
+                JOptionPane.showMessageDialog(null, "Contraseña actual o nueva no Valida", "Acción no valida", JOptionPane.INFORMATION_MESSAGE);
+            } else if (val == -3) {
+                JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden para la nueva contraseña", "Acción no valida", JOptionPane.INFORMATION_MESSAGE);
+            } else if (val == -4) {
+                JOptionPane.showMessageDialog(null, "La nueva contraseña no es segura.Debe tener minimo 8 caracteres con minimo una letra en mayucula, minucula y un numero", "Acción no valida", JOptionPane.INFORMATION_MESSAGE);
+            } else if (val == -5) {
+                JOptionPane.showMessageDialog(null, "Ha ocurrido un error al intentar conectar con la base de datos", "Error", JOptionPane.INFORMATION_MESSAGE);
+            } else if (val == -6) {
+                JOptionPane.showMessageDialog(null, "La nueva contraseña coincide con la contraseña actual", "Acción no valida", JOptionPane.INFORMATION_MESSAGE);
+            }
+            usuario.setContrasenia("1234567890");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "A ocurrido un error: " + e);
         }
-        
+
     }
-    
-    private void camCodig(){
-        
-        try{
-           usuario.setContrasenia(jPasswordField4.getText());
-            Validar_Registro validar_Registro =new Validar_Registro();
-            int val=validar_Registro.cambiarCod(usuario,jPasswordField7.getText());
-             if(val==1){
-                  JOptionPane.showMessageDialog(null, "Se ha cambiado el código satisfactoriamente", "Guardado", JOptionPane.INFORMATION_MESSAGE);
-                  usuario.setContrasenia("1234567890"); 
-             }else if(val==0){
-                 JOptionPane.showMessageDialog(null, "Contraseña incorrecta", "Acción no valida", JOptionPane.INFORMATION_MESSAGE);
-             }else if(val==-1){
-                 JOptionPane.showMessageDialog(null, "Usuario no Valido", "Acción no valida", JOptionPane.INFORMATION_MESSAGE);
-             }else if(val==-2){
-                JOptionPane.showMessageDialog(null, "Contraseña no Valida", "Acción no valida", JOptionPane.INFORMATION_MESSAGE); 
-             }else if(val==-3){
-                 JOptionPane.showMessageDialog(null, "Código no valido. Debe tener minimo 8 caracteres con minimo una letra en mayucula, minucula y un numero", "Acción no valida", JOptionPane.INFORMATION_MESSAGE);
-             }else if(val==-4){
-                 JOptionPane.showMessageDialog(null, "El código no es seguro.", "Acción no valida", JOptionPane.INFORMATION_MESSAGE);
-             }else if(val==-5){
-                JOptionPane.showMessageDialog(null, "Ha ocurrido un error al intentar conectar con la base de datos", "Error", JOptionPane.INFORMATION_MESSAGE);  
-             }else if(val==-6){
-                JOptionPane.showMessageDialog(null, "No tiene permisos para ejecutar esta acción", "Acción no valida", JOptionPane.INFORMATION_MESSAGE);  
-             }
-              
-        }catch(Exception e){
-             JOptionPane.showMessageDialog(this,"A ocurrido un error: "+e); 
+
+    private void camCodig() {
+
+        try {
+            usuario.setContrasenia(jPasswordField4.getText());
+            Validar_Registro validar_Registro = new Validar_Registro(manipulacionConexiones);
+            int val = validar_Registro.cambiarCod(usuario, jPasswordField7.getText());
+            if (val == 1) {
+                JOptionPane.showMessageDialog(null, "Se ha cambiado el código satisfactoriamente", "Guardado", JOptionPane.INFORMATION_MESSAGE);
+                usuario.setContrasenia("1234567890");
+            } else if (val == 0) {
+                JOptionPane.showMessageDialog(null, "Contraseña incorrecta", "Acción no valida", JOptionPane.INFORMATION_MESSAGE);
+            } else if (val == -1) {
+                JOptionPane.showMessageDialog(null, "Usuario no Valido", "Acción no valida", JOptionPane.INFORMATION_MESSAGE);
+            } else if (val == -2) {
+                JOptionPane.showMessageDialog(null, "Contraseña no Valida", "Acción no valida", JOptionPane.INFORMATION_MESSAGE);
+            } else if (val == -3) {
+                JOptionPane.showMessageDialog(null, "Código no valido. Debe tener minimo 8 caracteres con minimo una letra en mayucula, minucula y un numero", "Acción no valida", JOptionPane.INFORMATION_MESSAGE);
+            } else if (val == -4) {
+                JOptionPane.showMessageDialog(null, "El código no es seguro.", "Acción no valida", JOptionPane.INFORMATION_MESSAGE);
+            } else if (val == -5) {
+                JOptionPane.showMessageDialog(null, "Ha ocurrido un error al intentar conectar con la base de datos", "Error", JOptionPane.INFORMATION_MESSAGE);
+            } else if (val == -6) {
+                JOptionPane.showMessageDialog(null, "No tiene permisos para ejecutar esta acción", "Acción no valida", JOptionPane.INFORMATION_MESSAGE);
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "A ocurrido un error: " + e);
         }
-        
-        
-        
+
     }
-    
-    private void camCorreoNotificar(){
-        try{
-           usuario.setContrasenia(jPasswordField4.getText());
-            Validar_Registro validar_Registro =new Validar_Registro(); 
-            int val=validar_Registro.camCorreoNot(usuario, JtfUsuario2.getText(), jPasswordField5.getText(), jPasswordField6.getText());
-            if(val==1){
-                  JOptionPane.showMessageDialog(null, "Se ha cambiado los datos satisfactoriamente", "Guardado", JOptionPane.INFORMATION_MESSAGE);
-                  usuario.setContrasenia("1234567890");
-            }else if(val==0){
-                 JOptionPane.showMessageDialog(null, "Contraseña incorrecta", "Acción no valida", JOptionPane.INFORMATION_MESSAGE);
-             }else if(val==-1){
-                 JOptionPane.showMessageDialog(null, "Usuario no Valido", "Acción no valida", JOptionPane.INFORMATION_MESSAGE);
-             }else if(val==-2){
-                JOptionPane.showMessageDialog(null, "Contraseña no Valida", "Acción no valida", JOptionPane.INFORMATION_MESSAGE); 
-             }else if(val==-3){
-                 JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden", "Acción no valida", JOptionPane.INFORMATION_MESSAGE);
-             }else if(val==-4){
-                 JOptionPane.showMessageDialog(null, "Correo y/o contraseña no valida", "Acción no valida", JOptionPane.INFORMATION_MESSAGE);
-             }else if(val==-5){
-                JOptionPane.showMessageDialog(null, "Ha ocurrido un error al intentar conectar con la base de datos", "Error", JOptionPane.INFORMATION_MESSAGE);  
-             }else if(val==-6){
-                JOptionPane.showMessageDialog(null, "No tiene permisos para ejecutar esta acción", "Acción no valida", JOptionPane.INFORMATION_MESSAGE);  
-             }
-               
-        }catch(Exception e){
-             JOptionPane.showMessageDialog(this,"A ocurrido un error: "+e);  
+
+    private void camCorreoNotificar() {
+        try {
+            usuario.setContrasenia(jPasswordField4.getText());
+            Validar_Registro validar_Registro = new Validar_Registro(manipulacionConexiones);
+            int val = validar_Registro.camCorreoNot(usuario, JtfUsuario2.getText(), jPasswordField5.getText(), jPasswordField6.getText());
+            if (val == 1) {
+                JOptionPane.showMessageDialog(null, "Se ha cambiado los datos satisfactoriamente", "Guardado", JOptionPane.INFORMATION_MESSAGE);
+                usuario.setContrasenia("1234567890");
+            } else if (val == 0) {
+                JOptionPane.showMessageDialog(null, "Contraseña incorrecta", "Acción no valida", JOptionPane.INFORMATION_MESSAGE);
+            } else if (val == -1) {
+                JOptionPane.showMessageDialog(null, "Usuario no Valido", "Acción no valida", JOptionPane.INFORMATION_MESSAGE);
+            } else if (val == -2) {
+                JOptionPane.showMessageDialog(null, "Contraseña no Valida", "Acción no valida", JOptionPane.INFORMATION_MESSAGE);
+            } else if (val == -3) {
+                JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden", "Acción no valida", JOptionPane.INFORMATION_MESSAGE);
+            } else if (val == -4) {
+                JOptionPane.showMessageDialog(null, "Correo y/o contraseña no valida", "Acción no valida", JOptionPane.INFORMATION_MESSAGE);
+            } else if (val == -5) {
+                JOptionPane.showMessageDialog(null, "Ha ocurrido un error al intentar conectar con la base de datos", "Error", JOptionPane.INFORMATION_MESSAGE);
+            } else if (val == -6) {
+                JOptionPane.showMessageDialog(null, "No tiene permisos para ejecutar esta acción", "Acción no valida", JOptionPane.INFORMATION_MESSAGE);
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "A ocurrido un error: " + e);
         }
     }
+
     /*
       private String obtener_estado(){
           if(Jcbox_rechazada.isSelected()){
@@ -2010,7 +2018,7 @@ public class Frame_Main extends javax.swing.JFrame{
     /// Acciones de los botones y labels
 
     private void jLabel2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MousePressed
-        
+
         try {
 
             solicitar_Espacio("Laboratorios");
@@ -2019,7 +2027,6 @@ public class Frame_Main extends javax.swing.JFrame{
             Logger.getLogger(Frame_Main.class
                     .getName()).log(Level.SEVERE, null, ex);
         }
-
 
 
     }//GEN-LAST:event_jLabel2MousePressed
@@ -2112,6 +2119,7 @@ public class Frame_Main extends javax.swing.JFrame{
     private void jLabel3MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MousePressed
 
         try {
+
             solicitar_Espacio("Sala de reuniones");
         } catch (SQLException ex) {
             Logger.getLogger(Frame_Main.class
@@ -2171,11 +2179,11 @@ public class Frame_Main extends javax.swing.JFrame{
     }//GEN-LAST:event_BuscadorActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        graficar.graficarGeneral (usuario, jMonthChooser1.getMonth(), jYearChooser1.getYear() );
+        graficar.graficarGeneral(usuario, jMonthChooser1.getMonth(), jYearChooser1.getYear());
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        graficar.graficarEspecifico (usuario, EstadisticasSeleccion, jMonthChooser2.getMonth(), jYearChooser2.getYear() );
+        graficar.graficarEspecifico(usuario, EstadisticasSeleccion, jMonthChooser2.getMonth(), jYearChooser2.getYear());
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jLabel6MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MousePressed
@@ -2204,8 +2212,8 @@ public class Frame_Main extends javax.swing.JFrame{
             idEspacioSeleccionado = (jTable3.getValueAt(jTable3.getSelectedRow(), 0)).toString();
             jLabelCargandoSE.setText("Cargando...");
             String fecha = obtener_fecha();
-            int day = obt_diaSemana();     
-            
+            int day = obt_diaSemana();
+
             try {
                 llenarTabla_espacios(Integer.valueOf(jTable3.getValueAt(jTable3.getSelectedRow(), 0).toString()), fecha, day);
             } catch (SQLException ex) {
@@ -2220,19 +2228,20 @@ public class Frame_Main extends javax.swing.JFrame{
 
     private void jCalendar2PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jCalendar2PropertyChange
         // TODO add your handling code here:
+
         fechaTermina = obtener_fecha();
         indiceRepeticion = 4;
         jLabelRepeticion.setText("No se repite");
-        int[] d ={0, 0, 0, 0, 0, 0, 0};
-        d[obt_diaSemana()-1] = obt_diaSemana();
+        int[] d = {0, 0, 0, 0, 0, 0, 0};
+        d[obt_diaSemana() - 1] = obt_diaSemana();
         diasRepeticion = d;
-        
+
         if (jTable3.getSelectedRow() != -1 && jTable3.getSelectedColumn() != -1) {
             jLabelCargandoSE.setText("Cargando...");
             int id_espacio = Integer.valueOf(jTable3.getValueAt(jTable3.getSelectedRow(), 0).toString());
-            
+
             String fecha = obtener_fecha();
-            
+
             int day = obt_diaSemana();
             System.out.println(day);
             try {
@@ -2251,16 +2260,16 @@ public class Frame_Main extends javax.swing.JFrame{
 
     private void Jcbox_rechazadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Jcbox_rechazadaActionPerformed
         try {
-            if(tipo_rechazada){              
-               llenarTabla_solicitudes("Todos"); 
-               tipo_rechazada=false;
+            if (tipo_rechazada) {
+                llenarTabla_solicitudes("Todos");
+                tipo_rechazada = false;
                 Tipo_estados.clearSelection();
-            }else{
-                tipo_rechazada=true;
-                llenarTabla_solicitudes("Rechazada");         
+            } else {
+                tipo_rechazada = true;
+                llenarTabla_solicitudes("Rechazada");
             }
-                     
-            } catch (SQLException ex) {
+
+        } catch (SQLException ex) {
             Logger.getLogger(Frame_Main.class
                     .getName()).log(Level.SEVERE, null, ex);
         }
@@ -2268,13 +2277,13 @@ public class Frame_Main extends javax.swing.JFrame{
 
     private void Jcbox_esperaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Jcbox_esperaActionPerformed
         try {
-            if(tipo_espera){              
-               llenarTabla_solicitudes("Todos"); 
-               tipo_espera=false;
+            if (tipo_espera) {
+                llenarTabla_solicitudes("Todos");
+                tipo_espera = false;
                 Tipo_estados.clearSelection();
-            }else{
-                 tipo_espera=true;
-               llenarTabla_solicitudes("Espera");
+            } else {
+                tipo_espera = true;
+                llenarTabla_solicitudes("Espera");
             }
         } catch (SQLException ex) {
             Logger.getLogger(Frame_Main.class
@@ -2284,14 +2293,14 @@ public class Frame_Main extends javax.swing.JFrame{
 
     private void Jcbox_canceladaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Jcbox_canceladaActionPerformed
         try {
-             if(tipo_cancelada){              
-               llenarTabla_solicitudes("Todos"); 
-               tipo_cancelada=false;
+            if (tipo_cancelada) {
+                llenarTabla_solicitudes("Todos");
+                tipo_cancelada = false;
                 Tipo_estados.clearSelection();
-            }else{
-             tipo_cancelada=true;
-               llenarTabla_solicitudes("Cancelada");
-             }
+            } else {
+                tipo_cancelada = true;
+                llenarTabla_solicitudes("Cancelada");
+            }
         } catch (SQLException ex) {
             Logger.getLogger(Frame_Main.class
                     .getName()).log(Level.SEVERE, null, ex);
@@ -2300,13 +2309,13 @@ public class Frame_Main extends javax.swing.JFrame{
 
     private void Jcbox_aceptadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Jcbox_aceptadaActionPerformed
         try {
-            if(tipo_aceptada){              
-               llenarTabla_solicitudes("Todos"); 
-               tipo_aceptada=false;
+            if (tipo_aceptada) {
+                llenarTabla_solicitudes("Todos");
+                tipo_aceptada = false;
                 Tipo_estados.clearSelection();
-            }else{
-            tipo_aceptada=true;
-            llenarTabla_solicitudes("Aceptada");
+            } else {
+                tipo_aceptada = true;
+                llenarTabla_solicitudes("Aceptada");
             }
         } catch (SQLException ex) {
             Logger.getLogger(Frame_Main.class
@@ -2359,8 +2368,8 @@ public class Frame_Main extends javax.swing.JFrame{
         jLabelCargandoSE.setText("Cargando...");
         verificarIngresoSolicitud();
         jLabelCargandoSE.setText("");
-          
-           /* 
+
+        /* 
         System.out.println(solicitud.getEspacioidEspacio()+"\n"
         +solicitud.getEstadoSolicitud()+"\n"
         +solicitud.getEvento().getFechaEvento()+"\n"
@@ -2372,7 +2381,7 @@ public class Frame_Main extends javax.swing.JFrame{
         +solicitud.getEvento().getDiasRepite()[4]
         +solicitud.getEvento().getDiasRepite()[5]
         +solicitud.getEvento().getDiasRepite()[6]);
-        */
+         */
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jComboMotivosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboMotivosActionPerformed
@@ -2386,13 +2395,15 @@ public class Frame_Main extends javax.swing.JFrame{
     private void jLabelAñadir2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelAñadir2MouseClicked
         jLabelCargandoSE.setText("Cargando...");
         Frame_DetallesEspacio frame_DetallesEspacio = new Frame_DetallesEspacio();
+        frame_DetallesEspacio.setDataConexiones(manipulacionConexiones);
+        
         try {
-            Tipo=jLabel36.getText();
+            Tipo = jLabel36.getText();
             frame_DetallesEspacio.setVisible(true);
-            frame_DetallesEspacio.crearEspacio(Tipo,this,usuario);
+            frame_DetallesEspacio.crearEspacio(Tipo, this, usuario);
             this.setEnabled(false);
             frame_DetallesEspacio.setVisible(true);
-            
+
             jLabelCargandoSE.setText("");
         } catch (Exception e) {
             System.out.println(e);
@@ -2400,44 +2411,44 @@ public class Frame_Main extends javax.swing.JFrame{
     }//GEN-LAST:event_jLabelAñadir2MouseClicked
 
     private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
-        if(jTable2.getSelectedRow()!=-1 && jTable2.getSelectedColumn()!=-1){
-            if(jTable2.getSelectedColumn()==9){
-                     verDetalles_solicitudes(jTable2.getValueAt(jTable2.getSelectedRow(),0));
-             }
+        if (jTable2.getSelectedRow() != -1 && jTable2.getSelectedColumn() != -1) {
+            if (jTable2.getSelectedColumn() == 9) {
+                verDetalles_solicitudes(jTable2.getValueAt(jTable2.getSelectedRow(), 0));
+            }
         }
     }//GEN-LAST:event_jTable2MouseClicked
 
     private void jLabelEliminar1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelEliminar1MouseClicked
-      
-        if (jTable3.getSelectedRow() != -1 && jTable3.getSelectedColumn() != -1) {
-        String edificio = (jTable3.getValueAt(jTable3.getSelectedRow(), 3)).toString();
-        String Salon = (jTable3.getValueAt(jTable3.getSelectedRow(), 2)).toString();
-        int dialog = JOptionPane.YES_NO_OPTION;
-        int result = JOptionPane.showConfirmDialog(null, "¿Esta seguro que desea eliminar el espacio: "+Salon+" - "+edificio+"?", "Exit", dialog);
-          if (result == 0) {
-           
-                jLabelCargandoSE.setText("Cargando...");
-                int n= validarEspacios.borrarEspacio(usuario, idEspacioSeleccionado);
 
-                if(n==1){
+        if (jTable3.getSelectedRow() != -1 && jTable3.getSelectedColumn() != -1) {
+            String edificio = (jTable3.getValueAt(jTable3.getSelectedRow(), 3)).toString();
+            String Salon = (jTable3.getValueAt(jTable3.getSelectedRow(), 2)).toString();
+            int dialog = JOptionPane.YES_NO_OPTION;
+            int result = JOptionPane.showConfirmDialog(null, "¿Esta seguro que desea eliminar el espacio: " + Salon + " - " + edificio + "?", "Exit", dialog);
+            if (result == 0) {
+
+                jLabelCargandoSE.setText("Cargando...");
+                int n = validarEspacios.borrarEspacio(usuario, idEspacioSeleccionado);
+
+                if (n == 1) {
                     try {
                         solicitar_Espacio(jLabel36.getText());
                     } catch (SQLException ex) {
                         Logger.getLogger(Frame_Main.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     JOptionPane.showMessageDialog(null, "El espacio fue borrado.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-                }else if(n==-1){
-                  JOptionPane.showMessageDialog(null, "Ha ocurrido un error al conectar con la base de datos.", "Error", JOptionPane.INFORMATION_MESSAGE); 
-                }else if(n==-2){
-                   JOptionPane.showMessageDialog(null, "No es posible eliminar el espacio ya que tiene solicitudes en espera.", "Acción no valida", JOptionPane.INFORMATION_MESSAGE);  
-                }else if(n==-3){
-                   JOptionPane.showMessageDialog(null, "No tiene permisos para ejecutar esta acción", "Acción no valida", JOptionPane.INFORMATION_MESSAGE);    
+                } else if (n == -1) {
+                    JOptionPane.showMessageDialog(null, "Ha ocurrido un error al conectar con la base de datos.", "Error", JOptionPane.INFORMATION_MESSAGE);
+                } else if (n == -2) {
+                    JOptionPane.showMessageDialog(null, "No es posible eliminar el espacio ya que tiene solicitudes en espera.", "Acción no valida", JOptionPane.INFORMATION_MESSAGE);
+                } else if (n == -3) {
+                    JOptionPane.showMessageDialog(null, "No tiene permisos para ejecutar esta acción", "Acción no valida", JOptionPane.INFORMATION_MESSAGE);
                 }
                 jLabelCargandoSE.setText("");
-                 
-             }
-                    }else{
-              JOptionPane.showMessageDialog(null, "No ha seleccionado un espacio para borrar.", "Error", JOptionPane.INFORMATION_MESSAGE);
+
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "No ha seleccionado un espacio para borrar.", "Error", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_jLabelEliminar1MouseClicked
 
@@ -2462,7 +2473,7 @@ public class Frame_Main extends javax.swing.JFrame{
     }//GEN-LAST:event_JtfUsuario2ActionPerformed
 
     private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
-       camCodig();
+        camCodig();
     }//GEN-LAST:event_jButton12ActionPerformed
 
     private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
@@ -2474,35 +2485,35 @@ public class Frame_Main extends javax.swing.JFrame{
     }//GEN-LAST:event_jLabel49MousePressed
 
     private void jLabel11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel11MouseClicked
-         configurar();
+        configurar();
     }//GEN-LAST:event_jLabel11MouseClicked
 
     private void jLabel43MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel43MouseClicked
-         configurar();
+        configurar();
     }//GEN-LAST:event_jLabel43MouseClicked
 
     private void jLabel46MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel46MouseClicked
-       ocultar_todosPanelesconfig();
-       pintartodos();
-       opcion1.setOpaque(true);
-       Menu_confg.repaint();
-       about.setVisible(true);
+        ocultar_todosPanelesconfig();
+        pintartodos();
+        opcion1.setOpaque(true);
+        Menu_confg.repaint();
+        about.setVisible(true);
     }//GEN-LAST:event_jLabel46MouseClicked
 
     private void jLabel44MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel44MouseClicked
-       ocultar_todosPanelesconfig();
-       pintartodos();
+        ocultar_todosPanelesconfig();
+        pintartodos();
         opcion2.setOpaque(true);
-        Menu_confg.repaint();        
-       CambiarContraseña.setVisible(true);
+        Menu_confg.repaint();
+        CambiarContraseña.setVisible(true);
     }//GEN-LAST:event_jLabel44MouseClicked
 
     private void jLabel45MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel45MouseClicked
-       ocultar_todosPanelesconfig();
-       pintartodos();       
-       opcion3.setOpaque(true);
-       Menu_confg.repaint();
-       notificaciones.setVisible(true);
+        ocultar_todosPanelesconfig();
+        pintartodos();
+        opcion3.setOpaque(true);
+        Menu_confg.repaint();
+        notificaciones.setVisible(true);
     }//GEN-LAST:event_jLabel45MouseClicked
 
     private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
@@ -2520,7 +2531,7 @@ public class Frame_Main extends javax.swing.JFrame{
     private void jRadioButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton3ActionPerformed
         EstadisticasSeleccion = 2;
     }//GEN-LAST:event_jRadioButton3ActionPerformed
-    
+
     /**
      * @param args the command line arguments
      */

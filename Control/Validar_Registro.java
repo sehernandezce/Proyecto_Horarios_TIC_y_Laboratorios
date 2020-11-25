@@ -13,12 +13,17 @@ import org.apache.commons.codec.binary.Base64;
 
 public class Validar_Registro {
     
-    private UsuarioDAO dao = new UsuarioDAO();    
+    private ManipularConecciones conexion = null;
+
+    public Validar_Registro(ManipularConecciones conexion) {
+        this.conexion = conexion;
+        dao = new UsuarioDAO(conexion.getConeccion());
+    }
+
+    
+    private UsuarioDAO dao ;    
     Usuario usuario =new Usuario (); 
     
-    public Validar_Registro(){
-        
-    }
     
     public int verificarRegistro(String name, String pass1, String pass2, int tipoUsuario, String codigo) throws Exception{
         if(!verificarLongitudNombre(name)){

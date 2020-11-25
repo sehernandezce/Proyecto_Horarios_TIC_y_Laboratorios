@@ -11,10 +11,15 @@ import javax.mail.internet.AddressException;
 
 public class Validar_administrar_solicitud {
 
-    private SolicitudDAO solicitud = new SolicitudDAO();
+    private ManipularConecciones conexion = null;
 
-    public Validar_administrar_solicitud() {
+    public Validar_administrar_solicitud(ManipularConecciones conexion) {
+        this.conexion = conexion;
+        solicitud = new SolicitudDAO(conexion.getConeccion());
     }
+    
+    private SolicitudDAO solicitud;
+    
 
     public String[][] llenarMatriz(Usuario par, String tipo_e) throws SQLException {
         return solicitud.leerSolicitudes(par, convertirTipo_e(tipo_e));
@@ -65,6 +70,7 @@ public class Validar_administrar_solicitud {
         }
 
     }
+    
 
     public boolean verificarEnvio(String contrasenia, String id, String tipE, String correoU, String obs) throws AddressException, Exception {
 

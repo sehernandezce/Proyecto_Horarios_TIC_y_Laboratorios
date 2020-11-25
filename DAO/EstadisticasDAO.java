@@ -5,7 +5,6 @@
  */
 package DAO;
 
-import static DAO.EspaciosDAO.DB_URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;

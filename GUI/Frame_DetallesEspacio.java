@@ -2,6 +2,7 @@ package GUI;
 
 import Control.ValidarEspacios;
 import Control.ValidarInventario;
+import Control.ManipularConecciones;
 import Entidad.Espacio;
 import Entidad.Inventario;
 import Entidad.Usuario;
@@ -15,34 +16,40 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
-
 public class Frame_DetallesEspacio extends javax.swing.JFrame {
 
     public Espacio espacioC = new Espacio();
-    private int x,y;
-    boolean existe=false;
+    private int x, y;
+    boolean existe = false;
     String TipoC;
     private Usuario usuario;
     private Frame_Main fraim;
-    private String verifinv="0";
-    private ValidarEspacios  validarEspacio = new  ValidarEspacios ();
-    private ValidarInventario validarInventario=new ValidarInventario();    
+    private String verifinv = "0";
+
+    private ValidarEspacios validarEspacio;
+    private ManipularConecciones dataConexion;
+    private ValidarInventario validarInventario;
     private final ArrayList<String> invDelete = new ArrayList<String>();
 
     private int Crear;
 
-    
     public Frame_DetallesEspacio() {
         initComponents();
-        this.setLocationRelativeTo(null);  
+        this.setLocationRelativeTo(null);
         buttonGroup1.add(jRadioBActivo);
         buttonGroup1.add(jRadioBInactivo);
-        habilitarControles(jTextField3,false);
+        habilitarControles(jTextField3, false);
         jButtonEditar.setVisible(false);
         habtext(false);
-      
-    }    
-  
+
+    }
+
+    public void setDataConexiones(ManipularConecciones con) {
+        this.dataConexion = con;
+        validarEspacio = new ValidarEspacios(con);
+        validarInventario = new ValidarInventario(con);
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -322,172 +329,170 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    
-      public void crearEspacio(String tipo, Frame_Main frame, Usuario u) throws SQLException{
-        
-        this.usuario=u;
+
+    public void crearEspacio(String tipo, Frame_Main frame, Usuario u) throws SQLException {
+
+        this.usuario = u;
         this.fraim = frame;
-        if(u.getTipoUsuario()==2){
-            
+        if (u.getTipoUsuario() == 2) {
+
             //Crear espacios (Sebastian H)
             jTextField3.setText(tipo);
             jTextField2.setText("-1");
             jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object[][] {}, new String [] {"Id inventario", "Nombre", "Descripción" }){                              
-                      } 
-                         );
+                    new Object[][]{}, new String[]{"Id inventario", "Nombre", "Descripción"}) {
+            }
+            );
             habtext(true);
-            Crear=1; // Esto de crear=1 si sirve
+            Crear = 1; // Esto de crear=1 si sirve
             //hasta aqui Crear espacios (Sebastian H)
-            
+
             // Crear espacio (Diego)
             //jButtonGuardar.enable(true);
             System.out.println(tipo + " espacio");
-            TipoC=tipo;
-            if (existe==false){
+            TipoC = tipo;
+            if (existe == false) {
                 jButtonGuardar.enable(!existe);
+            } else {
+                JOptionPane.showMessageDialog(null, "El espacio ya esta creado", "Valor no valido", JOptionPane.INFORMATION_MESSAGE);
+                Crear = 0;
             }
-            else{JOptionPane.showMessageDialog(null, "El espacio ya esta creado",  "Valor no valido", JOptionPane.INFORMATION_MESSAGE);
-            Crear =0;
-            } 
             // hasta aqui Crear espacios (Diego)
         }
-            
-        
+
     }
-     private void habilitarControles(JTextField text, boolean b) {
-          if (b) {
-              
-                  text.setDisabledTextColor(new Color(0, 0, 0));
-                  text.setBackground(new Color(255, 255, 255));
-                  text.setEnabled(b);
-            } else {
-                  text.setDisabledTextColor(new Color(60, 63, 65));
-                  text.setBackground(new Color(240, 240, 240));
-                  text.setEnabled(b);
-           }
-              
+
+    private void habilitarControles(JTextField text, boolean b) {
+        if (b) {
+
+            text.setDisabledTextColor(new Color(0, 0, 0));
+            text.setBackground(new Color(255, 255, 255));
+            text.setEnabled(b);
+        } else {
+            text.setDisabledTextColor(new Color(60, 63, 65));
+            text.setBackground(new Color(240, 240, 240));
+            text.setEnabled(b);
         }
-     
-    private void cargando(boolean b){
-        if(b){
-           jLabelCargandoe.setText("Cargando..."); 
-        }else{
-           jLabelCargandoe.setText(""); 
+
+    }
+
+    private void cargando(boolean b) {
+        if (b) {
+            jLabelCargandoe.setText("Cargando...");
+        } else {
+            jLabelCargandoe.setText("");
         }
     }
-    
-    private void actualizando(boolean b){
-        if(b){
-           jLabelCargandoe.setText("Actualizando..."); 
-        }else{
-           jLabelCargandoe.setText(""); 
+
+    private void actualizando(boolean b) {
+        if (b) {
+            jLabelCargandoe.setText("Actualizando...");
+        } else {
+            jLabelCargandoe.setText("");
         }
     }
 //    public boolean isCellEditable (int rowIndex, int colIndex){
 //             return false;
 //         }
-   
-     void habtext(boolean b){          
+
+    void habtext(boolean b) {
         jButtonGuardar.setVisible(b);
         jLabelAñadir.setVisible(b);
         jLabelEliminar1.setVisible(b);
         jButtonNuevo.setVisible(b);
-         habilitarControles(jTextNombreEspacio2,b);
-         //habilitarControles(jTextField3,b);
-         habilitarControles(jTextCorreoEncargado,b);
-         habilitarControles(jTextCorreoEncargado1,b);
-         habilitarControles(jTextCapacidad,b);
-         habilitarControles(jTextNumeroSalon1,b);
-         habilitarControles(jTextNumeroEdificio3,b);
-         habilitarControles(jTextNombreEdificio,b); 
-         jRadioBActivo.setEnabled(b);
-         jRadioBInactivo.setEnabled(b);
-         jTable1.setEnabled(b);                  
-         
-     }
-    public void llenarFrame(Usuario u, Espacio esp, Frame_Main frame) throws SQLException{
-        
-        this.usuario=u;
+        habilitarControles(jTextNombreEspacio2, b);
+        //habilitarControles(jTextField3,b);
+        habilitarControles(jTextCorreoEncargado, b);
+        habilitarControles(jTextCorreoEncargado1, b);
+        habilitarControles(jTextCapacidad, b);
+        habilitarControles(jTextNumeroSalon1, b);
+        habilitarControles(jTextNumeroEdificio3, b);
+        habilitarControles(jTextNombreEdificio, b);
+        jRadioBActivo.setEnabled(b);
+        jRadioBInactivo.setEnabled(b);
+        jTable1.setEnabled(b);
+
+    }
+
+    public void llenarFrame(Usuario u, Espacio esp, Frame_Main frame) throws SQLException {
+
+        this.usuario = u;
         this.fraim = frame;
         jTextCorreoEncargado.setText(esp.getCorreo_encargado());
-        if(esp.getNombre_espacio().equals(null)){
-             jTextNombreEspacio2.setText(" ");
-        }else{
-             jTextNombreEspacio2.setText(esp.getNombre_espacio());
+        if (esp.getNombre_espacio().equals(null)) {
+            jTextNombreEspacio2.setText(" ");
+        } else {
+            jTextNombreEspacio2.setText(esp.getNombre_espacio());
         }
         jTextField2.setText(String.valueOf(esp.getId_espacio()));
         jTextField3.setText(esp.getNombre_tipoespacio());
         jTextCorreoEncargado.setText(esp.getCorreo_encargado());
-        jTextCorreoEncargado1.setText(esp.getNombre_encargado());        
+        jTextCorreoEncargado1.setText(esp.getNombre_encargado());
         jTextNumeroSalon1.setText(esp.getNum_Espacio());
         jTextNombreEdificio.setText(esp.getNombre_edificio());
-        jTextNumeroEdificio3.setText(String.valueOf(esp.getNum_edificio()));     
-        jTextCapacidad.setText(String.valueOf(esp.getCapacidad())); 
-        
-        
-        if(esp.getEstado()){
+        jTextNumeroEdificio3.setText(String.valueOf(esp.getNum_edificio()));
+        jTextCapacidad.setText(String.valueOf(esp.getCapacidad()));
+
+        if (esp.getEstado()) {
             jRadioBActivo.setSelected(true);
             jRadioBInactivo.setSelected(false);
-        }else{
-             jRadioBActivo.setSelected(false);
+        } else {
+            jRadioBActivo.setSelected(false);
             jRadioBInactivo.setSelected(true);
-        }          
-       llenartableInv(esp.getId_espacio());
+        }
+        llenartableInv(esp.getId_espacio());
     }
-    
-    private void llenartableInv(int idesp) throws SQLException{
-        
-        Object[][] tabla=validarInventario.llenarMatrizInv(idesp, usuario);   
+
+    private void llenartableInv(int idesp) throws SQLException {
+
+        Object[][] tabla = validarInventario.llenarMatrizInv(idesp, usuario);
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
-         tabla, new String [] {"Id inventario", "Nombre", "Descripción" }){                              
-                      } 
-                         );
-          if(usuario.getTipoUsuario()==2){
+                tabla, new String[]{"Id inventario", "Nombre", "Descripción"}) {
+        }
+        );
+        if (usuario.getTipoUsuario() == 2) {
             jButtonEditar.setVisible(true);
         }
     }
-    
-    void habilitarEdit(){
-        if(usuario.getTipoUsuario()==2){
-          habtext(true);           
+
+    void habilitarEdit() {
+        if (usuario.getTipoUsuario() == 2) {
+            habtext(true);
         }
-        
+
     }
-    
-    private Espacio capturarE(){
-        Espacio espacio= new Espacio();
-                espacio.setId_espacio(Integer.valueOf(jTextField2.getText()));
-                espacio.setNombre_espacio(jTextNombreEspacio2.getText());
-                espacio.setNum_Espacio(jTextNumeroSalon1.getText());
-                espacio.setNombre_edificio(jTextNombreEdificio.getText());
-                espacio.setNum_edificio(Integer.valueOf(jTextNumeroEdificio3.getText()));
-                espacio.setNombre_encargado(jTextCorreoEncargado1.getText());
-                 espacio.setCorreo_encargado(jTextCorreoEncargado.getText());
-                if(jRadioBActivo.isSelected()){
-                    espacio.setEstado(true);
-                }else{
-                   espacio.setEstado(false);
-                } 
-                espacio.setCapacidad(Integer.valueOf(jTextCapacidad.getText()));  
-                
-                espacio.setNombre_tipoespacio(jTextField3.getText());
-                
-        
+
+    private Espacio capturarE() {
+        Espacio espacio = new Espacio();
+        espacio.setId_espacio(Integer.valueOf(jTextField2.getText()));
+        espacio.setNombre_espacio(jTextNombreEspacio2.getText());
+        espacio.setNum_Espacio(jTextNumeroSalon1.getText());
+        espacio.setNombre_edificio(jTextNombreEdificio.getText());
+        espacio.setNum_edificio(Integer.valueOf(jTextNumeroEdificio3.getText()));
+        espacio.setNombre_encargado(jTextCorreoEncargado1.getText());
+        espacio.setCorreo_encargado(jTextCorreoEncargado.getText());
+        if (jRadioBActivo.isSelected()) {
+            espacio.setEstado(true);
+        } else {
+            espacio.setEstado(false);
+        }
+        espacio.setCapacidad(Integer.valueOf(jTextCapacidad.getText()));
+
+        espacio.setNombre_tipoespacio(jTextField3.getText());
+
         return espacio;
     }
-    
-   
-    private void guardar() throws SQLException{
-        boolean verif=false;
 
-        try{
+    private void guardar() throws SQLException {
+        boolean verif = false;
+
+        try {
             Integer.valueOf(jTextNumeroEdificio3.getText());
             Integer.valueOf(jTextNumeroSalon1.getText());
             Integer.valueOf(jTextCapacidad.getText());
-            verif=true;
-        }catch(Exception e){
-             JOptionPane.showMessageDialog(null, "Ha ingresado un valor no valido",  "Valor no valido", JOptionPane.INFORMATION_MESSAGE);
+            verif = true;
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Ha ingresado un valor no valido", "Valor no valido", JOptionPane.INFORMATION_MESSAGE);
         }
         //Crear espacios (De Diego) 
 //        if(Crear==1){
@@ -508,105 +513,105 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
 //            espacioDao.crearEspacio(usuario, espacioC);
 //        }
         //hasta aqui Crear espacios (De Diego)
-        
-        ArrayList<Inventario> inventario=saveInv();
-        
-        if(verif && !jTextCorreoEncargado.getText().equals(usuario.getNombreusuarioInstitucional())&& !verifinv.equals("-7")){
-            ValidarEspacios validarEspacios = new ValidarEspacios ();
-             int n= validarEspacios.ValidarInfoEspacio(usuario, capturarE()); 
-             if(n>=1){
-                     //Toma el id para crear el inventario. (Sebastian H)
-                     if(Crear==1){
-                         jTextField2.setText(String.valueOf(n));
-                         Crear=0;
-                     }
-                     //Lo demas se hace solo. Por lo que la parte de nuevo inventario ya esta. 
-                     
-                     if(validarInventario.ValidarInfoInventario(usuario, jTextField2.getText(),inventario,invDelete)){
-                        JOptionPane.showMessageDialog(null, "Se han actualizado los datos correctamente",  "Guardado", JOptionPane.INFORMATION_MESSAGE);    
-                        invDelete.clear();
-                         Espacio espacio = new Espacio();
-                        espacio = validarEspacios.BuscarInfoEspacio(usuario, Integer.valueOf(jTextField2.getText()));
-                        actualizando(true);
-                        llenarFrame(usuario, espacio, fraim);
-                         try {
-                            fraim.solicitar_Espacio(jTextField3.getText());
-                        } catch (SQLException ex) {
-                            Logger.getLogger(Frame_DetallesEspacio.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                     }else{
-                          JOptionPane.showMessageDialog(null, "Se ha actualizado los datos del espacio. Ha ocurrido un error al actualizar el inventario",  "Error", JOptionPane.INFORMATION_MESSAGE);  
-                     }                     
-                               
-                 
-              }else if(n==-1 || n==-5){
-                 JOptionPane.showMessageDialog(null, "El usuario "+usuario.getNombreusuarioInstitucional()+" no tiene permisos para modificar los espacios" ,  "Accion invalida", JOptionPane.INFORMATION_MESSAGE);   
-              }else if(n==-2){
-                 JOptionPane.showMessageDialog(null, "Ya existe un espacio con el edificio y salon : "+ jTextNumeroEdificio3.getText() +" " + jTextNumeroSalon1.getText(),  "Accion invalida", JOptionPane.INFORMATION_MESSAGE);   
-              }else if(n==-3){
-                 JOptionPane.showMessageDialog(null, "El usuario "+jTextCorreoEncargado.getText() +" no es valido" ,  "Accion invalida", JOptionPane.INFORMATION_MESSAGE);   
-              }else if(n==-4){
-                 JOptionPane.showMessageDialog(null, "Ha ocurrido un error al intentar conectar con el servidor" ,  "Error", JOptionPane.INFORMATION_MESSAGE);   
-              }else if(n==-6){
-                 JOptionPane.showMessageDialog(null, "Usuario de encargado invalido" ,  "Accion invalida", JOptionPane.INFORMATION_MESSAGE);   
-              }else if(n==-8){
-                 JOptionPane.showMessageDialog(null, "Nombre de espacio invalido" ,  "Accion invalida", JOptionPane.INFORMATION_MESSAGE);   
-              }else if(n==-9){
-                  JOptionPane.showMessageDialog(null, "El espacio ha sido eliminado" ,  "Accion invalida", JOptionPane.INFORMATION_MESSAGE);   
-              }         
-        }else{
-            if(jTextCorreoEncargado.getText().equals(usuario.getNombreusuarioInstitucional())){
-               JOptionPane.showMessageDialog(null, "No es posible asignar el rol coordinador como encargado" ,  "Accion invalida", JOptionPane.INFORMATION_MESSAGE);      
-            }            
-            if(verifinv.equals("-7")){
-                 verifinv="0";
-              JOptionPane.showMessageDialog(null, "Por favor, ingrese el nombre de atributo a cada item del inventario" ,  "Accion invalida", JOptionPane.INFORMATION_MESSAGE);        
+
+        ArrayList<Inventario> inventario = saveInv();
+
+        if (verif && !jTextCorreoEncargado.getText().equals(usuario.getNombreusuarioInstitucional()) && !verifinv.equals("-7")) {
+            
+            ValidarEspacios validarEspacios = new ValidarEspacios(dataConexion);
+
+            int n = validarEspacios.ValidarInfoEspacio(usuario, capturarE());
+            if (n >= 1) {
+                //Toma el id para crear el inventario. (Sebastian H)
+                if (Crear == 1) {
+                    jTextField2.setText(String.valueOf(n));
+                    Crear = 0;
+                }
+                //Lo demas se hace solo. Por lo que la parte de nuevo inventario ya esta. 
+
+                if (validarInventario.ValidarInfoInventario(usuario, jTextField2.getText(), inventario, invDelete)) {
+                    JOptionPane.showMessageDialog(null, "Se han actualizado los datos correctamente", "Guardado", JOptionPane.INFORMATION_MESSAGE);
+                    invDelete.clear();
+                    Espacio espacio = new Espacio();
+                    espacio = validarEspacios.BuscarInfoEspacio(usuario, Integer.valueOf(jTextField2.getText()));
+                    actualizando(true);
+                    llenarFrame(usuario, espacio, fraim);
+                    try {
+                        fraim.solicitar_Espacio(jTextField3.getText());
+                    } catch (SQLException ex) {
+                        Logger.getLogger(Frame_DetallesEspacio.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Se ha actualizado los datos del espacio. Ha ocurrido un error al actualizar el inventario", "Error", JOptionPane.INFORMATION_MESSAGE);
+                }
+
+            } else if (n == -1 || n == -5) {
+                JOptionPane.showMessageDialog(null, "El usuario " + usuario.getNombreusuarioInstitucional() + " no tiene permisos para modificar los espacios", "Accion invalida", JOptionPane.INFORMATION_MESSAGE);
+            } else if (n == -2) {
+                JOptionPane.showMessageDialog(null, "Ya existe un espacio con el edificio y salon : " + jTextNumeroEdificio3.getText() + " " + jTextNumeroSalon1.getText(), "Accion invalida", JOptionPane.INFORMATION_MESSAGE);
+            } else if (n == -3) {
+                JOptionPane.showMessageDialog(null, "El usuario " + jTextCorreoEncargado.getText() + " no es valido", "Accion invalida", JOptionPane.INFORMATION_MESSAGE);
+            } else if (n == -4) {
+                JOptionPane.showMessageDialog(null, "Ha ocurrido un error al intentar conectar con el servidor", "Error", JOptionPane.INFORMATION_MESSAGE);
+            } else if (n == -6) {
+                JOptionPane.showMessageDialog(null, "Usuario de encargado invalido", "Accion invalida", JOptionPane.INFORMATION_MESSAGE);
+            } else if (n == -8) {
+                JOptionPane.showMessageDialog(null, "Nombre de espacio invalido", "Accion invalida", JOptionPane.INFORMATION_MESSAGE);
+            } else if (n == -9) {
+                JOptionPane.showMessageDialog(null, "El espacio ha sido eliminado", "Accion invalida", JOptionPane.INFORMATION_MESSAGE);
+            }
+        } else {
+            if (jTextCorreoEncargado.getText().equals(usuario.getNombreusuarioInstitucional())) {
+                JOptionPane.showMessageDialog(null, "No es posible asignar el rol coordinador como encargado", "Accion invalida", JOptionPane.INFORMATION_MESSAGE);
+            }
+            if (verifinv.equals("-7")) {
+                verifinv = "0";
+                JOptionPane.showMessageDialog(null, "Por favor, ingrese el nombre de atributo a cada item del inventario", "Accion invalida", JOptionPane.INFORMATION_MESSAGE);
             }
         }
-        
-     }
-    
-    private void deletInv(){
-        if(jTable1.getSelectedRow()!=-1 && jTable1.getSelectedColumn()!=-1){
-           if(!jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString().equals("")){
-               invDelete.add(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString());
-           }
-       }
+
     }
-    
-    private ArrayList<Inventario> saveInv(){
-        ArrayList<Inventario> inventario = new ArrayList<Inventario>();
-        for(int i=0; i<jTable1.getRowCount(); i++){
-            Inventario e=new Inventario ();
-            if(jTable1.getValueAt(i, 1).toString().equals("")){               
-                verifinv="-7";
-                break;
+
+    private void deletInv() {
+        if (jTable1.getSelectedRow() != -1 && jTable1.getSelectedColumn() != -1) {
+            if (!jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString().equals("")) {
+                invDelete.add(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString());
             }
-            else if(!jTable1.getValueAt(i, 1).toString().equals("")){
-                if(jTable1.getValueAt(i, 0).toString().equals("")){
-                     e.setId_inventario("-1");
-                }else{
-                   e.setId_inventario(jTable1.getValueAt(i, 0).toString()); 
-                }               
+        }
+    }
+
+    private ArrayList<Inventario> saveInv() {
+        ArrayList<Inventario> inventario = new ArrayList<Inventario>();
+        for (int i = 0; i < jTable1.getRowCount(); i++) {
+            Inventario e = new Inventario();
+            if (jTable1.getValueAt(i, 1).toString().equals("")) {
+                verifinv = "-7";
+                break;
+            } else if (!jTable1.getValueAt(i, 1).toString().equals("")) {
+                if (jTable1.getValueAt(i, 0).toString().equals("")) {
+                    e.setId_inventario("-1");
+                } else {
+                    e.setId_inventario(jTable1.getValueAt(i, 0).toString());
+                }
                 e.setNombreAtributo(jTable1.getValueAt(i, 1).toString());
                 e.setDescripcion(jTable1.getValueAt(i, 2).toString());
-                inventario.add(e);               
-            }            
-         }
-                 
+                inventario.add(e);
+            }
+        }
+
         return inventario;
     }
-    
+
     private void jlClose1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlClose1MouseClicked
         int dialog = JOptionPane.YES_NO_OPTION;
-        int result = JOptionPane.showConfirmDialog(null, "¿Desea cerrar el esta ventana?","Exit",dialog);
-        
-        if(result == 0){
-            this.fraim.setEnabled(true);            
+        int result = JOptionPane.showConfirmDialog(null, "¿Desea cerrar el esta ventana?", "Exit", dialog);
+
+        if (result == 0) {
+            this.fraim.setEnabled(true);
             this.dispose();
-            
+
         }
-      
+
     }//GEN-LAST:event_jlClose1MouseClicked
 
     private void jlMinimize1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlMinimize1MouseClicked
@@ -614,12 +619,12 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
     }//GEN-LAST:event_jlMinimize1MouseClicked
 
     private void formMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseDragged
-         this.setLocation(this.getLocation().x + evt.getX()-x,this.getLocation().y+evt.getY()-y);
+        this.setLocation(this.getLocation().x + evt.getX() - x, this.getLocation().y + evt.getY() - y);
     }//GEN-LAST:event_formMouseDragged
 
     private void formMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMousePressed
-        x= evt.getX();   
-        y= evt.getY(); 
+        x = evt.getX();
+        y = evt.getY();
     }//GEN-LAST:event_formMousePressed
 
     private void jTextNombreEdificioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextNombreEdificioActionPerformed
@@ -631,18 +636,18 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextNumeroEdificio3ActionPerformed
 
     private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
-         habilitarEdit();
+        habilitarEdit();
     }//GEN-LAST:event_jButtonEditarActionPerformed
 
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
         try {
             cargando(true);
             guardar();
-             cargando(false);
+            cargando(false);
         } catch (SQLException ex) {
             Logger.getLogger(Frame_DetallesEspacio.class.getName()).log(Level.SEVERE, null, ex);
         }
-       
+
     }//GEN-LAST:event_jButtonGuardarActionPerformed
 
     private void jLabelAñadirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelAñadirMouseClicked
@@ -651,12 +656,12 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabelAñadirMouseClicked
 
     private void jLabelEliminar1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelEliminar1MouseClicked
-       if(jTable1.getSelectedRow()!=-1 && jTable1.getSelectedColumn()!=-1){
+        if (jTable1.getSelectedRow() != -1 && jTable1.getSelectedColumn() != -1) {
             DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-             deletInv();
-            model.removeRow(jTable1.getSelectedRow());           
-       }
-              
+            deletInv();
+            model.removeRow(jTable1.getSelectedRow());
+        }
+
     }//GEN-LAST:event_jLabelEliminar1MouseClicked
 
     private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
@@ -664,18 +669,19 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField3ActionPerformed
 
     private void jButtonNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevoActionPerformed
-         // Aqui sera para poder crear otro espacio sin tener que cerrar el frame 
-         Frame_DetallesEspacio frame_DetallesEspacio = new Frame_DetallesEspacio();
-         try {
+        // Aqui sera para poder crear otro espacio sin tener que cerrar el frame 
+        Frame_DetallesEspacio frame_DetallesEspacio = new Frame_DetallesEspacio();
+        frame_DetallesEspacio.setDataConexiones(dataConexion);
+        try {
             frame_DetallesEspacio.setVisible(true);
-            frame_DetallesEspacio.crearEspacio(jTextField3.getText(),fraim,usuario);
+            frame_DetallesEspacio.crearEspacio(jTextField3.getText(), fraim, usuario);
             this.setEnabled(false);
             frame_DetallesEspacio.setVisible(true);
-          
+
         } catch (Exception e) {
             System.out.println(e);
         }
-         this.dispose();
+        this.dispose();
     }//GEN-LAST:event_jButtonNuevoActionPerformed
 
     /**

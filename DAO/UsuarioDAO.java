@@ -2,6 +2,7 @@ package DAO;
 
 
 import Control.ContraseniaHasheada;
+import Control.EncriptadorAES;
 import Control.EnviarCorreo;
 import Control.ManipularConecciones;
 import Entidad.Correo;
@@ -23,6 +24,7 @@ public class UsuarioDAO {
     
     Connection connection = null;
     private ContraseniaHasheada contraseniahasheada = new ContraseniaHasheada();
+    private EncriptadorAES encriptadorAES = new EncriptadorAES();
     
     public UsuarioDAO(Connection connection){
         try {
@@ -74,8 +76,7 @@ public class UsuarioDAO {
             resultSet = statement.executeQuery("SELECT * FROM USUARIOS "
                     + "WHERE USUARIOINSTITUCIONAL = '" + par.getNombreusuarioInstitucional() + "'" );
  //                   + "' AND CONTRASENIA='" + par.getContrasenia() + "'");
-            System.out.println(par.getNombreusuarioInstitucional());
-            System.out.println(par.getContrasenia());
+            
             if(resultSet.next()){
                 if(contraseniahasheada.check(par.getContrasenia(), resultSet.getString(3))){
                     int tipUser=Integer.valueOf(resultSet.getString(1));
@@ -202,6 +203,7 @@ public class UsuarioDAO {
                      if(enviarCorreo.enviarC(correo)){
                          return 1;
                      }else{
+                         VerificarCode(cod, u);
                          return -3;
                      }                      
                  }else {
@@ -301,20 +303,46 @@ public class UsuarioDAO {
     
       public boolean actualizarCorreoNot(Usuario object) throws Exception { // Ingresar un usuario en la base de datos
         Statement statement = null;
-                
+        ResultSet resultSet=null;        
         
         try {
+            
+            
             int resultSet2=-1;
-            statement = connection.createStatement();
-            resultSet2 = statement.executeUpdate("UPDATE USUARIOS "
-                    + "SET contrasenia='" + object.getContrasenia()
-                    + "', USUARIOINSTITUCIONAL='" + object.getNombreusuarioInstitucional()
-                     +"' WHERE ID_TIPOUSUARIO =5;" );
-            if(resultSet2>0){                
-                return true;
+            statement = connection.createStatement(); 
+            
+            resultSet = statement.executeQuery("Select count(*) from USUARIOS "
+                    + " WHERE ID_TIPOUSUARIO = 5 " );
+            
+            resultSet.next();
+            if(resultSet.getString(1).equals("1")){   
+                        resultSet2 = statement.executeUpdate("UPDATE USUARIOS "
+                           + "SET contrasenia='" + encriptadorAES.encriptar(object.getContrasenia(), "koUyrt90*65!")
+                           + "', USUARIOINSTITUCIONAL='" + encriptadorAES.encriptar(object.getNombreusuarioInstitucional(), "koUyrt90*5!")
+                            +"' WHERE ID_TIPOUSUARIO =5;" );
+                        
+               
+                
+                   if(resultSet2>0){                
+                       return true;
+                   }else{
+                      return false;
+                   }  
+        }else if (resultSet.getString(1).equals("0")) {
+                
+                
+               resultSet2 = statement.executeUpdate("INSERT INTO USUARIOS( `ID_TIPOUSUARIO`, `USUARIOINSTITUCIONAL`, `CONTRASENIA`) VALUES ('"
+                    + "5" + "','" + encriptadorAES.encriptar(object.getNombreusuarioInstitucional(), "koUyrt90*5!")+"','"+ encriptadorAES.encriptar(object.getContrasenia(), "koUyrt90*65!")+ "');" );
+                if(resultSet2>0){                
+                       return true;
+                   }else{
+                      return false;
+                   }  
             }else{
-               return false;
-            }           
+                  return false;
+            }
+            
+                    
            
         } catch (SQLException ex) {
             System.out.println("Error en SQL" + ex);
@@ -340,8 +368,8 @@ public class UsuarioDAO {
             
             if(resultSet.next()){
                 Usuario u=new Usuario();
-                u.setNombreusuarioInstitucional(resultSet.getString(2));
-                u.setContrasenia(resultSet.getString(3));
+                u.setNombreusuarioInstitucional(encriptadorAES.desencriptar(resultSet.getString(2), "koUyrt90*5!"));                
+                u.setContrasenia(encriptadorAES.desencriptar(resultSet.getString(3), "koUyrt90*65!"));
                 return u;
             }else{
                 return null;

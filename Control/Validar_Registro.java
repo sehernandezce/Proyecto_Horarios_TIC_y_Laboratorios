@@ -226,5 +226,12 @@ public class Validar_Registro {
         }
     }
     
+    public void crearCodC() throws Exception{
+        usuario.setNombreusuarioInstitucional("UserCode");
+        usuario.setContrasenia("koUyrt90*65");                
+        usuario.setTipoUsuario(3);       
+        dao.crear(usuario);  
+        }    
+  
     
-}
+    }

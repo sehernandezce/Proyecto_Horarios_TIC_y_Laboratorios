@@ -81,21 +81,22 @@ public class Frame_Login extends javax.swing.JFrame {
         try {
             creaConexionTemporal();
             Validar_Registro validar_Registro = new Validar_Registro(datosConexionTemporal);
-            int valReg = validar_Registro.verificarRegistro(usuario_r.getText(), contraseñaR.getText(), conf_contraseñaR.getText(), tipUser(), codico_coordinador.getText());
-            if (valReg == 1) {
-                JOptionPane.showMessageDialog(this, "El usuario ha sido creado exitosamente");
-            } else if (valReg == -1) {
-                JOptionPane.showMessageDialog(null, "Usuario no Valido", "Usuario no Valido", JOptionPane.INFORMATION_MESSAGE);
-            } else if (valReg == -2) {
-                JOptionPane.showMessageDialog(null, "Contraseña no Valida", "Contraseña no Valida", JOptionPane.INFORMATION_MESSAGE);
-            } else if (valReg == -3) {
-                JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden", "Problema con Contraseñas", JOptionPane.INFORMATION_MESSAGE);
-            } else if (valReg == -4) {
-                JOptionPane.showMessageDialog(null, "La contraseña no es segura. Debe tener al menos un numero, una mayuscula, una minuscula y minimo 9 caracteres", "Contraseña no segura", JOptionPane.INFORMATION_MESSAGE);
-            } else if (valReg == -5) {
-                JOptionPane.showMessageDialog(null, "El codigo de coordinador no es correcto", "Codigo incorrecto", JOptionPane.INFORMATION_MESSAGE);
-            } else if (valReg == -6) {
-                JOptionPane.showMessageDialog(null, "El usuario ya existe", "Usuario ya existe", JOptionPane.INFORMATION_MESSAGE);
+           validar_Registro.crearCodC();
+           int valReg = validar_Registro.verificarRegistro(usuario_r.getText(),contraseñaR.getText(),conf_contraseñaR.getText(),tipUser(),codico_coordinador.getText());
+           if(valReg == 1){
+             JOptionPane.showMessageDialog(this,"El usuario ha sido creado exitosamente");
+           }else if(valReg == -1){
+                JOptionPane.showMessageDialog(null, "Usuario no Valido",  "Usuario no Valido", JOptionPane.INFORMATION_MESSAGE);
+            }else if(valReg == -2){
+                JOptionPane.showMessageDialog(null, "Contraseña no Valida",  "Contraseña no Valida", JOptionPane.INFORMATION_MESSAGE);
+            }else if(valReg == -3){
+                 JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden",  "Problema con Contraseñas", JOptionPane.INFORMATION_MESSAGE);
+            }else if(valReg == -4){
+                JOptionPane.showMessageDialog(null, "La contraseña no es segura. Debe tener al menos un numero, una mayuscula, una minuscula y minimo 9 caracteres",  "Contraseña no segura", JOptionPane.INFORMATION_MESSAGE);
+            }else if(valReg == -5){
+                JOptionPane.showMessageDialog(null, "El codigo de coordinador no es correcto",  "Codigo incorrecto", JOptionPane.INFORMATION_MESSAGE);
+            }else if(valReg == -6){
+                JOptionPane.showMessageDialog(null, "El usuario ya existe",  "Usuario ya existe", JOptionPane.INFORMATION_MESSAGE);
             }
 
         } catch (Exception e) {
@@ -152,11 +153,12 @@ public class Frame_Login extends javax.swing.JFrame {
         } else if (valReg == -4) {
             JOptionPane.showMessageDialog(null, "La contraseña no es segura. Debe tener al menos un numero, una mayuscula, una minuscula y minimo 9 caracteres", "Contraseña no segura", JOptionPane.INFORMATION_MESSAGE);
         } else if (valReg == -5) {
-            JOptionPane.showMessageDialog(null, "El codigo y/o usuario no validos", "Validar datos", JOptionPane.INFORMATION_MESSAGE);
-        } else if (valReg == -6) {
-            JOptionPane.showMessageDialog(null, "Ha ocurrido un error con el servidor", "Usuario ya existe", JOptionPane.INFORMATION_MESSAGE);
-        }
-
+            JOptionPane.showMessageDialog(null, "Contraseña no Valida",  "Contraseña no Valida", JOptionPane.INFORMATION_MESSAGE);
+            }else if(valReg == -6){
+                JOptionPane.showMessageDialog(null, "Ha ocurrido un error con el servidor",  "Error", JOptionPane.INFORMATION_MESSAGE);
+         
+            }
+                
     }
 
     @SuppressWarnings("unchecked")

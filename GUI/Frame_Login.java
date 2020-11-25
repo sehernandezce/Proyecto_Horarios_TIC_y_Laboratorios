@@ -115,7 +115,7 @@ public class Frame_Login extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Ya se ha generado un código, por favor valide el correo.",  "Acción no valida", JOptionPane.INFORMATION_MESSAGE);
             
          }else if(val==-3){           
-            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al enviar el correo, por favor intente más tarde.",  "Error", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al enviar el correo, por favor contacte con el coordinador.",  "Error", JOptionPane.INFORMATION_MESSAGE);
             
          }else if(val==-4){           
             JOptionPane.showMessageDialog(null, "Ha ocurrido un error al generar el código, por favor intente más tarde.",  "Error", JOptionPane.INFORMATION_MESSAGE);

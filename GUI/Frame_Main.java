@@ -166,11 +166,11 @@ public class Frame_Main extends javax.swing.JFrame {
         jLabel40 = new javax.swing.JLabel();
         jLabel41 = new javax.swing.JLabel();
         jLabel42 = new javax.swing.JLabel();
-        jComboSelectDuracion = new javax.swing.JComboBox<>();
         dudaSolicitud = new javax.swing.JLabel();
         dudaSolicitud2 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        jComboSelectDuracion = new javax.swing.JComboBox<>();
         Fondo5 = new javax.swing.JLabel();
         Configuraciones = new javax.swing.JPanel();
         Menu_confg = new javax.swing.JPanel();
@@ -272,7 +272,6 @@ public class Frame_Main extends javax.swing.JFrame {
         jRadioButton3 = new javax.swing.JRadioButton();
         jRadioButton4 = new javax.swing.JRadioButton();
         Fondo7 = new javax.swing.JLabel();
-        jLabel51 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1024, 550));
@@ -797,7 +796,6 @@ public class Frame_Main extends javax.swing.JFrame {
             }
         };
         jTable3.setBackground(java.awt.SystemColor.info);
-        jTable3.setForeground(new java.awt.Color(0, 0, 0));
         jTable3.getTableHeader().setReorderingAllowed(false);
         jTable3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -843,11 +841,11 @@ public class Frame_Main extends javax.swing.JFrame {
 
         jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel15.setText("Duración en horas:");
-        jPanel2.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 240, -1, 20));
+        jPanel2.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 230, -1, 20));
 
         jLabel27.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel27.setText("¿El evento se repite?");
-        jPanel2.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 290, -1, 30));
+        jPanel2.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 280, -1, 30));
 
         jCheckBox3.setBackground(new java.awt.Color(204, 204, 204));
         jCheckBox3.addActionListener(new java.awt.event.ActionListener() {
@@ -855,7 +853,7 @@ public class Frame_Main extends javax.swing.JFrame {
                 jCheckBox3ActionPerformed(evt);
             }
         });
-        jPanel2.add(jCheckBox3, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 300, -1, 14));
+        jPanel2.add(jCheckBox3, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 290, -1, 14));
 
         jButtonPersonalizar.setBackground(new java.awt.Color(0, 255, 240));
         jButtonPersonalizar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -874,7 +872,7 @@ public class Frame_Main extends javax.swing.JFrame {
                 jButtonPersonalizarActionPerformed(evt);
             }
         });
-        jPanel2.add(jButtonPersonalizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 290, -1, -1));
+        jPanel2.add(jButtonPersonalizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 280, -1, 30));
 
         jLabel28.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel28.setText("Observaciones:");
@@ -928,8 +926,7 @@ public class Frame_Main extends javax.swing.JFrame {
         jPanel2.add(jTextMotivoSolicitud, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 410, 168, 50));
 
         jLabelRepeticion.setToolTipText("");
-        jPanel2.add(jLabelRepeticion, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 324, 260, 50));
-        jPanel2.add(jSpinnerHorainicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 260, 56, -1));
+        jPanel2.add(jLabelRepeticion, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 314, 260, 60));
 
         jSpinnerHorainicio.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jPanel2.add(jSpinnerHorainicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 250, 56, -1));
@@ -947,9 +944,6 @@ public class Frame_Main extends javax.swing.JFrame {
             }
         });
         jPanel2.add(jLabelAñadir2, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 10, -1, -1));
-
-        jSpinnerHorafinal.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        jPanel2.add(jSpinnerHorafinal, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 250, 55, -1));
 
         jLabelEliminar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cancelar.png"))); // NOI18N
         jLabelEliminar1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -991,13 +985,9 @@ public class Frame_Main extends javax.swing.JFrame {
 
         jLabel42.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel42.setText("Hora de inicio:");
-        jPanel2.add(jLabel42, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 240, -1, 20));
-
-        jComboSelectDuracion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1 Hora", "2 Horas" }));
-        jPanel2.add(jComboSelectDuracion, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 260, 80, 20));
+        jPanel2.add(jLabel42, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 230, -1, 20));
 
         dudaSolicitud.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/signo-de-pregunta-en-circulos.png"))); // NOI18N
-        dudaSolicitud.setBorder(null);
         dudaSolicitud.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 dudaSolicitudMouseEntered(evt);
@@ -1009,7 +999,6 @@ public class Frame_Main extends javax.swing.JFrame {
         jPanel2.add(dudaSolicitud, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 220, -1, -1));
 
         dudaSolicitud2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/signo-de-pregunta-en-circulos.png"))); // NOI18N
-        dudaSolicitud2.setBorder(null);
         dudaSolicitud2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 dudaSolicitud2MouseEntered(evt);
@@ -1029,6 +1018,9 @@ public class Frame_Main extends javax.swing.JFrame {
         jLabel3.setOpaque(true);
         jLabel3.setPreferredSize(new java.awt.Dimension(32, 32));
         jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 10, -1, -1));
+
+        jComboSelectDuracion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1 Hora", "2 Horas" }));
+        jPanel2.add(jComboSelectDuracion, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 250, 80, 20));
 
         Fondo5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondo_blanco1 1 .jpg"))); // NOI18N
         jPanel2.add(Fondo5, new org.netbeans.lib.awtextra.AbsoluteConstraints(-20, 0, 880, -1));
@@ -1341,7 +1333,6 @@ public class Frame_Main extends javax.swing.JFrame {
         notificaciones.add(LbContraseña7, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 200, 90, -1));
 
         dudaCorreo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/signo-de-pregunta-en-circulos.png"))); // NOI18N
-        dudaCorreo.setBorder(null);
         dudaCorreo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 dudaCorreoMouseEntered(evt);
@@ -1356,7 +1347,6 @@ public class Frame_Main extends javax.swing.JFrame {
         notificaciones.add(masInfoCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 165, 200, -1));
 
         dudaCodigo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/signo-de-pregunta-en-circulos.png"))); // NOI18N
-        dudaCodigo.setBorder(null);
         dudaCodigo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 dudaCodigoMouseEntered(evt);
@@ -1394,7 +1384,6 @@ public class Frame_Main extends javax.swing.JFrame {
             }
         };
         jTable2.setBackground(java.awt.SystemColor.info);
-        jTable2.setForeground(new java.awt.Color(0, 0, 0));
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -1555,7 +1544,6 @@ public class Frame_Main extends javax.swing.JFrame {
         Administrar_Solicitudes.add(jLabel38, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 330, -1, -1));
 
         dudaadmSolicitud1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/signo-de-pregunta-en-circulos.png"))); // NOI18N
-        dudaadmSolicitud1.setBorder(null);
         dudaadmSolicitud1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 dudaadmSolicitud1MouseEntered(evt);
@@ -1567,7 +1555,6 @@ public class Frame_Main extends javax.swing.JFrame {
         Administrar_Solicitudes.add(dudaadmSolicitud1, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 350, -1, -1));
 
         dudaadmSolicitud2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/signo-de-pregunta-en-circulos.png"))); // NOI18N
-        dudaadmSolicitud2.setBorder(null);
         dudaadmSolicitud2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 dudaadmSolicitud2MouseEntered(evt);
@@ -1579,7 +1566,6 @@ public class Frame_Main extends javax.swing.JFrame {
         Administrar_Solicitudes.add(dudaadmSolicitud2, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 400, -1, -1));
 
         dudaadmSolicitud3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/signo-de-pregunta-en-circulos.png"))); // NOI18N
-        dudaadmSolicitud3.setBorder(null);
         dudaadmSolicitud3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 dudaadmSolicitud3MouseEntered(evt);
@@ -1623,13 +1609,19 @@ public class Frame_Main extends javax.swing.JFrame {
 
         jLabel33.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel33.setText("Estadísticas");
+        Estadisticas.add(jLabel33);
+        Estadisticas.add(jMonthChooser1);
+        Estadisticas.add(jYearChooser1);
 
         jTextArea2.setColumns(20);
         jTextArea2.setRows(5);
         jScrollPane6.setViewportView(jTextArea2);
 
+        Estadisticas.add(jScrollPane6);
+
         jLabel34.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel34.setText("Estadísticas Por Tipo De Espacio");
+        Estadisticas.add(jLabel34);
 
         jButton7.setText("Buscar");
         jButton7.addActionListener(new java.awt.event.ActionListener() {
@@ -1637,8 +1629,12 @@ public class Frame_Main extends javax.swing.JFrame {
                 jButton7ActionPerformed(evt);
             }
         });
+        Estadisticas.add(jButton7);
 
         jLabel35.setText("Tipo de espacio:");
+        Estadisticas.add(jLabel35);
+        Estadisticas.add(jMonthChooser2);
+        Estadisticas.add(jYearChooser2);
 
         jButton8.setText("Buscar");
         jButton8.addActionListener(new java.awt.event.ActionListener() {
@@ -1646,6 +1642,7 @@ public class Frame_Main extends javax.swing.JFrame {
                 jButton8ActionPerformed(evt);
             }
         });
+        Estadisticas.add(jButton8);
 
         Estadisticas_por_tipo.add(jRadioButton1);
         jRadioButton1.setText("Laboratorio");
@@ -1654,6 +1651,7 @@ public class Frame_Main extends javax.swing.JFrame {
                 jRadioButton1ActionPerformed(evt);
             }
         });
+        Estadisticas.add(jRadioButton1);
 
         Estadisticas_por_tipo.add(jRadioButton2);
         jRadioButton2.setText("Auditorio");
@@ -1662,6 +1660,7 @@ public class Frame_Main extends javax.swing.JFrame {
                 jRadioButton2ActionPerformed(evt);
             }
         });
+        Estadisticas.add(jRadioButton2);
 
         Estadisticas_por_tipo.add(jRadioButton3);
         jRadioButton3.setText("Sala de Reuniones");
@@ -1670,6 +1669,7 @@ public class Frame_Main extends javax.swing.JFrame {
                 jRadioButton3ActionPerformed(evt);
             }
         });
+        Estadisticas.add(jRadioButton3);
 
         Estadisticas_por_tipo.add(jRadioButton4);
         jRadioButton4.setText("Sala de Computadores");
@@ -1678,99 +1678,10 @@ public class Frame_Main extends javax.swing.JFrame {
                 jRadioButton4ActionPerformed(evt);
             }
         });
+        Estadisticas.add(jRadioButton4);
 
         Fondo7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondo_blanco1 1 .jpg"))); // NOI18N
-
-        javax.swing.GroupLayout EstadisticasLayout = new javax.swing.GroupLayout(Estadisticas);
-        Estadisticas.setLayout(EstadisticasLayout);
-        EstadisticasLayout.setHorizontalGroup(
-            EstadisticasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(EstadisticasLayout.createSequentialGroup()
-                .addGap(110, 110, 110)
-                .addGroup(EstadisticasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(EstadisticasLayout.createSequentialGroup()
-                        .addGroup(EstadisticasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel34)
-                            .addGroup(EstadisticasLayout.createSequentialGroup()
-                                .addGroup(EstadisticasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel33)
-                                    .addComponent(jMonthChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(23, 23, 23)
-                                .addComponent(jYearChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(9, 9, 9)
-                                .addComponent(jButton7)
-                                .addGap(86, 86, 86)
-                                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 323, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(92, Short.MAX_VALUE))
-                    .addGroup(EstadisticasLayout.createSequentialGroup()
-                        .addGroup(EstadisticasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(EstadisticasLayout.createSequentialGroup()
-                                .addGap(20, 20, 20)
-                                .addComponent(jLabel35))
-                            .addGroup(EstadisticasLayout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addGroup(EstadisticasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jRadioButton1)
-                                    .addComponent(jRadioButton2)
-                                    .addComponent(jRadioButton3)
-                                    .addComponent(jRadioButton4))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(EstadisticasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jYearChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jMonthChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton8))
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel51, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(66, 66, 66))))
-        );
-        EstadisticasLayout.setVerticalGroup(
-            EstadisticasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(EstadisticasLayout.createSequentialGroup()
-                .addGroup(EstadisticasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(EstadisticasLayout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addGroup(EstadisticasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(EstadisticasLayout.createSequentialGroup()
-                                .addComponent(jLabel33)
-                                .addGap(68, 68, 68)
-                                .addComponent(jMonthChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(EstadisticasLayout.createSequentialGroup()
-                                .addGap(90, 90, 90)
-                                .addGroup(EstadisticasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jYearChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(80, 80, 80))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, EstadisticasLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(11, 11, 11)))
-                .addComponent(jLabel34)
-                .addGroup(EstadisticasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(EstadisticasLayout.createSequentialGroup()
-                        .addGroup(EstadisticasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(EstadisticasLayout.createSequentialGroup()
-                                .addGap(49, 49, 49)
-                                .addComponent(jMonthChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jYearChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(EstadisticasLayout.createSequentialGroup()
-                                .addGap(33, 33, 33)
-                                .addComponent(jLabel35)
-                                .addGap(18, 18, 18)
-                                .addComponent(jRadioButton1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jRadioButton2)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jRadioButton3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(EstadisticasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jRadioButton4)
-                            .addComponent(jButton8)))
-                    .addGroup(EstadisticasLayout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel51, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(45, Short.MAX_VALUE))
-        );
+        Estadisticas.add(Fondo7);
 
         getContentPane().add(Estadisticas, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 30, -1, -1));
         Estadisticas.getAccessibleContext().setAccessibleDescription("");
@@ -2656,7 +2567,7 @@ public class Frame_Main extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "La fecha de inicio o fecha de final no pueden ser un Domingo", "Acción no valida", JOptionPane.INFORMATION_MESSAGE);
             }
 
-            jLabelCargandoSE.setText("");
+      
         } else {
             JOptionPane.showMessageDialog(null, "No ha seleccionado ningún espacio", "Acción no valida", JOptionPane.INFORMATION_MESSAGE);
 
@@ -3264,8 +3175,6 @@ public class Frame_Main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel49;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel50;
-    private javax.swing.JLabel jLabel51;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel52;
     private javax.swing.JLabel jLabel53;
     private javax.swing.JLabel jLabel7;

@@ -127,7 +127,7 @@ public class Frame_PersonalizarRepeticion extends javax.swing.JFrame {
         jCheckBoxSabado = new javax.swing.JCheckBox();
         jLabel2 = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
-        javax.swing.JButton jButtonGuardars = new javax.swing.JButton();
+        javax.swing.JButton jButtonGuardarsa = new javax.swing.JButton();
         jCalendar1 = new com.toedter.calendar.JCalendar();
         jLabelVisualizarRepetición = new javax.swing.JLabel();
         dudaSolicitud = new javax.swing.JLabel();
@@ -245,23 +245,26 @@ public class Frame_PersonalizarRepeticion extends javax.swing.JFrame {
         jSeparator2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         panelRepetición.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, 490, 1));
 
-        jButtonGuardars.setBackground(new java.awt.Color(0, 255, 240));
-        jButtonGuardars.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButtonGuardars.setText("Guardar");
-        jButtonGuardars.addMouseListener(new java.awt.event.MouseAdapter() {
+        jButtonGuardarsa.setBackground(new java.awt.Color(0, 255, 240));
+        jButtonGuardarsa.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jButtonGuardarsa.setText("Guardar");
+        jButtonGuardarsa.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButtonGuardarsaMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jButtonGuardarsMouseEntered(evt);
+                jButtonGuardarsaMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                jButtonGuardarsMouseExited(evt);
+                jButtonGuardarsaMouseExited(evt);
             }
         });
-        jButtonGuardars.addActionListener(new java.awt.event.ActionListener() {
+        jButtonGuardarsa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonGuardarsActionPerformed(evt);
+                jButtonGuardarsaActionPerformed(evt);
             }
         });
-        panelRepetición.add(jButtonGuardars, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 360, 90, 30));
+        panelRepetición.add(jButtonGuardarsa, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 350, 90, 30));
 
         jCalendar1.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
@@ -274,7 +277,6 @@ public class Frame_PersonalizarRepeticion extends javax.swing.JFrame {
         panelRepetición.add(jLabelVisualizarRepetición, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 180, 130, 150));
 
         dudaSolicitud.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/signo-de-pregunta-en-circulos.png"))); // NOI18N
-        dudaSolicitud.setBorder(null);
         dudaSolicitud.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 dudaSolicitudMouseEntered(evt);
@@ -372,78 +374,6 @@ public class Frame_PersonalizarRepeticion extends javax.swing.JFrame {
         this.setState(Frame_Login.ICONIFIED);
     }//GEN-LAST:event_jlMinimize1MouseClicked
 
-    private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
-
-        String caso = (String) jComboSelectorDia.getSelectedItem();
-        switch (caso) {
-            case "Diario":
-                this.repeticion = 1;
-                break;
-            case "Semanalmente":
-                this.repeticion = 2;
-                break;
-
-            case "Mensualmente":
-                this.repeticion = 3;
-                break;
-            case "Seleccione uno...":
-                this.repeticion = 5;
-                break;
-            default:
-                this.repeticion = 4;
-                fecha = fechaInicio;
-                this.Frame.setTextoMuestralabel("No se repite");
-        }
-
-        if (this.repeticion != 5) {
-            this.setEnabled(false);
-            this.Frame.setEnabled(true);
-            this.Frame.setTextoMuestralabel(jLabelVisualizarRepetición.getText());
-
-            int[] diasDIARIOS = {0, 0, 0, 0, 0, 0, 0};
-
-            String[] fechaVec0 = fechaInicio.split("-");
-            String[] fechaVec1 = fecha.split("-");
-
-            TimeZone timezone = TimeZone.getDefault();
-            Calendar calendarInicio = new GregorianCalendar(timezone);
-            calendarInicio.set(Integer.valueOf(fechaVec0[0]), Integer.valueOf(fechaVec0[1]) - 1, Integer.valueOf(fechaVec0[2]));
-
-            Calendar calendarFinal = new GregorianCalendar(timezone);
-            calendarFinal.set(Integer.valueOf(fechaVec1[0]), Integer.valueOf(fechaVec1[1]) - 1, Integer.valueOf(fechaVec1[2]));
-
-            Calendar calendarPivote = new GregorianCalendar(timezone);
-            calendarPivote.set(Integer.valueOf(fechaVec0[0]), Integer.valueOf(fechaVec0[1]) - 1, Integer.valueOf(fechaVec0[2]));
-
-            while (calendarPivote.compareTo(calendarFinal) <= 0) {
-                diasDIARIOS[calendarPivote.get(Calendar.DAY_OF_WEEK) - 1] = calendarPivote.get(Calendar.DAY_OF_WEEK);
-                calendarPivote.add(Calendar.DAY_OF_MONTH, 1); // suma un día al calendario 1
-
-                if (calendarPivote.get(Calendar.DAY_OF_WEEK) == calendarInicio.get(Calendar.DAY_OF_WEEK)) {
-                    break;
-                }
-            }
-            diasDIARIOS[0] = 0;
-
-            if (repeticion == 1) {
-                DiasSeRepite = diasDIARIOS;
-            } else if (repeticion == 3) {
-                DiasSeRepite[dia_Semana - 1] = dia_Semana;
-            }
-
-            this.Frame.setDiasRepeticion(DiasSeRepite);
-            this.Frame.setFechaTermina(fecha);
-            this.Frame.setIndiceRepeticion(repeticion);
-            this.Frame.setNombreRepeticion(jComboSelectorDia.getItemAt(jComboSelectorDia.getSelectedIndex()));
-
-            this.dispose();
-        } else {
-            JOptionPane.showMessageDialog(null, "Seleccione una opción", "Acción no valida", JOptionPane.INFORMATION_MESSAGE);
-        }
-
-
-    }//GEN-LAST:event_jButtonGuardarActionPerformed
-
     private void formMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMousePressed
         x = evt.getX();
         y = evt.getY();
@@ -511,13 +441,86 @@ public class Frame_PersonalizarRepeticion extends javax.swing.JFrame {
         masInfoRepeticion.setVisible(false);
     }//GEN-LAST:event_dudaSolicitudMouseExited
 
-    private void jButtonGuardarsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonGuardarsMouseEntered
+    private void jButtonGuardarsaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonGuardarsaMouseEntered
        //jButtonGuardars.setBackground(new Color(69, 162, 156));
-    }//GEN-LAST:event_jButtonGuardarsMouseEntered
+    }//GEN-LAST:event_jButtonGuardarsaMouseEntered
 
-    private void jButtonGuardarsMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonGuardarsMouseExited
+    private void jButtonGuardarsaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonGuardarsaMouseExited
       //jButtonGuardars.setBackground(new Color(0,255,240)); 
-    }//GEN-LAST:event_jButtonGuardarsMouseExited
+    }//GEN-LAST:event_jButtonGuardarsaMouseExited
+
+    private void jButtonGuardarsaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonGuardarsaMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonGuardarsaMouseClicked
+
+    private void jButtonGuardarsaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarsaActionPerformed
+                String caso = (String) jComboSelectorDia.getSelectedItem();
+        switch (caso) {
+            case "Diario":
+                this.repeticion = 1;
+                break;
+            case "Semanalmente":
+                this.repeticion = 2;
+                break;
+
+            case "Mensualmente":
+                this.repeticion = 3;
+                break;
+            case "Seleccione uno...":
+                this.repeticion = 5;
+                break;
+            default:
+                this.repeticion = 4;
+                fecha = fechaInicio;
+                this.Frame.setTextoMuestralabel("No se repite");
+        }
+
+        if (this.repeticion != 5) {
+            this.setEnabled(false);
+            this.Frame.setEnabled(true);
+            this.Frame.setTextoMuestralabel(jLabelVisualizarRepetición.getText());
+
+            int[] diasDIARIOS = {0, 0, 0, 0, 0, 0, 0};
+
+            String[] fechaVec0 = fechaInicio.split("-");
+            String[] fechaVec1 = fecha.split("-");
+
+            TimeZone timezone = TimeZone.getDefault();
+            Calendar calendarInicio = new GregorianCalendar(timezone);
+            calendarInicio.set(Integer.valueOf(fechaVec0[0]), Integer.valueOf(fechaVec0[1]) - 1, Integer.valueOf(fechaVec0[2]));
+
+            Calendar calendarFinal = new GregorianCalendar(timezone);
+            calendarFinal.set(Integer.valueOf(fechaVec1[0]), Integer.valueOf(fechaVec1[1]) - 1, Integer.valueOf(fechaVec1[2]));
+
+            Calendar calendarPivote = new GregorianCalendar(timezone);
+            calendarPivote.set(Integer.valueOf(fechaVec0[0]), Integer.valueOf(fechaVec0[1]) - 1, Integer.valueOf(fechaVec0[2]));
+
+            while (calendarPivote.compareTo(calendarFinal) <= 0) {
+                diasDIARIOS[calendarPivote.get(Calendar.DAY_OF_WEEK) - 1] = calendarPivote.get(Calendar.DAY_OF_WEEK);
+                calendarPivote.add(Calendar.DAY_OF_MONTH, 1); // suma un día al calendario 1
+
+                if (calendarPivote.get(Calendar.DAY_OF_WEEK) == calendarInicio.get(Calendar.DAY_OF_WEEK)) {
+                    break;
+                }
+            }
+            diasDIARIOS[0] = 0;
+
+            if (repeticion == 1) {
+                DiasSeRepite = diasDIARIOS;
+            } else if (repeticion == 3) {
+                DiasSeRepite[dia_Semana - 1] = dia_Semana;
+            }
+
+            this.Frame.setDiasRepeticion(DiasSeRepite);
+            this.Frame.setFechaTermina(fecha);
+            this.Frame.setIndiceRepeticion(repeticion);
+            this.Frame.setNombreRepeticion(jComboSelectorDia.getItemAt(jComboSelectorDia.getSelectedIndex()));
+
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(null, "Seleccione una opción", "Acción no valida", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_jButtonGuardarsaActionPerformed
 
     /**
      * @param args the command line arguments

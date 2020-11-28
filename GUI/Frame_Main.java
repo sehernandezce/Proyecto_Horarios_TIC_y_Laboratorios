@@ -209,9 +209,6 @@ public class Frame_Main extends javax.swing.JFrame {
         jLabelRepeticion = new javax.swing.JLabel();
         jSpinnerHorainicio = new javax.swing.JSpinner();
         jLabelAñadir2 = new javax.swing.JLabel();
-        jSpinnerMinutosInicio = new javax.swing.JSpinner();
-        jSpinnerHorafinal = new javax.swing.JSpinner();
-        jSpinnerMinutosFinal = new javax.swing.JSpinner();
         jLabelEliminar1 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         jLabel29 = new javax.swing.JLabel();
@@ -219,6 +216,7 @@ public class Frame_Main extends javax.swing.JFrame {
         jLabel40 = new javax.swing.JLabel();
         jLabel41 = new javax.swing.JLabel();
         jLabel42 = new javax.swing.JLabel();
+        jComboSelectDuracion = new javax.swing.JComboBox<>();
         Administrar_Solicitudes = new javax.swing.JPanel();
         jLabel30 = new javax.swing.JLabel();
         jScrollPane5 = new javax.swing.JScrollPane();
@@ -1042,12 +1040,12 @@ public class Frame_Main extends javax.swing.JFrame {
         jPanel2.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 230, 90, 20));
 
         jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel15.setText("Hora final:");
-        jPanel2.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 290, -1, 20));
+        jLabel15.setText("Duración en horas:");
+        jPanel2.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 240, -1, 20));
 
         jLabel27.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel27.setText("¿El evento se repite?");
-        jPanel2.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 320, -1, 30));
+        jPanel2.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 290, -1, 30));
 
         jCheckBox3.setBackground(new java.awt.Color(204, 204, 204));
         jCheckBox3.addActionListener(new java.awt.event.ActionListener() {
@@ -1055,7 +1053,7 @@ public class Frame_Main extends javax.swing.JFrame {
                 jCheckBox3ActionPerformed(evt);
             }
         });
-        jPanel2.add(jCheckBox3, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 330, -1, 14));
+        jPanel2.add(jCheckBox3, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 300, -1, 14));
 
         jButtonPersonalizar.setBackground(new java.awt.Color(204, 204, 204));
         jButtonPersonalizar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -1066,7 +1064,7 @@ public class Frame_Main extends javax.swing.JFrame {
                 jButtonPersonalizarActionPerformed(evt);
             }
         });
-        jPanel2.add(jButtonPersonalizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 320, -1, -1));
+        jPanel2.add(jButtonPersonalizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 290, -1, -1));
 
         jLabel28.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel28.setText("Observaciones:");
@@ -1114,8 +1112,8 @@ public class Frame_Main extends javax.swing.JFrame {
         jPanel2.add(jLabelCargandoSE, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 480, 90, 20));
 
         jLabelRepeticion.setToolTipText("");
-        jPanel2.add(jLabelRepeticion, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 350, 260, 24));
-        jPanel2.add(jSpinnerHorainicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 240, 56, -1));
+        jPanel2.add(jLabelRepeticion, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 324, 260, 50));
+        jPanel2.add(jSpinnerHorainicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 260, 56, -1));
 
         jLabelAñadir2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/anadir.png"))); // NOI18N
         jLabelAñadir2.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -1124,9 +1122,6 @@ public class Frame_Main extends javax.swing.JFrame {
             }
         });
         jPanel2.add(jLabelAñadir2, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 10, -1, -1));
-        jPanel2.add(jSpinnerMinutosInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 240, 50, -1));
-        jPanel2.add(jSpinnerHorafinal, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 280, 55, -1));
-        jPanel2.add(jSpinnerMinutosFinal, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 280, 50, -1));
 
         jLabelEliminar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cancelar.png"))); // NOI18N
         jLabelEliminar1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -1158,7 +1153,10 @@ public class Frame_Main extends javax.swing.JFrame {
 
         jLabel42.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel42.setText("Hora de inicio:");
-        jPanel2.add(jLabel42, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 240, -1, 20));
+        jPanel2.add(jLabel42, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 240, -1, 20));
+
+        jComboSelectDuracion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1 Hora", "2 Horas" }));
+        jPanel2.add(jComboSelectDuracion, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 260, 80, 20));
 
         Solicitar_Espacio.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
@@ -1492,13 +1490,12 @@ public class Frame_Main extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public void setdataConexiones(ManipularConecciones con){
+    public void setdataConexiones(ManipularConecciones con) {
         this.manipulacionConexiones = con;
         validarEspacios = new ValidarEspacios(con);
-        validarSolicitudes = new Validar_administrar_solicitud(con);           
+        validarSolicitudes = new Validar_administrar_solicitud(con);
     }
-    
-    
+
     public void entrar_bienvenida(Usuario usuario2) { //Selecciona el tipo de menu segun el usuario        
         ocultar_todosPaneles();
         Bienvenida.setVisible(true);
@@ -1590,7 +1587,6 @@ public class Frame_Main extends javax.swing.JFrame {
         ocultar_todosPaneles();
         Categorias.setSelectedIndex(0);
 
-       
         if (usuario.getTipoUsuario() == 1 || usuario.getTipoUsuario() == 4) {
             Aceptar_sol_boton.setVisible(false);
             Rechazar_sol_boton.setVisible(false);
@@ -1833,12 +1829,20 @@ public class Frame_Main extends javax.swing.JFrame {
 
     public void verificarIngresoSolicitud() {
 
+        int val;
+
+        if (jComboSelectDuracion.getSelectedIndex() == 0) {
+            val = 1;
+        } else {
+            val = 2;
+        }
+        
         evento = new Evento(0,
-                (Integer) jSpinnerHorainicio.getValue() + ":0" + (Integer) jSpinnerMinutosInicio.getValue() + ":00",
+                (Integer) jSpinnerHorainicio.getValue() + ":0" + "0" + ":00",
                 nombreRepeticion,
                 obtener_fecha(),
                 fechaTermina,
-                (Integer) jSpinnerHorafinal.getValue() + ":0" + (Integer) jSpinnerMinutosFinal.getValue() + ":00",
+                ((Integer) jSpinnerHorainicio.getValue() + val) + ":0" + "0" + ":00",
                 jTextMotivoSolicitud.getText(),
                 -1,
                 indiceRepeticion,
@@ -1860,9 +1864,10 @@ public class Frame_Main extends javax.swing.JFrame {
                 fechaTermina,
                 obtener_fecha(),
                 (Integer) jSpinnerHorainicio.getValue(),
-                (Integer) jSpinnerMinutosInicio.getValue(),
-                (Integer) jSpinnerHorafinal.getValue(),
-                (Integer) jSpinnerMinutosFinal.getValue());
+                0,
+                (Integer) jSpinnerHorainicio.getValue() + val,
+                0,
+                (String) jTable3.getValueAt(jTable3.getSelectedRow(), 5));
 
         if (validado.equals("ok")) {
             JOptionPane.showMessageDialog(null, "Solicitud ingresada con exito");
@@ -1911,7 +1916,7 @@ public class Frame_Main extends javax.swing.JFrame {
     private void guardarCamContrasenia() {
         try {
             usuario.setContrasenia(jPasswordField1.getText());
-            
+
             Validar_Registro validar_Registro = new Validar_Registro(manipulacionConexiones);
             int val = validar_Registro.cambiarcontrasenia(usuario, jPasswordField3.getText(), jPasswordField2.getText());
             if (val == 1) {
@@ -2209,8 +2214,9 @@ public class Frame_Main extends javax.swing.JFrame {
             String edificio = (jTable3.getValueAt(jTable3.getSelectedRow(), 3)).toString();
             String Salon = (jTable3.getValueAt(jTable3.getSelectedRow(), 2)).toString();
             jLabel37.setText(Salon + " - " + edificio + "  ");
-            idEspacioSeleccionado = (jTable3.getValueAt(jTable3.getSelectedRow(), 0)).toString();
+
             jLabelCargandoSE.setText("Cargando...");
+
             String fecha = obtener_fecha();
             int day = obt_diaSemana();
 
@@ -2365,9 +2371,29 @@ public class Frame_Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonPersonalizarActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+
         jLabelCargandoSE.setText("Cargando...");
-        verificarIngresoSolicitud();
-        jLabelCargandoSE.setText("");
+
+        if (jTable3.getSelectedRow() != -1 && jTable3.getSelectedColumn() != -1) {
+            idEspacioSeleccionado = (jTable3.getValueAt(jTable3.getSelectedRow(), 0)).toString();
+            String[] fechaVec0 = fechaTermina.split("-");
+
+            TimeZone timezone = TimeZone.getDefault();
+            Calendar calendarfinal = new GregorianCalendar(timezone);
+            calendarfinal.set(Integer.valueOf(fechaVec0[0]), Integer.valueOf(fechaVec0[1]) - 1, Integer.valueOf(fechaVec0[2]));
+            int dia_terminaSemana = calendarfinal.get(Calendar.DAY_OF_WEEK);
+
+            if (obt_diaSemana() != 1 && dia_terminaSemana != 1) {
+                verificarIngresoSolicitud();
+            } else {
+                JOptionPane.showMessageDialog(null, "La fecha de inicio o fecha de final no pueden ser un Domingo", "Acción no valida", JOptionPane.INFORMATION_MESSAGE);
+            }
+
+            jLabelCargandoSE.setText("");
+        } else {
+            JOptionPane.showMessageDialog(null, "No ha seleccionado ningún espacio", "Acción no valida", JOptionPane.INFORMATION_MESSAGE);
+
+        }
 
         /* 
         System.out.println(solicitud.getEspacioidEspacio()+"\n"
@@ -2396,7 +2422,7 @@ public class Frame_Main extends javax.swing.JFrame {
         jLabelCargandoSE.setText("Cargando...");
         Frame_DetallesEspacio frame_DetallesEspacio = new Frame_DetallesEspacio();
         frame_DetallesEspacio.setDataConexiones(manipulacionConexiones);
-        
+
         try {
             Tipo = jLabel36.getText();
             frame_DetallesEspacio.setVisible(true);
@@ -2628,6 +2654,7 @@ public class Frame_Main extends javax.swing.JFrame {
     private com.toedter.calendar.JCalendar jCalendar2;
     private javax.swing.JCheckBox jCheckBox3;
     private javax.swing.JComboBox<String> jComboMotivos;
+    private javax.swing.JComboBox<String> jComboSelectDuracion;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -2729,10 +2756,7 @@ public class Frame_Main extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator7;
     private javax.swing.JSeparator jSeparator8;
     private javax.swing.JSeparator jSeparator9;
-    private javax.swing.JSpinner jSpinnerHorafinal;
     private javax.swing.JSpinner jSpinnerHorainicio;
-    private javax.swing.JSpinner jSpinnerMinutosFinal;
-    private javax.swing.JSpinner jSpinnerMinutosInicio;
     private javax.swing.JTable jTable2;
     private javax.swing.JTable jTable3;
     private javax.swing.JTable jTable4;

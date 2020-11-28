@@ -19,12 +19,11 @@ import javax.swing.JOptionPane;
  */
 public class Frame_PersonalizarRepeticion extends javax.swing.JFrame {
 
-
     private int x, y;
     private Frame_Main Frame;
     private String fecha;
     private String fechaInicio;
-    private int[] DiasSeRepite = {0,0,0,0,0,0,0};
+    private int[] DiasSeRepite = {0, 0, 0, 0, 0, 0, 0};
     private int repeticion;
     private int dia_Semana;
 
@@ -36,41 +35,38 @@ public class Frame_PersonalizarRepeticion extends javax.swing.JFrame {
     public void setFechaInicio(String fechaInicio) {
         this.fechaInicio = fechaInicio;
     }
- 
-    
+
     private String repeticionDias() {
         String retorno = "";
-        javax.swing.JCheckBox[] dias = {null,jCheckBoxLunes, jCheckBoxMartes, jCheckBoxMiercoles, jCheckBoxJueves, jCheckBoxViernes, jCheckBoxSabado};
-        int diaSeleccionado = jCalendar1.getCalendar().get(Calendar.DAY_OF_WEEK)-1;
-        
+        javax.swing.JCheckBox[] dias = {null, jCheckBoxLunes, jCheckBoxMartes, jCheckBoxMiercoles, jCheckBoxJueves, jCheckBoxViernes, jCheckBoxSabado};
+        int diaSeleccionado = jCalendar1.getCalendar().get(Calendar.DAY_OF_WEEK) - 1;
+
         if (dia_Semana <= 7 && dia_Semana > 1) {
-            dias[dia_Semana-1].setSelected(true);
+            dias[dia_Semana - 1].setSelected(true);
         }
-        
+
         if (diaSeleccionado <= 6 && diaSeleccionado > 0) {
-            dias[diaSeleccionado].setSelected(true);     
+            dias[diaSeleccionado].setSelected(true);
         }
-        
 
         for (int i = 1; i < 7; i++) {
             if (dias[i].isSelected()) {
                 retorno = retorno + ", " + dias[i].getText();
             }
         }
-        
+
         if ("".equals(retorno)) {
             return "pero no se ha seleccionado ningún dia, por favor, seleccione al menos uno.";
         }
 
         for (int i = 1; i < 7; i++) {
             if (dias[i].isSelected()) {
-                DiasSeRepite[i] = i+1;
-            }else{
+                DiasSeRepite[i] = i + 1;
+            } else {
                 DiasSeRepite[i] = 0;
             }
         }
-        
-        
+
         return "los dias " + retorno.substring(1);
     }
 
@@ -82,15 +78,15 @@ public class Frame_PersonalizarRepeticion extends javax.swing.JFrame {
         String text = "";
 
         int año = jCalendar1.getCalendar().get(Calendar.YEAR);
-        int mes = jCalendar1.getCalendar().get(Calendar.MARCH)+1;
+        int mes = jCalendar1.getCalendar().get(Calendar.MONTH) + 1;
         int dia = jCalendar1.getCalendar().get(Calendar.DAY_OF_MONTH);
 
         fecha = (año + "-" + mes + "-" + dia);
 
         if ("Semanalmente".equals(String.valueOf(jComboSelectorDia.getSelectedItem()))) {
-            text = "Se repite semanalmente " + repeticionDias() + " desde el dia "+fechaInicio+" hasta el día " + fecha;
+            text = "Se repite semanalmente " + repeticionDias() + " desde el dia " + fechaInicio + " hasta el día " + fecha;
         } else if (!"Seleccione uno...".equals(String.valueOf(jComboSelectorDia.getSelectedItem()))) {
-            text = "Se repite " + String.valueOf(jComboSelectorDia.getSelectedItem())+" desde el dia "+fechaInicio
+            text = "Se repite " + String.valueOf(jComboSelectorDia.getSelectedItem()) + " desde el dia " + fechaInicio
                     + " hasta el día " + fecha;
         }
 
@@ -103,7 +99,7 @@ public class Frame_PersonalizarRepeticion extends javax.swing.JFrame {
         ocultar = "Semanalmente".equals((String.valueOf(jComboSelectorDia.getSelectedItem())));
 
         if ("Seleccione uno...".equals(jComboSelectorDia.getItemAt(0)) && jComboSelectorDia.getSelectedIndex() != 0) {
-            
+
             jComboSelectorDia.removeItemAt(0);
         }
 
@@ -115,10 +111,10 @@ public class Frame_PersonalizarRepeticion extends javax.swing.JFrame {
         jCheckBoxSabado.setEnabled(ocultar);
     }
 
-    public void setFramePadre(Frame_Main frame){
+    public void setFramePadre(Frame_Main frame) {
         this.Frame = frame;
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -301,9 +297,9 @@ public class Frame_PersonalizarRepeticion extends javax.swing.JFrame {
         if (result == 0) {
             this.setEnabled(false);
             this.Frame.setEnabled(true);
-            this.dispose();  
+            this.dispose();
         }
-        
+
     }//GEN-LAST:event_jlClose1MouseClicked
 
     private void jlMinimize1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlMinimize1MouseClicked
@@ -311,44 +307,75 @@ public class Frame_PersonalizarRepeticion extends javax.swing.JFrame {
     }//GEN-LAST:event_jlMinimize1MouseClicked
 
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
-        
-        this.setEnabled(false);
-        this.Frame.setEnabled(true);
-        this.Frame.setTextoMuestralabel(jLabelVisualizarRepetición.getText());
-   
-        String caso =  (String)jComboSelectorDia.getSelectedItem();
-        switch(caso){
+
+        String caso = (String) jComboSelectorDia.getSelectedItem();
+        switch (caso) {
             case "Diario":
-                this.repeticion= 1;
-            break;
+                this.repeticion = 1;
+                break;
             case "Semanalmente":
                 this.repeticion = 2;
-            break;
-                
+                break;
+
             case "Mensualmente":
                 this.repeticion = 3;
-            break;
-            
+                break;
+            case "Seleccione uno...":
+                this.repeticion = 5;
+                break;
             default:
                 this.repeticion = 4;
+                fecha = fechaInicio;
                 this.Frame.setTextoMuestralabel("No se repite");
         }
-        
-        
-        int[] diasDIARIOS = {1,2,3,4,5,6,7};
-        
-        if(repeticion == 1){
-            DiasSeRepite = diasDIARIOS;
-        }else if(repeticion == 3){
-            DiasSeRepite[dia_Semana-1] = dia_Semana; 
+
+        if (this.repeticion != 5) {
+            this.setEnabled(false);
+            this.Frame.setEnabled(true);
+            this.Frame.setTextoMuestralabel(jLabelVisualizarRepetición.getText());
+
+            int[] diasDIARIOS = {0, 0, 0, 0, 0, 0, 0};
+
+            String[] fechaVec0 = fechaInicio.split("-");
+            String[] fechaVec1 = fecha.split("-");
+
+            TimeZone timezone = TimeZone.getDefault();
+            Calendar calendarInicio = new GregorianCalendar(timezone);
+            calendarInicio.set(Integer.valueOf(fechaVec0[0]), Integer.valueOf(fechaVec0[1]) - 1, Integer.valueOf(fechaVec0[2]));
+
+            Calendar calendarFinal = new GregorianCalendar(timezone);
+            calendarFinal.set(Integer.valueOf(fechaVec1[0]), Integer.valueOf(fechaVec1[1]) - 1, Integer.valueOf(fechaVec1[2]));
+
+            Calendar calendarPivote = new GregorianCalendar(timezone);
+            calendarPivote.set(Integer.valueOf(fechaVec0[0]), Integer.valueOf(fechaVec0[1]) - 1, Integer.valueOf(fechaVec0[2]));
+
+            while (calendarPivote.compareTo(calendarFinal) <= 0) {
+                diasDIARIOS[calendarPivote.get(Calendar.DAY_OF_WEEK) - 1] = calendarPivote.get(Calendar.DAY_OF_WEEK);
+                calendarPivote.add(Calendar.DAY_OF_MONTH, 1); // suma un día al calendario 1
+
+                if (calendarPivote.get(Calendar.DAY_OF_WEEK) == calendarInicio.get(Calendar.DAY_OF_WEEK)) {
+                    break;
+                }
+            }
+            diasDIARIOS[0] = 0;
+
+            if (repeticion == 1) {
+                DiasSeRepite = diasDIARIOS;
+            } else if (repeticion == 3) {
+                DiasSeRepite[dia_Semana - 1] = dia_Semana;
+            }
+
+            this.Frame.setDiasRepeticion(DiasSeRepite);
+            this.Frame.setFechaTermina(fecha);
+            this.Frame.setIndiceRepeticion(repeticion);
+            this.Frame.setNombreRepeticion(jComboSelectorDia.getItemAt(jComboSelectorDia.getSelectedIndex()));
+
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(null, "Seleccione una opción", "Acción no valida", JOptionPane.INFORMATION_MESSAGE);
         }
-        
-        this.Frame.setDiasRepeticion(DiasSeRepite);
-        this.Frame.setFechaTermina(fecha);
-        this.Frame.setIndiceRepeticion(repeticion);
-        this.Frame.setNombreRepeticion(jComboSelectorDia.getItemAt(jComboSelectorDia.getSelectedIndex()));
-        
-        this.dispose(); 
+
+
     }//GEN-LAST:event_jButtonGuardarActionPerformed
 
     private void formMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMousePressed

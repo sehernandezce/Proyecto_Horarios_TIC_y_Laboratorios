@@ -18,7 +18,7 @@ import java.util.logging.Logger;
  */
 public class ConexionDAO {
 
-    Connection connection = null;
+    private Connection connection = null;
 
     static final String DB_URL
             = "jdbc:mysql://database-1.cjxw1f4bh3ms.us-east-1.rds.amazonaws.com:3306/Horarios_Tics_y_Laboratorios"; //Endpoint
@@ -31,7 +31,7 @@ public class ConexionDAO {
     public Connection crearConeccion(Usuario par) {
         seleccionarUser(par.getTipoUsuario());
         try {
-            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
+            this.connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
         } catch (SQLException ex) {
             Logger.getLogger(SolicitudDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -39,6 +39,29 @@ public class ConexionDAO {
         return connection;
     }
 
+    public void Reconnection(int tipoUsuario){
+        
+        try {
+            System.out.println("conexión: "+this.connection.isClosed());
+        } catch (SQLException ex) {
+            Logger.getLogger(ConexionDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        seleccionarUser(tipoUsuario);
+        try {
+            if(this.connection.isClosed()){
+                this.connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
+            }
+        } catch (SQLException ex) {
+            try {
+                this.connection.close();
+            } catch (SQLException ex1) {
+                Logger.getLogger(ConexionDAO.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+            
+        }
+    
+    }
+    
     public Connection getConnection() {
         return connection;
     }
@@ -65,6 +88,9 @@ public class ConexionDAO {
         } else if (tipUser == 2) {
             this.DB_USER = "UserCoordinator";
             this.DB_PASSWD = "uC102*lPg";
+        } else if(tipUser == -10){
+            this.DB_USER = "SeeTableUser";
+            this.DB_PASSWD = "ISsRD1*y";
         }
     }
 }

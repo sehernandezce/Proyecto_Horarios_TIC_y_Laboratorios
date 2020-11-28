@@ -18,6 +18,9 @@ public class ManipularConecciones {
     ConexionDAO conexionDao = new ConexionDAO();
     
     
+    public void verificarConexion(int tipoUsuario){
+        this.conexionDao.Reconnection(tipoUsuario);
+    }
     
     public void crearConeccion(Usuario Par){
         conexionDao.crearConeccion(Par);

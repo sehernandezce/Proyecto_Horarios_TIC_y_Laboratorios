@@ -21,21 +21,22 @@ import java.util.logging.Logger;
  */
 public class SolicitudDAO {
 
-    Connection connection = null;
-
+    private Connection connection = null;
+    private ConexionDAO conexionDao = new ConexionDAO();
 
     public SolicitudDAO(Connection connection) {
         this.connection = connection;
+        this.conexionDao.setConnection(this.connection);
     }
-    
-    public String[][] leerSolicitudesEspacio(Usuario par, int idEspacio) {// buscar las solicitudes activas dependiendo el estado, tipo de usuario y si están activas
 
+    public String[][] leerSolicitudesEspacio(Usuario par, int idEspacio) {// buscar las solicitudes activas dependiendo el estado, tipo de usuario y si están activas
+        this.conexionDao.Reconnection(par.getTipoUsuario());
         Statement statement = null;
         ResultSet resultSet = null;
 
         try {
             resultSet = null;
-            statement = connection.createStatement();
+            statement = this.connection.createStatement();
             resultSet = statement.executeQuery("");//En proceso
             if (resultSet.next()) {
 
@@ -59,11 +60,12 @@ public class SolicitudDAO {
     }
 
     public String[][] leerSolicitudes(Usuario par, int tipo_e) { // buscar las solicitudes dependiendo el estado y tipo de usuario
+        this.conexionDao.Reconnection(par.getTipoUsuario());
         Statement statement = null;
         ResultSet resultSet = null;
         try {
             resultSet = null;
-            statement = connection.createStatement();
+            statement = this.connection.createStatement();
             resultSet = statement.executeQuery("CALL Ver_solicitudes_estado('" + par.getNombreusuarioInstitucional() + "','" + tipo_e + "')");
             if (resultSet.next()) {
 
@@ -127,11 +129,12 @@ public class SolicitudDAO {
     }
 
     public String getfechaBD(Usuario par) {
+        this.conexionDao.Reconnection(par.getTipoUsuario());
         Statement statement = null;
         ResultSet resultSet = null;
         try {
             resultSet = null;
-            statement = connection.createStatement();
+            statement = this.connection.createStatement();
             resultSet = statement.executeQuery("select curdate()");
 
             resultSet.next();
@@ -154,12 +157,12 @@ public class SolicitudDAO {
     }
 
     public boolean ComprobarfechaesMenorBD(Usuario par, String fechaIngresada) {
-
+        this.conexionDao.Reconnection(par.getTipoUsuario());
         Statement statement = null;
         ResultSet resultSet = null;
         try {
             resultSet = null;
-            statement = connection.createStatement();
+            statement = this.connection.createStatement();
 
             resultSet = statement.executeQuery("select curdate() > '" + fechaIngresada + "'");
 
@@ -182,11 +185,12 @@ public class SolicitudDAO {
     }
 
     public int cambiarEstado(Usuario par, int tipo_e, String id_solicitud, String obs) { // buscar las solicitudes dependiendo el estado y tipo de usuario
+        this.conexionDao.Reconnection(par.getTipoUsuario());
         Statement statement = null;
         ResultSet resultSet = null;
         try {
             resultSet = null;
-            statement = connection.createStatement();
+            statement = this.connection.createStatement();
             resultSet = statement.executeQuery("Select cambiar_estado('" + par.getNombreusuarioInstitucional() + "'," + id_solicitud + "," + tipo_e + ",'" + obs + "')");
             if (resultSet.next()) {
                 return Integer.valueOf(resultSet.getString(1));
@@ -209,12 +213,13 @@ public class SolicitudDAO {
     }
 
     public boolean insertarSolicitud(Usuario par, Solicitud sol) {
+        this.conexionDao.Reconnection(par.getTipoUsuario());
         Statement statement = null;
         ResultSet resultSet = null;
         ResultSet size = null;
         try {
             resultSet = null;
-            statement = connection.createStatement();
+            statement = this.connection.createStatement();
 
             int[] dias = sol.getEvento().getDiasRepite();
             String diasString = "";
@@ -222,6 +227,17 @@ public class SolicitudDAO {
                 diasString = diasString + dia;
             }
 
+            System.out.println("call Horarios_Tics_y_Laboratorios.Ingresar_Solicitud("
+                    + sol.getEvento().getTipoRepetición()
+                    + ", '" + sol.getEvento().getFechaEvento()
+                    + "', '" + sol.getEvento().getHoraInicio()
+                    + "', '" + sol.getEvento().getHoraFinalEvento()
+                    + "', '" + sol.getEvento().getFechaTerminaEvento()
+                    + "', '" + sol.getEvento().getMotivoEvento()
+                    + "', '" + sol.getEvento().getIdMotivoEvento()
+                    + "', '" + par.getNombreusuarioInstitucional()
+                    + "', '" + sol.getEspacioidEspacio()
+                    + "', '" + diasString + "');");
             
             resultSet = statement.executeQuery("call Horarios_Tics_y_Laboratorios.Ingresar_Solicitud("
                     + sol.getEvento().getTipoRepetición()
@@ -254,12 +270,13 @@ public class SolicitudDAO {
     }
 
     public boolean verificarConcurrenciaEventos(Usuario par, Solicitud sol) {
+        this.conexionDao.Reconnection(par.getTipoUsuario());
         Statement statement = null;
         ResultSet resultSet = null;
         ResultSet size = null;
         try {
             resultSet = null;
-            statement = connection.createStatement();
+            statement = this.connection.createStatement();
 
             int[] dias = sol.getEvento().getDiasRepite();
             String diasString = "";
@@ -267,14 +284,13 @@ public class SolicitudDAO {
                 diasString = diasString + dia;
             }
 
-            
-            System.out.println("select Horarios_Tics_y_Laboratorios.compararEventos("+
-                    sol.getEspacioidEspacio()+
-                    ", '"+sol.getEvento().getHoraInicio()+
-                    "', '"+sol.getEvento().getHoraFinalEvento()+
-                    "', "+sol.getEvento().getTipoRepetición()+
-                    ", '"+sol.getEvento().getFechaEvento()+"', '"+sol.getEvento().getFechaTerminaEvento()+"', '"+diasString+"');");
-            
+            System.out.println("select Horarios_Tics_y_Laboratorios.compararEventos("
+                    + sol.getEspacioidEspacio()
+                    + ", '" + sol.getEvento().getHoraInicio()
+                    + "', '" + sol.getEvento().getHoraFinalEvento()
+                    + "', " + sol.getEvento().getTipoRepetición()
+                    + ", '" + sol.getEvento().getFechaEvento() + "', '" + sol.getEvento().getFechaTerminaEvento() + "', '" + diasString + "');");
+
             resultSet = statement.executeQuery("select Horarios_Tics_y_Laboratorios.compararEventos("
                     + sol.getEspacioidEspacio()
                     + ", '" + sol.getEvento().getHoraInicio()
@@ -302,13 +318,14 @@ public class SolicitudDAO {
     }
 
     public String[] obtenerMotivo(Usuario par) {
+        this.conexionDao.Reconnection(par.getTipoUsuario());
         String[] retorno;
         Statement statement = null;
         ResultSet resultSet = null;
         ResultSet size = null;
         try {
             resultSet = null;
-            statement = connection.createStatement();
+            statement = this.connection.createStatement();
             resultSet = statement.executeQuery("SELECT * FROM MOTIVOS_EVENTOS");
 
             resultSet.afterLast();
@@ -344,11 +361,12 @@ public class SolicitudDAO {
     }
 
     public String[] leerunaSolicitud(Usuario par, int id_solicitud) { // buscar datos en especifico de una solicitud
+        this.conexionDao.Reconnection(par.getTipoUsuario());
         Statement statement = null;
         ResultSet resultSet = null;
         try {
             resultSet = null;
-            statement = connection.createStatement();
+            statement = this.connection.createStatement();
             resultSet = statement.executeQuery("CALL infoporSolicitud(" + id_solicitud + ")");
             String[] datos = new String[10];
             if (resultSet.next()) {
@@ -375,11 +393,12 @@ public class SolicitudDAO {
     }
 
     public String leerdias_soli(Usuario par, int id_solicitud) { // buscar las solicitudes dependiendo el estado y tipo de usuario
+        this.conexionDao.Reconnection(par.getTipoUsuario());
         Statement statement = null;
         ResultSet resultSet = null;
         try {
             resultSet = null;
-            statement = connection.createStatement();
+            statement = this.connection.createStatement();
             resultSet = statement.executeQuery("SELECT dias_del_evento(" + id_solicitud + ")");
             if (resultSet.next()) {
                 return ObtenerDias_solicitud(resultSet);

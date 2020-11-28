@@ -1,5 +1,6 @@
 package DAO;
 
+import Control.ManipularConecciones;
 import Entidad.Espacio;
 import Entidad.Usuario;
 import java.sql.Connection;
@@ -12,18 +13,21 @@ import java.util.logging.Logger;
 
 public class EspaciosDAO {
 
-    Connection connection = null;
+    private ConexionDAO conexionDao = new ConexionDAO();
+    private Connection connection = null;
 
     public EspaciosDAO(Connection connection) {
         this.connection = connection;
+        this.conexionDao.setConnection(this.connection);
     }
 
     public int crearEspacio(Usuario par, Espacio Espacio) {
+        this.conexionDao.Reconnection(par.getTipoUsuario());
         Statement statement = null;
         ResultSet resultSet = null;
         try {
             resultSet = null;
-            statement = connection.createStatement();
+            statement = this.connection.createStatement();
             //VALUES ('453', '1', '2', 'lab prueba', '123', '1', '312');
             resultSet = statement.executeQuery("INSERT INTO `Horarios_Tics_y_Laboratorios`.`ESPACIOS`(`ID_EDIFICIO`, `ID_TIPOESPACIO`, `ID_PERSONA`, `NOMBRE_ESPACIO`, `NUM_ESPACIO`, `ACTIVO`, `CAPACIDAD`) VALUES ('"
                     + Espacio.getNum_edificio() + ",'"
@@ -81,11 +85,12 @@ public class EspaciosDAO {
 //    }
 
     public String[][] leer(Usuario par, int tipEspacio) { // buscar todos los lugares conrespecto a un tipo de espacio
+        //this.conexionDao.Reconnection(par.getTipoUsuario());
         Statement statement = null;
         ResultSet resultSet = null;
         try {
             resultSet = null;
-            statement = connection.createStatement();
+            statement = this.connection.createStatement();
             resultSet = statement.executeQuery("CALL InfoporTipodeEspacio(" + tipEspacio + ")");
             if (resultSet.next()) {
                 return ObtenerData(resultSet);
@@ -93,7 +98,7 @@ public class EspaciosDAO {
                 return null;
             }
         } catch (Exception ex) {
-            System.out.println("Error en SQL" + ex);
+            System.out.println("Error en SQL dasfasdfasd" + ex);
             return null;
         } finally {
             try {
@@ -108,11 +113,12 @@ public class EspaciosDAO {
     }
 
     public String[][] leerHoras_espacios(Usuario par, int id_espacio, String fecha, int day) { // buscar todos los lugares conrespecto a un tipo de espacio
+        this.conexionDao.Reconnection(par.getTipoUsuario());
         Statement statement = null;
         ResultSet resultSet = null;
         try {
             resultSet = null;
-            statement = connection.createStatement();
+            statement = this.connection.createStatement();
             resultSet = statement.executeQuery("call Horarios_Tics_y_Laboratorios.Obtener_Horas_espacio('" + id_espacio + "','" + fecha + "','" + day + "')");
             System.out.println("call Horarios_Tics_y_Laboratorios.Obtener_Horas_espacio('" + id_espacio + "','" + fecha + "','" + day + "')");
             if (resultSet.next()) {
@@ -137,11 +143,12 @@ public class EspaciosDAO {
     }
 
     public int borrarEspacio(Usuario par, String idEspacio) {
+        this.conexionDao.Reconnection(par.getTipoUsuario());
         Statement statement = null;
         int resultSet = -1;
         ResultSet resultSet2 = null;
         try {
-            statement = connection.createStatement();
+            statement = this.connection.createStatement();
             resultSet2 = statement.executeQuery("Select * from SOLICITUDES where ID_ESPACIO='" + idEspacio + " ' AND (ID_ESTADO =2);");
             if (!resultSet2.next()) {
                 resultSet = statement.executeUpdate("update ESPACIOS set VIVO = false, ACTIVO = false where ID_ESPACIO = " + idEspacio + ";");
@@ -208,11 +215,12 @@ public class EspaciosDAO {
     }
 
     public Espacio leerunEspacio(Usuario par, int idEspacio) { // buscar todos los lugares conrespecto a un tipo de espacio
+        this.conexionDao.Reconnection(par.getTipoUsuario());
         Statement statement = null;
         ResultSet resultSet = null;
         try {
             resultSet = null;
-            statement = connection.createStatement();
+            statement = this.connection.createStatement();
 
             resultSet = statement.executeQuery("CALL InforporEspacio(" + idEspacio + ")");
             if (resultSet.next()) {
@@ -252,11 +260,12 @@ public class EspaciosDAO {
     }
 
     public int ActualizarinfoEspacio(Usuario par, Espacio Espacio) { // buscar todos los lugares conrespecto a un tipo de espacio
+        this.conexionDao.Reconnection(par.getTipoUsuario());
         Statement statement = null;
         ResultSet resultSet = null;
         try {
             resultSet = null;
-            statement = connection.createStatement();
+            statement = this.connection.createStatement();
 
             resultSet = statement.executeQuery("Select actualizarEspacio('" + par.getNombreusuarioInstitucional() + "',"
                     + Espacio.getId_espacio() + ","
@@ -291,13 +300,14 @@ public class EspaciosDAO {
     }
 
     public int buscarEspacio(Usuario par, Espacio esp) throws SQLException {
+        this.conexionDao.Reconnection(par.getTipoUsuario());
         Statement statement = null;
         ResultSet res = null;
 
         String sql1 = "select count(ESPACIOS.NUM_ESPACIO)FROM ESPACIOS WHERE NUM_ESPACIO = '" + esp.getNum_Espacio() + "' || NOMBRE_ESPACIO='" + esp.getNombre_espacio() + "'";
 
         try {
-            statement = connection.createStatement();
+            statement = this.connection.createStatement();
             res = statement.executeQuery(sql1);
             if (res.getInt(1) == 0) {
                 return res.getInt(1);

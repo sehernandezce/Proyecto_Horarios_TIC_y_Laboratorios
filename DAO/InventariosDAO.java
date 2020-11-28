@@ -13,10 +13,13 @@ import java.util.logging.Logger;
 
 public class InventariosDAO {
 
-    Connection connection = null;
-
+    private Connection connection = null;
+    private ConexionDAO conexionDao = new ConexionDAO();
+    
     public InventariosDAO(Connection connection) {
         this.connection = connection;
+        this.conexionDao.setConnection(this.connection);
+        
     }
 
 //    public boolean crear(Usuario object) {// falta hacerla
@@ -48,11 +51,12 @@ public class InventariosDAO {
 //
 //    }
     public String[][] leer(Usuario par, int idEspacio) { // buscar todos los lugares conrespecto a un tipo de espacio
+        this.conexionDao.Reconnection(par.getTipoUsuario());
         Statement statement = null;
         ResultSet resultSet = null;
         try {
             resultSet = null;
-            statement = connection.createStatement();
+            statement = this.connection.createStatement();
 
             resultSet = statement.executeQuery("select ID_INVENTARIO, NOMBREATRIBUTO, DESCRIPCION from INVENTARIOS where VIVO_INV=1 AND ID_ESPACIO=(" + idEspacio + ")");
             if (resultSet.next()) {
@@ -95,11 +99,12 @@ public class InventariosDAO {
     }
 
     public boolean actualizar(Usuario par, ArrayList<Inventario> inventarioList, String id_espacio) {//Modifica el invetario que ya existe mas no agrega nuevos
+        this.conexionDao.Reconnection(par.getTipoUsuario());
         Statement statement = null;
         int resultSet;
         try {
             resultSet = -1;
-            statement = connection.createStatement();
+            statement = this.connection.createStatement();
 
             for (int i = 0; i < inventarioList.size(); i++) {
 
@@ -125,11 +130,12 @@ public class InventariosDAO {
     }
 
     public boolean eliminar(Usuario object, ArrayList<String> idinventarioList) {
+        this.conexionDao.Reconnection(object.getTipoUsuario());
         Statement statement = null;
         int resultSet;
         try {
             resultSet = -1;
-            statement = connection.createStatement();
+            statement = this.connection.createStatement();
 
             for (int i = 0; i < idinventarioList.size(); i++) {
                 resultSet = statement.executeUpdate("UPDATE INVENTARIOS SET VIVO_INV=FALSE"

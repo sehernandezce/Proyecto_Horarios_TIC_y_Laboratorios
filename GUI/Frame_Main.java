@@ -245,7 +245,6 @@ public class Frame_Main extends javax.swing.JFrame {
         Jcbox_rechazada = new javax.swing.JCheckBox();
         Categorias = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
-        jLabelCargandoAS = new javax.swing.JLabel();
         jLabel38 = new javax.swing.JLabel();
         dudaadmSolicitud1 = new javax.swing.JLabel();
         dudaadmSolicitud2 = new javax.swing.JLabel();
@@ -257,20 +256,20 @@ public class Frame_Main extends javax.swing.JFrame {
         Fondo6 = new javax.swing.JLabel();
         Estadisticas = new javax.swing.JPanel();
         jLabel33 = new javax.swing.JLabel();
-        jMonthChooser1 = new com.toedter.calendar.JMonthChooser();
         jYearChooser1 = new com.toedter.calendar.JYearChooser();
-        jScrollPane6 = new javax.swing.JScrollPane();
-        jTextArea2 = new javax.swing.JTextArea();
         jLabel34 = new javax.swing.JLabel();
         jButton7 = new javax.swing.JButton();
-        jLabel35 = new javax.swing.JLabel();
-        jMonthChooser2 = new com.toedter.calendar.JMonthChooser();
-        jYearChooser2 = new com.toedter.calendar.JYearChooser();
-        jButton8 = new javax.swing.JButton();
-        jRadioButton1 = new javax.swing.JRadioButton();
         jRadioButton2 = new javax.swing.JRadioButton();
         jRadioButton3 = new javax.swing.JRadioButton();
         jRadioButton4 = new javax.swing.JRadioButton();
+        jLabel35 = new javax.swing.JLabel();
+        jMonthChooser1 = new com.toedter.calendar.JMonthChooser();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        jTextArea2 = new javax.swing.JTextArea();
+        jButton8 = new javax.swing.JButton();
+        jRadioButton1 = new javax.swing.JRadioButton();
+        jMonthChooser2 = new com.toedter.calendar.JMonthChooser();
+        jYearChooser2 = new com.toedter.calendar.JYearChooser();
         Fondo7 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -1135,7 +1134,6 @@ public class Frame_Main extends javax.swing.JFrame {
 
         jPasswordField1.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jPasswordField1.setText("Contraseña");
-        jPasswordField1.setMinimumSize(new java.awt.Dimension(15, 20));
         jPasswordField1.setPreferredSize(new java.awt.Dimension(15, 20));
         CambiarContraseña.add(jPasswordField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 210, 230, 30));
 
@@ -1159,7 +1157,6 @@ public class Frame_Main extends javax.swing.JFrame {
 
         jPasswordField2.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jPasswordField2.setText("Contraseña");
-        jPasswordField2.setMinimumSize(new java.awt.Dimension(15, 20));
         jPasswordField2.setPreferredSize(new java.awt.Dimension(15, 20));
         CambiarContraseña.add(jPasswordField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 290, 230, 30));
 
@@ -1169,7 +1166,6 @@ public class Frame_Main extends javax.swing.JFrame {
 
         jPasswordField3.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jPasswordField3.setText("Contraseña");
-        jPasswordField3.setMinimumSize(new java.awt.Dimension(15, 20));
         jPasswordField3.setPreferredSize(new java.awt.Dimension(15, 20));
         CambiarContraseña.add(jPasswordField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 250, 230, 30));
 
@@ -1229,7 +1225,6 @@ public class Frame_Main extends javax.swing.JFrame {
 
         jPasswordField4.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jPasswordField4.setText("Contraseña");
-        jPasswordField4.setMinimumSize(new java.awt.Dimension(15, 20));
         jPasswordField4.setPreferredSize(new java.awt.Dimension(15, 20));
         notificaciones.add(jPasswordField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 280, 200, 30));
 
@@ -1252,7 +1247,6 @@ public class Frame_Main extends javax.swing.JFrame {
 
         jPasswordField5.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jPasswordField5.setText("Contraseña");
-        jPasswordField5.setMinimumSize(new java.awt.Dimension(15, 20));
         jPasswordField5.setPreferredSize(new java.awt.Dimension(15, 20));
         notificaciones.add(jPasswordField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 280, 230, 30));
 
@@ -1262,7 +1256,6 @@ public class Frame_Main extends javax.swing.JFrame {
 
         jPasswordField6.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jPasswordField6.setText("Contraseña");
-        jPasswordField6.setMinimumSize(new java.awt.Dimension(15, 20));
         jPasswordField6.setPreferredSize(new java.awt.Dimension(15, 20));
         notificaciones.add(jPasswordField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 340, 230, 30));
 
@@ -1276,7 +1269,6 @@ public class Frame_Main extends javax.swing.JFrame {
 
         jPasswordField7.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jPasswordField7.setText("Contraseña");
-        jPasswordField7.setMinimumSize(new java.awt.Dimension(15, 20));
         jPasswordField7.setPreferredSize(new java.awt.Dimension(15, 20));
         notificaciones.add(jPasswordField7, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 220, 210, 30));
 
@@ -1537,9 +1529,6 @@ public class Frame_Main extends javax.swing.JFrame {
         jLabel9.setText("Filtro:");
         Administrar_Solicitudes.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 70, -1, -1));
 
-        jLabelCargandoAS.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
-        Administrar_Solicitudes.add(jLabelCargandoAS, new org.netbeans.lib.awtextra.AbsoluteConstraints(721, 596, 90, 20));
-
         jLabel38.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel38.setText("Observaciones:");
         Administrar_Solicitudes.add(jLabel38, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 330, -1, -1));
@@ -1607,22 +1596,16 @@ public class Frame_Main extends javax.swing.JFrame {
         Estadisticas.setName(""); // NOI18N
         Estadisticas.setPreferredSize(new java.awt.Dimension(854, 520));
         Estadisticas.setRequestFocusEnabled(false);
+        Estadisticas.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel33.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel33.setText("Estadísticas");
-        Estadisticas.add(jLabel33);
-        Estadisticas.add(jMonthChooser1);
-        Estadisticas.add(jYearChooser1);
-
-        jTextArea2.setColumns(20);
-        jTextArea2.setRows(5);
-        jScrollPane6.setViewportView(jTextArea2);
-
-        Estadisticas.add(jScrollPane6);
+        Estadisticas.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 0, 110, 70));
+        Estadisticas.add(jYearChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 80, 80, -1));
 
         jLabel34.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel34.setText("Estadísticas Por Tipo De Espacio");
-        Estadisticas.add(jLabel34);
+        Estadisticas.add(jLabel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 40, 220, 90));
 
         jButton7.setText("Buscar");
         jButton7.addActionListener(new java.awt.event.ActionListener() {
@@ -1630,29 +1613,7 @@ public class Frame_Main extends javax.swing.JFrame {
                 jButton7ActionPerformed(evt);
             }
         });
-        Estadisticas.add(jButton7);
-
-        jLabel35.setText("Tipo de espacio:");
-        Estadisticas.add(jLabel35);
-        Estadisticas.add(jMonthChooser2);
-        Estadisticas.add(jYearChooser2);
-
-        jButton8.setText("Buscar");
-        jButton8.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton8ActionPerformed(evt);
-            }
-        });
-        Estadisticas.add(jButton8);
-
-        Estadisticas_por_tipo.add(jRadioButton1);
-        jRadioButton1.setText("Laboratorio");
-        jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton1ActionPerformed(evt);
-            }
-        });
-        Estadisticas.add(jRadioButton1);
+        Estadisticas.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 80, 80, 30));
 
         Estadisticas_por_tipo.add(jRadioButton2);
         jRadioButton2.setText("Auditorio");
@@ -1661,7 +1622,7 @@ public class Frame_Main extends javax.swing.JFrame {
                 jRadioButton2ActionPerformed(evt);
             }
         });
-        Estadisticas.add(jRadioButton2);
+        Estadisticas.add(jRadioButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 120, 110, 30));
 
         Estadisticas_por_tipo.add(jRadioButton3);
         jRadioButton3.setText("Sala de Reuniones");
@@ -1670,7 +1631,7 @@ public class Frame_Main extends javax.swing.JFrame {
                 jRadioButton3ActionPerformed(evt);
             }
         });
-        Estadisticas.add(jRadioButton3);
+        Estadisticas.add(jRadioButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 120, 150, 30));
 
         Estadisticas_por_tipo.add(jRadioButton4);
         jRadioButton4.setText("Sala de Computadores");
@@ -1679,10 +1640,39 @@ public class Frame_Main extends javax.swing.JFrame {
                 jRadioButton4ActionPerformed(evt);
             }
         });
-        Estadisticas.add(jRadioButton4);
+        Estadisticas.add(jRadioButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 120, 170, 30));
+
+        jLabel35.setText("Tipo de espacio:");
+        Estadisticas.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 110, 160, 40));
+        Estadisticas.add(jMonthChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 80, -1, 30));
+
+        jTextArea2.setColumns(20);
+        jTextArea2.setRows(5);
+        jScrollPane6.setViewportView(jTextArea2);
+
+        Estadisticas.add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 210, 250, 200));
+
+        jButton8.setText("Buscar");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
+        Estadisticas.add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 190, 80, 30));
+
+        Estadisticas_por_tipo.add(jRadioButton1);
+        jRadioButton1.setText("Laboratorio");
+        jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButton1ActionPerformed(evt);
+            }
+        });
+        Estadisticas.add(jRadioButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 120, 110, 30));
+        Estadisticas.add(jMonthChooser2, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 190, 110, 30));
+        Estadisticas.add(jYearChooser2, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 190, 90, 30));
 
         Fondo7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondo_blanco1 1 .jpg"))); // NOI18N
-        Estadisticas.add(Fondo7);
+        Estadisticas.add(Fondo7, new org.netbeans.lib.awtextra.AbsoluteConstraints(-20, 0, 880, -1));
 
         getContentPane().add(Estadisticas, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 30, -1, -1));
         Estadisticas.getAccessibleContext().setAccessibleDescription("");
@@ -1696,7 +1686,7 @@ public class Frame_Main extends javax.swing.JFrame {
         validarSolicitudes = new Validar_administrar_solicitud(con);
     }
 
-    public void entrar_bienvenida(Usuario usuario2) { //Selecciona el tipo de menu segun el usuario        
+    public void entrar_bienvenida(Usuario usuario2) {       
         ocultar_todosPaneles();
         Bienvenida.setVisible(true);
         Paneles_Menu.setVisible(true);
@@ -1768,7 +1758,7 @@ public class Frame_Main extends javax.swing.JFrame {
 
     }
 
-    public void solicitar_Espacio(String Espacio) throws SQLException { //Para mostrar la informacion en el panel de solicitar espacios     
+    public void solicitar_Espacio(String Espacio) throws SQLException {
 
         jLabelRepeticion.setText("No se repite");
         fechaTermina = obtener_fecha();
@@ -1805,7 +1795,7 @@ public class Frame_Main extends javax.swing.JFrame {
         jTable2.setRowSorter(TRSFiltro);
     }
 
-    private void administrar_Solicitudes() { //Para mostrar las solicitudes en el administrador
+    private void administrar_Solicitudes() { 
         ocultar_todosPaneles();
         Categorias.setSelectedIndex(0);
 
@@ -1827,13 +1817,13 @@ public class Frame_Main extends javax.swing.JFrame {
 
     }
 
-    private void ver_Estadisticas() { //Para ver estadisticas
+    private void ver_Estadisticas() { 
         ocultar_todosPaneles();
         Estadisticas.setVisible(true);
 
     }
 
-    private void llenarTabla(String tipo) throws SQLException {//modelo tabla
+    private void llenarTabla(String tipo) throws SQLException {
 
         Object[][] tabla = validarEspacios.llenarMatriz(tipo, usuario);
         jTable3.setModel(new javax.swing.table.DefaultTableModel(
@@ -1852,12 +1842,12 @@ public class Frame_Main extends javax.swing.JFrame {
        
     }
 
-    private void llenarTabla_solicitudes(String tipo_e) throws SQLException {//modelo tabla espacios
+    private void llenarTabla_solicitudes(String tipo_e) throws SQLException {
         Administrar_Solicitudes.setEnabled(false);
         Categorias.setSelectedIndex(0);
         Buscador.setText("");
         Object[][] tabla = validarSolicitudes.llenarMatriz(usuario, tipo_e);
-        jTable2.setModel(new javax.swing.table.DefaultTableModel( //fechas con horas
+        jTable2.setModel(new javax.swing.table.DefaultTableModel( 
                 tabla, new String[]{
                     "ID SOLICITUD", "FECHA SOLICITUD", "ESTADO", "FECHA DE MODIFICACIÓN", "USUARIO INTITUCIONAL", "SALON/EDIFICIO", "FECHA INICIO", "FECHA TERMINA", "OBSERVACIONES", "INFORMACIÓN ADICIONAL"
 
@@ -1956,8 +1946,7 @@ public class Frame_Main extends javax.swing.JFrame {
     }
 
     private void cambiarEstado(String tipE) throws AddressException, Exception {
-        jLabelCargandoAS.setText("Cargando...");
-
+       
         if (jTable2.getSelectedRow() != -1 && jTable2.getSelectedColumn() != -1) {
 
             int res = validarSolicitudes.cambiarEstado(usuario, tipE, jTable2.getValueAt(jTable2.getSelectedRow(), 0).toString(), jTextField2.getText(), jTable2.getValueAt(jTable2.getSelectedRow(), 2).toString());
@@ -2362,18 +2351,6 @@ public class Frame_Main extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_BuscadorActionPerformed
 
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        graficar.graficarGeneral(usuario, jMonthChooser1.getMonth(), jYearChooser1.getYear());
-    }//GEN-LAST:event_jButton7ActionPerformed
-
-    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        try {
-            graficar.graficarEspecifico(usuario, EstadisticasSeleccion, jMonthChooser2.getMonth(), jYearChooser2.getYear());
-        } catch (IOException ex) {
-            Logger.getLogger(Frame_Main.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_jButton8ActionPerformed
-
     private void jlAdmMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlAdmMousePressed
         administrar_Solicitudes();
     }//GEN-LAST:event_jlAdmMousePressed
@@ -2707,22 +2684,6 @@ public class Frame_Main extends javax.swing.JFrame {
         notificaciones.setVisible(true);
     }//GEN-LAST:event_jLabel45MouseClicked
 
-    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
-        EstadisticasSeleccion = 1;
-    }//GEN-LAST:event_jRadioButton1ActionPerformed
-
-    private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
-        EstadisticasSeleccion = 4;
-    }//GEN-LAST:event_jRadioButton2ActionPerformed
-
-    private void jRadioButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton4ActionPerformed
-        EstadisticasSeleccion = 3;
-    }//GEN-LAST:event_jRadioButton4ActionPerformed
-
-    private void jRadioButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton3ActionPerformed
-        EstadisticasSeleccion = 2;
-    }//GEN-LAST:event_jRadioButton3ActionPerformed
-
     private void jButton11MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton11MouseEntered
         
         jButton11.setBackground(new Color(69, 162, 156));
@@ -3019,6 +2980,34 @@ public class Frame_Main extends javax.swing.JFrame {
         masInfoCancelar.setVisible(false);
     }//GEN-LAST:event_dudaadmSolicitud3MouseExited
 
+    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
+        EstadisticasSeleccion = 1;
+    }//GEN-LAST:event_jRadioButton1ActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        try {
+            graficar.graficarEspecifico(usuario, EstadisticasSeleccion, jMonthChooser2.getMonth(), jYearChooser2.getYear());
+        } catch (IOException ex) {
+            Logger.getLogger(Frame_Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jRadioButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton4ActionPerformed
+        EstadisticasSeleccion = 3;
+    }//GEN-LAST:event_jRadioButton4ActionPerformed
+
+    private void jRadioButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton3ActionPerformed
+        EstadisticasSeleccion = 2;
+    }//GEN-LAST:event_jRadioButton3ActionPerformed
+
+    private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
+        EstadisticasSeleccion = 4;
+    }//GEN-LAST:event_jRadioButton2ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        graficar.graficarGeneral(usuario, jMonthChooser1.getMonth(), jYearChooser1.getYear());
+    }//GEN-LAST:event_jButton7ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -3182,7 +3171,6 @@ public class Frame_Main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabelAñadir2;
-    private javax.swing.JLabel jLabelCargandoAS;
     private javax.swing.JLabel jLabelEliminar1;
     private javax.swing.JLabel jLabelRepeticion;
     private com.toedter.calendar.JMonthChooser jMonthChooser1;

@@ -24,7 +24,7 @@ public class HiloCargando extends Thread{
     } 
     public void Iniciar(String nombre){        
         this.hilo=new Thread(this,nombre);
-        jLCargando.setVisible(true);
+        this.jLCargando.setVisible(true);
         this.suspender=true;
         this.hilo.start();   
     } 

@@ -52,7 +52,7 @@ public class Frame_Main extends javax.swing.JFrame {
     private boolean tipo_espera = false;
     private boolean tipo_aceptada = false;
     private boolean tipo_cancelada = false;
-    public static HiloCargando hiloCargando=new HiloCargando();
+    private static final HiloCargando hiloCargando=new HiloCargando();;
     public static HiloFrame_Main hiloFrame_Main= new HiloFrame_Main();
     private int EstadisticasSeleccion;    
     public String Tipo;
@@ -62,7 +62,7 @@ public class Frame_Main extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         ocultar_todosPaneles();
         Paneles_Menu.setVisible(false);
-        jLCargando.setVisible(false);
+        jLCargando.setVisible(false);        
     }
 
     public void setNombreRepeticion(String nombreRepeticion) {
@@ -130,7 +130,7 @@ public class Frame_Main extends javax.swing.JFrame {
         roleLabel1 = new javax.swing.JLabel();
         jLabel43 = new javax.swing.JLabel();
         jSeparator18 = new javax.swing.JSeparator();
-        jLCargando1 = new javax.swing.JLabel();
+        jLCargandos0 = new javax.swing.JLabel();
         jLabel53 = new javax.swing.JLabel();
         Bienvenida = new javax.swing.JPanel();
         MensajeBienvenida = new javax.swing.JPanel();
@@ -739,8 +739,8 @@ public class Frame_Main extends javax.swing.JFrame {
         jSeparator18.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         Menu_UE.add(jSeparator18, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 0, 1, 519));
 
-        jLCargando1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/reloj-de-arena.png"))); // NOI18N
-        Menu_UE.add(jLCargando1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 415, 16, 16));
+        jLCargandos0.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/reloj-de-arena.png"))); // NOI18N
+        Menu_UE.add(jLCargandos0, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 415, 16, 16));
 
         jLabel53.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondo2 2.jpg"))); // NOI18N
         Menu_UE.add(jLabel53, new org.netbeans.lib.awtextra.AbsoluteConstraints(-50, 0, -1, -1));
@@ -1712,7 +1712,7 @@ public class Frame_Main extends javax.swing.JFrame {
             jLabelAñadir2.setVisible(false);
             dudaadmSolicitud1.setVisible(false);
             dudaadmSolicitud2.setVisible(false);
-            hiloCargando.setVariable(this.jLCargando1);           
+            hiloCargando.setVariable(this.jLCargandos0);           
             if (usuario.getTipoUsuario() == 4) {
                 roleLabel1.setText("Usuario Encargado");
             }
@@ -1760,6 +1760,7 @@ public class Frame_Main extends javax.swing.JFrame {
         if (result == 0) {
             Frame_Login frame_Login = new Frame_Login();
             frame_Login.setVisible(true);
+            hiloCargando.finalizarhilo();                  
             this.dispose();
         }
     }
@@ -3077,7 +3078,7 @@ public class Frame_Main extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jComboMotivos;
     private javax.swing.JComboBox<String> jComboSelectDuracion;
     public static javax.swing.JLabel jLCargando;
-    public static javax.swing.JLabel jLCargando1;
+    public static javax.swing.JLabel jLCargandos0;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

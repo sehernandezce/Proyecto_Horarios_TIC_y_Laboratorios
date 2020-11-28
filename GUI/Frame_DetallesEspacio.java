@@ -32,7 +32,7 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
     private ValidarInventario validarInventario;
     private final ArrayList<String> invDelete = new ArrayList<String>();
     private static HiloFrame_DetallesEspacio hiloFrame_DetallesEspacio= new HiloFrame_DetallesEspacio();
-    private static HiloCargando hiloCargando2=new HiloCargando();
+    private static final HiloCargando hiloCargando2=new HiloCargando();;
 
     private int Crear;
 
@@ -49,8 +49,7 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
         masInfoEstadoE.setVisible(false);
         masInfoEncargado.setVisible(false);
         habtext(false);
-        jLCargando2.setVisible(false);
-
+        jLCargando3.setVisible(false);        
     }
 
     public void setDataConexiones(ManipularConecciones con) {
@@ -80,7 +79,7 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jRadioBActivo = new javax.swing.JRadioButton();
         jRadioBInactivo = new javax.swing.JRadioButton();
-        jLCargando2 = new javax.swing.JLabel();
+        jLCargando3 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -181,8 +180,8 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
         jRadioBInactivo.setText("Inactivo");
         paneldetallesInventario.add(jRadioBInactivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 230, -1, -1));
 
-        jLCargando2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/reloj-de-arena.png"))); // NOI18N
-        paneldetallesInventario.add(jLCargando2, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 560, 16, 16));
+        jLCargando3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/reloj-de-arena.png"))); // NOI18N
+        paneldetallesInventario.add(jLCargando3, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 560, 16, 16));
 
         jLabel9.setBackground(new java.awt.Color(177, 178, 176));
         jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -512,7 +511,7 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
 
     public void llenarFrame(Usuario u, Espacio esp, Frame_Main frame) throws SQLException {
         this.hiloFrame_DetallesEspacio.setVariable(this);
-        this.hiloCargando2.setVariable(jLCargando2);
+        this.hiloCargando2.setVariable(jLCargando3);
         this.usuario = u;
         this.fraim = frame;
         jTextCorreoEncargado.setText(esp.getCorreo_encargado());
@@ -605,7 +604,7 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
                     jTextField2.setText(String.valueOf(n));
                     Crear = 0;
                 }
-             
+                 
                 if (validarInventario.ValidarInfoInventario(usuario, jTextField2.getText(), inventario, invDelete)) {
                     JOptionPane.showMessageDialog(null, "Se han actualizado los datos correctamente", "Guardado", JOptionPane.INFORMATION_MESSAGE);
                     invDelete.clear();
@@ -616,14 +615,7 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
                 } else {
                     JOptionPane.showMessageDialog(null, "Se ha actualizado los datos del espacio. Ha ocurrido un error al actualizar el inventario", "Error", JOptionPane.INFORMATION_MESSAGE);
                 }
-               
-                    try {
-                        Thread.sleep(10000);
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(Frame_DetallesEspacio.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                    fraim.hiloFrame_Main.Iniciar("solicitar_Espacio", jTextField3.getText());
-                
+                fraim.hiloFrame_Main.Iniciar("solicitar_Espacio", jTextField3.getText());                    
             } else if (n == -1 || n == -5) {
                 JOptionPane.showMessageDialog(null, "El usuario " + usuario.getNombreusuarioInstitucional() + " no tiene permisos para modificar los espacios", "Accion invalida", JOptionPane.INFORMATION_MESSAGE);
             } else if (n == -2) {
@@ -686,6 +678,7 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
         int result = JOptionPane.showConfirmDialog(null, "¿Desea cerrar el esta ventana?", "Exit", dialog);
 
         if (result == 0) {
+            hiloCargando2.finalizarhilo(); 
             this.fraim.setEnabled(true);
             this.dispose();
 
@@ -719,8 +712,7 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonEditarActionPerformed
 
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
-           Frame_Main.hiloCargando.Iniciar("Actualizar");
-           hiloCargando2.Iniciar("Cargando1");   
+           hiloCargando2.Iniciar("CargandoDetalles");   
            hiloFrame_DetallesEspacio.Iniciar("guardar", ""); 
      
     }//GEN-LAST:event_jButtonGuardarActionPerformed
@@ -877,7 +869,7 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
     private javax.swing.JButton jButtonEditar;
     private javax.swing.JButton jButtonGuardar;
     private javax.swing.JButton jButtonNuevo;
-    public static javax.swing.JLabel jLCargando2;
+    public static javax.swing.JLabel jLCargando3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

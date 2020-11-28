@@ -4,6 +4,8 @@ import Control.Validar_Login;
 import Control.Validar_Registro;
 import Control.ManipularConecciones;
 import Entidad.Usuario;
+import Hilos.HiloCargando;
+import Hilos.HiloFrame_Login;
 import java.awt.Color;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -14,6 +16,8 @@ public class Frame_Login extends javax.swing.JFrame {
     private Frame_Main frame_Main = new Frame_Main();
     private ManipularConecciones datosConexion = new ManipularConecciones();
     private ManipularConecciones datosConexionTemporal = new ManipularConecciones();
+    private static HiloFrame_Login hiloFrame_Login= new HiloFrame_Login();
+    private static final HiloCargando hiloCargando= new HiloCargando();;
     private int x, y;
 
     public Frame_Login() {
@@ -22,8 +26,10 @@ public class Frame_Login extends javax.swing.JFrame {
         grupo_botones.add(jRBYes);
         grupo_botones.add(jRBNo);
         panelRegistrase.setVisible(false);
-        panelRecupararCon.setVisible(false);
-     
+        panelRecupararCon.setVisible(false);        
+        hiloFrame_Login.setVariable(this);
+        hiloCargando.setVariable(jLCargando2);
+        jLCargando2.setVisible(false);
     }
     
 
@@ -31,11 +37,11 @@ public class Frame_Login extends javax.swing.JFrame {
 
     private void creaConexionTemporal() {
         Usuario us = new Usuario();
-        us.setTipoUsuario(2);
+        us.setTipoUsuario(-10);
         datosConexionTemporal.crearConeccion(us);
     }
 
-    private void logIn() { 
+    public void logIn() { 
             
         try {
             creaConexionTemporal();
@@ -53,6 +59,7 @@ public class Frame_Login extends javax.swing.JFrame {
                 frame_Main.entrar_bienvenida(usuario);               
                 frame_Main.setVisible(true);
                 frame_Main.setdataConexiones(datosConexion);
+                hiloCargando.finalizarhilo();
                 this.dispose();
 
             } else if (usuario.getTipoUsuario() == -1 || usuario.getTipoUsuario() == 3 || usuario.getTipoUsuario() == 5) {
@@ -70,7 +77,7 @@ public class Frame_Login extends javax.swing.JFrame {
         } catch (Exception ex) {
             Logger.getLogger(Frame_Login.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        hiloCargando.finalizarhilo();
     }
 
     private void logUp() { 
@@ -178,6 +185,7 @@ public class Frame_Login extends javax.swing.JFrame {
         LbUsuario1 = new javax.swing.JLabel();
         LbRegistrar2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        jLCargando2 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         panelRegistrase = new javax.swing.JPanel();
         usuario_r = new javax.swing.JTextField();
@@ -358,6 +366,9 @@ public class Frame_Login extends javax.swing.JFrame {
         });
         panelIniciarSesion.add(LbRegistrar2, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 330, 160, -1));
         panelIniciarSesion.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 440, -1, -1));
+
+        jLCargando2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/reloj-de-arena.png"))); // NOI18N
+        panelIniciarSesion.add(jLCargando2, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 389, 16, 16));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondo1.jpg"))); // NOI18N
         jLabel2.setText("jLabel2");
@@ -646,7 +657,8 @@ public class Frame_Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void IngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IngresarActionPerformed
-       logIn();
+        hiloCargando.Iniciar("Cargando_logIn");   
+        hiloFrame_Login.Iniciar("logIn", "");         
     }//GEN-LAST:event_IngresarActionPerformed
 
     private void LbRegistrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LbRegistrarMouseClicked
@@ -843,6 +855,7 @@ public class Frame_Login extends javax.swing.JFrame {
     private javax.swing.JLabel dominioUn;
     private javax.swing.JLabel dominioUn1;
     private javax.swing.ButtonGroup grupo_botones;
+    public static javax.swing.JLabel jLCargando2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

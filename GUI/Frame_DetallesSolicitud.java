@@ -1,23 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package GUI;
 
 import Entidad.Usuario;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import java.awt.Color;
+import javax.swing.ImageIcon;
 
-/**
- *
- * @author Asus
- */
 public class Frame_DetallesSolicitud extends javax.swing.JFrame {
 
-    /** Creates new form Frame_DetallesSolicitud */
+ 
     private int x,y;    
     private Usuario usuario;
     private Frame_Main fraim; 
@@ -111,6 +102,7 @@ public class Frame_DetallesSolicitud extends javax.swing.JFrame {
         jF_motivo = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         jF_obs = new javax.swing.JTextField();
+        Fondo5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(770, 617));
@@ -128,7 +120,7 @@ public class Frame_DetallesSolicitud extends javax.swing.JFrame {
         });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        panelCerrar.setBackground(new java.awt.Color(153, 153, 153));
+        panelCerrar.setBackground(new java.awt.Color(86, 90, 92));
         panelCerrar.setForeground(new java.awt.Color(102, 255, 255));
         panelCerrar.setMaximumSize(new java.awt.Dimension(50, 30));
         panelCerrar.setMinimumSize(new java.awt.Dimension(50, 30));
@@ -140,6 +132,12 @@ public class Frame_DetallesSolicitud extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jlClose1MouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jlClose1MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jlClose1MouseExited(evt);
+            }
         });
         panelCerrar.add(jlClose1, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 10, 20, -1));
 
@@ -147,6 +145,12 @@ public class Frame_DetallesSolicitud extends javax.swing.JFrame {
         jlMinimize1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jlMinimize1MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jlMinimize1MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jlMinimize1MouseExited(evt);
             }
         });
         panelCerrar.add(jlMinimize1, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 10, 20, -1));
@@ -165,40 +169,60 @@ public class Frame_DetallesSolicitud extends javax.swing.JFrame {
         jPanel1.setMinimumSize(new java.awt.Dimension(770, 617));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 21)); // NOI18N
+        jLabel1.setBackground(new java.awt.Color(0, 102, 255));
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 102, 255));
         jLabel1.setText("Información del evento:");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 26, 280, 29));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 26, 440, 29));
 
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel2.setText("Fecha de inicio:");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(41, 107, -1, -1));
 
+        jFF_inicio.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jFF_inicio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jFF_inicioActionPerformed(evt);
             }
         });
         jPanel1.add(jFF_inicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(133, 98, 248, 32));
+
+        jFH_inicio.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jPanel1.add(jFH_inicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(133, 169, 248, 32));
 
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel3.setText("Hora de inicio:");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(47, 178, -1, -1));
+
+        jF_repeticion.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jPanel1.add(jF_repeticion, new org.netbeans.lib.awtextra.AbsoluteConstraints(133, 241, 248, 32));
 
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel4.setText("Repeticion:");
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(61, 250, -1, -1));
+
+        jF_nombre_esp.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jPanel1.add(jF_nombre_esp, new org.netbeans.lib.awtextra.AbsoluteConstraints(133, 313, 248, 32));
 
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel5.setText("Nombre del espacio:");
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 322, -1, -1));
+
+        jF_nombre_edi.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jPanel1.add(jF_nombre_edi, new org.netbeans.lib.awtextra.AbsoluteConstraints(133, 384, 248, 32));
 
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel6.setText("Nombre edificio:");
         jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(38, 393, -1, -1));
+
+        jF_salon.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jPanel1.add(jF_salon, new org.netbeans.lib.awtextra.AbsoluteConstraints(133, 453, 103, 32));
 
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel7.setText("Salón:");
         jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(85, 462, -1, -1));
 
+        jFF_final.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jFF_final.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jFF_finalActionPerformed(evt);
@@ -206,24 +230,41 @@ public class Frame_DetallesSolicitud extends javax.swing.JFrame {
         });
         jPanel1.add(jFF_final, new org.netbeans.lib.awtextra.AbsoluteConstraints(492, 98, 248, 32));
 
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel8.setText("Fecha de final:");
         jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(403, 107, -1, -1));
+
+        jFH_final.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jPanel1.add(jFH_final, new org.netbeans.lib.awtextra.AbsoluteConstraints(492, 169, 248, 32));
 
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel9.setText("Hora final:");
         jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(424, 178, -1, -1));
 
+        jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel10.setText("Dias:");
         jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 250, -1, -1));
+
+        jF_dias.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jPanel1.add(jF_dias, new org.netbeans.lib.awtextra.AbsoluteConstraints(492, 241, 248, 32));
 
+        jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel11.setText("Motivo:");
         jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(438, 322, -1, -1));
+
+        jF_motivo.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jPanel1.add(jF_motivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(492, 313, 248, 32));
 
+        jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel12.setText("Observaciones:");
         jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(407, 393, -1, -1));
+
+        jF_obs.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jPanel1.add(jF_obs, new org.netbeans.lib.awtextra.AbsoluteConstraints(492, 390, 248, 95));
+
+        Fondo5.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        Fondo5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondo_blanco1 1 .jpg"))); // NOI18N
+        jPanel1.add(Fondo5, new org.netbeans.lib.awtextra.AbsoluteConstraints(-20, 0, 880, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 770, 600));
 
@@ -263,6 +304,22 @@ public class Frame_DetallesSolicitud extends javax.swing.JFrame {
         y= evt.getY(); 
     }//GEN-LAST:event_formMousePressed
 
+    private void jlMinimize1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlMinimize1MouseEntered
+        jlMinimize1.setIcon(new ImageIcon("src/Imagenes/menos.png"));
+    }//GEN-LAST:event_jlMinimize1MouseEntered
+
+    private void jlMinimize1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlMinimize1MouseExited
+         jlMinimize1.setIcon(new ImageIcon("src/Imagenes/linea.png")); 
+    }//GEN-LAST:event_jlMinimize1MouseExited
+
+    private void jlClose1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlClose1MouseEntered
+        jlClose1.setIcon(new ImageIcon("src/Imagenes/cancelar-marca.png"));
+    }//GEN-LAST:event_jlClose1MouseEntered
+
+    private void jlClose1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlClose1MouseExited
+     jlClose1.setIcon(new ImageIcon("src/Imagenes/incorrecto.png"));
+    }//GEN-LAST:event_jlClose1MouseExited
+
     /**
      * @param args the command line arguments
      */
@@ -299,6 +356,7 @@ public class Frame_DetallesSolicitud extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel Fondo5;
     private javax.swing.JLabel LbUsuario;
     private javax.swing.JTextField jFF_final;
     private javax.swing.JTextField jFF_inicio;

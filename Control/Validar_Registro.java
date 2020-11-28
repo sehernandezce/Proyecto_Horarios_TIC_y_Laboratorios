@@ -3,12 +3,6 @@ package Control;
 
 import DAO.UsuarioDAO;
 import Entidad.Usuario;
-/*librerías de seguridad:*/
-import javax.crypto.SecretKey;
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.PBEKeySpec;
-import java.security.SecureRandom;
-import org.apache.commons.codec.binary.Base64;
 
 
 public class Validar_Registro {
@@ -27,20 +21,20 @@ public class Validar_Registro {
     
     public int verificarRegistro(String name, String pass1, String pass2, int tipoUsuario, String codigo) throws Exception{
         if(!verificarLongitudNombre(name)){
-            return(-1); // "Longitud nombre incorreta"
+            return(-1);
         }
         else if (!verificarLongitudPassword(pass1)){
-            return(-2); // "Longitud contraseña incorreta"
+            return(-2); 
         }
          else if (!verificarContrasenias(pass1,pass2)){
-            return(-3);//"Las contraseñas no coinciden"
+            return(-3);
         }
          else if (!verificarSeguridadContrasenias(pass1)){
-            return(-4);//"La contraseña no es segura. Debe tener al menos un numero, una mayuscula y una minuscula "
+            return(-4);
         }
          else if(tipoUsuario==2){
             if(!dao.VerificarCode(codigo)){
-                 return -5;//"Codigo incorrecto"
+                 return -5;
             }else{
              usuario.setNombreusuarioInstitucional(name);
              usuario.setContrasenia(pass1); 
@@ -58,7 +52,7 @@ public class Validar_Registro {
              usuario.setContrasenia(pass1);                
              usuario.setTipoUsuario(tipoUsuario);       
               if(dao.crear(usuario)){
-                 return 1;  //"Usuario registrado"
+                 return 1; 
              }else{
                  return -6;
              }
@@ -108,23 +102,23 @@ public class Validar_Registro {
      
       public int camPass(String U, String pass1, String pass2, String cod) throws Exception{
          if(!verificarLongitudNombre(U)){
-            return(-1); // "Longitud nombre incorreta"
+            return(-1);
         }
         else if (!verificarLongitudPassword(pass1)){
-            return(-2); // "Longitud contraseña incorreta"
+            return(-2); 
         }
          else if (!verificarContrasenias(pass1,pass2)){
-            return(-3);//"Las contraseñas no coinciden"
+            return(-3);
         }
          else if (!verificarSeguridadContrasenias(pass1)){
-            return(-4);//"La contraseña no es segura. Debe tener al menos un numero, una mayuscula y una minuscula "
+            return(-4);
         } else if (!verificarLongitudCode(cod)){
-            return(-5);//"Codigo incorrecto "
+            return(-5);
         }else if(dao.VerificarCode(cod,U)){           
               usuario.setNombreusuarioInstitucional(U);
               usuario.setContrasenia(pass1);              
                if(dao.actualizarPASS(usuario)){
-                  return 1;  //"Usuario registrado"
+                  return 1; 
               }else{
                   return -6;
               }                         
@@ -142,22 +136,22 @@ public class Validar_Registro {
     
     public int cambiarcontrasenia(Usuario u, String pass1, String pass2) throws Exception{
         if(!verificarLongitudNombre(u.getNombreusuarioInstitucional())){
-            return(-1); // "Longitud nombre incorreta"
+            return(-1); 
         }
         else if(verificarContrasenias(u.getContrasenia(),pass1)){
             return(-6);
         }
         else if (!verificarLongitudPassword(u.getContrasenia())){
-            return(-2); // "Longitud contraseña incorreta"
+            return(-2);
         }else if (!verificarLongitudPassword(pass1)){
-            return(-2); // "Longitud contraseña incorreta"
+            return(-2); 
         }
          else if (!verificarContrasenias(pass1,pass2)){
-            return(-3);//"Las contraseñas no coinciden"
+            return(-3);
         }else if (!verificarSeguridadContrasenias(pass1)){
-            return(-4);//"La contraseña no es segura. Debe tener al menos un numero, una mayuscula y una minuscula "
+            return(-4);
         }else if(dao.leer(u)<=0){
-             return(0);//datos incorrectos
+             return(0);
         }else{
             u.setContrasenia(pass1);
              if(dao.actualizarPASS(u)){
@@ -176,16 +170,16 @@ public class Validar_Registro {
              return(-6);
         }
         else if(!verificarLongitudNombre(u.getNombreusuarioInstitucional())){
-            return(-1); // "Longitud nombre incorreta"
+            return(-1); 
         }
         else if (!verificarLongitudPassword(u.getContrasenia())){
-            return(-2); // "Longitud contraseña incorreta"
+            return(-2);
         }else if (!verificarLongitudPassword(codigo)){
-            return(-3); // "Longitud contraseña incorreta"
+            return(-3); 
         } else if (!verificarSeguridadContrasenias(codigo)){
-            return(-4);//"La contraseña no es segura. Debe tener al menos un numero, una mayuscula y una minuscula "
+            return(-4);
         }else if(dao.leer(u)<=0){
-             return(0);//datos incorrectos
+             return(0);
         }else{
             Usuario code=new Usuario();
             code.setNombreusuarioInstitucional("UserCode");
@@ -204,16 +198,16 @@ public class Validar_Registro {
              return(-6);
         }
         else if(!verificarLongitudNombre(u.getNombreusuarioInstitucional())){
-            return(-1); // "Longitud nombre incorreta"
+            return(-1); 
         }
         else if (!verificarLongitudPassword(u.getContrasenia())){
-            return(-2); // "Longitud contraseña incorreta"
+            return(-2); 
         }else if (!verificarContrasenias(pass,pass2)){
-            return(-3);//"Las contraseñas no coinciden"
+            return(-3);
         }else if(correo.length()==0 || pass.length()==0){
             return(-4);
         }else if(dao.leer(u)<=0){
-             return(0);//datos incorrectos
+             return(0);
         }else{
             Usuario corre=new Usuario();
             corre.setNombreusuarioInstitucional(correo);

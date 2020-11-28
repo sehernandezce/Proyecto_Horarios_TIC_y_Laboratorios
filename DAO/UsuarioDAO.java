@@ -18,7 +18,7 @@ import java.util.logging.Logger;
 public class UsuarioDAO {
     
     static final String DB_URL
-            = "jdbc:mysql://database-1.cjxw1f4bh3ms.us-east-1.rds.amazonaws.com:3306/Horarios_Tics_y_Laboratorios"; //Endpoint
+            = "jdbc:mysql://database-1.cjxw1f4bh3ms.us-east-1.rds.amazonaws.com:3306/Horarios_Tics_y_Laboratorios";
     static final String DB_USER = "SeeTableUser"; 
     static final String DB_PASSWD = "ISsRD1*y"; 
     
@@ -36,7 +36,7 @@ public class UsuarioDAO {
     }
     
     
-    public boolean crear(Usuario object) throws Exception { // Ingresar un usuario en la base de datos
+    public boolean crear(Usuario object) throws Exception { 
         Statement statement = null;
         ResultSet resultSet2 = null;
         int resultSet;      
@@ -67,7 +67,7 @@ public class UsuarioDAO {
 
     }
 
-    public int leer(Usuario par) throws Exception { // Buscar un usuario en la base de datos. 0=Usuario no existe
+    public int leer(Usuario par) throws Exception { 
         Statement statement = null;
         ResultSet resultSet = null;
         try {
@@ -75,7 +75,6 @@ public class UsuarioDAO {
             statement = connection.createStatement();
             resultSet = statement.executeQuery("SELECT * FROM USUARIOS "
                     + "WHERE USUARIOINSTITUCIONAL = '" + par.getNombreusuarioInstitucional() + "'" );
- //                   + "' AND CONTRASENIA='" + par.getContrasenia() + "'");
             
             if(resultSet.next()){
                 if(contraseniahasheada.check(par.getContrasenia(), resultSet.getString(3))){
@@ -107,7 +106,7 @@ public class UsuarioDAO {
     }
     
     
-    public boolean VerificarCode(String cod) throws Exception { // Verifica el codigo
+    public boolean VerificarCode(String cod) throws Exception { 
         Statement statement = null;
         ResultSet resultSet = null;
          
@@ -117,7 +116,7 @@ public class UsuarioDAO {
             resultSet = statement.executeQuery("SELECT * FROM USUARIOS "
                     + "WHERE USUARIOINSTITUCIONAL = 'UserCode" 
                     + "'AND ID_TIPOUSUARIO = '3' ");
-           //         + "AND CONTRASENIA='" + cod + "'");
+           
             
             if(resultSet.next()){                    
                 if(contraseniahasheada.check(cod, resultSet.getString(3))){
@@ -147,7 +146,7 @@ public class UsuarioDAO {
 
     }
     
-      public String existir(String user) throws Exception { // Buscar un usuario en la base de datos. 0=Usuario no existe
+      public String existir(String user) throws Exception {
         Statement statement = null;
         ResultSet resultSet = null;
         try {
@@ -228,7 +227,7 @@ public class UsuarioDAO {
 
     }
         
-    public boolean VerificarCode(String cod, String U) throws Exception { // Verifica el codigo
+    public boolean VerificarCode(String cod, String U) throws Exception { 
         Statement statement = null;
         ResultSet resultSet = null;
          
@@ -272,7 +271,7 @@ public class UsuarioDAO {
 
     }
     
-      public boolean actualizarPASS(Usuario object) throws Exception { // Ingresar un usuario en la base de datos
+      public boolean actualizarPASS(Usuario object) throws Exception { 
         Statement statement = null;
                 
         
@@ -301,7 +300,7 @@ public class UsuarioDAO {
     }
       
     
-      public boolean actualizarCorreoNot(Usuario object) throws Exception { // Ingresar un usuario en la base de datos
+      public boolean actualizarCorreoNot(Usuario object) throws Exception { 
         Statement statement = null;
         ResultSet resultSet=null;        
         
@@ -357,7 +356,7 @@ public class UsuarioDAO {
 
     }
      
-    public Usuario leerCorreoNotificar() throws Exception { // Buscar un usuario en la base de datos. 0=Usuario no existe
+    public Usuario leerCorreoNotificar() throws Exception { 
         Statement statement = null;
         ResultSet resultSet = null;
         try {

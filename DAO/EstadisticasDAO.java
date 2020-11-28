@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package DAO;
 
 import java.sql.Connection;
@@ -10,12 +5,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import Entidad.Usuario;
-import DAO.UsuarioDAO;
 
-/**
- *
- * @author brukm
- */
 public class EstadisticasDAO {
 
     static final String DB_URL
@@ -49,7 +39,6 @@ public class EstadisticasDAO {
             statement = connection.createStatement();
             DB_USER = null;
             DB_PASSWD = null;
-            //VALUES ('453', '1', '2', 'lab prueba', '123', '1', '312');
             resultSet = statement.executeQuery("SELECT * from SOLICITUDES, ESPACIOS WHERE mesREGEX and ESPACIOS.ID_TIPOESPACIO =" + tipoEspacio + ";");
             if (resultSet.next()) {
                 return Integer.valueOf(resultSet.getString(1));
@@ -64,7 +53,7 @@ public class EstadisticasDAO {
                 resultSet.close();
                 statement.close();
                 connection.close();
-                //return null;
+               
             } catch (Exception ex) {
 
             }

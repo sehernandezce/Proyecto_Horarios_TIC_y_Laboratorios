@@ -41,15 +41,11 @@ public class HiloCargando extends Thread{
                     }else{
                        jLCargando.setIcon(new ImageIcon("src/Imagenes/reloj-de-arena.png"));  
                         giro=true;                            
-                    }
-                    System.out.println(hilo.getName()+ "  supender: "+this.suspender);
+                    }                   
                     Thread.sleep(2000); 
                    // wait(); 
                 }
-                jLCargando.setVisible(false); 
-             
-     //          } 
-            
+                jLCargando.setVisible(false);     
         }catch (InterruptedException exc){ 
             System.out.println(hilo.getName()+ "interrumpido."); 
         }         

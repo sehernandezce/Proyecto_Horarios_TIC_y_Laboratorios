@@ -52,7 +52,7 @@ public class Frame_Main extends javax.swing.JFrame {
     private boolean tipo_espera = false;
     private boolean tipo_aceptada = false;
     private boolean tipo_cancelada = false;
-    private static final HiloCargando hiloCargando=new HiloCargando();;
+    private static HiloCargando hiloCargando=new HiloCargando();
     public static HiloFrame_Main hiloFrame_Main= new HiloFrame_Main();
     private int EstadisticasSeleccion;    
     public String Tipo;
@@ -288,6 +288,9 @@ public class Frame_Main extends javax.swing.JFrame {
             }
         });
         addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                formMouseClicked(evt);
+            }
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 formMousePressed(evt);
             }
@@ -1696,7 +1699,17 @@ public class Frame_Main extends javax.swing.JFrame {
         validarEspacios = new ValidarEspacios(con);
         validarSolicitudes = new Validar_administrar_solicitud(con);
     }
-
+    
+    public void cargando(){        
+        hiloCargando=new HiloCargando();
+         if (usuario.getTipoUsuario() == 1 || usuario.getTipoUsuario() == 4) {
+         hiloCargando.setVariable(this.jLCargando);
+         }else if(usuario.getTipoUsuario() == 2){
+            hiloCargando.setVariable(this.jLCargandos0);  
+         }
+          
+    }
+            
     public void entrar_bienvenida(Usuario usuario2) {
         ocultar_todosPaneles();
         Bienvenida.setVisible(true);
@@ -2210,6 +2223,7 @@ public class Frame_Main extends javax.swing.JFrame {
 
 
     private void jlLabMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlLabMousePressed
+        cargando();
         hiloCargando.Iniciar("Laboratorios");   
         hiloFrame_Main.Iniciar("solicitar_Espacio", "Laboratorios");       
     }//GEN-LAST:event_jlLabMousePressed
@@ -2255,39 +2269,46 @@ public class Frame_Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jCheckBox3ActionPerformed
 
     private void jLabel19MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel19MousePressed
+        cargando();
         hiloCargando.Iniciar("Laboratorios2");   
         hiloFrame_Main.Iniciar("solicitar_Espacio", "Laboratorios");    
     }//GEN-LAST:event_jLabel19MousePressed
 
     private void jLabel20MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel20MousePressed
+        cargando();
         hiloCargando.Iniciar("Sala de reuniones2");   
         hiloFrame_Main.Iniciar("solicitar_Espacio", "Sala de reuniones");    
     }//GEN-LAST:event_jLabel20MousePressed
 
     private void jLabel21MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel21MousePressed
+        cargando();
         hiloCargando.Iniciar("Sala de computadores2");   
         hiloFrame_Main.Iniciar("solicitar_Espacio", "Sala de computadores");   
      
     }//GEN-LAST:event_jLabel21MousePressed
 
     private void jLabel22MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel22MousePressed
+        cargando();
         hiloCargando.Iniciar("Auditorios2");   
         hiloFrame_Main.Iniciar("solicitar_Espacio", "Auditorios"); 
     }//GEN-LAST:event_jLabel22MousePressed
 
     private void jlSalaRMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlSalaRMousePressed
+        cargando();
         hiloCargando.Iniciar("Sala de reuniones");   
         hiloFrame_Main.Iniciar("solicitar_Espacio", "Sala de reuniones"); 
         llenarMotivos(usuario);
     }//GEN-LAST:event_jlSalaRMousePressed
 
     private void jLabel4MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MousePressed
+        cargando();
         hiloCargando.Iniciar("Sala de computadores");   
         hiloFrame_Main.Iniciar("solicitar_Espacio", "Sala de computadores"); 
         llenarMotivos(usuario);
     }//GEN-LAST:event_jLabel4MousePressed
 
     private void jLabel5MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MousePressed
+        cargando();
         hiloCargando.Iniciar("Auditorios");   
         hiloFrame_Main.Iniciar("solicitar_Espacio", "Auditorios"); 
         llenarMotivos(usuario);
@@ -2307,7 +2328,7 @@ public class Frame_Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField2ActionPerformed
 
     private void Aceptar_sol_botonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Aceptar_sol_botonActionPerformed
-  
+        cargando();
             hiloCargando.Iniciar("Aceptada1");   
             hiloFrame_Main.Iniciar("cambiarEstado", "Aceptada");
        
@@ -2481,6 +2502,7 @@ public class Frame_Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton10ActionPerformed
 
     private void Rechazar_sol_botonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Rechazar_sol_botonActionPerformed
+           cargando();  
            hiloCargando.Iniciar("Rechazada1");   
            hiloFrame_Main.Iniciar("cambiarEstado", "Rechazada");  
     }//GEN-LAST:event_Rechazar_sol_botonActionPerformed
@@ -2500,6 +2522,7 @@ public class Frame_Main extends javax.swing.JFrame {
             int dia_terminaSemana = calendarfinal.get(Calendar.DAY_OF_WEEK);
 
             if (obt_diaSemana() != 1 && dia_terminaSemana != 1) {
+                cargando();
                 hiloCargando.Iniciar("Solicitar");   
                 hiloFrame_Main.Iniciar("verificarIngresoSolicitud", "");      
             } else {
@@ -2586,6 +2609,7 @@ public class Frame_Main extends javax.swing.JFrame {
     }//GEN-LAST:event_JtfUsuarioActionPerformed
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
+        cargando();
         hiloCargando.Iniciar("Cargando");   
         hiloFrame_Main.Iniciar("guardarCamContrasenia", ""); 
     }//GEN-LAST:event_jButton11ActionPerformed
@@ -2965,6 +2989,10 @@ public class Frame_Main extends javax.swing.JFrame {
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         graficar.graficarGeneral(usuario, jMonthChooser1.getMonth(), jYearChooser1.getYear());
     }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
+        
+    }//GEN-LAST:event_formMouseClicked
 
     /**
      * @param args the command line arguments

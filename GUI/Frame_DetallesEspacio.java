@@ -680,7 +680,9 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
         if (result == 0) {
             hiloCargando2.finalizarhilo(); 
             this.fraim.setEnabled(true);
+            this.fraim.cargando();
             this.dispose();
+            
 
         }
 

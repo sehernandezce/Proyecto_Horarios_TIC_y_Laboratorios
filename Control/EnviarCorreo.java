@@ -25,6 +25,7 @@ public class EnviarCorreo {
     
 
     public boolean enviarC(Correo correo) throws AddressException, Exception {
+        try {
         Properties props = new Properties();
         props.setProperty("mail.smtp.host", "smtp.gmail.com");
         props.setProperty("mail.smtp.starttls.enable", "true");
@@ -44,7 +45,7 @@ public class EnviarCorreo {
         String mensaje = correo.getMensaje();          
 
         MimeMessage message = new MimeMessage(session);
-        try {
+        
             message.setFrom(new InternetAddress(correoRemitente));
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(correoReceptor));
             message.setSubject(asunto);
@@ -55,7 +56,7 @@ public class EnviarCorreo {
             t.sendMessage(message, message.getRecipients(Message.RecipientType.TO));
             t.close();
             return true;
-        } catch (MessagingException ex) {
+        } catch (Exception ex) {
 
             Logger.getLogger(EnviarCorreo.class.getName()).log(Level.SEVERE, null, ex);
             return false;

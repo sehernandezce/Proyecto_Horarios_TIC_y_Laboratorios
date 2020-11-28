@@ -2,6 +2,8 @@ package Hilos;
 
 
 import GUI.Frame_Login;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class HiloFrame_Login extends Thread{
@@ -32,7 +34,15 @@ public class HiloFrame_Login extends Thread{
                 frame_Login.logIn();
                 break;
             }
-
+            case "forgetPass":
+            {
+            try {
+                frame_Login.forgetPass();
+            } catch (Exception ex) {
+                Logger.getLogger(HiloFrame_Login.class.getName()).log(Level.SEVERE, null, ex);
+            }
+                break;
+            }
         }
          
     }

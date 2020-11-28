@@ -27,9 +27,9 @@ public class Frame_Login extends javax.swing.JFrame {
         grupo_botones.add(jRBNo);
         panelRegistrase.setVisible(false);
         panelRecupararCon.setVisible(false);        
-        hiloFrame_Login.setVariable(this);
-        hiloCargando.setVariable(jLCargando2);
+        hiloFrame_Login.setVariable(this);              
         jLCargando2.setVisible(false);
+        jLCargandoRecon.setVisible(false);
     }
     
 
@@ -118,7 +118,7 @@ public class Frame_Login extends javax.swing.JFrame {
         }
     }
 
-    private void forgetPass() throws Exception {
+    public void forgetPass() throws Exception {
         creaConexionTemporal(); 
         Validar_Login validar_Login = new Validar_Login(datosConexionTemporal);
         
@@ -135,10 +135,10 @@ public class Frame_Login extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Ha ocurrido un error al enviar el correo, por favor intente más tarde.", "Error", JOptionPane.INFORMATION_MESSAGE);
 
         } else if (val == -4) {
-            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al generar el código, por favor intente más tarde.", "Error", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al conectar con la base de datos, por favor intente más tarde.", "Error", JOptionPane.INFORMATION_MESSAGE);
 
         }
-
+        hiloCargando.finalizarhilo();
     }
 
     private void CamPass() throws Exception {
@@ -215,6 +215,7 @@ public class Frame_Login extends javax.swing.JFrame {
         usuario_institucional_r4 = new javax.swing.JLabel();
         usuario_institucional_r5 = new javax.swing.JLabel();
         usuario_institucional_r6 = new javax.swing.JLabel();
+        jLCargandoRecon = new javax.swing.JLabel();
         jPanelCam = new javax.swing.JPanel();
         signInTitle3 = new javax.swing.JLabel();
         jSeparator5 = new javax.swing.JSeparator();
@@ -566,6 +567,9 @@ public class Frame_Login extends javax.swing.JFrame {
         usuario_institucional_r6.setText("Usuario institucional:");
         panelRecupararCon.add(usuario_institucional_r6, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 120, 120, 30));
 
+        jLCargandoRecon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/reloj-de-arena.png"))); // NOI18N
+        panelRecupararCon.add(jLCargandoRecon, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 140, 16, 16));
+
         jPanelCam.setBackground(new java.awt.Color(204, 204, 204));
         jPanelCam.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 102, 102)));
         jPanelCam.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -657,6 +661,7 @@ public class Frame_Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void IngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IngresarActionPerformed
+        hiloCargando.setVariable(jLCargando2); 
         hiloCargando.Iniciar("Cargando_logIn");   
         hiloFrame_Login.Iniciar("logIn", "");         
     }//GEN-LAST:event_IngresarActionPerformed
@@ -669,7 +674,8 @@ public class Frame_Login extends javax.swing.JFrame {
     private void jlClose1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlClose1MouseClicked
         int dialog = JOptionPane.YES_NO_OPTION;
         int result = JOptionPane.showConfirmDialog(null, "¿Desea cerrar el programa?", "Exit", dialog);
-        if (result == 0) {         
+        if (result == 0) {
+            hiloCargando.finalizarhilo();
             System.exit(0);
         }
     }//GEN-LAST:event_jlClose1MouseClicked
@@ -711,13 +717,9 @@ public class Frame_Login extends javax.swing.JFrame {
     }//GEN-LAST:event_JtfUsuarioActionPerformed
 
     private void registrarse1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrarse1ActionPerformed
-
-        try {
-            forgetPass();
-        } catch (Exception ex) {
-            Logger.getLogger(Frame_Login.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
+        hiloCargando.setVariable(jLCargandoRecon);
+        hiloCargando.Iniciar("Cargando");   
+        hiloFrame_Login.Iniciar("forgetPass", ""); 
     }//GEN-LAST:event_registrarse1ActionPerformed
 
     private void LbRegistrar3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LbRegistrar3MouseClicked
@@ -856,6 +858,7 @@ public class Frame_Login extends javax.swing.JFrame {
     private javax.swing.JLabel dominioUn1;
     private javax.swing.ButtonGroup grupo_botones;
     public static javax.swing.JLabel jLCargando2;
+    public static javax.swing.JLabel jLCargandoRecon;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

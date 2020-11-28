@@ -26,6 +26,8 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import Control.GraficarEstadisticas;
 import Control.ManipularConecciones;
+import Hilos.HiloCargando;
+import Hilos.HiloGUI;
 import javax.swing.ImageIcon;
 import java.io.IOException;
 
@@ -51,7 +53,7 @@ public class Frame_Main extends javax.swing.JFrame {
     private boolean tipo_aceptada = false;
     private boolean tipo_cancelada = false;
     private int EstadisticasSeleccion;
-
+    private static HiloGUI hiloGUI = new HiloGUI();
     public String Tipo;
 
     public Frame_Main() {
@@ -59,7 +61,7 @@ public class Frame_Main extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         ocultar_todosPaneles();
         Paneles_Menu.setVisible(false);
-
+        jLCargando.setVisible(false);
     }
 
     public void setNombreRepeticion(String nombreRepeticion) {
@@ -102,6 +104,7 @@ public class Frame_Main extends javax.swing.JFrame {
         jSeparator10 = new javax.swing.JSeparator();
         jLabel11 = new javax.swing.JLabel();
         jSeparator17 = new javax.swing.JSeparator();
+        jLCargando = new javax.swing.JLabel();
         jLabel52 = new javax.swing.JLabel();
         Menu_UE = new javax.swing.JPanel();
         jSeparator20 = new javax.swing.JSeparator();
@@ -547,6 +550,9 @@ public class Frame_Main extends javax.swing.JFrame {
         jSeparator17.setOrientation(javax.swing.SwingConstants.VERTICAL);
         jSeparator17.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         Menu_UC.add(jSeparator17, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 0, 1, 518));
+
+        jLCargando.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/reloj-de-arena.png"))); // NOI18N
+        Menu_UC.add(jLCargando, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 415, 20, -1));
 
         jLabel52.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondo2 2.jpg"))); // NOI18N
         Menu_UC.add(jLabel52, new org.netbeans.lib.awtextra.AbsoluteConstraints(-50, 0, -1, -1));
@@ -1680,13 +1686,17 @@ public class Frame_Main extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public void setHiloMain(HiloGUI hiloGUI2) {
+       this.hiloGUI = hiloGUI2;
+    }
+
     public void setdataConexiones(ManipularConecciones con) {
         this.manipulacionConexiones = con;
         validarEspacios = new ValidarEspacios(con);
         validarSolicitudes = new Validar_administrar_solicitud(con);
     }
 
-    public void entrar_bienvenida(Usuario usuario2) {       
+    public void entrar_bienvenida(Usuario usuario2) {
         ocultar_todosPaneles();
         Bienvenida.setVisible(true);
         Paneles_Menu.setVisible(true);
@@ -1700,6 +1710,7 @@ public class Frame_Main extends javax.swing.JFrame {
             jLabelAñadir2.setVisible(false);
             dudaadmSolicitud1.setVisible(false);
             dudaadmSolicitud2.setVisible(false);
+
             if (usuario.getTipoUsuario() == 4) {
                 roleLabel1.setText("Usuario Encargado");
             }
@@ -1709,6 +1720,7 @@ public class Frame_Main extends javax.swing.JFrame {
             jLabelAñadir2.setVisible(true);
             dudaadmSolicitud1.setVisible(true);
             dudaadmSolicitud2.setVisible(true);
+            hiloGUI.hiloCargando.setVariable(this.jLCargando);
             userLabel1.setText(usuario.getNombreusuarioInstitucional());
             JtfUsuario.setText(usuario.getNombreusuarioInstitucional());
             JtfUsuario1.setText(usuario.getNombreusuarioInstitucional());
@@ -1717,20 +1729,21 @@ public class Frame_Main extends javax.swing.JFrame {
         }
 
     }
-    
-    private void ocultar_masInfo(){
+
+    private void ocultar_masInfo() {
         masInfoCorreo.setVisible(false);
-        masInfoCodigo.setVisible(false);        
-       masInfoSolicitud.setVisible(false);
-       masInfoSolicitud2.setVisible(false);
-       masInfoAceptar.setVisible(false);
-       masInfoRechazar.setVisible(false);
-       masInfoCancelar.setVisible(false);
-       jLabel2.setVisible(false);
-       jLabel3.setVisible(false);
-        
+        masInfoCodigo.setVisible(false);
+        masInfoSolicitud.setVisible(false);
+        masInfoSolicitud2.setVisible(false);
+        masInfoAceptar.setVisible(false);
+        masInfoRechazar.setVisible(false);
+        masInfoCancelar.setVisible(false);
+        jLabel2.setVisible(false);
+        jLabel3.setVisible(false);
+
     }
-    private void ocultar_todosPaneles() { 
+
+    private void ocultar_todosPaneles() {
         Bienvenida.setVisible(false);
         Solicitar_Espacio.setVisible(false);
         Administrar_Solicitudes.setVisible(false);
@@ -1759,6 +1772,14 @@ public class Frame_Main extends javax.swing.JFrame {
     }
 
     public void solicitar_Espacio(String Espacio) throws SQLException {
+        hiloGUI.hiloCargando.Iniciar("Cargando");        
+        System.out.println("visible: " + jLCargando.isVisible());
+        int i = 0;
+        while (i <= 100000000) {
+            hiloGUI.hiloCargando.girar();       
+            System.out.println("visible: " + i + " " + jLCargando.isVisible());
+            i++;
+        }
 
         jLabelRepeticion.setText("No se repite");
         fechaTermina = obtener_fecha();
@@ -1766,22 +1787,22 @@ public class Frame_Main extends javax.swing.JFrame {
         llenarMotivos(usuario);
         ocultar_todosPaneles();
         Solicitar_Espacio.setVisible(true);
-       
+
         jLabel36.setText(Espacio);
         jLabel37.setText("");
         jTable3.setModel(new javax.swing.table.DefaultTableModel(
                 new Object[][]{}, new String[]{" ID", "Nombre espacio", "Salon", "Edificio", "Encargado", "Estado", "Información adicional"})
         );
-        
+
         jTable4.setModel(new javax.swing.table.DefaultTableModel(
                 new Object[][]{}, new String[]{"Horas ocupadas"})
         );
         llenarTabla(Espacio);
-        
+        hiloGUI.hiloCargando.finalizarhilo();
         if (jTable3.getRowCount() == 0) {
-            JOptionPane.showMessageDialog(null, "No se han creado espacios de tipo "+Espacio, "Sin registros", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "No se han creado espacios de tipo " + Espacio, "Sin registros", JOptionPane.INFORMATION_MESSAGE);
         }
-       
+
     }
 
     private void verTodoSolicitud() {
@@ -1795,7 +1816,7 @@ public class Frame_Main extends javax.swing.JFrame {
         jTable2.setRowSorter(TRSFiltro);
     }
 
-    private void administrar_Solicitudes() { 
+    private void administrar_Solicitudes() {
         ocultar_todosPaneles();
         Categorias.setSelectedIndex(0);
 
@@ -1817,7 +1838,7 @@ public class Frame_Main extends javax.swing.JFrame {
 
     }
 
-    private void ver_Estadisticas() { 
+    private void ver_Estadisticas() {
         ocultar_todosPaneles();
         Estadisticas.setVisible(true);
 
@@ -1835,11 +1856,11 @@ public class Frame_Main extends javax.swing.JFrame {
     }
 
     private void llenarTabla_espacios(int id_espacio, String fecha, int day) throws SQLException {//modelo tabla espacios
-        
+
         Object[][] tabla = validarEspacios.llenarMatriz_horas(id_espacio, fecha, usuario, day);
         jTable4.setModel(new javax.swing.table.DefaultTableModel(
                 tabla, new String[]{"Horas ocupadas"}));
-       
+
     }
 
     private void llenarTabla_solicitudes(String tipo_e) throws SQLException {
@@ -1847,7 +1868,7 @@ public class Frame_Main extends javax.swing.JFrame {
         Categorias.setSelectedIndex(0);
         Buscador.setText("");
         Object[][] tabla = validarSolicitudes.llenarMatriz(usuario, tipo_e);
-        jTable2.setModel(new javax.swing.table.DefaultTableModel( 
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(
                 tabla, new String[]{
                     "ID SOLICITUD", "FECHA SOLICITUD", "ESTADO", "FECHA DE MODIFICACIÓN", "USUARIO INTITUCIONAL", "SALON/EDIFICIO", "FECHA INICIO", "FECHA TERMINA", "OBSERVACIONES", "INFORMACIÓN ADICIONAL"
 
@@ -1878,7 +1899,7 @@ public class Frame_Main extends javax.swing.JFrame {
     }
 
     private void verDetalles(Object obj) {
-       
+
         try {
 
             Espacio espacio = new Espacio();
@@ -1889,7 +1910,7 @@ public class Frame_Main extends javax.swing.JFrame {
             frame_DetallesEspacio.llenarFrame(usuario, espacio, this);
             this.setEnabled(false);
             frame_DetallesEspacio.setVisible(true);
-            
+
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -1946,12 +1967,12 @@ public class Frame_Main extends javax.swing.JFrame {
     }
 
     private void cambiarEstado(String tipE) throws AddressException, Exception {
-       
+
         if (jTable2.getSelectedRow() != -1 && jTable2.getSelectedColumn() != -1) {
 
             int res = validarSolicitudes.cambiarEstado(usuario, tipE, jTable2.getValueAt(jTable2.getSelectedRow(), 0).toString(), jTextField2.getText(), jTable2.getValueAt(jTable2.getSelectedRow(), 2).toString());
             if (res == 1) {
-              
+
                 JOptionPane.showMessageDialog(null, "Se han guardado los cambios.", "Cambiar estado de la solicitud", JOptionPane.INFORMATION_MESSAGE);
 
                 if (!tipE.equals("Cancelada")) {
@@ -1978,7 +1999,7 @@ public class Frame_Main extends javax.swing.JFrame {
             } else if (res == -6) {
                 JOptionPane.showMessageDialog(null, "Ya existe un evento que se cruza con el evento de esta solicitud", "Accion no valida", JOptionPane.INFORMATION_MESSAGE);
             }
-           
+
         } else {
             JOptionPane.showMessageDialog(null, "No ha seleccionado una solicitud para gestionar", "Accion no valida", JOptionPane.INFORMATION_MESSAGE);
         }
@@ -2020,7 +2041,7 @@ public class Frame_Main extends javax.swing.JFrame {
         } else {
             val = 2;
         }
-        
+
         evento = new Evento(0,
                 (Integer) jSpinnerHorainicio.getValue() + ":0" + "0" + ":00",
                 nombreRepeticion,
@@ -2079,7 +2100,7 @@ public class Frame_Main extends javax.swing.JFrame {
         opcion2.setOpaque(true);
         if (usuario.getTipoUsuario() != 2) {
             habilitar_notificar(false);
-            
+
         }
         Menu_confg.repaint();
 
@@ -2208,7 +2229,7 @@ public class Frame_Main extends javax.swing.JFrame {
         int dialog = JOptionPane.YES_NO_OPTION;
         int result = JOptionPane.showConfirmDialog(null, "¿Desea cerrar el programa?", "Exit", dialog);
         if (result == 0) {
-
+            hiloGUI.finalizarhilo();
             System.exit(0);
         }
     }//GEN-LAST:event_jlClose1MouseClicked
@@ -2384,7 +2405,7 @@ public class Frame_Main extends javax.swing.JFrame {
                 Logger.getLogger(Frame_Main.class
                         .getName()).log(Level.SEVERE, null, ex);
             }
-           
+
         }
 
 
@@ -2401,7 +2422,7 @@ public class Frame_Main extends javax.swing.JFrame {
         diasRepeticion = d;
 
         if (jTable3.getSelectedRow() != -1 && jTable3.getSelectedColumn() != -1) {
-          
+
             int id_espacio = Integer.valueOf(jTable3.getValueAt(jTable3.getSelectedRow(), 0).toString());
 
             String fecha = obtener_fecha();
@@ -2414,7 +2435,7 @@ public class Frame_Main extends javax.swing.JFrame {
                 Logger.getLogger(Frame_Main.class
                         .getName()).log(Level.SEVERE, null, ex);
             }
-           
+
         }
 
     }//GEN-LAST:event_jCalendar2PropertyChange
@@ -2545,7 +2566,6 @@ public class Frame_Main extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "La fecha de inicio o fecha de final no pueden ser un Domingo", "Acción no valida", JOptionPane.INFORMATION_MESSAGE);
             }
 
-      
         } else {
             JOptionPane.showMessageDialog(null, "No ha seleccionado ningún espacio", "Acción no valida", JOptionPane.INFORMATION_MESSAGE);
 
@@ -2561,7 +2581,7 @@ public class Frame_Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboMotivosActionPerformed
 
     private void jLabelAñadir2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelAñadir2MouseClicked
-       
+
         Frame_DetallesEspacio frame_DetallesEspacio = new Frame_DetallesEspacio();
         frame_DetallesEspacio.setDataConexiones(manipulacionConexiones);
 
@@ -2572,7 +2592,6 @@ public class Frame_Main extends javax.swing.JFrame {
             this.setEnabled(false);
             frame_DetallesEspacio.setVisible(true);
 
-            
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -2595,7 +2614,6 @@ public class Frame_Main extends javax.swing.JFrame {
             int result = JOptionPane.showConfirmDialog(null, "¿Esta seguro que desea eliminar el espacio: " + Salon + " - " + edificio + "?", "Exit", dialog);
             if (result == 0) {
 
-               
                 int n = validarEspacios.borrarEspacio(usuario, idEspacioSeleccionado);
 
                 if (n == 1) {
@@ -2612,7 +2630,6 @@ public class Frame_Main extends javax.swing.JFrame {
                 } else if (n == -3) {
                     JOptionPane.showMessageDialog(null, "No tiene permisos para ejecutar esta acción", "Acción no valida", JOptionPane.INFORMATION_MESSAGE);
                 }
-              
 
             }
         } else {
@@ -2685,42 +2702,42 @@ public class Frame_Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel45MouseClicked
 
     private void jButton11MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton11MouseEntered
-        
+
         jButton11.setBackground(new Color(69, 162, 156));
     }//GEN-LAST:event_jButton11MouseEntered
 
     private void jButton11MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton11MouseExited
-      jButton11.setBackground(new Color(0,255,240));
+        jButton11.setBackground(new Color(0, 255, 240));
     }//GEN-LAST:event_jButton11MouseExited
 
     private void dudaCorreoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dudaCorreoMouseEntered
-       masInfoCorreo.setVisible(true);
-       dudaCorreo.setOpaque(true);
+        masInfoCorreo.setVisible(true);
+        dudaCorreo.setOpaque(true);
     }//GEN-LAST:event_dudaCorreoMouseEntered
 
     private void dudaCorreoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dudaCorreoMouseExited
-       masInfoCorreo.setVisible(false); 
-       dudaCorreo.setOpaque(false);
+        masInfoCorreo.setVisible(false);
+        dudaCorreo.setOpaque(false);
     }//GEN-LAST:event_dudaCorreoMouseExited
 
     private void dudaCodigoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dudaCodigoMouseEntered
-        masInfoCodigo.setVisible(true); 
-       dudaCodigo.setOpaque(true);
+        masInfoCodigo.setVisible(true);
+        dudaCodigo.setOpaque(true);
     }//GEN-LAST:event_dudaCodigoMouseEntered
 
     private void dudaCodigoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dudaCodigoMouseExited
-        masInfoCodigo.setVisible(false); 
-       dudaCodigo.setOpaque(false);
-       
-       
+        masInfoCodigo.setVisible(false);
+        dudaCodigo.setOpaque(false);
+
+
     }//GEN-LAST:event_dudaCodigoMouseExited
 
     private void jButton13MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton13MouseEntered
-       jButton13.setBackground(new Color(69, 162, 156));
+        jButton13.setBackground(new Color(69, 162, 156));
     }//GEN-LAST:event_jButton13MouseEntered
 
     private void jButton13MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton13MouseExited
-        jButton13.setBackground(new Color(0,255,240));
+        jButton13.setBackground(new Color(0, 255, 240));
     }//GEN-LAST:event_jButton13MouseExited
 
     private void jButton12MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton12MouseEntered
@@ -2728,164 +2745,164 @@ public class Frame_Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton12MouseEntered
 
     private void jButton12MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton12MouseExited
-         jButton12.setBackground(new Color(0,255,240));
+        jButton12.setBackground(new Color(0, 255, 240));
     }//GEN-LAST:event_jButton12MouseExited
 
     private void jlLabMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlLabMouseEntered
-       jlLab.setForeground(new Color(0,0,0)); 
+        jlLab.setForeground(new Color(0, 0, 0));
     }//GEN-LAST:event_jlLabMouseEntered
 
     private void jlLabMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlLabMouseExited
-        jlLab.setForeground(new Color(255,255,255)); 
+        jlLab.setForeground(new Color(255, 255, 255));
     }//GEN-LAST:event_jlLabMouseExited
 
     private void jlAdmMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlAdmMouseEntered
-        
-        jlAdm.setForeground(new Color(0,0,0)); 
+
+        jlAdm.setForeground(new Color(0, 0, 0));
     }//GEN-LAST:event_jlAdmMouseEntered
 
     private void jlAdmMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlAdmMouseExited
-        jlAdm.setForeground(new Color(255,255,255));
+        jlAdm.setForeground(new Color(255, 255, 255));
     }//GEN-LAST:event_jlAdmMouseExited
 
     private void jlSalaRMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlSalaRMouseEntered
-       jlSalaR.setForeground(new Color(0,0,0)); 
+        jlSalaR.setForeground(new Color(0, 0, 0));
     }//GEN-LAST:event_jlSalaRMouseEntered
 
     private void jlSalaRMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlSalaRMouseExited
-        jlSalaR.setForeground(new Color(255,255,255)); 
+        jlSalaR.setForeground(new Color(255, 255, 255));
     }//GEN-LAST:event_jlSalaRMouseExited
 
     private void jLabel4MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseEntered
-        jLabel4.setForeground(new Color(0,0,0)); 
+        jLabel4.setForeground(new Color(0, 0, 0));
     }//GEN-LAST:event_jLabel4MouseEntered
 
     private void jLabel4MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseExited
-         jLabel4.setForeground(new Color(255,255,255)); 
+        jLabel4.setForeground(new Color(255, 255, 255));
     }//GEN-LAST:event_jLabel4MouseExited
 
     private void jLabel5MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseEntered
-         jLabel5.setForeground(new Color(0,0,0)); 
+        jLabel5.setForeground(new Color(0, 0, 0));
     }//GEN-LAST:event_jLabel5MouseEntered
 
     private void jLabel5MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseExited
-        jLabel5.setForeground(new Color(255,255,255)); 
+        jLabel5.setForeground(new Color(255, 255, 255));
     }//GEN-LAST:event_jLabel5MouseExited
 
     private void jLabel8MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseEntered
-        jLabel8.setForeground(new Color(0,0,0)); 
+        jLabel8.setForeground(new Color(0, 0, 0));
     }//GEN-LAST:event_jLabel8MouseEntered
 
     private void jLabel8MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseExited
-       jLabel8.setForeground(new Color(255,255,255));  
+        jLabel8.setForeground(new Color(255, 255, 255));
     }//GEN-LAST:event_jLabel8MouseExited
 
     private void jLabel7MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseEntered
-      jLabel7.setForeground(new Color(255,255,255)); 
+        jLabel7.setForeground(new Color(255, 255, 255));
     }//GEN-LAST:event_jLabel7MouseEntered
 
     private void jLabel7MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseExited
-       jLabel7.setForeground(new Color(0,0,0));  
+        jLabel7.setForeground(new Color(0, 0, 0));
     }//GEN-LAST:event_jLabel7MouseExited
 
     private void jLabel18MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel18MouseEntered
-       jLabel18.setIcon(new ImageIcon("src/Imagenes/usuario (1).png")); 
+        jLabel18.setIcon(new ImageIcon("src/Imagenes/usuario (1).png"));
     }//GEN-LAST:event_jLabel18MouseEntered
 
     private void jLabel18MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel18MouseExited
-      jLabel18.setIcon(new ImageIcon("src/Imagenes/usuario.png"));   
+        jLabel18.setIcon(new ImageIcon("src/Imagenes/usuario.png"));
     }//GEN-LAST:event_jLabel18MouseExited
 
     private void jLabel11MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel11MouseEntered
-         jLabel11.setIcon(new ImageIcon("src/Imagenes/configuraciones_1.png")); 
+        jLabel11.setIcon(new ImageIcon("src/Imagenes/configuraciones_1.png"));
     }//GEN-LAST:event_jLabel11MouseEntered
 
     private void jLabel11MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel11MouseExited
-      jLabel11.setIcon(new ImageIcon("src/Imagenes/configuraciones.png")); 
+        jLabel11.setIcon(new ImageIcon("src/Imagenes/configuraciones.png"));
     }//GEN-LAST:event_jLabel11MouseExited
 
     private void jlMinimize1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlMinimize1MouseEntered
-      jlMinimize1.setIcon(new ImageIcon("src/Imagenes/menos.png"));
+        jlMinimize1.setIcon(new ImageIcon("src/Imagenes/menos.png"));
     }//GEN-LAST:event_jlMinimize1MouseEntered
 
     private void jlMinimize1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlMinimize1MouseExited
-       jlMinimize1.setIcon(new ImageIcon("src/Imagenes/linea.png")); 
+        jlMinimize1.setIcon(new ImageIcon("src/Imagenes/linea.png"));
     }//GEN-LAST:event_jlMinimize1MouseExited
 
     private void jlClose1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlClose1MouseEntered
-       jlClose1.setIcon(new ImageIcon("src/Imagenes/cancelar-marca.png"));
+        jlClose1.setIcon(new ImageIcon("src/Imagenes/cancelar-marca.png"));
     }//GEN-LAST:event_jlClose1MouseEntered
 
     private void jlClose1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlClose1MouseExited
-         jlClose1.setIcon(new ImageIcon("src/Imagenes/incorrecto.png"));
+        jlClose1.setIcon(new ImageIcon("src/Imagenes/incorrecto.png"));
     }//GEN-LAST:event_jlClose1MouseExited
 
     private void jLabel19MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel19MouseEntered
-        jLabel19.setForeground(new Color(0,0,0)); 
+        jLabel19.setForeground(new Color(0, 0, 0));
     }//GEN-LAST:event_jLabel19MouseEntered
 
     private void jLabel19MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel19MouseExited
-       jLabel19.setForeground(new Color(255,255,255));
+        jLabel19.setForeground(new Color(255, 255, 255));
     }//GEN-LAST:event_jLabel19MouseExited
 
     private void jLabel20MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel20MouseEntered
-         jLabel20.setForeground(new Color(0,0,0)); 
+        jLabel20.setForeground(new Color(0, 0, 0));
     }//GEN-LAST:event_jLabel20MouseEntered
 
     private void jLabel20MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel20MouseExited
-       jLabel20.setForeground(new Color(255,255,255));
+        jLabel20.setForeground(new Color(255, 255, 255));
     }//GEN-LAST:event_jLabel20MouseExited
 
     private void jLabel21MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel21MouseEntered
-       jLabel21.setForeground(new Color(0,0,0)); 
+        jLabel21.setForeground(new Color(0, 0, 0));
     }//GEN-LAST:event_jLabel21MouseEntered
 
     private void jLabel21MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel21MouseExited
-        jLabel21.setForeground(new Color(255,255,255));
+        jLabel21.setForeground(new Color(255, 255, 255));
     }//GEN-LAST:event_jLabel21MouseExited
 
     private void jLabel22MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel22MouseEntered
-       jLabel22.setForeground(new Color(0,0,0)); 
+        jLabel22.setForeground(new Color(0, 0, 0));
     }//GEN-LAST:event_jLabel22MouseEntered
 
     private void jLabel22MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel22MouseExited
-       jLabel22.setForeground(new Color(255,255,255));
+        jLabel22.setForeground(new Color(255, 255, 255));
     }//GEN-LAST:event_jLabel22MouseExited
 
     private void jLabel23MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel23MouseEntered
-        jLabel23.setForeground(new Color(0,0,0));  
+        jLabel23.setForeground(new Color(0, 0, 0));
     }//GEN-LAST:event_jLabel23MouseEntered
 
     private void jLabel23MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel23MouseExited
-        jLabel23.setForeground(new Color(255,255,255));
+        jLabel23.setForeground(new Color(255, 255, 255));
     }//GEN-LAST:event_jLabel23MouseExited
 
     private void jLabel24MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel24MouseEntered
-       jLabel24.setForeground(new Color(255,255,255));
+        jLabel24.setForeground(new Color(255, 255, 255));
     }//GEN-LAST:event_jLabel24MouseEntered
 
     private void jLabel24MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel24MouseExited
-       jLabel24.setForeground(new Color(0,0,0));  
+        jLabel24.setForeground(new Color(0, 0, 0));
     }//GEN-LAST:event_jLabel24MouseExited
 
     private void jLabel43MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel43MouseEntered
-       jLabel43.setIcon(new ImageIcon("src/Imagenes/configuraciones_1.png")); 
+        jLabel43.setIcon(new ImageIcon("src/Imagenes/configuraciones_1.png"));
     }//GEN-LAST:event_jLabel43MouseEntered
 
     private void jLabel43MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel43MouseExited
-       jLabel43.setIcon(new ImageIcon("src/Imagenes/configuraciones.png"));
+        jLabel43.setIcon(new ImageIcon("src/Imagenes/configuraciones.png"));
     }//GEN-LAST:event_jLabel43MouseExited
 
     private void jLabel26MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel26MouseEntered
-        jLabel26.setIcon(new ImageIcon("src/Imagenes/usuario (1).png")); 
+        jLabel26.setIcon(new ImageIcon("src/Imagenes/usuario (1).png"));
     }//GEN-LAST:event_jLabel26MouseEntered
 
     private void jLabel26MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel26MouseExited
-         jLabel26.setIcon(new ImageIcon("src/Imagenes/usuario.png")); 
+        jLabel26.setIcon(new ImageIcon("src/Imagenes/usuario.png"));
     }//GEN-LAST:event_jLabel26MouseExited
 
     private void dudaSolicitudMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dudaSolicitudMouseEntered
-       masInfoSolicitud.setVisible(true);
+        masInfoSolicitud.setVisible(true);
     }//GEN-LAST:event_dudaSolicitudMouseEntered
 
     private void dudaSolicitudMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dudaSolicitudMouseExited
@@ -2893,7 +2910,7 @@ public class Frame_Main extends javax.swing.JFrame {
     }//GEN-LAST:event_dudaSolicitudMouseExited
 
     private void dudaSolicitud2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dudaSolicitud2MouseEntered
-      masInfoSolicitud2.setVisible(true);
+        masInfoSolicitud2.setVisible(true);
     }//GEN-LAST:event_dudaSolicitud2MouseEntered
 
     private void dudaSolicitud2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dudaSolicitud2MouseExited
@@ -2905,7 +2922,7 @@ public class Frame_Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3MouseEntered
 
     private void jButton3MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseExited
-        jButton3.setBackground(new Color(0,255,240));
+        jButton3.setBackground(new Color(0, 255, 240));
     }//GEN-LAST:event_jButton3MouseExited
 
     private void jButtonPersonalizarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonPersonalizarMouseEntered
@@ -2913,11 +2930,11 @@ public class Frame_Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonPersonalizarMouseEntered
 
     private void jButtonPersonalizarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonPersonalizarMouseExited
-        jButtonPersonalizar.setBackground(new Color(0,255,240));
+        jButtonPersonalizar.setBackground(new Color(0, 255, 240));
     }//GEN-LAST:event_jButtonPersonalizarMouseExited
 
     private void jLabelAñadir2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelAñadir2MouseEntered
-      jLabel2.setVisible(true);
+        jLabel2.setVisible(true);
     }//GEN-LAST:event_jLabelAñadir2MouseEntered
 
     private void jLabelAñadir2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelAñadir2MouseExited
@@ -2925,11 +2942,11 @@ public class Frame_Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabelAñadir2MouseExited
 
     private void jLabelEliminar1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelEliminar1MouseEntered
-       jLabel3.setVisible(true);
+        jLabel3.setVisible(true);
     }//GEN-LAST:event_jLabelEliminar1MouseEntered
 
     private void jLabelEliminar1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelEliminar1MouseExited
-      jLabel3.setVisible(false);
+        jLabel3.setVisible(false);
     }//GEN-LAST:event_jLabelEliminar1MouseExited
 
     private void Aceptar_sol_botonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Aceptar_sol_botonMouseEntered
@@ -2937,39 +2954,39 @@ public class Frame_Main extends javax.swing.JFrame {
     }//GEN-LAST:event_Aceptar_sol_botonMouseEntered
 
     private void Aceptar_sol_botonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Aceptar_sol_botonMouseExited
-      Aceptar_sol_boton.setBackground(new Color(0,255,240));
+        Aceptar_sol_boton.setBackground(new Color(0, 255, 240));
     }//GEN-LAST:event_Aceptar_sol_botonMouseExited
 
     private void Rechazar_sol_botonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Rechazar_sol_botonMouseEntered
-         Rechazar_sol_boton.setBackground(new Color(69, 162, 156));
+        Rechazar_sol_boton.setBackground(new Color(69, 162, 156));
     }//GEN-LAST:event_Rechazar_sol_botonMouseEntered
 
     private void Rechazar_sol_botonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Rechazar_sol_botonMouseExited
-        Rechazar_sol_boton.setBackground(new Color(0,255,240));
+        Rechazar_sol_boton.setBackground(new Color(0, 255, 240));
     }//GEN-LAST:event_Rechazar_sol_botonMouseExited
 
     private void jButton10MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton10MouseEntered
-          jButton10.setBackground(new Color(69, 162, 156));
+        jButton10.setBackground(new Color(69, 162, 156));
     }//GEN-LAST:event_jButton10MouseEntered
 
     private void jButton10MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton10MouseExited
-      jButton10.setBackground(new Color(0,255,240));
+        jButton10.setBackground(new Color(0, 255, 240));
     }//GEN-LAST:event_jButton10MouseExited
 
     private void dudaadmSolicitud1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dudaadmSolicitud1MouseEntered
-       masInfoAceptar.setVisible(true);
+        masInfoAceptar.setVisible(true);
     }//GEN-LAST:event_dudaadmSolicitud1MouseEntered
 
     private void dudaadmSolicitud1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dudaadmSolicitud1MouseExited
-      masInfoAceptar.setVisible(false);
+        masInfoAceptar.setVisible(false);
     }//GEN-LAST:event_dudaadmSolicitud1MouseExited
 
     private void dudaadmSolicitud2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dudaadmSolicitud2MouseEntered
-       masInfoRechazar.setVisible(true);
+        masInfoRechazar.setVisible(true);
     }//GEN-LAST:event_dudaadmSolicitud2MouseEntered
 
     private void dudaadmSolicitud2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dudaadmSolicitud2MouseExited
-         masInfoRechazar.setVisible(false);
+        masInfoRechazar.setVisible(false);
     }//GEN-LAST:event_dudaadmSolicitud2MouseExited
 
     private void dudaadmSolicitud3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dudaadmSolicitud3MouseEntered
@@ -3119,6 +3136,7 @@ public class Frame_Main extends javax.swing.JFrame {
     private javax.swing.JCheckBox jCheckBox3;
     private javax.swing.JComboBox<String> jComboMotivos;
     private javax.swing.JComboBox<String> jComboSelectDuracion;
+    public javax.swing.JLabel jLCargando;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

@@ -4,6 +4,7 @@ import Control.Validar_Login;
 import Control.Validar_Registro;
 import Control.ManipularConecciones;
 import Entidad.Usuario;
+import Hilos.HiloGUI;
 import java.awt.Color;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -13,9 +14,9 @@ public class Frame_Login extends javax.swing.JFrame {
 
     private Frame_Main frame_Main = new Frame_Main();
     private ManipularConecciones datosConexion = new ManipularConecciones();
-
     private ManipularConecciones datosConexionTemporal = new ManipularConecciones();
     private int x, y;
+    private static HiloGUI hiloGUI = new HiloGUI();
 
     public Frame_Login() {
         initComponents();
@@ -27,7 +28,9 @@ public class Frame_Login extends javax.swing.JFrame {
      
     }
     
-    
+    public void setHiloMain2(HiloGUI hiloGUI2){
+        this.hiloGUI=hiloGUI2;
+    }
             
 
     private void creaConexionTemporal() {
@@ -52,6 +55,7 @@ public class Frame_Login extends javax.swing.JFrame {
             datosConexion.crearConeccion(usuario);
             if (usuario.getTipoUsuario() > 0 && usuario.getTipoUsuario() != 3 && usuario.getTipoUsuario() != 5) {
                 frame_Main.entrar_bienvenida(usuario);
+                frame_Main.setHiloMain(hiloGUI);
                 frame_Main.setVisible(true);
                 frame_Main.setdataConexiones(datosConexion);
                 this.dispose();
@@ -239,6 +243,11 @@ public class Frame_Login extends javax.swing.JFrame {
                 formMousePressed(evt);
             }
         });
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         panelCerrar.setBackground(new java.awt.Color(86, 90, 92));
@@ -255,7 +264,7 @@ public class Frame_Login extends javax.swing.JFrame {
                 jlClose1MouseClicked(evt);
             }
         });
-        panelCerrar.add(jlClose1, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 10, -1, -1));
+        panelCerrar.add(jlClose1, new org.netbeans.lib.awtextra.AbsoluteConstraints(472, 8, -1, -1));
 
         jlMinimize1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/linea.png"))); // NOI18N
         jlMinimize1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -654,7 +663,7 @@ public class Frame_Login extends javax.swing.JFrame {
         int dialog = JOptionPane.YES_NO_OPTION;
         int result = JOptionPane.showConfirmDialog(null, "¿Desea cerrar el programa?", "Exit", dialog);
         if (result == 0) {
-
+            hiloGUI.finalizarhilo();
             System.exit(0);
         }
     }//GEN-LAST:event_jlClose1MouseClicked
@@ -764,9 +773,12 @@ public class Frame_Login extends javax.swing.JFrame {
     }//GEN-LAST:event_registrarse2MouseEntered
 
     private void registrarse2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registrarse2MouseExited
-       
-       registrarse2.setBackground(new Color(0,255,240));
+     registrarse2.setBackground(new Color(0,255,240));
     }//GEN-LAST:event_registrarse2MouseExited
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+     
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments

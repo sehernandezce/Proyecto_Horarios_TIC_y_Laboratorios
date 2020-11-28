@@ -4,7 +4,6 @@ import Control.Validar_Login;
 import Control.Validar_Registro;
 import Control.ManipularConecciones;
 import Entidad.Usuario;
-import Hilos.HiloGUI;
 import java.awt.Color;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -16,7 +15,6 @@ public class Frame_Login extends javax.swing.JFrame {
     private ManipularConecciones datosConexion = new ManipularConecciones();
     private ManipularConecciones datosConexionTemporal = new ManipularConecciones();
     private int x, y;
-    private static HiloGUI hiloGUI = new HiloGUI();
 
     public Frame_Login() {
         initComponents();
@@ -28,9 +26,7 @@ public class Frame_Login extends javax.swing.JFrame {
      
     }
     
-    public void setHiloMain2(HiloGUI hiloGUI2){
-        this.hiloGUI=hiloGUI2;
-    }
+
             
 
     private void creaConexionTemporal() {
@@ -54,8 +50,7 @@ public class Frame_Login extends javax.swing.JFrame {
 
             datosConexion.crearConeccion(usuario);
             if (usuario.getTipoUsuario() > 0 && usuario.getTipoUsuario() != 3 && usuario.getTipoUsuario() != 5) {
-                frame_Main.entrar_bienvenida(usuario);
-                frame_Main.setHiloMain(hiloGUI);
+                frame_Main.entrar_bienvenida(usuario);               
                 frame_Main.setVisible(true);
                 frame_Main.setdataConexiones(datosConexion);
                 this.dispose();
@@ -662,8 +657,7 @@ public class Frame_Login extends javax.swing.JFrame {
     private void jlClose1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlClose1MouseClicked
         int dialog = JOptionPane.YES_NO_OPTION;
         int result = JOptionPane.showConfirmDialog(null, "¿Desea cerrar el programa?", "Exit", dialog);
-        if (result == 0) {
-            hiloGUI.finalizarhilo();
+        if (result == 0) {         
             System.exit(0);
         }
     }//GEN-LAST:event_jlClose1MouseClicked

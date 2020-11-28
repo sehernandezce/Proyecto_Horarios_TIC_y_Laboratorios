@@ -27,7 +27,7 @@ import javax.swing.table.TableRowSorter;
 import Control.GraficarEstadisticas;
 import Control.ManipularConecciones;
 import Hilos.HiloCargando;
-import Hilos.HiloGUI;
+import Hilos.HiloFrame_Main;
 import javax.swing.ImageIcon;
 import java.io.IOException;
 
@@ -52,8 +52,9 @@ public class Frame_Main extends javax.swing.JFrame {
     private boolean tipo_espera = false;
     private boolean tipo_aceptada = false;
     private boolean tipo_cancelada = false;
-    private int EstadisticasSeleccion;
-    private static HiloGUI hiloGUI = new HiloGUI();
+    public static HiloCargando hiloCargando=new HiloCargando();
+    public static HiloFrame_Main hiloFrame_Main= new HiloFrame_Main();
+    private int EstadisticasSeleccion;    
     public String Tipo;
 
     public Frame_Main() {
@@ -128,8 +129,9 @@ public class Frame_Main extends javax.swing.JFrame {
         userLabel2 = new javax.swing.JLabel();
         roleLabel1 = new javax.swing.JLabel();
         jLabel43 = new javax.swing.JLabel();
-        jLabel53 = new javax.swing.JLabel();
         jSeparator18 = new javax.swing.JSeparator();
+        jLCargando1 = new javax.swing.JLabel();
+        jLabel53 = new javax.swing.JLabel();
         Bienvenida = new javax.swing.JPanel();
         MensajeBienvenida = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -552,7 +554,7 @@ public class Frame_Main extends javax.swing.JFrame {
         Menu_UC.add(jSeparator17, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 0, 1, 518));
 
         jLCargando.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/reloj-de-arena.png"))); // NOI18N
-        Menu_UC.add(jLCargando, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 415, 20, -1));
+        Menu_UC.add(jLCargando, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 415, 16, 16));
 
         jLabel52.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondo2 2.jpg"))); // NOI18N
         Menu_UC.add(jLabel52, new org.netbeans.lib.awtextra.AbsoluteConstraints(-50, 0, -1, -1));
@@ -732,13 +734,16 @@ public class Frame_Main extends javax.swing.JFrame {
         });
         Menu_UE.add(jLabel43, new org.netbeans.lib.awtextra.AbsoluteConstraints(8, 17, -1, -1));
 
-        jLabel53.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondo2 2.jpg"))); // NOI18N
-        Menu_UE.add(jLabel53, new org.netbeans.lib.awtextra.AbsoluteConstraints(-50, 0, -1, -1));
-
         jSeparator18.setBackground(new java.awt.Color(0, 0, 0));
         jSeparator18.setOrientation(javax.swing.SwingConstants.VERTICAL);
         jSeparator18.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         Menu_UE.add(jSeparator18, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 0, 1, 519));
+
+        jLCargando1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/reloj-de-arena.png"))); // NOI18N
+        Menu_UE.add(jLCargando1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 415, 16, 16));
+
+        jLabel53.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondo2 2.jpg"))); // NOI18N
+        Menu_UE.add(jLabel53, new org.netbeans.lib.awtextra.AbsoluteConstraints(-50, 0, -1, -1));
 
         Paneles_Menu.add(Menu_UE, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 170, 520));
 
@@ -1686,10 +1691,6 @@ public class Frame_Main extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public void setHiloMain(HiloGUI hiloGUI2) {
-       this.hiloGUI = hiloGUI2;
-    }
-
     public void setdataConexiones(ManipularConecciones con) {
         this.manipulacionConexiones = con;
         validarEspacios = new ValidarEspacios(con);
@@ -1701,6 +1702,7 @@ public class Frame_Main extends javax.swing.JFrame {
         Bienvenida.setVisible(true);
         Paneles_Menu.setVisible(true);
         this.usuario = usuario2;
+        this.hiloFrame_Main.setVariable(this);
         if (usuario.getTipoUsuario() == 1 || usuario.getTipoUsuario() == 4) {
             Menu_UC.setVisible(false);
             userLabel2.setText(usuario.getNombreusuarioInstitucional());
@@ -1710,7 +1712,7 @@ public class Frame_Main extends javax.swing.JFrame {
             jLabelAñadir2.setVisible(false);
             dudaadmSolicitud1.setVisible(false);
             dudaadmSolicitud2.setVisible(false);
-
+            hiloCargando.setVariable(this.jLCargando1);           
             if (usuario.getTipoUsuario() == 4) {
                 roleLabel1.setText("Usuario Encargado");
             }
@@ -1720,7 +1722,7 @@ public class Frame_Main extends javax.swing.JFrame {
             jLabelAñadir2.setVisible(true);
             dudaadmSolicitud1.setVisible(true);
             dudaadmSolicitud2.setVisible(true);
-            hiloGUI.hiloCargando.setVariable(this.jLCargando);
+            hiloCargando.setVariable(this.jLCargando);
             userLabel1.setText(usuario.getNombreusuarioInstitucional());
             JtfUsuario.setText(usuario.getNombreusuarioInstitucional());
             JtfUsuario1.setText(usuario.getNombreusuarioInstitucional());
@@ -1772,22 +1774,13 @@ public class Frame_Main extends javax.swing.JFrame {
     }
 
     public void solicitar_Espacio(String Espacio) throws SQLException {
-        hiloGUI.hiloCargando.Iniciar("Cargando");        
-        System.out.println("visible: " + jLCargando.isVisible());
-        int i = 0;
-        while (i <= 100000000) {
-            hiloGUI.hiloCargando.girar();       
-            System.out.println("visible: " + i + " " + jLCargando.isVisible());
-            i++;
-        }
 
         jLabelRepeticion.setText("No se repite");
         fechaTermina = obtener_fecha();
         indiceRepeticion = 4;
-        llenarMotivos(usuario);
+        llenarMotivos(usuario);            
         ocultar_todosPaneles();
-        Solicitar_Espacio.setVisible(true);
-
+        Solicitar_Espacio.setVisible(true);           
         jLabel36.setText(Espacio);
         jLabel37.setText("");
         jTable3.setModel(new javax.swing.table.DefaultTableModel(
@@ -1797,12 +1790,11 @@ public class Frame_Main extends javax.swing.JFrame {
         jTable4.setModel(new javax.swing.table.DefaultTableModel(
                 new Object[][]{}, new String[]{"Horas ocupadas"})
         );
-        llenarTabla(Espacio);
-        hiloGUI.hiloCargando.finalizarhilo();
+        llenarTabla(Espacio); 
         if (jTable3.getRowCount() == 0) {
             JOptionPane.showMessageDialog(null, "No se han creado espacios de tipo " + Espacio, "Sin registros", JOptionPane.INFORMATION_MESSAGE);
         }
-
+        hiloCargando.finalizarhilo();
     }
 
     private void verTodoSolicitud() {
@@ -1966,7 +1958,7 @@ public class Frame_Main extends javax.swing.JFrame {
 
     }
 
-    private void cambiarEstado(String tipE) throws AddressException, Exception {
+    public void cambiarEstado(String tipE) throws AddressException, Exception {
 
         if (jTable2.getSelectedRow() != -1 && jTable2.getSelectedColumn() != -1) {
 
@@ -2003,7 +1995,8 @@ public class Frame_Main extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(null, "No ha seleccionado una solicitud para gestionar", "Accion no valida", JOptionPane.INFORMATION_MESSAGE);
         }
-
+        
+        hiloCargando.finalizarhilo();
     }
 
     public void setFechaTermina(String fechaTermina) {
@@ -2033,7 +2026,7 @@ public class Frame_Main extends javax.swing.JFrame {
     }
 
     public void verificarIngresoSolicitud() {
-
+        
         int val;
 
         if (jComboSelectDuracion.getSelectedIndex() == 0) {
@@ -2041,7 +2034,7 @@ public class Frame_Main extends javax.swing.JFrame {
         } else {
             val = 2;
         }
-
+        
         evento = new Evento(0,
                 (Integer) jSpinnerHorainicio.getValue() + ":0" + "0" + ":00",
                 nombreRepeticion,
@@ -2053,7 +2046,7 @@ public class Frame_Main extends javax.swing.JFrame {
                 indiceRepeticion,
                 diasRepeticion,
                 jComboMotivos.getSelectedIndex());
-
+        
         solicitud = new Solicitud(0,
                 validarSolicitudes.fechaBD(usuario),
                 "",
@@ -2061,7 +2054,7 @@ public class Frame_Main extends javax.swing.JFrame {
                 "",
                 idEspacioSeleccionado,
                 evento);
-
+        
         String validado = validarSolicitudes.verificarDatosSolicitudNueva(usuario,
                 solicitud,
                 jComboMotivos.getItemAt(jComboMotivos.getSelectedIndex()),
@@ -2073,13 +2066,13 @@ public class Frame_Main extends javax.swing.JFrame {
                 (Integer) jSpinnerHorainicio.getValue() + val,
                 0,
                 (String) jTable3.getValueAt(jTable3.getSelectedRow(), 5));
-
+        
         if (validado.equals("ok")) {
             JOptionPane.showMessageDialog(null, "Solicitud ingresada con exito");
         } else {
             JOptionPane.showMessageDialog(null, validado);
         }
-
+        hiloCargando.finalizarhilo();
     }
 
     private void ocultar_todosPanelesconfig() {
@@ -2120,10 +2113,11 @@ public class Frame_Main extends javax.swing.JFrame {
 
     }
 
-    private void guardarCamContrasenia() {
+    public void guardarCamContrasenia() {
         try {
+           
             usuario.setContrasenia(jPasswordField1.getText());
-
+           
             Validar_Registro validar_Registro = new Validar_Registro(manipulacionConexiones);
             int val = validar_Registro.cambiarcontrasenia(usuario, jPasswordField3.getText(), jPasswordField2.getText());
             if (val == 1) {
@@ -2144,10 +2138,13 @@ public class Frame_Main extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "La nueva contraseña coincide con la contraseña actual", "Acción no valida", JOptionPane.INFORMATION_MESSAGE);
             }
             usuario.setContrasenia("1234567890");
+         
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "A ocurrido un error: " + e);
         }
-
+           System.out.println("entre2o");
+            hiloCargando.finalizarhilo();
+            System.out.println("entreo");
     }
 
     private void camCodig() {
@@ -2212,24 +2209,14 @@ public class Frame_Main extends javax.swing.JFrame {
 
 
     private void jlLabMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlLabMousePressed
-
-        try {
-
-            solicitar_Espacio("Laboratorios");
-
-        } catch (SQLException ex) {
-            Logger.getLogger(Frame_Main.class
-                    .getName()).log(Level.SEVERE, null, ex);
-        }
-
-
+        hiloCargando.Iniciar("Laboratorios");   
+        hiloFrame_Main.Iniciar("solicitar_Espacio", "Laboratorios");       
     }//GEN-LAST:event_jlLabMousePressed
 
     private void jlClose1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlClose1MouseClicked
         int dialog = JOptionPane.YES_NO_OPTION;
         int result = JOptionPane.showConfirmDialog(null, "¿Desea cerrar el programa?", "Exit", dialog);
-        if (result == 0) {
-            hiloGUI.finalizarhilo();
+        if (result == 0) {       
             System.exit(0);
         }
     }//GEN-LAST:event_jlClose1MouseClicked
@@ -2267,80 +2254,41 @@ public class Frame_Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jCheckBox3ActionPerformed
 
     private void jLabel19MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel19MousePressed
-
-        try {
-            solicitar_Espacio("Laboratorios");
-        } catch (SQLException ex) {
-            Logger.getLogger(Frame_Main.class
-                    .getName()).log(Level.SEVERE, null, ex);
-        }
-
+        hiloCargando.Iniciar("Laboratorios2");   
+        hiloFrame_Main.Iniciar("solicitar_Espacio", "Laboratorios");    
     }//GEN-LAST:event_jLabel19MousePressed
 
     private void jLabel20MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel20MousePressed
-
-        try {
-            solicitar_Espacio("Sala de reuniones");
-        } catch (SQLException ex) {
-            Logger.getLogger(Frame_Main.class
-                    .getName()).log(Level.SEVERE, null, ex);
-        }
-
+        hiloCargando.Iniciar("Sala de reuniones2");   
+        hiloFrame_Main.Iniciar("solicitar_Espacio", "Sala de reuniones");    
     }//GEN-LAST:event_jLabel20MousePressed
 
     private void jLabel21MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel21MousePressed
-
-        try {
-            solicitar_Espacio("Sala de computadores");
-        } catch (SQLException ex) {
-            Logger.getLogger(Frame_Main.class
-                    .getName()).log(Level.SEVERE, null, ex);
-        }
-
+        hiloCargando.Iniciar("Sala de computadores2");   
+        hiloFrame_Main.Iniciar("solicitar_Espacio", "Sala de computadores");   
+     
     }//GEN-LAST:event_jLabel21MousePressed
 
     private void jLabel22MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel22MousePressed
-
-        try {
-            solicitar_Espacio("Auditorios");
-        } catch (SQLException ex) {
-            Logger.getLogger(Frame_Main.class
-                    .getName()).log(Level.SEVERE, null, ex);
-        }
-
+        hiloCargando.Iniciar("Auditorios2");   
+        hiloFrame_Main.Iniciar("solicitar_Espacio", "Auditorios"); 
     }//GEN-LAST:event_jLabel22MousePressed
 
     private void jlSalaRMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlSalaRMousePressed
-
-        try {
-
-            solicitar_Espacio("Sala de reuniones");
-        } catch (SQLException ex) {
-            Logger.getLogger(Frame_Main.class
-                    .getName()).log(Level.SEVERE, null, ex);
-        }
+        hiloCargando.Iniciar("Sala de reuniones");   
+        hiloFrame_Main.Iniciar("solicitar_Espacio", "Sala de reuniones"); 
         llenarMotivos(usuario);
     }//GEN-LAST:event_jlSalaRMousePressed
 
     private void jLabel4MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MousePressed
-
-        try {
-            solicitar_Espacio("Sala de computadores");
-        } catch (SQLException ex) {
-            Logger.getLogger(Frame_Main.class
-                    .getName()).log(Level.SEVERE, null, ex);
-        }
+        hiloCargando.Iniciar("Sala de computadores");   
+        hiloFrame_Main.Iniciar("solicitar_Espacio", "Sala de computadores"); 
         llenarMotivos(usuario);
     }//GEN-LAST:event_jLabel4MousePressed
 
     private void jLabel5MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MousePressed
-
-        try {
-            solicitar_Espacio("Auditorios");
-        } catch (SQLException ex) {
-            Logger.getLogger(Frame_Main.class
-                    .getName()).log(Level.SEVERE, null, ex);
-        }
+        hiloCargando.Iniciar("Auditorios");   
+        hiloFrame_Main.Iniciar("solicitar_Espacio", "Auditorios"); 
         llenarMotivos(usuario);
     }//GEN-LAST:event_jLabel5MousePressed
 
@@ -2358,14 +2306,10 @@ public class Frame_Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField2ActionPerformed
 
     private void Aceptar_sol_botonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Aceptar_sol_botonActionPerformed
-        try {
-            cambiarEstado("Aceptada");
-        } catch (AddressException ex) {
-            Logger.getLogger(Frame_Main.class
-                    .getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(Frame_Main.class.getName()).log(Level.SEVERE, null, ex);
-        }
+  
+            hiloCargando.Iniciar("Aceptada1");   
+            hiloFrame_Main.Iniciar("cambiarEstado", "Aceptada");
+       
     }//GEN-LAST:event_Aceptar_sol_botonActionPerformed
 
     private void BuscadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscadorActionPerformed
@@ -2536,14 +2480,8 @@ public class Frame_Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton10ActionPerformed
 
     private void Rechazar_sol_botonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Rechazar_sol_botonActionPerformed
-        try {
-            cambiarEstado("Rechazada");
-        } catch (AddressException ex) {
-            Logger.getLogger(Frame_Main.class
-                    .getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(Frame_Main.class.getName()).log(Level.SEVERE, null, ex);
-        }
+           hiloCargando.Iniciar("Rechazada1");   
+           hiloFrame_Main.Iniciar("cambiarEstado", "Rechazada");  
     }//GEN-LAST:event_Rechazar_sol_botonActionPerformed
 
     private void jButtonPersonalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPersonalizarActionPerformed
@@ -2561,7 +2499,8 @@ public class Frame_Main extends javax.swing.JFrame {
             int dia_terminaSemana = calendarfinal.get(Calendar.DAY_OF_WEEK);
 
             if (obt_diaSemana() != 1 && dia_terminaSemana != 1) {
-                verificarIngresoSolicitud();
+                hiloCargando.Iniciar("Solicitar");   
+                hiloFrame_Main.Iniciar("verificarIngresoSolicitud", "");      
             } else {
                 JOptionPane.showMessageDialog(null, "La fecha de inicio o fecha de final no pueden ser un Domingo", "Acción no valida", JOptionPane.INFORMATION_MESSAGE);
             }
@@ -2646,7 +2585,8 @@ public class Frame_Main extends javax.swing.JFrame {
     }//GEN-LAST:event_JtfUsuarioActionPerformed
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
-        guardarCamContrasenia();
+        hiloCargando.Iniciar("Cargando");   
+        hiloFrame_Main.Iniciar("guardarCamContrasenia", ""); 
     }//GEN-LAST:event_jButton11ActionPerformed
 
     private void JtfUsuario1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JtfUsuario1ActionPerformed
@@ -3105,7 +3045,7 @@ public class Frame_Main extends javax.swing.JFrame {
     private javax.swing.JLabel LbUsuario3;
     private javax.swing.JLabel LbUsuario4;
     private javax.swing.JPanel MensajeBienvenida;
-    private javax.swing.JPanel Menu_UC;
+    public static javax.swing.JPanel Menu_UC;
     private javax.swing.JPanel Menu_UE;
     private javax.swing.JPanel Menu_confg;
     private javax.swing.JPanel Paneles_Menu;
@@ -3136,7 +3076,8 @@ public class Frame_Main extends javax.swing.JFrame {
     private javax.swing.JCheckBox jCheckBox3;
     private javax.swing.JComboBox<String> jComboMotivos;
     private javax.swing.JComboBox<String> jComboSelectDuracion;
-    public javax.swing.JLabel jLCargando;
+    public static javax.swing.JLabel jLCargando;
+    public static javax.swing.JLabel jLCargando1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

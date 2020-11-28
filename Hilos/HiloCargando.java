@@ -3,57 +3,52 @@ package Hilos;
  
 import javax.swing.ImageIcon;
 import javax.swing.JLabel; 
-import GUI.Frame_Main;
+
+
  
-public class HiloCargando extends Thread{ 
+public class HiloCargando extends Thread{  
+    
     private static Thread hilo; 
     private boolean suspender; 
     private boolean finalizar; 
-    public javax.swing.JLabel jLCargando; 
+    public static javax.swing.JLabel jLCargando; 
     private boolean giro=false;
     public HiloCargando (){ 
         
     } 
     public void setVariable (JLabel jLCargando){        
-        this.jLCargando=jLCargando; 
+        this.jLCargando=jLCargando;               
         this.suspender=true; 
         this.finalizar=false; 
       
     } 
     public void Iniciar(String nombre){        
-        this.hilo=new Thread(this,nombre); 
+        this.hilo=new Thread(this,nombre);
+        jLCargando.setVisible(true);
+        this.suspender=true;
         this.hilo.start();   
     } 
      
     @Override 
-    public void run() { 
-        System.out.println(hilo.getName()+ " iniciando."); 
+    public void run() {      
         try {       
-         synchronized (this) { 
-           jLCargando.setVisible(true);
-             while(suspender){                                      
-                   
-                    if(giro){                       
+     //    synchronized (this) {          
+             while(this.suspender){                                      
+                    if(giro){                             
                        jLCargando.setIcon(new ImageIcon("src/Imagenes/reloj-de-arena 2.png")); 
-                       jLCargando.setText("tosde");
-                       giro=false;        
-                        System.out.println("Giro 1 "+giro+" es visible: "+jLCargando.isVisible());
+                        giro=false;  
                        
                     }else{
                        jLCargando.setIcon(new ImageIcon("src/Imagenes/reloj-de-arena.png"));  
-                        giro=true;
-                        jLCargando.setText("tosde2");
-                         System.out.println("Giro 2 "+giro+" es visible: "+jLCargando.isVisible());     
+                        giro=true;                            
                     }
-                    jLCargando.repaint();
-                    jLCargando.revalidate(); 
-                     jLCargando.updateUI(); 
+                    System.out.println(hilo.getName()+ "  supender: "+this.suspender);
                     Thread.sleep(2000); 
-                   wait(); 
+                   // wait(); 
                 }
                 jLCargando.setVisible(false); 
              
-               } 
+     //          } 
             
         }catch (InterruptedException exc){ 
             System.out.println(hilo.getName()+ "interrumpido."); 
@@ -61,24 +56,11 @@ public class HiloCargando extends Thread{
          
          
     } 
- 
-    public synchronized void finalizarhilo(){ 
+     public void finalizarhilo(){ 
         this.finalizar=true;        
         this.suspender=false; 
-         notify(); 
+        //notify(); 
     } 
- 
-     public synchronized void suspenderhilo(){ 
-        this.suspender=true;     
-    } 
- 
-     public synchronized void renaudarhilo(){ 
-      this.suspender=false;     
-      notify(); 
-    }          
-     
-   public synchronized void girar(){    
-      notify(); 
-    }   
-    
+        
+
 } 

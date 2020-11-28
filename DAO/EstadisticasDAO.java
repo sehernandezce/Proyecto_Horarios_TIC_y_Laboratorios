@@ -5,6 +5,9 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import Entidad.Usuario;
+import DAO.UsuarioDAO;
+import java.sql.SQLException;
+import org.jfree.data.general.DefaultPieDataset;
 
 public class EstadisticasDAO {
 
@@ -18,19 +21,20 @@ public class EstadisticasDAO {
 
     private void seleccionarUser(int tipUser) {
 
-        if (tipUser == 1 || tipUser == 4) {
+        if (tipUser == 1 ) {
             this.DB_USER = "UserStandard";
             this.DB_PASSWD = "Us58*uQL";
-        } else if (tipUser == 2) {
+        } else if (tipUser == 2 || tipUser == 4) {
             this.DB_USER = "horariosdesalastics";
             this.DB_PASSWD = "123456789Qw";
         }
     }
 
-    public int obtenerGrafica(Usuario par, int tipoEspacio, int mes, int anio) {
+    public DefaultPieDataset  obtenerGrafica_especifico(Usuario par, int tipoEspacio, int mes, int anio) {
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
+        String fecha=anio+"-"+mes;
 
         try {
             resultSet = null;
@@ -39,15 +43,16 @@ public class EstadisticasDAO {
             statement = connection.createStatement();
             DB_USER = null;
             DB_PASSWD = null;
-            resultSet = statement.executeQuery("SELECT * from SOLICITUDES, ESPACIOS WHERE mesREGEX and ESPACIOS.ID_TIPOESPACIO =" + tipoEspacio + ";");
+            //VALUES ('453', '1', '2', 'lab prueba', '123', '1', '312');
+            resultSet = statement.executeQuery("Call espacio_especifico_estadistica('^"+fecha+"',"+tipoEspacio+")");
             if (resultSet.next()) {
-                return Integer.valueOf(resultSet.getString(1));
+                return obtenerData_especifico(resultSet);
             } else {
-                return -4;
+                return null;
             }
         } catch (Exception e) {
             System.out.println("Error en SQL" + e);
-            return -4;
+            return null;
         } finally {
             try {
                 resultSet.close();
@@ -59,5 +64,15 @@ public class EstadisticasDAO {
             }
         }
     }
+    
+    public DefaultPieDataset obtenerData_especifico(ResultSet rs) throws SQLException{
+        DefaultPieDataset dataset= new DefaultPieDataset();
+        while(rs.next()){
+            dataset.setValue(rs.getString("NOMBRE_ESPACIO"),Integer.parseInt(rs.getString("Cantidad")));
+        }
+      return dataset;
+    }
+    
 }
 
+ 

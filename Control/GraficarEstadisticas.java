@@ -7,6 +7,13 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import Entidad.Usuario;
 import DAO.EstadisticasDAO;
+import java.io.File;
+import java.io.IOException;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartUtilities;
+import org.jfree.chart.JFreeChart;
+import org.jfree.data.category.CategoryDataset;
+import org.jfree.data.general.DefaultPieDataset;
 
 public class GraficarEstadisticas {
     
@@ -16,10 +23,19 @@ public class GraficarEstadisticas {
         return 0;
     }
     
-    public int graficarEspecifico (Usuario user, int tipoEspacio, int mes, int anio ){
-        return daoEstadisticas.obtenerGrafica(user, tipoEspacio, mes, anio );
+    public void graficarEspecifico (Usuario user, int tipoEspacio, int mes, int anio ) throws IOException{
+        
+        DefaultPieDataset dataset=daoEstadisticas.obtenerGrafica_especifico(user, tipoEspacio, mes, anio);
+        
+        JFreeChart chart=ChartFactory.createBarChart("Grafico", "Espacio", "Cantidad", (CategoryDataset) dataset);
+        
+        int ancho=350;
+        int alto=210;
+        File F= new File("src\\Graficos\\Grafico_especifico.png");
+        ChartUtilities.saveChartAsPNG(F, chart ,ancho,alto);
 
     }
+    
     public int generarGrafica(ResultSet rs){
         return 0;
     }

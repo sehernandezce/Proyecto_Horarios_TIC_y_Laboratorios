@@ -751,7 +751,6 @@ public class Frame_Main extends javax.swing.JFrame {
         MensajeBienvenida.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jTextArea1.setEditable(false);
-        jTextArea1.setBackground(java.awt.SystemColor.info);
         jTextArea1.setColumns(20);
         jTextArea1.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         jTextArea1.setRows(5);
@@ -782,20 +781,23 @@ public class Frame_Main extends javax.swing.JFrame {
         jPanel2.setPreferredSize(new java.awt.Dimension(854, 520));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        masInfoSolicitud2.setBackground(new java.awt.Color(255, 255, 255));
         masInfoSolicitud2.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         masInfoSolicitud2.setText("<html><Center> Seleccione la fecha y espacio <p>para conocer en que horas del dia<p>esta ocupado el espacio. ");
-        jPanel2.add(masInfoSolicitud2, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 160, 190, 40));
+        masInfoSolicitud2.setOpaque(true);
+        jPanel2.add(masInfoSolicitud2, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 130, 190, 70));
 
+        masInfoSolicitud.setBackground(new java.awt.Color(255, 255, 255));
         masInfoSolicitud.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         masInfoSolicitud.setText("<html><Center> No se permite realizar<p> eventos los dias domingos. ");
-        jPanel2.add(masInfoSolicitud, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 166, 130, 50));
+        masInfoSolicitud.setOpaque(true);
+        jPanel2.add(masInfoSolicitud, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 146, 130, 70));
 
         jTable3 = new javax.swing.JTable(){
             public boolean isCellEditable (int rowIndex, int colIndex){
                 return false;
             }
         };
-        jTable3.setBackground(java.awt.SystemColor.info);
         jTable3.getTableHeader().setReorderingAllowed(false);
         jTable3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -1383,7 +1385,6 @@ public class Frame_Main extends javax.swing.JFrame {
                 return false;
             }
         };
-        jTable2.setBackground(java.awt.SystemColor.info);
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 

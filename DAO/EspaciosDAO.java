@@ -4,12 +4,10 @@ import Control.ManipularConecciones;
 import Entidad.Espacio;
 import Entidad.Usuario;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 public class EspaciosDAO {
 
@@ -28,7 +26,6 @@ public class EspaciosDAO {
         try {
             resultSet = null;
             statement = this.connection.createStatement();
-            //VALUES ('453', '1', '2', 'lab prueba', '123', '1', '312');
             resultSet = statement.executeQuery("INSERT INTO `Horarios_Tics_y_Laboratorios`.`ESPACIOS`(`ID_EDIFICIO`, `ID_TIPOESPACIO`, `ID_PERSONA`, `NOMBRE_ESPACIO`, `NUM_ESPACIO`, `ACTIVO`, `CAPACIDAD`) VALUES ('"
                     + Espacio.getNum_edificio() + ",'"
                     + Espacio.getNombre_tipoespacio() + "',"
@@ -50,42 +47,13 @@ public class EspaciosDAO {
             try {
                 resultSet.close();
                 statement.close();
-                //return null;
+               
             } catch (Exception ex) {
 
             }
         }
     }
-//    public boolean crear(Usuario object) {
-//        Connection connection = null;
-//        Statement statement = null;
-//        int resultSet;
-//        Usuario usuario = new Usuario();
-//        
-//        try {
-//            resultSet = -1;
-//            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
-//            statement = connection.createStatement();
-//            resultSet = statement.executeUpdate("INSERT INTO usuarios( `NOMBRE`, `PASSWORD`, `TIENECODIGO`) VALUES (\""
-//                    + object.getNombre() + "\",\"" + object.getPassword()+"\"," +object.isTienecodigo() +")");
-//            
-//            return resultSet > 0;
-//        } catch (SQLException ex) {
-//            System.out.println("Error en SQL" + ex);
-//            return false;
-//        } finally {
-//            try {
-//                statement.close();
-//                connection.close();
-//            } catch (SQLException ex) {
-//                System.out.println("Error en SQL" + ex);
-//            }
-//        }
-//
-//    }
-
-    public String[][] leer(Usuario par, int tipEspacio) { // buscar todos los lugares conrespecto a un tipo de espacio
-        //this.conexionDao.Reconnection(par.getTipoUsuario());
+    public String[][] leer(Usuario par, int tipEspacio) { 
         Statement statement = null;
         ResultSet resultSet = null;
         try {
@@ -214,7 +182,7 @@ public class EspaciosDAO {
         return tabla;
     }
 
-    public Espacio leerunEspacio(Usuario par, int idEspacio) { // buscar todos los lugares conrespecto a un tipo de espacio
+    public Espacio leerunEspacio(Usuario par, int idEspacio) { 
         this.conexionDao.Reconnection(par.getTipoUsuario());
         Statement statement = null;
         ResultSet resultSet = null;
@@ -259,7 +227,7 @@ public class EspaciosDAO {
 
     }
 
-    public int ActualizarinfoEspacio(Usuario par, Espacio Espacio) { // buscar todos los lugares conrespecto a un tipo de espacio
+    public int ActualizarinfoEspacio(Usuario par, Espacio Espacio) { 
         this.conexionDao.Reconnection(par.getTipoUsuario());
         Statement statement = null;
         ResultSet resultSet = null;
@@ -291,7 +259,7 @@ public class EspaciosDAO {
             try {
                 resultSet.close();
                 statement.close();
-                //return null;
+             
             } catch (Exception ex) {
 
             }
@@ -327,21 +295,4 @@ public class EspaciosDAO {
         return res.getInt(1);
     }
 
-//    public String[][] obtenerEspacios(ResultSet resultSet) throws SQLException{
-//        int fila = 0;
-//        resultSet.afterLast();
-//        resultSet.previous();
-//
-//        int tamanio = resultSet.getRow();
-//        resultSet.absolute(0);
-//
-//        String[][] tabla = new String[tamanio][1];
-//        while (resultSet.next()) {
-//            tabla[fila][0] = resultSet.getString(1) + "/" + resultSet.getString(2);
-//            fila++;
-//        }
-//
-//        return tabla;
-//    
-//    }
 }

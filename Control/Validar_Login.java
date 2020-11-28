@@ -19,13 +19,13 @@ public class Validar_Login {
 
     public int verificarLogin(Usuario usuario) throws Exception {
         if (!verificarLongitudNombre(usuario.getNombreusuarioInstitucional())) {
-            return (-1); //Longitud nombre incorrecta == -1 
+            return (-1); 
         }
         if (!verificarLongitudPassword(usuario.getContrasenia())) {
-            return (-2); //Longitud contraseña incorrecta == -2
+            return (-2);
         }
 
-        return (dao.leer(usuario)); //Bienvenido > 0, en otro caso retorna 0= usuario no existe
+        return (dao.leer(usuario)); 
 
     }
 
@@ -40,7 +40,7 @@ public class Validar_Login {
 
     public int existeUser(String u) throws Exception {
         if (!verificarLongitudNombre(u)) {
-            return (-1); //Longitud nombre incorrecta 
+            return (-1);
         } else if (dao.existir(u).equals("false")) {
             return (-1);
         } else {

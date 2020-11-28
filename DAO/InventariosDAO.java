@@ -3,13 +3,11 @@ package DAO;
 import Entidad.Inventario;
 import Entidad.Usuario;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 public class InventariosDAO {
 
@@ -22,35 +20,7 @@ public class InventariosDAO {
         
     }
 
-//    public boolean crear(Usuario object) {// falta hacerla
-//        Connection connection = null;
-//        Statement statement = null;
-//        int resultSet;
-//        Usuario usuario = new Usuario();
-//        
-//        try {
-//            resultSet = -1;
-//            seleccionarUser(object.getTipoUsuario());
-//            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
-//            statement = connection.createStatement();
-//            resultSet = statement.executeUpdate("INSERT INTO usuarios( `NOMBRE`, `PASSWORD`, `TIENECODIGO`) VALUES (\""
-//                    + object.getNombre() + "\",\"" + object.getPassword()+"\"," +object.isTienecodigo() +")");
-//            
-//            return resultSet > 0;
-//        } catch (SQLException ex) {
-//            System.out.println("Error en SQL" + ex);
-//            return false;
-//        } finally {
-//            try {
-//                statement.close();
-//                connection.close();
-//            } catch (SQLException ex) {
-//                System.out.println("Error en SQL" + ex);
-//            }
-//        }
-//
-//    }
-    public String[][] leer(Usuario par, int idEspacio) { // buscar todos los lugares conrespecto a un tipo de espacio
+    public String[][] leer(Usuario par, int idEspacio) {
         this.conexionDao.Reconnection(par.getTipoUsuario());
         Statement statement = null;
         ResultSet resultSet = null;
@@ -98,7 +68,7 @@ public class InventariosDAO {
         return tabla;
     }
 
-    public boolean actualizar(Usuario par, ArrayList<Inventario> inventarioList, String id_espacio) {//Modifica el invetario que ya existe mas no agrega nuevos
+    public boolean actualizar(Usuario par, ArrayList<Inventario> inventarioList, String id_espacio) {
         this.conexionDao.Reconnection(par.getTipoUsuario());
         Statement statement = null;
         int resultSet;

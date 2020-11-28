@@ -13,7 +13,7 @@ import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import javax.swing.JOptionPane;
+
 
 public class EnviarCorreo {
 
@@ -41,20 +41,15 @@ public class EnviarCorreo {
 
         String correoReceptor = correo.getCorreoReceptor();
         String asunto = correo.getAsunto();
-        String mensaje = correo.getMensaje();//Hola <br>  <b>java></b><br><br>       b en negrita br salto de linea             
+        String mensaje = correo.getMensaje();          
 
         MimeMessage message = new MimeMessage(session);
         try {
             message.setFrom(new InternetAddress(correoRemitente));
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(correoReceptor));
-            // message.addRecipient(Message.RecipientType.BCC, new InternetAddress(correoReceptor)); PARA ENVIAR UNA COPIA
             message.setSubject(asunto);
             message.setText(mensaje, "ISO-8859-1", "html"); //
 
-            /*
-           para enviar contenido
-           
-             */
             Transport t = session.getTransport("smtp");
             t.connect(correoRemitente, passwordRemitente);
             t.sendMessage(message, message.getRecipients(Message.RecipientType.TO));

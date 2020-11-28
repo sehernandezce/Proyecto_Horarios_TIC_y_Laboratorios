@@ -1,10 +1,8 @@
 package Control;
 
-import DAO.UsuarioDAO;
 import DAO.EspaciosDAO;
 import Entidad.Espacio;
 import Entidad.Usuario;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ValidarEspacios {
@@ -75,7 +73,7 @@ public class ValidarEspacios {
     }
 
     public boolean verificaExistencia(Usuario par, Espacio esp) throws SQLException {
-        //Espacio espacio = new Espacio();
+       
         boolean resultado = false;
         if (espacioDao.buscarEspacio(par, esp) == 0) {
             return false;

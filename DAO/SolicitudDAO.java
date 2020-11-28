@@ -1,24 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package DAO;
 
 import Entidad.Solicitud;
 import Entidad.Usuario;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-/**
- *
- * @author Asus
- */
+
 public class SolicitudDAO {
 
     private Connection connection = null;
@@ -28,16 +17,17 @@ public class SolicitudDAO {
         this.connection = connection;
         this.conexionDao.setConnection(this.connection);
     }
+    
+    public String[][] leerSolicitudesEspacio(Usuario par, int idEspacio) {
 
-    public String[][] leerSolicitudesEspacio(Usuario par, int idEspacio) {// buscar las solicitudes activas dependiendo el estado, tipo de usuario y si están activas
         this.conexionDao.Reconnection(par.getTipoUsuario());
         Statement statement = null;
         ResultSet resultSet = null;
 
         try {
             resultSet = null;
+            resultSet = statement.executeQuery("");
             statement = this.connection.createStatement();
-            resultSet = statement.executeQuery("");//En proceso
             if (resultSet.next()) {
 
                 return ObtenerData_solicitudes(resultSet);
@@ -51,7 +41,7 @@ public class SolicitudDAO {
             try {
                 resultSet.close();
                 statement.close();
-                //return null;
+              
             } catch (Exception ex) {
 
             }
@@ -59,7 +49,7 @@ public class SolicitudDAO {
 
     }
 
-    public String[][] leerSolicitudes(Usuario par, int tipo_e) { // buscar las solicitudes dependiendo el estado y tipo de usuario
+    public String[][] leerSolicitudes(Usuario par, int tipo_e) {
         this.conexionDao.Reconnection(par.getTipoUsuario());
         Statement statement = null;
         ResultSet resultSet = null;
@@ -80,7 +70,7 @@ public class SolicitudDAO {
             try {
                 resultSet.close();
                 statement.close();
-                //return null;
+                
             } catch (Exception ex) {
 
             }
@@ -148,7 +138,7 @@ public class SolicitudDAO {
             try {
                 resultSet.close();
                 statement.close();
-                //return null;
+              
             } catch (Exception ex) {
 
             }
@@ -177,7 +167,7 @@ public class SolicitudDAO {
             try {
                 resultSet.close();
                 statement.close();
-                //return null;
+               
             } catch (Exception ex) {
 
             }
@@ -204,7 +194,7 @@ public class SolicitudDAO {
             try {
                 resultSet.close();
                 statement.close();
-                //return null;
+              
             } catch (Exception ex) {
 
             }
@@ -261,7 +251,7 @@ public class SolicitudDAO {
                 resultSet.close();
                 size.close();
                 statement.close();
-                //return null;
+               
             } catch (Exception ex) {
 
             }
@@ -310,7 +300,7 @@ public class SolicitudDAO {
                 resultSet.close();
                 size.close();
                 statement.close();
-                //return null;
+               
             } catch (Exception ex) {
 
             }
@@ -353,7 +343,7 @@ public class SolicitudDAO {
                 resultSet.close();
                 size.close();
                 statement.close();
-                //return null;
+               
             } catch (Exception ex) {
 
             }
@@ -384,7 +374,7 @@ public class SolicitudDAO {
             try {
                 resultSet.close();
                 statement.close();
-                //return null;
+               
             } catch (Exception ex) {
 
             }
@@ -412,7 +402,7 @@ public class SolicitudDAO {
             try {
                 resultSet.close();
                 statement.close();
-                //return null;
+                
             } catch (Exception ex) {
 
             }

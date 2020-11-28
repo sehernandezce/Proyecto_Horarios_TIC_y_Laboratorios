@@ -1,22 +1,17 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package GUI;
 
+import java.awt.Color;
 import java.time.DayOfWeek;
 import java.time.temporal.ChronoField;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
+import javax.swing.ImageIcon;
 import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author Usuario
- */
+
 public class Frame_PersonalizarRepeticion extends javax.swing.JFrame {
 
     private int x, y;
@@ -30,6 +25,7 @@ public class Frame_PersonalizarRepeticion extends javax.swing.JFrame {
     public Frame_PersonalizarRepeticion() {
         initComponents();
         this.setLocationRelativeTo(null);
+        masInfoRepeticion.setVisible(false);
     }
 
     public void setFechaInicio(String fechaInicio) {
@@ -131,9 +127,12 @@ public class Frame_PersonalizarRepeticion extends javax.swing.JFrame {
         jCheckBoxSabado = new javax.swing.JCheckBox();
         jLabel2 = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
-        javax.swing.JButton jButtonGuardar = new javax.swing.JButton();
+        javax.swing.JButton jButtonGuardars = new javax.swing.JButton();
         jCalendar1 = new com.toedter.calendar.JCalendar();
         jLabelVisualizarRepetición = new javax.swing.JLabel();
+        dudaSolicitud = new javax.swing.JLabel();
+        masInfoRepeticion = new javax.swing.JLabel();
+        Fondo5 = new javax.swing.JLabel();
         panelCerrar = new javax.swing.JPanel();
         jlClose1 = new javax.swing.JLabel();
         jlMinimize1 = new javax.swing.JLabel();
@@ -162,14 +161,15 @@ public class Frame_PersonalizarRepeticion extends javax.swing.JFrame {
         panelRepetición.setPreferredSize(new java.awt.Dimension(560, 410));
         panelRepetición.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel12.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
+        jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel12.setText("Periodicidad personalizada");
-        panelRepetición.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 0, 500, 60));
+        panelRepetición.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 0, 490, 60));
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel1.setText("Fecha termina: ");
         panelRepetición.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, -1, -1));
 
+        jComboSelectorDia.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jComboSelectorDia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione uno...", "Diario", "Semanalmente", "Mensualmente" }));
         jComboSelectorDia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -178,6 +178,7 @@ public class Frame_PersonalizarRepeticion extends javax.swing.JFrame {
         });
         panelRepetición.add(jComboSelectorDia, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 70, 170, 30));
 
+        jCheckBoxLunes.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jCheckBoxLunes.setText("Lunes");
         jCheckBoxLunes.setEnabled(false);
         jCheckBoxLunes.addActionListener(new java.awt.event.ActionListener() {
@@ -187,6 +188,7 @@ public class Frame_PersonalizarRepeticion extends javax.swing.JFrame {
         });
         panelRepetición.add(jCheckBoxLunes, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 120, -1, -1));
 
+        jCheckBoxMartes.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jCheckBoxMartes.setText("Martes");
         jCheckBoxMartes.setEnabled(false);
         jCheckBoxMartes.addActionListener(new java.awt.event.ActionListener() {
@@ -196,6 +198,7 @@ public class Frame_PersonalizarRepeticion extends javax.swing.JFrame {
         });
         panelRepetición.add(jCheckBoxMartes, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 120, -1, -1));
 
+        jCheckBoxMiercoles.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jCheckBoxMiercoles.setText("Miercoles");
         jCheckBoxMiercoles.setEnabled(false);
         jCheckBoxMiercoles.addActionListener(new java.awt.event.ActionListener() {
@@ -205,6 +208,7 @@ public class Frame_PersonalizarRepeticion extends javax.swing.JFrame {
         });
         panelRepetición.add(jCheckBoxMiercoles, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 120, -1, -1));
 
+        jCheckBoxJueves.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jCheckBoxJueves.setText("Jueves");
         jCheckBoxJueves.setEnabled(false);
         jCheckBoxJueves.addActionListener(new java.awt.event.ActionListener() {
@@ -214,6 +218,7 @@ public class Frame_PersonalizarRepeticion extends javax.swing.JFrame {
         });
         panelRepetición.add(jCheckBoxJueves, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 120, -1, -1));
 
+        jCheckBoxViernes.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jCheckBoxViernes.setText("Viernes");
         jCheckBoxViernes.setEnabled(false);
         jCheckBoxViernes.addActionListener(new java.awt.event.ActionListener() {
@@ -223,6 +228,7 @@ public class Frame_PersonalizarRepeticion extends javax.swing.JFrame {
         });
         panelRepetición.add(jCheckBoxViernes, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 120, -1, -1));
 
+        jCheckBoxSabado.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jCheckBoxSabado.setText("Sabado");
         jCheckBoxSabado.setEnabled(false);
         jCheckBoxSabado.addActionListener(new java.awt.event.ActionListener() {
@@ -232,18 +238,30 @@ public class Frame_PersonalizarRepeticion extends javax.swing.JFrame {
         });
         panelRepetición.add(jCheckBoxSabado, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 120, -1, -1));
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel2.setText("Repetir:");
         panelRepetición.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 80, -1, -1));
-        panelRepetición.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, 490, 10));
 
-        jButtonGuardar.setText("Guardar");
-        jButtonGuardar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonGuardarActionPerformed(evt);
+        jSeparator2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        panelRepetición.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, 490, 1));
+
+        jButtonGuardars.setBackground(new java.awt.Color(0, 255, 240));
+        jButtonGuardars.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jButtonGuardars.setText("Guardar");
+        jButtonGuardars.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButtonGuardarsMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jButtonGuardarsMouseExited(evt);
             }
         });
-        panelRepetición.add(jButtonGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 360, 90, 30));
+        jButtonGuardars.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonGuardarsActionPerformed(evt);
+            }
+        });
+        panelRepetición.add(jButtonGuardars, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 360, 90, 30));
 
         jCalendar1.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
@@ -251,43 +269,91 @@ public class Frame_PersonalizarRepeticion extends javax.swing.JFrame {
             }
         });
         panelRepetición.add(jCalendar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, 360, 220));
+
+        jLabelVisualizarRepetición.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         panelRepetición.add(jLabelVisualizarRepetición, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 180, 130, 150));
 
-        getContentPane().add(panelRepetición, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 560, 410));
-
-        panelCerrar.setBackground(new java.awt.Color(153, 153, 153));
-        panelCerrar.setForeground(new java.awt.Color(102, 255, 255));
-        panelCerrar.setMaximumSize(new java.awt.Dimension(50, 30));
-        panelCerrar.setMinimumSize(new java.awt.Dimension(50, 30));
-        panelCerrar.setPreferredSize(new java.awt.Dimension(500, 30));
-        panelCerrar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jlClose1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/incorrecto.png"))); // NOI18N
-        jlClose1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jlClose1MouseClicked(evt);
+        dudaSolicitud.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/signo-de-pregunta-en-circulos.png"))); // NOI18N
+        dudaSolicitud.setBorder(null);
+        dudaSolicitud.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                dudaSolicitudMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                dudaSolicitudMouseExited(evt);
             }
         });
-        panelCerrar.add(jlClose1, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 10, 30, 20));
+        panelRepetición.add(dudaSolicitud, new org.netbeans.lib.awtextra.AbsoluteConstraints(291, 75, -1, -1));
 
-        jlMinimize1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/linea.png"))); // NOI18N
-        jlMinimize1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jlMinimize1MouseClicked(evt);
-            }
-        });
-        panelCerrar.add(jlMinimize1, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 10, 20, 20));
+        masInfoRepeticion.setFont(new java.awt.Font("<html><Center>*Diario: El evento se repite todos los dias<p>" +
+            "que se encuentren dentro de las fechas del <p>" +
+            "evento.<p>" +
+            "*Semanal: El evento se repite cada semana<p>" +
+            "los dias escogidos incluyendo el dia de la<p>" +
+            "semana de la fecha inicial y final del evento.<p>" +
+            "*Mensual: El evento se repite el dia de la<p>" +
+            "semana de la fecha inicial mensualmente.<p>" +
+            "Teniendo encuenta que si el dia de la semana<p>" +
+            "es el primero, el segundo, el tercero o el<p>" +
+            "cuarto(ultimo, si es el quinto sera entonces<p>" +
+            "el ultimo) de ese mes, se repetira de esta<p>" +
+            "forma todos los meses.<p><p>" +
+            "Nota: En ningun caso, se agenda un evento <p>" +
+            "los domingos. ", 1, 12));
+    panelRepetición.add(masInfoRepeticion, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 70, 240, 30));
 
-        LbUsuario.setBackground(new java.awt.Color(0, 51, 204));
-        LbUsuario.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        LbUsuario.setForeground(new java.awt.Color(255, 255, 255));
-        LbUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Logo u_preview_rev_1_opt.png"))); // NOI18N
-        LbUsuario.setText("Horarios de salas TIC's y Laboratorios");
-        panelCerrar.add(LbUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 6, 240, 20));
+    Fondo5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondo_blanco1 1 .jpg"))); // NOI18N
+    Fondo5.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+    panelRepetición.add(Fondo5, new org.netbeans.lib.awtextra.AbsoluteConstraints(-20, 0, 880, -1));
 
-        getContentPane().add(panelCerrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 560, 30));
+    getContentPane().add(panelRepetición, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 560, 410));
 
-        pack();
+    panelCerrar.setBackground(new java.awt.Color(86, 90, 92));
+    panelCerrar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+    panelCerrar.setForeground(new java.awt.Color(102, 255, 255));
+    panelCerrar.setMaximumSize(new java.awt.Dimension(50, 30));
+    panelCerrar.setMinimumSize(new java.awt.Dimension(50, 30));
+    panelCerrar.setPreferredSize(new java.awt.Dimension(500, 30));
+    panelCerrar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+    jlClose1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/incorrecto.png"))); // NOI18N
+    jlClose1.addMouseListener(new java.awt.event.MouseAdapter() {
+        public void mouseClicked(java.awt.event.MouseEvent evt) {
+            jlClose1MouseClicked(evt);
+        }
+        public void mouseEntered(java.awt.event.MouseEvent evt) {
+            jlClose1MouseEntered(evt);
+        }
+        public void mouseExited(java.awt.event.MouseEvent evt) {
+            jlClose1MouseExited(evt);
+        }
+    });
+    panelCerrar.add(jlClose1, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 10, 30, 20));
+
+    jlMinimize1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/linea.png"))); // NOI18N
+    jlMinimize1.addMouseListener(new java.awt.event.MouseAdapter() {
+        public void mouseClicked(java.awt.event.MouseEvent evt) {
+            jlMinimize1MouseClicked(evt);
+        }
+        public void mouseEntered(java.awt.event.MouseEvent evt) {
+            jlMinimize1MouseEntered(evt);
+        }
+        public void mouseExited(java.awt.event.MouseEvent evt) {
+            jlMinimize1MouseExited(evt);
+        }
+    });
+    panelCerrar.add(jlMinimize1, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 10, 20, 20));
+
+    LbUsuario.setBackground(new java.awt.Color(0, 51, 204));
+    LbUsuario.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+    LbUsuario.setForeground(new java.awt.Color(255, 255, 255));
+    LbUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Logo u_preview_rev_1_opt.png"))); // NOI18N
+    LbUsuario.setText("Horarios de salas TIC's y Laboratorios");
+    panelCerrar.add(LbUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 6, 240, 20));
+
+    getContentPane().add(panelCerrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 560, 30));
+
+    pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jlClose1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlClose1MouseClicked
@@ -421,6 +487,38 @@ public class Frame_PersonalizarRepeticion extends javax.swing.JFrame {
         mostrarPeriodicidad();
     }//GEN-LAST:event_jCheckBoxSabadoActionPerformed
 
+    private void jlMinimize1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlMinimize1MouseEntered
+        jlMinimize1.setIcon(new ImageIcon("src/Imagenes/menos.png"));
+    }//GEN-LAST:event_jlMinimize1MouseEntered
+
+    private void jlMinimize1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlMinimize1MouseExited
+        jlMinimize1.setIcon(new ImageIcon("src/Imagenes/linea.png")); 
+    }//GEN-LAST:event_jlMinimize1MouseExited
+
+    private void jlClose1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlClose1MouseEntered
+          jlClose1.setIcon(new ImageIcon("src/Imagenes/cancelar-marca.png"));
+    }//GEN-LAST:event_jlClose1MouseEntered
+
+    private void jlClose1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlClose1MouseExited
+         jlClose1.setIcon(new ImageIcon("src/Imagenes/incorrecto.png"));
+    }//GEN-LAST:event_jlClose1MouseExited
+
+    private void dudaSolicitudMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dudaSolicitudMouseEntered
+        masInfoRepeticion.setVisible(true);
+    }//GEN-LAST:event_dudaSolicitudMouseEntered
+
+    private void dudaSolicitudMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dudaSolicitudMouseExited
+        masInfoRepeticion.setVisible(false);
+    }//GEN-LAST:event_dudaSolicitudMouseExited
+
+    private void jButtonGuardarsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonGuardarsMouseEntered
+       //jButtonGuardars.setBackground(new Color(69, 162, 156));
+    }//GEN-LAST:event_jButtonGuardarsMouseEntered
+
+    private void jButtonGuardarsMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonGuardarsMouseExited
+      //jButtonGuardars.setBackground(new Color(0,255,240)); 
+    }//GEN-LAST:event_jButtonGuardarsMouseExited
+
     /**
      * @param args the command line arguments
      */
@@ -457,7 +555,9 @@ public class Frame_PersonalizarRepeticion extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel Fondo5;
     private javax.swing.JLabel LbUsuario;
+    private javax.swing.JLabel dudaSolicitud;
     private com.toedter.calendar.JCalendar jCalendar1;
     private javax.swing.JCheckBox jCheckBoxJueves;
     private javax.swing.JCheckBox jCheckBoxLunes;
@@ -473,6 +573,7 @@ public class Frame_PersonalizarRepeticion extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JLabel jlClose1;
     private javax.swing.JLabel jlMinimize1;
+    private javax.swing.JLabel masInfoRepeticion;
     private javax.swing.JPanel panelCerrar;
     private javax.swing.JPanel panelRepetición;
     // End of variables declaration//GEN-END:variables

@@ -6,7 +6,9 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 public class SolicitudDAO {
 
@@ -17,10 +19,32 @@ public class SolicitudDAO {
         this.connection = connection;
         this.conexionDao.setConnection(this.connection);
     }
-    
+
+    public void reconection(Usuario par) {
+
+        try {
+
+            if (connection.isClosed()) {
+                int dialog = JOptionPane.YES_NO_OPTION;
+                int result = JOptionPane.showConfirmDialog(null, "¿Se ha perdido la conexión con el servidor, intentar reconectar con el servidor?", "Exit", dialog);
+                if (result == 0) {
+                    this.connection = this.conexionDao.Reconnection(par.getTipoUsuario());
+                    reconection(par);
+                } else {
+                    JOptionPane.showMessageDialog(null, "El programa se cerrará por falta de conexion con el servidor", "Exit", JOptionPane.INFORMATION_MESSAGE);
+                    System.exit(0);
+                }
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(EspaciosDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
     public String[][] leerSolicitudesEspacio(Usuario par, int idEspacio) {
 
-        this.conexionDao.Reconnection(par.getTipoUsuario());
+        reconection(par);
         Statement statement = null;
         ResultSet resultSet = null;
 
@@ -41,7 +65,7 @@ public class SolicitudDAO {
             try {
                 resultSet.close();
                 statement.close();
-              
+
             } catch (Exception ex) {
 
             }
@@ -50,7 +74,8 @@ public class SolicitudDAO {
     }
 
     public String[][] leerSolicitudes(Usuario par, int tipo_e) {
-        this.conexionDao.Reconnection(par.getTipoUsuario());
+        
+        reconection(par);
         Statement statement = null;
         ResultSet resultSet = null;
         try {
@@ -70,7 +95,7 @@ public class SolicitudDAO {
             try {
                 resultSet.close();
                 statement.close();
-                
+
             } catch (Exception ex) {
 
             }
@@ -119,7 +144,8 @@ public class SolicitudDAO {
     }
 
     public String getfechaBD(Usuario par) {
-        this.conexionDao.Reconnection(par.getTipoUsuario());
+        
+        reconection(par);
         Statement statement = null;
         ResultSet resultSet = null;
         try {
@@ -138,7 +164,7 @@ public class SolicitudDAO {
             try {
                 resultSet.close();
                 statement.close();
-              
+
             } catch (Exception ex) {
 
             }
@@ -147,7 +173,8 @@ public class SolicitudDAO {
     }
 
     public boolean ComprobarfechaesMenorBD(Usuario par, String fechaIngresada) {
-        this.conexionDao.Reconnection(par.getTipoUsuario());
+        
+        reconection(par);
         Statement statement = null;
         ResultSet resultSet = null;
         try {
@@ -167,7 +194,7 @@ public class SolicitudDAO {
             try {
                 resultSet.close();
                 statement.close();
-               
+
             } catch (Exception ex) {
 
             }
@@ -175,7 +202,8 @@ public class SolicitudDAO {
     }
 
     public int cambiarEstado(Usuario par, int tipo_e, String id_solicitud, String obs) { // buscar las solicitudes dependiendo el estado y tipo de usuario
-        this.conexionDao.Reconnection(par.getTipoUsuario());
+        
+        reconection(par);
         Statement statement = null;
         ResultSet resultSet = null;
         try {
@@ -194,7 +222,7 @@ public class SolicitudDAO {
             try {
                 resultSet.close();
                 statement.close();
-              
+
             } catch (Exception ex) {
 
             }
@@ -203,7 +231,8 @@ public class SolicitudDAO {
     }
 
     public boolean insertarSolicitud(Usuario par, Solicitud sol) {
-        this.conexionDao.Reconnection(par.getTipoUsuario());
+        
+        reconection(par);
         Statement statement = null;
         ResultSet resultSet = null;
         ResultSet size = null;
@@ -228,7 +257,7 @@ public class SolicitudDAO {
                     + "', '" + par.getNombreusuarioInstitucional()
                     + "', '" + sol.getEspacioidEspacio()
                     + "', '" + diasString + "');");
-            
+
             resultSet = statement.executeQuery("call Horarios_Tics_y_Laboratorios.Ingresar_Solicitud("
                     + sol.getEvento().getTipoRepetición()
                     + ", '" + sol.getEvento().getFechaEvento()
@@ -251,7 +280,7 @@ public class SolicitudDAO {
                 resultSet.close();
                 size.close();
                 statement.close();
-               
+
             } catch (Exception ex) {
 
             }
@@ -260,7 +289,8 @@ public class SolicitudDAO {
     }
 
     public boolean verificarConcurrenciaEventos(Usuario par, Solicitud sol) {
-        this.conexionDao.Reconnection(par.getTipoUsuario());
+        
+        reconection(par);
         Statement statement = null;
         ResultSet resultSet = null;
         ResultSet size = null;
@@ -300,7 +330,7 @@ public class SolicitudDAO {
                 resultSet.close();
                 size.close();
                 statement.close();
-               
+
             } catch (Exception ex) {
 
             }
@@ -308,7 +338,8 @@ public class SolicitudDAO {
     }
 
     public String[] obtenerMotivo(Usuario par) {
-        this.conexionDao.Reconnection(par.getTipoUsuario());
+        
+        reconection(par);
         String[] retorno;
         Statement statement = null;
         ResultSet resultSet = null;
@@ -343,7 +374,7 @@ public class SolicitudDAO {
                 resultSet.close();
                 size.close();
                 statement.close();
-               
+
             } catch (Exception ex) {
 
             }
@@ -351,7 +382,8 @@ public class SolicitudDAO {
     }
 
     public String[] leerunaSolicitud(Usuario par, int id_solicitud) { // buscar datos en especifico de una solicitud
-        this.conexionDao.Reconnection(par.getTipoUsuario());
+        
+        reconection(par);
         Statement statement = null;
         ResultSet resultSet = null;
         try {
@@ -374,7 +406,7 @@ public class SolicitudDAO {
             try {
                 resultSet.close();
                 statement.close();
-               
+
             } catch (Exception ex) {
 
             }
@@ -383,7 +415,8 @@ public class SolicitudDAO {
     }
 
     public String leerdias_soli(Usuario par, int id_solicitud) { // buscar las solicitudes dependiendo el estado y tipo de usuario
-        this.conexionDao.Reconnection(par.getTipoUsuario());
+        
+        reconection(par);
         Statement statement = null;
         ResultSet resultSet = null;
         try {
@@ -402,7 +435,7 @@ public class SolicitudDAO {
             try {
                 resultSet.close();
                 statement.close();
-                
+
             } catch (Exception ex) {
 
             }

@@ -13,18 +13,42 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 public class UsuarioDAO {
 
     static final String DB_URL
             = "jdbc:mysql://database-1.cjxw1f4bh3ms.us-east-1.rds.amazonaws.com:3306/Horarios_Tics_y_Laboratorios";
-    static final String DB_USER = "SeeTableUser"; 
-    static final String DB_PASSWD = "ISsRD1*y"; 
-    
+    static final String DB_USER = "SeeTableUser";
+    static final String DB_PASSWD = "ISsRD1*y";
+
     Connection connection = null;
     private ContraseniaHasheada contraseniahasheada = new ContraseniaHasheada();
     private EncriptadorAES encriptadorAES = new EncriptadorAES();
     private ConexionDAO conexionDao = new ConexionDAO();
+    private Usuario ParEspecial = new Usuario(); 
+
+    public void reconection(int tipoUsuario) {
+       
+        try {
+
+            if (connection.isClosed()) {
+                int dialog = JOptionPane.YES_NO_OPTION;
+                int result = JOptionPane.showConfirmDialog(null, "¿Se ha perdido la conexión con el servidor, intentar reconectar con el servidor?", "Exit", dialog);
+                if (result == 0) {
+                    this.connection = this.conexionDao.Reconnection(tipoUsuario);
+                    reconection(tipoUsuario);
+                } else {
+                    JOptionPane.showMessageDialog(null, "El programa se cerrará por falta de conexion con el servidor", "Exit", JOptionPane.INFORMATION_MESSAGE);
+                    System.exit(0);
+                }
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(EspaciosDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
 
     public UsuarioDAO(Connection connection) {
         try {
@@ -35,8 +59,9 @@ public class UsuarioDAO {
         }
 
     }
-    public boolean crear(Usuario object) throws Exception { 
-        this.conexionDao.Reconnection(-10);
+
+    public boolean crear(Usuario object) throws Exception {
+        reconection(-10);
         Statement statement = null;
         ResultSet resultSet2 = null;
         int resultSet;
@@ -67,19 +92,19 @@ public class UsuarioDAO {
 
     }
 
-    public int leer(Usuario par) throws Exception { 
-        this.conexionDao.Reconnection(-10);
+    public int leer(Usuario par) throws Exception {
+        reconection(-10);
         Statement statement = null;
         ResultSet resultSet = null;
         try {
             resultSet = null;
             statement = connection.createStatement();
             resultSet = statement.executeQuery("SELECT * FROM USUARIOS "
-                    + "WHERE USUARIOINSTITUCIONAL = '" + par.getNombreusuarioInstitucional() + "'" );
-            
-            if(resultSet.next()){
-                if(contraseniahasheada.check(par.getContrasenia(), resultSet.getString(3))){
-                    int tipUser=Integer.valueOf(resultSet.getString(1));
+                    + "WHERE USUARIOINSTITUCIONAL = '" + par.getNombreusuarioInstitucional() + "'");
+
+            if (resultSet.next()) {
+                if (contraseniahasheada.check(par.getContrasenia(), resultSet.getString(3))) {
+                    int tipUser = Integer.valueOf(resultSet.getString(1));
                     return tipUser;
                 } else {
                     return 0;
@@ -105,10 +130,9 @@ public class UsuarioDAO {
         }
 
     }
-    
-    
-    public boolean VerificarCode(String cod) throws Exception { 
-        this.conexionDao.Reconnection(-10);
+
+    public boolean VerificarCode(String cod) throws Exception {
+        reconection(-10);
         Statement statement = null;
         ResultSet resultSet = null;
 
@@ -118,11 +142,10 @@ public class UsuarioDAO {
             resultSet = statement.executeQuery("SELECT * FROM USUARIOS "
                     + "WHERE USUARIOINSTITUCIONAL = 'UserCode"
                     + "'AND ID_TIPOUSUARIO = '3' ");
-           
-            
-            if(resultSet.next()){                    
-                if(contraseniahasheada.check(cod, resultSet.getString(3))){
-                   
+
+            if (resultSet.next()) {
+                if (contraseniahasheada.check(cod, resultSet.getString(3))) {
+
                     return true;
                 } else {
                     return false;
@@ -145,9 +168,9 @@ public class UsuarioDAO {
         }
 
     }
-    
-      public String existir(String user) throws Exception {
-        this.conexionDao.Reconnection(-10);
+
+    public String existir(String user) throws Exception {
+        reconection(-10);
         Statement statement = null;
         ResultSet resultSet = null;
         try {
@@ -180,7 +203,7 @@ public class UsuarioDAO {
     }
 
     public int AgreCod(String u, Correo correo, String cod) throws Exception { // Ingresar un usuario en la base de datos
-        this.conexionDao.Reconnection(-10);
+        reconection(-10);
         Statement statement = null;
         ResultSet resultSet2 = null;
         int resultSet;
@@ -227,9 +250,9 @@ public class UsuarioDAO {
         }
 
     }
-        
-    public boolean VerificarCode(String cod, String U) throws Exception { 
-        this.conexionDao.Reconnection(-10);
+
+    public boolean VerificarCode(String cod, String U) throws Exception {
+        reconection(-10);
         Statement statement = null;
         ResultSet resultSet = null;
 
@@ -272,9 +295,9 @@ public class UsuarioDAO {
         }
 
     }
-    
-      public boolean actualizarPASS(Usuario object) throws Exception { 
-        this.conexionDao.Reconnection(-10);
+
+    public boolean actualizarPASS(Usuario object) throws Exception {
+        reconection(-10);
         Statement statement = null;
 
         try {
@@ -300,10 +323,9 @@ public class UsuarioDAO {
         }
 
     }
-      
-    
-      public boolean actualizarCorreoNot(Usuario object) throws Exception { 
-        this.conexionDao.Reconnection(-10);
+
+    public boolean actualizarCorreoNot(Usuario object) throws Exception {
+        reconection(-10);
         Statement statement = null;
         ResultSet resultSet = null;
 
@@ -352,9 +374,9 @@ public class UsuarioDAO {
         }
 
     }
-     
-    public Usuario leerCorreoNotificar() throws Exception { 
-        this.conexionDao.Reconnection(-10);
+
+    public Usuario leerCorreoNotificar() throws Exception {
+        reconection(-10);
         Statement statement = null;
         ResultSet resultSet = null;
         try {

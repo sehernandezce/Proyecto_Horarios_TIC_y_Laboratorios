@@ -7,21 +7,45 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 public class InventariosDAO {
 
     private Connection connection = null;
     private ConexionDAO conexionDao = new ConexionDAO();
-    
+
     public InventariosDAO(Connection connection) {
         this.connection = connection;
         this.conexionDao.setConnection(this.connection);
-        
+
+    }
+
+    public void reconection(Usuario par) {
+
+        try {
+
+            if (connection.isClosed()) {
+                int dialog = JOptionPane.YES_NO_OPTION;
+                int result = JOptionPane.showConfirmDialog(null, "¿Se ha perdido la conexión con el servidor, intentar reconectar con el servidor?", "Exit", dialog);
+                if (result == 0) {
+                    this.connection = this.conexionDao.Reconnection(par.getTipoUsuario());
+                    reconection(par);
+                } else {
+                    JOptionPane.showMessageDialog(null, "El programa se cerrará por falta de conexion con el servidor", "Exit", JOptionPane.INFORMATION_MESSAGE);
+                    System.exit(0);
+                }
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(EspaciosDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
     public String[][] leer(Usuario par, int idEspacio) {
-        this.conexionDao.Reconnection(par.getTipoUsuario());
+        reconection(par);
         Statement statement = null;
         ResultSet resultSet = null;
         try {
@@ -69,7 +93,7 @@ public class InventariosDAO {
     }
 
     public boolean actualizar(Usuario par, ArrayList<Inventario> inventarioList, String id_espacio) {
-        this.conexionDao.Reconnection(par.getTipoUsuario());
+        reconection(par);
         Statement statement = null;
         int resultSet;
         try {
@@ -87,7 +111,7 @@ public class InventariosDAO {
             }
             return resultSet > 0;
         } catch (SQLException ex) {
-            System.out.println("Error en SQL" + ex);
+            System.out.println("Error en SQL: -->" + ex);
             return false;
         } finally {
             try {
@@ -100,7 +124,7 @@ public class InventariosDAO {
     }
 
     public boolean eliminar(Usuario object, ArrayList<String> idinventarioList) {
-        this.conexionDao.Reconnection(object.getTipoUsuario());
+        reconection(object);
         Statement statement = null;
         int resultSet;
         try {
@@ -108,13 +132,12 @@ public class InventariosDAO {
             statement = this.connection.createStatement();
 
             for (int i = 0; i < idinventarioList.size(); i++) {
-                resultSet = statement.executeUpdate("UPDATE INVENTARIOS SET VIVO_INV=FALSE"
-                        + "WHERE ID_INVENTARIO=" + idinventarioList.get(i) + ";");
+                resultSet = statement.executeUpdate("UPDATE INVENTARIOS SET VIVO_INV=FALSE WHERE ID_INVENTARIO=" + idinventarioList.get(i) + ";");
 
             }
             return resultSet > 0;
         } catch (SQLException ex) {
-            System.out.println("Error en SQL" + ex);
+            System.out.println("Error en SQL: --<" + ex);
             return false;
         } finally {
             try {

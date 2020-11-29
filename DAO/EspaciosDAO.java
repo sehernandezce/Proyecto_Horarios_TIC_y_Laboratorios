@@ -7,7 +7,9 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 public class EspaciosDAO {
 
@@ -19,8 +21,30 @@ public class EspaciosDAO {
         this.conexionDao.setConnection(this.connection);
     }
 
+    public void reconection(Usuario par) {
+    
+        try {
+            
+            if (connection.isClosed()) {
+                int dialog = JOptionPane.YES_NO_OPTION;
+                int result = JOptionPane.showConfirmDialog(null, "¿Se ha perdido la conexión con el servidor, intentar reconectar con el servidor?", "Exit", dialog);
+                if (result == 0) {
+                    this.connection = this.conexionDao.Reconnection(par.getTipoUsuario());
+                    reconection(par);
+                } else {
+                    JOptionPane.showMessageDialog(null, "El programa se cerrará por falta de conexion con el servidor", "Exit", JOptionPane.INFORMATION_MESSAGE);
+                    System.exit(0);
+                }
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(EspaciosDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
     public int crearEspacio(Usuario par, Espacio Espacio) {
-        this.conexionDao.Reconnection(par.getTipoUsuario());
+        reconection(par);
         Statement statement = null;
         ResultSet resultSet = null;
         try {
@@ -47,13 +71,15 @@ public class EspaciosDAO {
             try {
                 resultSet.close();
                 statement.close();
-               
+
             } catch (Exception ex) {
 
             }
         }
     }
-    public String[][] leer(Usuario par, int tipEspacio) { 
+
+    public String[][] leer(Usuario par, int tipEspacio) {
+        reconection(par);
         Statement statement = null;
         ResultSet resultSet = null;
         try {
@@ -81,7 +107,7 @@ public class EspaciosDAO {
     }
 
     public String[][] leerHoras_espacios(Usuario par, int id_espacio, String fecha, int day) { // buscar todos los lugares conrespecto a un tipo de espacio
-        this.conexionDao.Reconnection(par.getTipoUsuario());
+        reconection(par);
         Statement statement = null;
         ResultSet resultSet = null;
         try {
@@ -111,15 +137,19 @@ public class EspaciosDAO {
     }
 
     public int borrarEspacio(Usuario par, String idEspacio) {
-        this.conexionDao.Reconnection(par.getTipoUsuario());
+        reconection(par);
         Statement statement = null;
         int resultSet = -1;
         ResultSet resultSet2 = null;
         try {
             statement = this.connection.createStatement();
-            resultSet2 = statement.executeQuery("Select * from SOLICITUDES where ID_ESPACIO='" + idEspacio + " ' AND (ID_ESTADO =2);");
+            
+            resultSet2 = statement.executeQuery("Select * from SOLICITUDES where ID_ESPACIO = " + idEspacio + " AND ID_ESTADO = 2;");
             if (!resultSet2.next()) {
                 resultSet = statement.executeUpdate("update ESPACIOS set VIVO = false, ACTIVO = false where ID_ESPACIO = " + idEspacio + ";");
+                System.out.println("el resulset es: "+resultSet);
+                System.out.println("El id del espacio es: "+idEspacio);
+                
                 if (resultSet > 0) {
                     return 1;
                 } else {
@@ -182,8 +212,8 @@ public class EspaciosDAO {
         return tabla;
     }
 
-    public Espacio leerunEspacio(Usuario par, int idEspacio) { 
-        this.conexionDao.Reconnection(par.getTipoUsuario());
+    public Espacio leerunEspacio(Usuario par, int idEspacio) {
+        reconection(par);
         Statement statement = null;
         ResultSet resultSet = null;
         try {
@@ -227,8 +257,8 @@ public class EspaciosDAO {
 
     }
 
-    public int ActualizarinfoEspacio(Usuario par, Espacio Espacio) { 
-        this.conexionDao.Reconnection(par.getTipoUsuario());
+    public int ActualizarinfoEspacio(Usuario par, Espacio Espacio) {
+        reconection(par);
         Statement statement = null;
         ResultSet resultSet = null;
         try {
@@ -259,7 +289,7 @@ public class EspaciosDAO {
             try {
                 resultSet.close();
                 statement.close();
-             
+
             } catch (Exception ex) {
 
             }
@@ -268,7 +298,7 @@ public class EspaciosDAO {
     }
 
     public int buscarEspacio(Usuario par, Espacio esp) throws SQLException {
-        this.conexionDao.Reconnection(par.getTipoUsuario());
+        reconection(par);
         Statement statement = null;
         ResultSet res = null;
 

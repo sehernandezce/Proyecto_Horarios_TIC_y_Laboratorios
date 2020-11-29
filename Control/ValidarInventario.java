@@ -12,7 +12,7 @@ public class ValidarInventario {
 
     public ValidarInventario(ManipularConecciones conexion) {
         this.conexion = conexion;
-        inventariosDAO = new InventariosDAO(conexion.getConeccion());
+        inventariosDAO = new InventariosDAO(this.conexion.getConeccion());
     }
 
     InventariosDAO inventariosDAO;

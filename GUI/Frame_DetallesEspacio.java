@@ -48,10 +48,10 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
 
     }
 
-    public void setDataConexiones(ManipularConecciones con) {
+    public void setDataConexiones(ManipularConecciones con, ValidarEspacios val,ValidarInventario vol) {
         this.dataConexion = con;
-        validarEspacio = new ValidarEspacios(con);
-        validarInventario = new ValidarInventario(con);
+        this.validarEspacio = val;
+        this.validarInventario = vol;
     }
 
     /**
@@ -740,7 +740,7 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
     private void jButtonNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevoActionPerformed
       
         Frame_DetallesEspacio frame_DetallesEspacio = new Frame_DetallesEspacio();
-        frame_DetallesEspacio.setDataConexiones(dataConexion);
+        frame_DetallesEspacio.setDataConexiones(dataConexion,this.validarEspacio,this.validarInventario);
         try {
             frame_DetallesEspacio.setVisible(true);
             frame_DetallesEspacio.crearEspacio(jTextField3.getText(), fraim, usuario);

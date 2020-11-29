@@ -139,7 +139,6 @@ public class Frame_PersonalizarRepeticion extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(558, 439));
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(558, 439));
         setResizable(false);
         addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
@@ -177,7 +176,7 @@ public class Frame_PersonalizarRepeticion extends javax.swing.JFrame {
             "Nota: En ningun caso, se agenda un evento <p>" +
             "los domingos. ");
         masInfoRepeticion.setOpaque(true);
-        panelRepetición.add(masInfoRepeticion, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 70, 240, 310));
+        panelRepetición.add(masInfoRepeticion, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 40, 240, 310));
 
         dudaSolicitud.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/signo-de-pregunta-en-circulos.png"))); // NOI18N
         dudaSolicitud.addMouseListener(new java.awt.event.MouseAdapter() {

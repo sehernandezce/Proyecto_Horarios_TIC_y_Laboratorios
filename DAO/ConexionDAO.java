@@ -30,17 +30,20 @@ public class ConexionDAO {
         return connection;
     }
 
-    public void Reconnection(int tipoUsuario){
+    public Connection Reconnection(int tipoUsuario){
+        
         
         try {
             System.out.println("conexión: "+this.connection.isClosed());
         } catch (SQLException ex) {
             Logger.getLogger(ConexionDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        seleccionarUser(tipoUsuario);
+        
         try {
             if(this.connection.isClosed()){
+                seleccionarUser(tipoUsuario);
                 this.connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
+                return connection;
             }
         } catch (SQLException ex) {
             try {
@@ -50,6 +53,8 @@ public class ConexionDAO {
             }
             
         }
+        
+        return this.connection;
     
     }
     

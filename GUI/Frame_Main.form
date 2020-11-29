@@ -3194,6 +3194,8 @@
           <AbsoluteConstraints x="170" y="30" width="-1" height="-1"/>
         </Constraint>
       </Constraints>
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout"/>
       <SubComponents>
         <Component class="javax.swing.JLabel" name="jLabel33">
           <Properties>

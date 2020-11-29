@@ -455,9 +455,11 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     public void crearEspacio(String tipo, Frame_Main frame, Usuario u) throws SQLException {
-
+        try{
+       
         this.usuario = u;
         this.fraim = frame;
+        frame.hiloCargando.finalizarhilo();
         if (u.getTipoUsuario() == 2) {
 
             jTextField3.setText(tipo);
@@ -470,7 +472,9 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
             Crear = 1;            
 
         }
-
+    }catch (Exception e){
+            
+        }
     }
 
     private void habilitarControles(JTextField text, boolean b) {
@@ -510,10 +514,12 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
     }
 
     public void llenarFrame(Usuario u, Espacio esp, Frame_Main frame) throws SQLException {
+       try{  
         this.hiloFrame_DetallesEspacio.setVariable(this);
         this.hiloCargando2.setVariable(jLCargando3);
-        this.usuario = u;
+        this.usuario = u;        
         this.fraim = frame;
+        frame.hiloCargando.finalizarhilo();
         jTextCorreoEncargado.setText(esp.getCorreo_encargado());
         if (esp.getNombre_espacio().equals(null)) {
             jTextNombreEspacio2.setText(" ");
@@ -537,10 +543,14 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
             jRadioBInactivo.setSelected(true);
         }
         llenartableInv(esp.getId_espacio());
+            
+        }catch (Exception e){
+            
+        }
     }
 
     private void llenartableInv(int idesp) throws SQLException {
-
+        try{
         Object[][] tabla = validarInventario.llenarMatrizInv(idesp, usuario);
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
                 tabla, new String[]{"Id inventario", "Nombre", "Descripción"}) {
@@ -548,6 +558,9 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
         );
         if (usuario.getTipoUsuario() == 2) {
             jButtonEditar.setVisible(true);
+        }
+        }catch (Exception e){
+            
         }
     }
 
@@ -580,6 +593,7 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
     }
 
     public void guardar() throws SQLException {
+      try{       
         boolean verif = false;
             
         try {
@@ -641,6 +655,10 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
             }
         }
        hiloCargando2.finalizarhilo(); 
+       
+       }catch (Exception e){
+            
+        } 
     }
 
     private void deletInv() {
@@ -680,6 +698,7 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
         if (result == 0) {
             hiloCargando2.finalizarhilo(); 
             this.fraim.setEnabled(true);
+            this.fraim.hiloCargando.finalizarhilo();
             this.fraim.cargando();
             this.dispose();
             
@@ -738,7 +757,8 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField3ActionPerformed
 
     private void jButtonNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevoActionPerformed
-      
+       try{
+            
         Frame_DetallesEspacio frame_DetallesEspacio = new Frame_DetallesEspacio();
         frame_DetallesEspacio.setDataConexiones(dataConexion,this.validarEspacio,this.validarInventario);
         try {
@@ -750,7 +770,11 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
         } catch (Exception e) {
             System.out.println(e);
         }
+        }catch (Exception e){
+            
+        }  
         this.dispose();
+               
     }//GEN-LAST:event_jButtonNuevoActionPerformed
 
     private void jlMinimize1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlMinimize1MouseEntered

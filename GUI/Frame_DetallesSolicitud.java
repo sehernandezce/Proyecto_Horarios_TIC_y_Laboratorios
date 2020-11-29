@@ -54,7 +54,9 @@ public class Frame_DetallesSolicitud extends javax.swing.JFrame {
      }
   
      public void llenar_frame(String[] datos, String dia,Usuario u, Frame_Main frame){
-        this.usuario=u;
+     try{
+          
+         this.usuario=u;
         this.fraim = frame;
         jFF_inicio.setText(datos[0]);
         jFF_final.setText(datos[1]);
@@ -67,6 +69,9 @@ public class Frame_DetallesSolicitud extends javax.swing.JFrame {
         jF_nombre_edi.setText(datos[7]);
         jF_salon.setText(datos[8]);
         jF_obs.setText(datos[9]);
+        }catch (Exception e){
+            
+        }
     }
     
     

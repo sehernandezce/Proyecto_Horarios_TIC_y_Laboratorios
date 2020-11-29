@@ -54,7 +54,7 @@ public class Frame_Main extends javax.swing.JFrame {
     private boolean tipo_espera = false;
     private boolean tipo_aceptada = false;
     private boolean tipo_cancelada = false;
-    private static HiloCargando hiloCargando=new HiloCargando();
+    public HiloCargando hiloCargando=new HiloCargando();
     public static HiloFrame_Main hiloFrame_Main= new HiloFrame_Main();
     private int EstadisticasSeleccion;    
     public String Tipo;
@@ -67,9 +67,7 @@ public class Frame_Main extends javax.swing.JFrame {
         jLCargando.setVisible(false);        
     }
 
-    public void setNombreRepeticion(String nombreRepeticion) {
-        this.nombreRepeticion = nombreRepeticion;
-    }
+   
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -850,7 +848,7 @@ public class Frame_Main extends javax.swing.JFrame {
 
         jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel12.setText("¿En que horario desea reservar el espacio? ");
-        jPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 210, 262, 20));
+        jPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 200, 262, 20));
 
         jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel13.setText("Tipo de espacio");
@@ -858,7 +856,7 @@ public class Frame_Main extends javax.swing.JFrame {
 
         jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel15.setText("Duración en horas:");
-        jPanel2.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 230, -1, 20));
+        jPanel2.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 220, -1, 20));
 
         jLabel27.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel27.setText("¿El evento se repite?");
@@ -903,14 +901,16 @@ public class Frame_Main extends javax.swing.JFrame {
                 jComboMotivosActionPerformed(evt);
             }
         });
-        jPanel2.add(jComboMotivos, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 380, 168, -1));
+        jPanel2.add(jComboMotivos, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 379, 168, 30));
 
+        jCalendar2.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
         jCalendar2.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
                 jCalendar2PropertyChange(evt);
             }
         });
-        jPanel2.add(jCalendar2, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 240, 325, 223));
+        jPanel2.add(jCalendar2, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 240, 350, 223));
+        jCalendar2.setFont(new java.awt.Font("Segoe UI", 1, 10));
 
         jButton3.setBackground(new java.awt.Color(0, 255, 240));
         jButton3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -946,7 +946,7 @@ public class Frame_Main extends javax.swing.JFrame {
         jPanel2.add(jLabelRepeticion, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 314, 260, 60));
 
         jSpinnerHorainicio.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        jPanel2.add(jSpinnerHorainicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 250, 56, -1));
+        jPanel2.add(jSpinnerHorainicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 240, 56, 30));
 
         jLabelAñadir2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/anadir.png"))); // NOI18N
         jLabelAñadir2.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -1002,7 +1002,7 @@ public class Frame_Main extends javax.swing.JFrame {
 
         jLabel42.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel42.setText("Hora de inicio:");
-        jPanel2.add(jLabel42, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 230, -1, 20));
+        jPanel2.add(jLabel42, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 220, -1, 20));
 
         dudaSolicitud.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/signo-de-pregunta-en-circulos.png"))); // NOI18N
         dudaSolicitud.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -1013,7 +1013,7 @@ public class Frame_Main extends javax.swing.JFrame {
                 dudaSolicitudMouseExited(evt);
             }
         });
-        jPanel2.add(dudaSolicitud, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 220, -1, -1));
+        jPanel2.add(dudaSolicitud, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 220, -1, -1));
 
         dudaSolicitud2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/signo-de-pregunta-en-circulos.png"))); // NOI18N
         dudaSolicitud2.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -1037,7 +1037,7 @@ public class Frame_Main extends javax.swing.JFrame {
         jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 10, -1, -1));
 
         jComboSelectDuracion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1 Hora", "2 Horas" }));
-        jPanel2.add(jComboSelectDuracion, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 250, 80, 20));
+        jPanel2.add(jComboSelectDuracion, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 240, 80, 30));
 
         Fondo5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondo_blanco1 1 .jpg"))); // NOI18N
         jPanel2.add(Fondo5, new org.netbeans.lib.awtextra.AbsoluteConstraints(-20, 0, 880, -1));
@@ -1695,7 +1695,11 @@ public class Frame_Main extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    public void setNombreRepeticion(String nombreRepeticion) {
+        this.nombreRepeticion = nombreRepeticion;
+    }
+    
     public void setdataConexiones(ManipularConecciones con) {
         this.manipulacionConexiones = con;
         validarEspacios = new ValidarEspacios(con);
@@ -1704,11 +1708,11 @@ public class Frame_Main extends javax.swing.JFrame {
     }
     
     public void cargando(){        
-        hiloCargando=new HiloCargando();
+        this.hiloCargando=new HiloCargando();
          if (usuario.getTipoUsuario() == 1 || usuario.getTipoUsuario() == 4) {
-         hiloCargando.setVariable(this.jLCargando);
+         hiloCargando.setVariable(this.jLCargandos0);
          }else if(usuario.getTipoUsuario() == 2){
-            hiloCargando.setVariable(this.jLCargandos0);  
+            hiloCargando.setVariable(this.jLCargando);  
          }
           
     }
@@ -1782,16 +1786,22 @@ public class Frame_Main extends javax.swing.JFrame {
     }
 
     public void llenarMotivos(Usuario us) {
-        String[] lista = validarSolicitudes.obtenerListaMotivos(us);
+       try{
+         String[] lista = validarSolicitudes.obtenerListaMotivos(us);
 
         for (String lista1 : lista) {
             jComboMotivos.addItem(lista1);
-        }
+        }  
+       }catch(Exception e){
+           
+       }
+        
+        
 
     }
 
     public void solicitar_Espacio(String Espacio) throws SQLException {
-
+        try{
         jLabelRepeticion.setText("No se repite");
         fechaTermina = obtener_fecha();
         indiceRepeticion = 4;
@@ -1811,6 +1821,9 @@ public class Frame_Main extends javax.swing.JFrame {
         if (jTable3.getRowCount() == 0) {
             JOptionPane.showMessageDialog(null, "No se han creado espacios de tipo " + Espacio, "Sin registros", JOptionPane.INFORMATION_MESSAGE);
         }
+         }catch (Exception e){
+            
+        }
         hiloCargando.finalizarhilo();
     }
 
@@ -1826,9 +1839,10 @@ public class Frame_Main extends javax.swing.JFrame {
     }
 
     private void administrar_Solicitudes() {
+       try{ 
         ocultar_todosPaneles();
         Categorias.setSelectedIndex(0);
-
+        
         if (usuario.getTipoUsuario() == 1 || usuario.getTipoUsuario() == 4) {
             Aceptar_sol_boton.setVisible(false);
             Rechazar_sol_boton.setVisible(false);
@@ -1844,7 +1858,9 @@ public class Frame_Main extends javax.swing.JFrame {
             Logger.getLogger(Frame_Main.class.getName()).log(Level.SEVERE, null, ex);
         }
         Tipo_estados.clearSelection();
-
+        }catch (Exception e){
+            
+        }
     }
 
     private void ver_Estadisticas() {
@@ -1854,25 +1870,33 @@ public class Frame_Main extends javax.swing.JFrame {
     }
 
     private void llenarTabla(String tipo) throws SQLException {
-
-        Object[][] tabla = validarEspacios.llenarMatriz(tipo, usuario);
+        try{
+             Object[][] tabla = validarEspacios.llenarMatriz(tipo, usuario);
         jTable3.setModel(new javax.swing.table.DefaultTableModel(
                 tabla, new String[]{" ID", "Nombre espacio", "Salon", "Edificio", "Encargado", "Estado", "Información adicional"})
         );
         DefaultTableCellRenderer render = new DefaultTableCellRenderer();
         render.setHorizontalAlignment(SwingConstants.CENTER);
-        jTable3.getColumnModel().getColumn(5).setCellRenderer(render);
+        jTable3.getColumnModel().getColumn(5).setCellRenderer(render); 
+        }catch(Exception e){
+            
+        }
+            
+      
     }
 
     private void llenarTabla_espacios(int id_espacio, String fecha, int day) throws SQLException {//modelo tabla espacios
-
-        Object[][] tabla = validarEspacios.llenarMatriz_horas(id_espacio, fecha, usuario, day);
-        jTable4.setModel(new javax.swing.table.DefaultTableModel(
-                tabla, new String[]{"Horas ocupadas"}));
-
+        try{
+            Object[][] tabla = validarEspacios.llenarMatriz_horas(id_espacio, fecha, usuario, day);
+            jTable4.setModel(new javax.swing.table.DefaultTableModel(
+                tabla, new String[]{"Horas ocupadas"}));  
+        }catch (Exception e){
+            
+        }      
     }
 
     private void llenarTabla_solicitudes(String tipo_e) throws SQLException {
+       try{  
         Administrar_Solicitudes.setEnabled(false);
         Categorias.setSelectedIndex(0);
         Buscador.setText("");
@@ -1888,6 +1912,9 @@ public class Frame_Main extends javax.swing.JFrame {
         }
         verTodoSolicitud();
         Administrar_Solicitudes.setEnabled(true);
+         }catch (Exception e){
+            
+        }
     }
 
     private String obtener_fecha() {
@@ -1941,10 +1968,13 @@ public class Frame_Main extends javax.swing.JFrame {
     }
 
     public void limpiarTabla() {
-
+        try{
         DefaultTableModel M = (DefaultTableModel) jTable2.getModel();
         M.getDataVector().removeAllElements();
         M.fireTableDataChanged();
+         }catch (Exception e){
+            
+        }
     }
 
     public int categoria_fil(String categoria) {
@@ -1975,9 +2005,9 @@ public class Frame_Main extends javax.swing.JFrame {
     }
 
     public void cambiarEstado(String tipE) throws AddressException, Exception {
-
+        try{
         if (jTable2.getSelectedRow() != -1 && jTable2.getSelectedColumn() != -1) {
-
+            
             int res = validarSolicitudes.cambiarEstado(usuario, tipE, jTable2.getValueAt(jTable2.getSelectedRow(), 0).toString(), jTextField2.getText(), jTable2.getValueAt(jTable2.getSelectedRow(), 2).toString());
             if (res == 1) {
 
@@ -2012,6 +2042,9 @@ public class Frame_Main extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "No ha seleccionado una solicitud para gestionar", "Accion no valida", JOptionPane.INFORMATION_MESSAGE);
         }
         
+        }catch (Exception e){
+            
+        }        
         hiloCargando.finalizarhilo();
     }
 
@@ -2042,7 +2075,7 @@ public class Frame_Main extends javax.swing.JFrame {
     }
 
     public void verificarIngresoSolicitud() {
-        
+        try{
         int val;
 
         if (jComboSelectDuracion.getSelectedIndex() == 0) {
@@ -2087,6 +2120,9 @@ public class Frame_Main extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Solicitud ingresada con exito");
         } else {
             JOptionPane.showMessageDialog(null, validado);
+        }
+        }catch (Exception e){
+            
         }
         hiloCargando.finalizarhilo();
     }
@@ -2158,9 +2194,9 @@ public class Frame_Main extends javax.swing.JFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "A ocurrido un error: " + e);
         }
-           System.out.println("entre2o");
+           
             hiloCargando.finalizarhilo();
-            System.out.println("entreo");
+           
     }
 
     private void camCodig() {
@@ -2358,6 +2394,8 @@ public class Frame_Main extends javax.swing.JFrame {
 
         if (jTable3.getSelectedRow() != -1 && jTable3.getSelectedColumn() != -1) {
             if (jTable3.getSelectedColumn() == 6) {
+                jLCargando.setVisible(false);
+                jLCargandos0.setVisible(false);
                 verDetalles(jTable3.getValueAt(jTable3.getSelectedRow(), 0));
             }
             String edificio = (jTable3.getValueAt(jTable3.getSelectedRow(), 3)).toString();
@@ -2381,7 +2419,7 @@ public class Frame_Main extends javax.swing.JFrame {
 
     private void jCalendar2PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jCalendar2PropertyChange
         // TODO add your handling code here:
-
+    try{
         fechaTermina = obtener_fecha();
         indiceRepeticion = 4;
         jLabelRepeticion.setText("No se repite");
@@ -2405,7 +2443,9 @@ public class Frame_Main extends javax.swing.JFrame {
             }
 
         }
-
+        }catch (Exception e){
+            
+        }
     }//GEN-LAST:event_jCalendar2PropertyChange
 
     private void CategoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CategoriasActionPerformed
@@ -2514,6 +2554,7 @@ public class Frame_Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonPersonalizarActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+      try{ 
         if (jTable3.getSelectedRow() != -1 && jTable3.getSelectedColumn() != -1) {
             idEspacioSeleccionado = (jTable3.getValueAt(jTable3.getSelectedRow(), 0)).toString();
             String[] fechaVec0 = fechaTermina.split("-");
@@ -2535,6 +2576,9 @@ public class Frame_Main extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "No ha seleccionado ningún espacio", "Acción no valida", JOptionPane.INFORMATION_MESSAGE);
 
         }
+       }catch (Exception e){
+            
+        }  
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jComboMotivosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboMotivosActionPerformed
@@ -2546,7 +2590,7 @@ public class Frame_Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboMotivosActionPerformed
 
     private void jLabelAñadir2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelAñadir2MouseClicked
-
+        try{
         Frame_DetallesEspacio frame_DetallesEspacio = new Frame_DetallesEspacio();
         frame_DetallesEspacio.setDataConexiones(manipulacionConexiones, validarEspacios, validarInventario);
 
@@ -2560,6 +2604,11 @@ public class Frame_Main extends javax.swing.JFrame {
         } catch (Exception e) {
             System.out.println(e);
         }
+        
+        }catch (Exception e){
+            
+        }
+        
     }//GEN-LAST:event_jLabelAñadir2MouseClicked
 
     private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked

@@ -7,6 +7,8 @@ import Entidad.Usuario;
 import Hilos.HiloCargando;
 import Hilos.HiloFrame_Login;
 import java.awt.Color;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -17,7 +19,7 @@ public class Frame_Login extends javax.swing.JFrame {
     private ManipularConecciones datosConexion = new ManipularConecciones();
     private ManipularConecciones datosConexionTemporal = new ManipularConecciones();
     private static HiloFrame_Login hiloFrame_Login= new HiloFrame_Login();
-    private static final HiloCargando hiloCargando= new HiloCargando();;
+    private static final HiloCargando hiloCargando3= new HiloCargando();;
     private int x, y;
 
     public Frame_Login() {
@@ -30,10 +32,10 @@ public class Frame_Login extends javax.swing.JFrame {
         hiloFrame_Login.setVariable(this);              
         jLCargando2.setVisible(false);
         jLCargandoRecon.setVisible(false);
+      
     }
     
-
-            
+      
 
     private void creaConexionTemporal() {
         Usuario us = new Usuario();
@@ -59,7 +61,7 @@ public class Frame_Login extends javax.swing.JFrame {
                 frame_Main.entrar_bienvenida(usuario);               
                 frame_Main.setVisible(true);
                 frame_Main.setdataConexiones(datosConexion);
-                hiloCargando.finalizarhilo();
+                hiloCargando3.finalizarhilo();
                 this.dispose();
 
             } else if (usuario.getTipoUsuario() == -1 || usuario.getTipoUsuario() == 3 || usuario.getTipoUsuario() == 5) {
@@ -77,7 +79,7 @@ public class Frame_Login extends javax.swing.JFrame {
         } catch (Exception ex) {
             Logger.getLogger(Frame_Login.class.getName()).log(Level.SEVERE, null, ex);
         }
-        hiloCargando.finalizarhilo();
+        hiloCargando3.finalizarhilo();
     }
 
     private void logUp() { 
@@ -138,7 +140,7 @@ public class Frame_Login extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Ha ocurrido un error al conectar con la base de datos, por favor intente más tarde.", "Error", JOptionPane.INFORMATION_MESSAGE);
 
         }
-        hiloCargando.finalizarhilo();
+        hiloCargando3.finalizarhilo();
     }
 
     private void CamPass() throws Exception {
@@ -292,6 +294,14 @@ public class Frame_Login extends javax.swing.JFrame {
         panelIniciarSesion.setMaximumSize(new java.awt.Dimension(500, 520));
         panelIniciarSesion.setMinimumSize(new java.awt.Dimension(500, 520));
         panelIniciarSesion.setPreferredSize(new java.awt.Dimension(500, 520));
+        panelIniciarSesion.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                panelIniciarSesionKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                panelIniciarSesionKeyTyped(evt);
+            }
+        });
         panelIniciarSesion.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         Ingresar.setBackground(new java.awt.Color(0, 255, 240));
@@ -329,6 +339,11 @@ public class Frame_Login extends javax.swing.JFrame {
                 JtfUsuarioActionPerformed(evt);
             }
         });
+        JtfUsuario.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                JtfUsuarioKeyPressed(evt);
+            }
+        });
         panelIniciarSesion.add(JtfUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 220, 230, 30));
 
         LbContraseña.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -349,6 +364,11 @@ public class Frame_Login extends javax.swing.JFrame {
         jPasswordField1.setText("Contraseña");
         jPasswordField1.setMinimumSize(new java.awt.Dimension(15, 20));
         jPasswordField1.setPreferredSize(new java.awt.Dimension(15, 20));
+        jPasswordField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jPasswordField1KeyPressed(evt);
+            }
+        });
         panelIniciarSesion.add(jPasswordField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 290, 230, 30));
         panelIniciarSesion.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 100, 310, 10));
 
@@ -661,8 +681,8 @@ public class Frame_Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void IngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IngresarActionPerformed
-        hiloCargando.setVariable(jLCargando2); 
-        hiloCargando.Iniciar("Cargando_logIn");   
+        hiloCargando3.setVariable(jLCargando2); 
+        hiloCargando3.Iniciar("Cargando_logIn");   
         hiloFrame_Login.Iniciar("logIn", "");         
     }//GEN-LAST:event_IngresarActionPerformed
 
@@ -675,7 +695,7 @@ public class Frame_Login extends javax.swing.JFrame {
         int dialog = JOptionPane.YES_NO_OPTION;
         int result = JOptionPane.showConfirmDialog(null, "¿Desea cerrar el programa?", "Exit", dialog);
         if (result == 0) {
-            hiloCargando.finalizarhilo();
+            hiloCargando3.finalizarhilo();
             System.exit(0);
         }
     }//GEN-LAST:event_jlClose1MouseClicked
@@ -717,8 +737,8 @@ public class Frame_Login extends javax.swing.JFrame {
     }//GEN-LAST:event_JtfUsuarioActionPerformed
 
     private void registrarse1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrarse1ActionPerformed
-        hiloCargando.setVariable(jLCargandoRecon);
-        hiloCargando.Iniciar("Cargando");   
+        hiloCargando3.setVariable(jLCargandoRecon);
+        hiloCargando3.Iniciar("Cargando");   
         hiloFrame_Login.Iniciar("forgetPass", ""); 
     }//GEN-LAST:event_registrarse1ActionPerformed
 
@@ -787,6 +807,31 @@ public class Frame_Login extends javax.swing.JFrame {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
      
     }//GEN-LAST:event_formWindowOpened
+
+    private void panelIniciarSesionKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_panelIniciarSesionKeyPressed
+        
+    }//GEN-LAST:event_panelIniciarSesionKeyPressed
+
+    private void panelIniciarSesionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_panelIniciarSesionKeyTyped
+      
+         
+    }//GEN-LAST:event_panelIniciarSesionKeyTyped
+
+    private void jPasswordField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPasswordField1KeyPressed
+         if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+                     hiloCargando3.setVariable(jLCargando2); 
+                     hiloCargando3.Iniciar("Cargando_logIn");   
+                     hiloFrame_Login.Iniciar("logIn", "");  
+         } 
+    }//GEN-LAST:event_jPasswordField1KeyPressed
+
+    private void JtfUsuarioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JtfUsuarioKeyPressed
+             if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+                     hiloCargando3.setVariable(jLCargando2); 
+                     hiloCargando3.Iniciar("Cargando_logIn");   
+                     hiloFrame_Login.Iniciar("logIn", "");  
+         } 
+    }//GEN-LAST:event_JtfUsuarioKeyPressed
 
     /**
      * @param args the command line arguments

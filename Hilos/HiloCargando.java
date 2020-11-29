@@ -22,6 +22,7 @@ public class HiloCargando extends Thread{
         this.finalizar=false; 
       
     } 
+    
     public void Iniciar(String nombre){        
         this.hilo=new Thread(this,nombre);
         this.jLCargando.setVisible(true);
@@ -32,6 +33,7 @@ public class HiloCargando extends Thread{
     @Override 
     public void run() {      
         try {       
+            System.out.println("Run: "+hilo.getName());
      //    synchronized (this) {          
              while(this.suspender){                                      
                     if(giro){                             
@@ -45,7 +47,9 @@ public class HiloCargando extends Thread{
                     Thread.sleep(2000); 
                    // wait(); 
                 }
+                
                 jLCargando.setVisible(false);     
+               System.out.println("Finaliza: "+hilo.getName());  
         }catch (InterruptedException exc){ 
             System.out.println(hilo.getName()+ "interrumpido."); 
         }         

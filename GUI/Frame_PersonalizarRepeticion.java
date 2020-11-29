@@ -299,7 +299,8 @@ public class Frame_PersonalizarRepeticion extends javax.swing.JFrame {
                 jCalendar1PropertyChange(evt);
             }
         });
-        panelRepetición.add(jCalendar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, 360, 220));
+        panelRepetición.add(jCalendar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, 370, 220));
+        jCalendar1.setFont(new java.awt.Font("Segoe UI", 1, 10));
 
         jLabelVisualizarRepetición.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         panelRepetición.add(jLabelVisualizarRepetición, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 180, 130, 150));

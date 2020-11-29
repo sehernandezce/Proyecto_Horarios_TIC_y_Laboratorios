@@ -218,26 +218,28 @@ public class UsuarioDAO {
 
             if (resultSet2.next()) {
                 if (resultSet2.getString(1).equals("0")) {
+                    EnviarCorreo enviarCorreo = new EnviarCorreo();
+                    enviarCorreo.setManipularConexion(new ManipularConecciones());
+                    if (enviarCorreo.enviarC(correo)) {
                     resultSet = statement.executeUpdate("CALL CrearCod('" + u + "','"
                             + contraseniahasheada.getSaltedHash(cod) + "')");
-                    if (resultSet > 0) {
-                        EnviarCorreo enviarCorreo = new EnviarCorreo();
-                        enviarCorreo.setManipularConexion(new ManipularConecciones());
-                        if (enviarCorreo.enviarC(correo)) {
-                            return 1;
-                        } else {
-                            VerificarCode(cod, u);
-                            return -3;
-                        }
+                             if (resultSet > 0) {
+                              return 1;
+                            } else {                           
+                            return -4;
+                          }
+                    }else{
+                       return -3; 
+                    }
+                        
+                    
                     } else {
-                        return -4;
+                        return -2;
                     }
                 } else {
-                    return -2;
+                    return -4;
                 }
-            }
-
-            return -1;
+          
         } catch (SQLException ex) {
             System.out.println("Error en SQL" + ex);
             return -1;
@@ -261,11 +263,9 @@ public class UsuarioDAO {
             int resultSet2 = -1;
             statement = connection.createStatement();
             resultSet = statement.executeQuery("select now();");
-            if (existir(U).equals("false")) {
-                System.out.println("entreo no existe");
+            if (existir(U).equals("false")) {             
                 return false;
-            } else {
-                System.out.println(existir(U));
+            } else {                
                 resultSet = statement.executeQuery("CALL verifCode('" + U + "')");
                 boolean verifcod = false;
                 resultSet.afterLast();

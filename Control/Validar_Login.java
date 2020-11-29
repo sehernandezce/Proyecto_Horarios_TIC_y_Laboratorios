@@ -57,7 +57,7 @@ public class Validar_Login {
         System.out.println("enviarcod");
         Correo correo = new Correo();
         correo.setAsunto("Restablezca la contraseña. Horarios de salasTIC's y laboratorios");
-        correo.setMensaje("Estimado/a <b>u</b>,<br> ¿Ha olvidado la contraseña?<br> Restablesca su contraseña ingresando el código: " + cod
+        correo.setMensaje("Estimado/a <b>u</b>,<br> ¿Ha olvidado la contraseña?<br> Restablezca su contraseña ingresando el código: " + cod
                 + "<br>El código es valido durante 24 horas y solo podra ser usado una vez. No se podran generar más codigo hasta pasar 24 horas o haber usado este código." + "<br> Si no desea cambiar la contraseña o no lo ha solicitado, ignore este mensaje y bórrelo. Gracias.<br>");
         correo.setCorreoReceptor(u + "@unal.edu.co");
         System.out.println("correo");

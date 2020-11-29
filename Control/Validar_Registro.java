@@ -33,7 +33,7 @@ public class Validar_Registro {
             return(-4);
         }
          else if(tipoUsuario==2){
-            if(!dao.VerificarCode(codigo)){
+            if(!dao.VerificarCode2(codigo)){
                  return -5;
             }else{
              usuario.setNombreusuarioInstitucional(name);

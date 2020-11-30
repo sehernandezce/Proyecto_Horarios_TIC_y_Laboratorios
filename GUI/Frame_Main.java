@@ -1786,12 +1786,15 @@ public class Frame_Main extends javax.swing.JFrame {
     }
 
     public void llenarMotivos(Usuario us) {
+       jComboMotivos.removeAllItems();       
+       jComboMotivos.addItem("Seleccion");
        try{
          String[] lista = validarSolicitudes.obtenerListaMotivos(us);
 
         for (String lista1 : lista) {
             jComboMotivos.addItem(lista1);
-        }  
+        } 
+        
        }catch(Exception e){
            
        }
@@ -1828,14 +1831,19 @@ public class Frame_Main extends javax.swing.JFrame {
     }
 
     private void verTodoSolicitud() {
-        Buscador.addKeyListener(new KeyAdapter() {
+        try{
+          Buscador.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent ke) {
                 TRSFiltro.setRowFilter(RowFilter.regexFilter("(?i)" + "Ver más", (categoria_fil("Selección") - 1)));
             }
         });
         TRSFiltro = new TableRowSorter(jTable2.getModel());
-        jTable2.setRowSorter(TRSFiltro);
+        jTable2.setRowSorter(TRSFiltro);   
+        }catch(Exception e){
+               System.out.println("Exception en verTodoSolicitud e "+e);
+        }            
+       
     }
 
     private void administrar_Solicitudes() {
@@ -1879,7 +1887,7 @@ public class Frame_Main extends javax.swing.JFrame {
         render.setHorizontalAlignment(SwingConstants.CENTER);
         jTable3.getColumnModel().getColumn(5).setCellRenderer(render); 
         }catch(Exception e){
-            
+               System.out.println("Exception en llenarTabla_solicitudes e "+e);
         }
             
       
@@ -1913,7 +1921,7 @@ public class Frame_Main extends javax.swing.JFrame {
         verTodoSolicitud();
         Administrar_Solicitudes.setEnabled(true);
          }catch (Exception e){
-            
+            System.out.println("Exception en llenarTabla_solicitudes e "+e);
         }
     }
 
@@ -2043,7 +2051,7 @@ public class Frame_Main extends javax.swing.JFrame {
         }
         
         }catch (Exception e){
-            
+            System.out.println("Exception en cambiarEstado e "+e);
         }        
         hiloCargando.finalizarhilo();
     }
@@ -2334,22 +2342,21 @@ public class Frame_Main extends javax.swing.JFrame {
     private void jlSalaRMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlSalaRMousePressed
         cargando();
         hiloCargando.Iniciar("Sala de reuniones");   
-        hiloFrame_Main.Iniciar("solicitar_Espacio", "Sala de reuniones"); 
-        llenarMotivos(usuario);
+        hiloFrame_Main.Iniciar("solicitar_Espacio", "Sala de reuniones");        
     }//GEN-LAST:event_jlSalaRMousePressed
 
     private void jLabel4MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MousePressed
         cargando();
         hiloCargando.Iniciar("Sala de computadores");   
         hiloFrame_Main.Iniciar("solicitar_Espacio", "Sala de computadores"); 
-        llenarMotivos(usuario);
+        
     }//GEN-LAST:event_jLabel4MousePressed
 
     private void jLabel5MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MousePressed
         cargando();
         hiloCargando.Iniciar("Auditorios");   
         hiloFrame_Main.Iniciar("solicitar_Espacio", "Auditorios"); 
-        llenarMotivos(usuario);
+        
     }//GEN-LAST:event_jLabel5MousePressed
 
     private void jLabel23MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel23MousePressed

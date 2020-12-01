@@ -29,6 +29,7 @@ import Control.ManipularConecciones;
 import Hilos.HiloCargando;
 import Hilos.HiloFrame_Main;
 import Control.ValidarInventario;
+import java.awt.Image;
 import javax.swing.ImageIcon;
 import java.io.IOException;
 
@@ -266,15 +267,15 @@ public class Frame_Main extends javax.swing.JFrame {
         jButton7 = new javax.swing.JButton();
         jRadioButton2 = new javax.swing.JRadioButton();
         jRadioButton3 = new javax.swing.JRadioButton();
-        jRadioButton4 = new javax.swing.JRadioButton();
         jLabel35 = new javax.swing.JLabel();
-        jMonthChooser1 = new com.toedter.calendar.JMonthChooser();
-        jScrollPane6 = new javax.swing.JScrollPane();
-        jTextArea2 = new javax.swing.JTextArea();
-        jButton8 = new javax.swing.JButton();
         jRadioButton1 = new javax.swing.JRadioButton();
+        jRadioButton4 = new javax.swing.JRadioButton();
+        jMonthChooser1 = new com.toedter.calendar.JMonthChooser();
+        jButton8 = new javax.swing.JButton();
         jMonthChooser2 = new com.toedter.calendar.JMonthChooser();
         jYearChooser2 = new com.toedter.calendar.JYearChooser();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel51 = new javax.swing.JLabel();
         Fondo7 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -1616,12 +1617,12 @@ public class Frame_Main extends javax.swing.JFrame {
 
         jLabel33.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel33.setText("Estadísticas");
-        Estadisticas.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 0, 110, 70));
-        Estadisticas.add(jYearChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 80, 80, -1));
+        Estadisticas.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, -10, 110, 70));
+        Estadisticas.add(jYearChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 80, 80, 30));
 
         jLabel34.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel34.setText("Estadísticas Por Tipo De Espacio");
-        Estadisticas.add(jLabel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 40, 220, 90));
+        Estadisticas.add(jLabel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, -20, 220, 90));
 
         jButton7.setText("Buscar");
         jButton7.addActionListener(new java.awt.event.ActionListener() {
@@ -1629,44 +1630,27 @@ public class Frame_Main extends javax.swing.JFrame {
                 jButton7ActionPerformed(evt);
             }
         });
-        Estadisticas.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 80, 80, 30));
+        Estadisticas.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 80, 80, 30));
 
         Estadisticas_por_tipo.add(jRadioButton2);
         jRadioButton2.setText("Auditorio");
-        jRadioButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton2ActionPerformed(evt);
-            }
-        });
-        Estadisticas.add(jRadioButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 120, 110, 30));
+        Estadisticas.add(jRadioButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 40, 70, 30));
 
         Estadisticas_por_tipo.add(jRadioButton3);
         jRadioButton3.setText("Sala de Reuniones");
-        jRadioButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton3ActionPerformed(evt);
-            }
-        });
-        Estadisticas.add(jRadioButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 120, 150, 30));
+        Estadisticas.add(jRadioButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 40, 110, 30));
+
+        jLabel35.setText("Tipo de espacio:");
+        Estadisticas.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 10, 160, 40));
+
+        Estadisticas_por_tipo.add(jRadioButton1);
+        jRadioButton1.setText("Laboratorio");
+        Estadisticas.add(jRadioButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 40, 110, 30));
 
         Estadisticas_por_tipo.add(jRadioButton4);
         jRadioButton4.setText("Sala de Computadores");
-        jRadioButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton4ActionPerformed(evt);
-            }
-        });
-        Estadisticas.add(jRadioButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 120, 170, 30));
-
-        jLabel35.setText("Tipo de espacio:");
-        Estadisticas.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 110, 160, 40));
-        Estadisticas.add(jMonthChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 80, -1, 30));
-
-        jTextArea2.setColumns(20);
-        jTextArea2.setRows(5);
-        jScrollPane6.setViewportView(jTextArea2);
-
-        Estadisticas.add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 210, 250, 200));
+        Estadisticas.add(jRadioButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 40, 140, 30));
+        Estadisticas.add(jMonthChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 80, -1, 30));
 
         jButton8.setText("Buscar");
         jButton8.addActionListener(new java.awt.event.ActionListener() {
@@ -1674,21 +1658,14 @@ public class Frame_Main extends javax.swing.JFrame {
                 jButton8ActionPerformed(evt);
             }
         });
-        Estadisticas.add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 190, 80, 30));
-
-        Estadisticas_por_tipo.add(jRadioButton1);
-        jRadioButton1.setText("Laboratorio");
-        jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton1ActionPerformed(evt);
-            }
-        });
-        Estadisticas.add(jRadioButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 120, 110, 30));
-        Estadisticas.add(jMonthChooser2, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 190, 110, 30));
-        Estadisticas.add(jYearChooser2, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 190, 90, 30));
+        Estadisticas.add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 80, 80, 30));
+        Estadisticas.add(jMonthChooser2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 110, 30));
+        Estadisticas.add(jYearChooser2, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 80, 90, 30));
+        Estadisticas.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 140, 370, 330));
+        Estadisticas.add(jLabel51, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 370, 330));
 
         Fondo7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondo_blanco1 1 .jpg"))); // NOI18N
-        Estadisticas.add(Fondo7, new org.netbeans.lib.awtextra.AbsoluteConstraints(-20, 0, 880, -1));
+        Estadisticas.add(Fondo7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 880, -1));
 
         getContentPane().add(Estadisticas, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 30, -1, -1));
         Estadisticas.getAccessibleContext().setAccessibleDescription("");
@@ -2267,6 +2244,21 @@ public class Frame_Main extends javax.swing.JFrame {
         }
     }
 
+    public int tipoEspacio_estadistica(){
+        if(jRadioButton4.isSelected()){
+            return 3;
+        }
+        if(jRadioButton1.isSelected()){
+            return 1;
+        }
+        if(jRadioButton2.isSelected()){
+            return 4;
+        }
+        if(jRadioButton3.isSelected()){
+            return 2;
+        }
+    return 0;
+    }
 
     private void jlLabMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlLabMousePressed
         cargando();
@@ -2389,6 +2381,19 @@ public class Frame_Main extends javax.swing.JFrame {
 
     private void jLabel8MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MousePressed
         ver_Estadisticas();
+
+        ImageIcon grafico_general= new ImageIcon(getClass().getResource("/Graficos/Grafico_general_inicial.png"));
+        ImageIcon icon;
+        icon = new ImageIcon(grafico_general.getImage().getScaledInstance(jLabel51.getWidth(), jLabel51.getHeight(),Image.SCALE_DEFAULT));
+        jLabel51.setIcon(icon);
+        
+        
+        ImageIcon grafico_especifico= new ImageIcon(getClass().getResource("/Graficos/Grafico_especifico_inicial.png"));
+        ImageIcon icon_;
+        icon_ = new ImageIcon(grafico_especifico.getImage().getScaledInstance(jLabel6.getWidth(), jLabel6.getHeight(),Image.SCALE_DEFAULT));
+        jLabel6.setIcon(icon_);
+      
+
     }//GEN-LAST:event_jLabel8MousePressed
 
     private void jLabel18MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel18MousePressed
@@ -3021,32 +3026,32 @@ public class Frame_Main extends javax.swing.JFrame {
         masInfoCancelar.setVisible(false);
     }//GEN-LAST:event_dudaadmSolicitud3MouseExited
 
-    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
-        EstadisticasSeleccion = 1;
-    }//GEN-LAST:event_jRadioButton1ActionPerformed
-
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         try {
-            graficar.graficarEspecifico(usuario, EstadisticasSeleccion, jMonthChooser2.getMonth(), jYearChooser2.getYear());
+            graficar.graficarGeneral(usuario, jMonthChooser2.getMonth()+1, jYearChooser2.getYear());
         } catch (IOException ex) {
             Logger.getLogger(Frame_Main.class.getName()).log(Level.SEVERE, null, ex);
         }
+        ImageIcon grafico_general= new ImageIcon(getClass().getResource("/Graficos/Grafico_general.png"));
+        ImageIcon icon;
+        icon = new ImageIcon(grafico_general.getImage().getScaledInstance(jLabel51.getWidth(), jLabel51.getHeight(),Image.SCALE_DEFAULT));
+        jLabel51.setIcon(icon);
     }//GEN-LAST:event_jButton8ActionPerformed
 
-    private void jRadioButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton4ActionPerformed
-        EstadisticasSeleccion = 3;
-    }//GEN-LAST:event_jRadioButton4ActionPerformed
-
-    private void jRadioButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton3ActionPerformed
-        EstadisticasSeleccion = 2;
-    }//GEN-LAST:event_jRadioButton3ActionPerformed
-
-    private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
-        EstadisticasSeleccion = 4;
-    }//GEN-LAST:event_jRadioButton2ActionPerformed
-
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        graficar.graficarGeneral(usuario, jMonthChooser1.getMonth(), jYearChooser1.getYear());
+        System.out.println(tipoEspacio_estadistica());
+        System.out.println(jMonthChooser1.getMonth());
+        System.out.println(jYearChooser1.getYear());
+        try {
+            graficar.graficarEspecifico(usuario, tipoEspacio_estadistica(), jMonthChooser1.getMonth()+1, jYearChooser1.getYear());
+        } catch (IOException ex) {
+            Logger.getLogger(Frame_Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       
+        ImageIcon grafico_especifico= new ImageIcon(getClass().getResource("/Graficos/Grafico_especifico.png"));
+        ImageIcon icon;
+        icon = new ImageIcon(grafico_especifico.getImage().getScaledInstance(jLabel6.getWidth(), jLabel6.getHeight(),Image.SCALE_DEFAULT));
+        jLabel6.setIcon(icon);
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
@@ -3212,8 +3217,10 @@ public class Frame_Main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel49;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel50;
+    private javax.swing.JLabel jLabel51;
     private javax.swing.JLabel jLabel52;
     private javax.swing.JLabel jLabel53;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
@@ -3239,7 +3246,6 @@ public class Frame_Main extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator10;
     private javax.swing.JSeparator jSeparator11;
@@ -3272,7 +3278,6 @@ public class Frame_Main extends javax.swing.JFrame {
     private javax.swing.JTable jTable3;
     private javax.swing.JTable jTable4;
     private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextArea jTextArea2;
     private javax.swing.JTextArea jTextArea4;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextMotivoSolicitud;

@@ -1,10 +1,6 @@
 package Control;
 
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
 import Entidad.Usuario;
 import DAO.EstadisticasDAO;
 import java.io.File;
@@ -12,31 +8,50 @@ import java.io.IOException;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
-import org.jfree.data.category.CategoryDataset;
-import org.jfree.data.general.DefaultPieDataset;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.DefaultCategoryDataset;
 
 public class GraficarEstadisticas {
     
     private EstadisticasDAO daoEstadisticas = new EstadisticasDAO();
     
-    public int graficarGeneral(Usuario user, int mes, int anio){
-        return 0;
+    public void graficarGeneral(Usuario user, int mes, int anio) throws IOException{
+       DefaultCategoryDataset dataset=daoEstadisticas.obtenerGrafica_general(user, mes, anio);
+         //se esta combinando el data set de una grafica de pie con una grafica barchart
+        JFreeChart chart=ChartFactory.createBarChart("Grafico espacios", "Espacios", "solicitudes", dataset, PlotOrientation.VERTICAL, false, false, false);
+        //Pasar a grafica xychart
+        int ancho=370;
+        int alto=330;
+        File F= new File("src\\Graficos\\Grafico_general.png");
+        ChartUtilities.saveChartAsPNG(F, chart ,ancho,alto);
     }
     
     public void graficarEspecifico (Usuario user, int tipoEspacio, int mes, int anio ) throws IOException{
         
-        DefaultPieDataset dataset=daoEstadisticas.obtenerGrafica_especifico(user, tipoEspacio, mes, anio);
-        
-        JFreeChart chart=ChartFactory.createBarChart("Grafico", "Espacio", "Cantidad", (CategoryDataset) dataset);
-        
-        int ancho=350;
-        int alto=210;
+        DefaultCategoryDataset dataset=daoEstadisticas.obtenerGrafica_especifico(user, tipoEspacio, mes, anio);
+        //se esta combinando el data set de una grafica de pie con una grafica barchart
+        JFreeChart chart=ChartFactory.createBarChart("Grafico por "+tipo_espacio(tipoEspacio), "Espacios", "solicitudes", dataset, PlotOrientation.VERTICAL, false, false, false);
+        //Pasar a grafica xychart
+        int ancho=370;
+        int alto=330;
         File F= new File("src\\Graficos\\Grafico_especifico.png");
         ChartUtilities.saveChartAsPNG(F, chart ,ancho,alto);
 
     }
     
-    public int generarGrafica(ResultSet rs){
-        return 0;
-    }
+   public String tipo_espacio(int tipo_espacio){
+       if(tipo_espacio==1){
+           return "Laboratorios";
+       }
+       if(tipo_espacio==2){
+           return "Salas de computadores";
+       }
+       if(tipo_espacio==3){
+           return "Salas de reuniones";
+       }
+       if(tipo_espacio==4){
+           return "Auditorios";
+       }
+       return null;
+   }
 }

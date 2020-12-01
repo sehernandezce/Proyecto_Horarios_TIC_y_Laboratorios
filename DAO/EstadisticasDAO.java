@@ -7,6 +7,7 @@ import java.sql.Statement;
 import Entidad.Usuario;
 import DAO.UsuarioDAO;
 import java.sql.SQLException;
+import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
 
 public class EstadisticasDAO {
@@ -25,12 +26,12 @@ public class EstadisticasDAO {
             this.DB_USER = "UserStandard";
             this.DB_PASSWD = "Us58*uQL";
         } else if (tipUser == 2 || tipUser == 4) {
-            this.DB_USER = "horariosdesalastics";
-            this.DB_PASSWD = "123456789Qw";
+            this.DB_USER = "UserCoordinator";
+            this.DB_PASSWD = "uC102*lPg";
         }
     }
 
-    public DefaultPieDataset  obtenerGrafica_especifico(Usuario par, int tipoEspacio, int mes, int anio) {
+    public DefaultCategoryDataset  obtenerGrafica_especifico(Usuario par, int tipoEspacio, int mes, int anio) {
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
@@ -46,7 +47,8 @@ public class EstadisticasDAO {
             //VALUES ('453', '1', '2', 'lab prueba', '123', '1', '312');
             resultSet = statement.executeQuery("Call espacio_especifico_estadistica('^"+fecha+"',"+tipoEspacio+")");
             if (resultSet.next()) {
-                return obtenerData_especifico(resultSet);
+                //No lee el primer dato
+                return obtenerData(resultSet,"NOMBRE_ESPACIO");
             } else {
                 return null;
             }
@@ -65,14 +67,50 @@ public class EstadisticasDAO {
         }
     }
     
-    public DefaultPieDataset obtenerData_especifico(ResultSet rs) throws SQLException{
-        DefaultPieDataset dataset= new DefaultPieDataset();
+    
+    public DefaultCategoryDataset  obtenerGrafica_general(Usuario par,int mes, int anio) {
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        String fecha=anio+"-"+mes;
+
+        try {
+            resultSet = null;
+            seleccionarUser(par.getTipoUsuario());
+            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
+            statement = connection.createStatement();
+            DB_USER = null;
+            DB_PASSWD = null;
+            //VALUES ('453', '1', '2', 'lab prueba', '123', '1', '312');
+            resultSet = statement.executeQuery("Call espacio_general_estadistica('^"+fecha+"')");
+            if (resultSet.next()) {
+                return obtenerData(resultSet,"NOMBRE_TIPOESPACIO");
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
+            System.out.println("Error en SQL" + e);
+            return null;
+        } finally {
+            try {
+                resultSet.close();
+                statement.close();
+                connection.close();
+                //return null;
+            } catch (Exception ex) {
+
+            }
+        }
+    }
+    
+      public DefaultCategoryDataset  obtenerData(ResultSet rs,String columna) throws SQLException{
+        DefaultCategoryDataset  dataset= new DefaultCategoryDataset ();
+        rs.previous();
         while(rs.next()){
-            dataset.setValue(rs.getString("NOMBRE_ESPACIO"),Integer.parseInt(rs.getString("Cantidad")));
+            dataset.setValue(Integer.parseInt(rs.getString("Cantidad")), "Espacio", rs.getString(columna));
+            
         }
       return dataset;
     }
     
 }
-
- 

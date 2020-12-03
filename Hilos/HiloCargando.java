@@ -1,86 +1,58 @@
  
 package Hilos; 
  
-import java.awt.Component; 
-import java.awt.Frame; 
-import static java.lang.System.exit; 
+import javax.swing.ImageIcon;
 import javax.swing.JLabel; 
-import javax.swing.JOptionPane; 
-import javax.swing.JPanel; 
+
+
  
-public class HiloCargando extends Thread{ 
+public class HiloCargando extends Thread{  
+    
     private static Thread hilo; 
-    public boolean suspender; //Suspende un hilo cuando es true 
-    private boolean finalizar; 
-    public  static javax.swing.JLabel jlabel=new javax.swing.JLabel(); 
-    private String mensaje="..."; 
-     
+    private boolean suspender; 
+    public static javax.swing.JLabel jLCargando; 
+    private boolean giro=false;
     public HiloCargando (){ 
         
     } 
-    public HiloCargando (JLabel jlabel2,String mensaje2){        
-        this.jlabel=jlabel2; 
-        this.suspender=true; 
-        this.finalizar=false; 
-        this.mensaje=mensaje2; 
+    public void setVariable (JLabel jLCargando){        
+        this.jLCargando=jLCargando;               
+        this.suspender=true;     
       
     } 
+    
     public void Iniciar(String nombre){        
-        this.hilo=new Thread(this,nombre); 
+        this.hilo=new Thread(this,nombre);
+        this.jLCargando.setVisible(true);
+        this.suspender=true;
         this.hilo.start();   
     } 
      
     @Override 
-    public void run() { 
-        System.out.println(hilo.getName()+ " iniciando."); 
-        try { 
-           //  hilo.sleep(400); 
-         synchronized (this) { 
-          
-          System.out.println(suspender);                           
-               
-             while(suspender){ 
-                    System.out.println(mensaje);                     
-    
-                    jlabel.setText(mensaje); 
-                    jlabel.updateUI(); 
-                    jlabel.revalidate(); 
-                    jlabel.repaint();                      
-                     
-                    Thread.sleep(1000);                     
-                    wait(); 
-                } 
-               System.out.println(suspender);  
-             
-               } 
-            // jlabel.setText(""); 
+    public void run() {      
+        try {       
+     while(this.suspender){                                      
+                    if(giro){                             
+                       jLCargando.setIcon(new ImageIcon("src/Imagenes/reloj-de-arena 2.png")); 
+                        giro=false;  
+                       
+                    }else{
+                       jLCargando.setIcon(new ImageIcon("src/Imagenes/reloj-de-arena.png"));  
+                        giro=true;                            
+                    }                   
+                    Thread.sleep(1000);                  
+                }
+                
+                jLCargando.setVisible(false);                  
         }catch (InterruptedException exc){ 
             System.out.println(hilo.getName()+ "interrumpido."); 
         }         
          
          
     } 
-     
-     //Pausar el hilo 
-    public synchronized void finalizarhilo(){ 
-        this.finalizar=true; 
-        //lo siguiente garantiza que un hilo suspendido puede detenerse. 
+     public void finalizarhilo(){  
         this.suspender=false; 
-         notify(); 
     } 
- 
-    //Suspender un hilo 
-    public synchronized void suspenderhilo(String mensaje2){ 
-        this.suspender=true; 
-        this.mensaje=mensaje2; 
-    } 
- 
-    //Renaudar un hilo 
-    public synchronized void renaudarhilo(String mensaje2){ 
-      //  this.suspender=false;     
-      this.mensaje=mensaje2; 
-         notify(); 
-    }     
-  
-    
+        
+
 } 

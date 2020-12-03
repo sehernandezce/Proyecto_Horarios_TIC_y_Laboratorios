@@ -11,10 +11,14 @@ import javax.mail.internet.AddressException;
 
 public class Validar_administrar_solicitud {
 
-    private SolicitudDAO solicitud = new SolicitudDAO();
+    private ManipularConecciones conexion = null;
 
-    public Validar_administrar_solicitud() {
+    public Validar_administrar_solicitud(ManipularConecciones conexion) {
+        this.conexion = conexion;
+        solicitud = new SolicitudDAO(conexion.getConeccion());
     }
+
+    private SolicitudDAO solicitud;
 
     public String[][] llenarMatriz(Usuario par, String tipo_e) throws SQLException {
         return solicitud.leerSolicitudes(par, convertirTipo_e(tipo_e));
@@ -72,53 +76,65 @@ public class Validar_administrar_solicitud {
         correo.setAsunto("Respuesta a su solicitud con ID: " + id);
         correo.setMensaje("Estimado/a <b>Usuario</b>,<br> Queremos informale que su solicitud con id: " + id
                 + "Ha cambiado al estado:<b> " + tipE + "</b>. A continuación se muestra la observación indicada por el coordinador:<br>" + obs + "<br>Muchas gracias por su atención.<br>Por favor, no responder a este correo.");
-        correo.setCorreoReceptor(correoU + "@unal.edu.co");           
+        correo.setCorreoReceptor(correoU + "@unal.edu.co");
         EnviarCorreo enviarCorreo = new EnviarCorreo();
-        return enviarCorreo.enviarC(correo);          
+        enviarCorreo.setManipularConexion(conexion);
+        return enviarCorreo.enviarC(correo);
     }
 
     public String[] obtenerListaMotivos(Usuario par) {
         return solicitud.obtenerMotivo(par);
     }
 
-    public String verificarDatosSolicitudNueva(Usuario par, Solicitud sol, String motivo, String motivoOtro, String fechaTermina, String fechaEmpieza, int horaInicio, int MinutosInicio, int horaFinal, int MinutosFinal) {
-        
+    public String verificarDatosSolicitudNueva(Usuario par, Solicitud sol, String motivo, String motivoOtro, String fechaTermina, String fechaEmpieza, int horaInicio, int MinutosInicio, int horaFinal, int MinutosFinal, String estadoEspacio) {
+
         String validacionFecha = verificarFechaActual(par, fechaTermina, fechaEmpieza);
         String validacionHoras = verificarHorasMinutosIngresadas(horaInicio, MinutosInicio, horaFinal, MinutosFinal);
         String valicacionMotivoSolicitud = verificarMotivoSolicitud(motivo, motivoOtro);
-        String verificacionConcurrencia = (verificarCruceEventos(par, sol))? "El evento se puede registrar" :"<tr><td>Un evento ya aceptado se cruza con este o no seleccionó ningún espacio donde hacer la solicitud</td></tr>";
-       
+        String verificacionConcurrencia = (verificarCruceEventos(par, sol)) ? "El evento se puede registrar" : "<tr><td>Un evento ya aceptado se cruza con este o no seleccionó ningún espacio donde hacer la solicitud</td></tr>";
+        String verificarEstadoActivo = verificarEstadoEspacio(estadoEspacio);
 
         if ("Motivo ingresado correctamente".equals(valicacionMotivoSolicitud)
                 && "La fecha es valida".equals(validacionFecha)
                 && "Las horas están correctas".equals(validacionHoras)
-                && "El evento se puede registrar".equals(verificacionConcurrencia)) {
+                && "El evento se puede registrar".equals(verificacionConcurrencia)
+                && "ok".equals(verificarEstadoActivo)) {
 
-            String ingreso_bd =ingresarSolicitudNueva(par, sol);
-            
-            if("Ingreso completo".equals(ingreso_bd)){
+            String ingreso_bd = ingresarSolicitudNueva(par, sol);
+
+            if ("Ingreso completo".equals(ingreso_bd)) {
                 return "ok";
-            }else{
+            } else {
                 return ingreso_bd;
             }
-            
-            
-        }else {
-            
-            validacionFecha = (validacionFecha.equals("La fecha es valida"))?"" : validacionFecha;
-            validacionHoras = (validacionHoras.equals("Las horas están correctas"))?"" : validacionHoras;
-            valicacionMotivoSolicitud = (valicacionMotivoSolicitud.equals("Motivo ingresado correctamente"))?"" : valicacionMotivoSolicitud;
-            verificacionConcurrencia = (verificacionConcurrencia.equals("El evento se puede registrar"))?"" : verificacionConcurrencia;
-            
-            
+
+        } else {
+
+            validacionFecha = (validacionFecha.equals("La fecha es valida")) ? "" : validacionFecha;
+            validacionHoras = (validacionHoras.equals("Las horas están correctas")) ? "" : validacionHoras;
+            valicacionMotivoSolicitud = (valicacionMotivoSolicitud.equals("Motivo ingresado correctamente")) ? "" : valicacionMotivoSolicitud;
+            verificacionConcurrencia = (verificacionConcurrencia.equals("El evento se puede registrar")) ? "" : verificacionConcurrencia;
+            verificarEstadoActivo = (verificarEstadoActivo.equals("ok")) ? "" : verificarEstadoActivo;
+
             return "<html>Se observan los siguientes detalles, por favor verifique: <br><br> " + "<table class=\"egt\" border=\"1\">"
-                +validacionFecha
-                +validacionHoras
-                +valicacionMotivoSolicitud
-                +verificacionConcurrencia
-                +"</table>" + "</html>";
+                    + validacionFecha
+                    + validacionHoras
+                    + valicacionMotivoSolicitud
+                    + verificacionConcurrencia
+                    + verificarEstadoActivo
+                    + "</table>" + "</html>";
         }
-        
+
+    }
+
+    public String verificarEstadoEspacio(String Estado) {
+
+        if ("En funcionamiento".equals(Estado)) {
+            return "ok";
+        } else {
+            return "<tr><td>El espacio que quiere solicitar no está en funcionamiento en este momento</td></tr>";
+        }
+
     }
 
     public String ingresarSolicitudNueva(Usuario par, Solicitud sol) {
@@ -142,11 +158,11 @@ public class Validar_administrar_solicitud {
         Pattern p = Pattern.compile("^[\\s]+.+[\\s].+");
         Matcher m = p.matcher(motivoOtro);
         boolean b = m.matches();
-        
+
         Pattern d = Pattern.compile("^.+[\\s]{2,}");
         Matcher f = d.matcher(motivoOtro);
         boolean g = f.matches();
-        
+
         Pattern r = Pattern.compile("^.+[\\s]{2,}.+");
         Matcher t = r.matcher(motivoOtro);
         boolean w = t.matches();
@@ -164,7 +180,6 @@ public class Validar_administrar_solicitud {
                 return "<tr><td>Motivo muy largo</td></tr>";
             }
 
-           
             if (b || g || w || "".equals(motivoOtro)) {
                 return "<tr><td>Motivo mal redactado</td></tr>";
             }
@@ -222,8 +237,17 @@ public class Validar_administrar_solicitud {
             return "<tr><td>Los minutos de inicio o final no tienen sentido</td></tr>";
         }
 
-        if ((horaFinal - horaInicio) != 2) {
-            return "<tr><td>Deben haber 2 horas entre las horas de inicio y final</td></tr>";
+        if ((horaFinal - horaInicio) == 2 && (horaInicio == 6
+                || horaInicio == 8
+                || horaInicio == 10
+                || horaInicio == 12
+                || horaInicio == 13
+                || horaInicio == 15
+                || horaInicio == 17
+                || horaInicio == 19
+                || horaInicio == 21
+                || horaInicio == 23)) {
+            return "<tr><td>El horario de 2 horas seleccionado no es válido</td></tr>";
         }
 
         return "Las horas están correctas";

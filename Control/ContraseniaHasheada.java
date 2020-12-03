@@ -1,11 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Control;
 
-/*librerias de criptografía:*/
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
@@ -14,24 +9,19 @@ import org.apache.commons.codec.binary.Base64;
 
 
 public class ContraseniaHasheada {
-    // Entre más iteraciones, más difícil para el atacante 
-
+   
     private static final int iterations = 20*1000;
     private static final int saltLen = 32;
     private static final int desiredKeyLen = 254;
     
-    /**Computa una versión salteada en PBKDF2 de hash de texto plano,
-       apropiada para guardar en una base de datos
-       NO SE SOPORTAN CONTRASEÑAS VACÍAS*/
-     
+  
     public static String getSaltedHash(String password) throws Exception {
         byte[] salt = SecureRandom.getInstance("SHA1PRNG").generateSeed(saltLen);
         // store the salt with the password
         return Base64.encodeBase64String(salt) + "$" + hash(password, salt);
     }
 
-    /** Verifica si un input de texto plano corresponde 
-        a un hash previo */
+
     public static boolean check(String password, String stored) throws Exception{
         String[] saltAndHash = stored.split("\\$");
         

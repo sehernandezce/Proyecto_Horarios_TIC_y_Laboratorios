@@ -10,7 +10,6 @@ public class HiloCargando extends Thread{
     
     private static Thread hilo; 
     private boolean suspender; 
-    private boolean finalizar; 
     public static javax.swing.JLabel jLCargando; 
     private boolean giro=false;
     public HiloCargando (){ 
@@ -18,8 +17,7 @@ public class HiloCargando extends Thread{
     } 
     public void setVariable (JLabel jLCargando){        
         this.jLCargando=jLCargando;               
-        this.suspender=true; 
-        this.finalizar=false; 
+        this.suspender=true;     
       
     } 
     
@@ -33,9 +31,7 @@ public class HiloCargando extends Thread{
     @Override 
     public void run() {      
         try {       
-            System.out.println("Run: "+hilo.getName());
-     //    synchronized (this) {          
-             while(this.suspender){                                      
+     while(this.suspender){                                      
                     if(giro){                             
                        jLCargando.setIcon(new ImageIcon("src/Imagenes/reloj-de-arena 2.png")); 
                         giro=false;  
@@ -44,22 +40,18 @@ public class HiloCargando extends Thread{
                        jLCargando.setIcon(new ImageIcon("src/Imagenes/reloj-de-arena.png"));  
                         giro=true;                            
                     }                   
-                    Thread.sleep(2000); 
-                   // wait(); 
+                    Thread.sleep(1000);                  
                 }
                 
-                jLCargando.setVisible(false);     
-               System.out.println("Finaliza: "+hilo.getName());  
+                jLCargando.setVisible(false);                  
         }catch (InterruptedException exc){ 
             System.out.println(hilo.getName()+ "interrumpido."); 
         }         
          
          
     } 
-     public void finalizarhilo(){ 
-        this.finalizar=true;        
+     public void finalizarhilo(){  
         this.suspender=false; 
-        //notify(); 
     } 
         
 

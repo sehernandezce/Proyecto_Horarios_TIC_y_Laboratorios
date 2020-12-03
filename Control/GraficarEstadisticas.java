@@ -3,17 +3,22 @@ package Control;
 
 import Entidad.Usuario;
 import DAO.EstadisticasDAO;
-import java.io.File;
 import java.io.IOException;
 import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
 
 public class GraficarEstadisticas {
     
-    private EstadisticasDAO daoEstadisticas = new EstadisticasDAO();
+    private ManipularConecciones conexion = null;
+    
+    public GraficarEstadisticas(ManipularConecciones conexion) {
+            this.conexion = conexion;
+            daoEstadisticas = new EstadisticasDAO(this.conexion.getConeccion());
+    }
+        
+    private EstadisticasDAO daoEstadisticas;
     
     public JFreeChart graficarGeneral(Usuario user, int mes, int anio) throws IOException{
        DefaultCategoryDataset dataset=daoEstadisticas.obtenerGrafica_general(user, mes, anio);

@@ -31,14 +31,7 @@ public class ConexionDAO {
     }
 
     public Connection Reconnection(int tipoUsuario){
-        
-        
-        try {
-            System.out.println("conexión: "+this.connection.isClosed());
-        } catch (SQLException ex) {
-            Logger.getLogger(ConexionDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
+
         try {
             if(this.connection.isClosed()){
                 seleccionarUser(tipoUsuario);

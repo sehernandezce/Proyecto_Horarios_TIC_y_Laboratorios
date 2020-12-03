@@ -59,10 +59,35 @@ public class HiloFrame_Main  extends Thread{
                 }
                 break;
             }
-            
-                    
-            
-
+            case "mostrarPorTipEspacio":
+            {
+                frame_Main.mostrarPorTipEspacio();
+                break;
+            }
+            case "mostrarPorEspacios":
+            {
+                frame_Main.mostrarPorEspacios();
+                break;
+            }
+            case "llenarTabla_solicitudes":
+            {
+            try {
+                frame_Main.llenarTabla_solicitudes(masInfo);
+            } catch (SQLException ex) {
+                Logger.getLogger(HiloFrame_Main.class.getName()).log(Level.SEVERE, null, ex);
+            }
+                break;
+            }
+            case "camCorreoNotificar":
+            {
+                frame_Main.camCorreoNotificar();
+                break;
+            }
+            case "camCodig":
+            {
+                frame_Main.camCodig();
+                break;
+            }
         }
          
     } 

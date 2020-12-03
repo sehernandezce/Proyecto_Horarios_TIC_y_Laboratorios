@@ -48,7 +48,7 @@ public class Frame_Main extends javax.swing.JFrame {
     private ManipularConecciones manipulacionConexiones;
     private String idEspacioSeleccionado;
     private Validar_administrar_solicitud validarSolicitudes;
-    private GraficarEstadisticas graficar = new GraficarEstadisticas();
+    private GraficarEstadisticas graficar;
     private TableRowSorter TRSFiltro;
     private String fechaTermina;
     private int[] diasRepeticion = {0, 0, 0, 0, 0, 0, 0};
@@ -135,6 +135,8 @@ public class Frame_Main extends javax.swing.JFrame {
         jLabel43 = new javax.swing.JLabel();
         jSeparator18 = new javax.swing.JSeparator();
         jLCargandos0 = new javax.swing.JLabel();
+        jSeparator19 = new javax.swing.JSeparator();
+        jLabel57 = new javax.swing.JLabel();
         jLabel53 = new javax.swing.JLabel();
         Bienvenida = new javax.swing.JPanel();
         MensajeBienvenida = new javax.swing.JPanel();
@@ -180,6 +182,10 @@ public class Frame_Main extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jComboSelectDuracion = new javax.swing.JComboBox<>();
+        dudaSolicitud3 = new javax.swing.JLabel();
+        masInfoSolicitud3 = new javax.swing.JLabel();
+        dudaSolicitud4 = new javax.swing.JLabel();
+        masInfoSolicitud4 = new javax.swing.JLabel();
         Fondo5 = new javax.swing.JLabel();
         Configuraciones = new javax.swing.JPanel();
         Menu_confg = new javax.swing.JPanel();
@@ -279,6 +285,12 @@ public class Frame_Main extends javax.swing.JFrame {
         jYearChooser2 = new com.toedter.calendar.JYearChooser();
         jPanel1 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
+        jLabel51 = new javax.swing.JLabel();
+        jLabel54 = new javax.swing.JLabel();
+        jLabel55 = new javax.swing.JLabel();
+        dudaEstadisticas = new javax.swing.JLabel();
+        masInfoEstadisticas = new javax.swing.JLabel();
+        jLabel56 = new javax.swing.JLabel();
         Fondo7 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -749,6 +761,26 @@ public class Frame_Main extends javax.swing.JFrame {
         jLCargandos0.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/reloj-de-arena.png"))); // NOI18N
         Menu_UE.add(jLCargandos0, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 415, 16, 16));
 
+        jSeparator19.setBackground(new java.awt.Color(0, 0, 0));
+        jSeparator19.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        Menu_UE.add(jSeparator19, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 360, 160, 1));
+
+        jLabel57.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel57.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel57.setText("Estadisticas");
+        jLabel57.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLabel57MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLabel57MouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabel57MousePressed(evt);
+            }
+        });
+        Menu_UE.add(jLabel57, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 330, -1, 30));
+
         jLabel53.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondo2 2.jpg"))); // NOI18N
         Menu_UE.add(jLabel53, new org.netbeans.lib.awtextra.AbsoluteConstraints(-50, 0, -1, -1));
 
@@ -852,7 +884,7 @@ public class Frame_Main extends javax.swing.JFrame {
 
         jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel12.setText("¿En que horario desea reservar el espacio? ");
-        jPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 200, 262, 20));
+        jPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 200, 240, 20));
 
         jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel13.setText("Tipo de espacio");
@@ -1043,6 +1075,40 @@ public class Frame_Main extends javax.swing.JFrame {
         jComboSelectDuracion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1 Hora", "2 Horas" }));
         jPanel2.add(jComboSelectDuracion, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 240, 80, 30));
 
+        dudaSolicitud3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/signo-de-pregunta-en-circulos.png"))); // NOI18N
+        dudaSolicitud3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                dudaSolicitud3MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                dudaSolicitud3MouseExited(evt);
+            }
+        });
+        jPanel2.add(dudaSolicitud3, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 200, -1, -1));
+
+        masInfoSolicitud3.setBackground(new java.awt.Color(255, 255, 255));
+        masInfoSolicitud3.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        masInfoSolicitud3.setText("<html><Center> Calcular hora final: Hora final=Hora de inicio + duración en horas.<p> Solo se permite eventos de 2 horas para las siguientes horas de inicio<p> 7,9,11,14,16,18,20 ");
+        masInfoSolicitud3.setOpaque(true);
+        jPanel2.add(masInfoSolicitud3, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 130, 230, 70));
+
+        dudaSolicitud4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/signo-de-pregunta-en-circulos.png"))); // NOI18N
+        dudaSolicitud4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                dudaSolicitud4MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                dudaSolicitud4MouseExited(evt);
+            }
+        });
+        jPanel2.add(dudaSolicitud4, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 250, -1, -1));
+
+        masInfoSolicitud4.setBackground(new java.awt.Color(255, 255, 255));
+        masInfoSolicitud4.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        masInfoSolicitud4.setText("<html><Center> Ingrese la hora inicial en horario militar en el rango de 6 a 21.<p> La hora debe ser exacta sin ','");
+        masInfoSolicitud4.setOpaque(true);
+        jPanel2.add(masInfoSolicitud4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 210, 310, 40));
+
         Fondo5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondo_blanco1 1 .jpg"))); // NOI18N
         jPanel2.add(Fondo5, new org.netbeans.lib.awtextra.AbsoluteConstraints(-20, 0, 880, -1));
 
@@ -1124,7 +1190,7 @@ public class Frame_Main extends javax.swing.JFrame {
         jTextArea4.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         jTextArea4.setForeground(java.awt.SystemColor.info);
         jTextArea4.setRows(5);
-        jTextArea4.setText("\n      Esta aplicación fue desarrollada por: \n      \n       *Sebastián Hernández Cerón\n       *Yeison Cuervo Basurto\n       *Sebastian Camilo Casas Rojas\n       *Diego Esteban Morales Granados\n       *Rodrigo Sierra Agredo\n");
+        jTextArea4.setText("\n      Esta aplicación fue desarrollada por estudiantes del programa Ingeniería de sistemas y computación\n      de la Universidad Nacional de Colombia: \n      \n       *Sebastián Hernández Cerón\n       *Yeison Cuervo Basurto\n       *Sebastian Camilo Casas Rojas\n       *Diego Esteban Morales Granados\n       *Rodrigo Sierra Agredo\n\n     Con el acompañamiento del profesor Henry Roberto Umana Acosta.\n\n     \n    \t\t\t\t\t\tv.3.0.0 7/12/2020");
         jTextArea4.setEnabled(false);
         jScrollPane2.setViewportView(jTextArea4);
 
@@ -1618,54 +1684,128 @@ public class Frame_Main extends javax.swing.JFrame {
         Estadisticas.setRequestFocusEnabled(false);
         Estadisticas.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel33.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel33.setBackground(new java.awt.Color(177, 178, 176));
+        jLabel33.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jLabel33.setForeground(new java.awt.Color(0, 102, 255));
         jLabel33.setText("Estadísticas");
-        Estadisticas.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, -10, 110, 70));
-        Estadisticas.add(jYearChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 80, 80, 30));
+        Estadisticas.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 200, 60));
+        Estadisticas.add(jYearChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 90, 110, 30));
 
-        jLabel34.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel34.setText("Estadísticas Por Tipo De Espacio");
-        Estadisticas.add(jLabel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, -20, 220, 90));
+        jLabel34.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel34.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel34.setText("Por tipo de espacio");
+        Estadisticas.add(jLabel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 110, 20));
 
-        jButton7.setText("Buscar");
+        jButton7.setBackground(new java.awt.Color(0, 255, 240));
+        jButton7.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jButton7.setText("Mostrar");
+        jButton7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButton7MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jButton7MouseExited(evt);
+            }
+        });
         jButton7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton7ActionPerformed(evt);
             }
         });
-        Estadisticas.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 80, 80, 30));
+        Estadisticas.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 480, 80, 30));
 
         Estadisticas_por_tipo.add(jRadioButton2);
+        jRadioButton2.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         jRadioButton2.setText("Auditorio");
-        Estadisticas.add(jRadioButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 40, 70, 30));
+        Estadisticas.add(jRadioButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 60, 110, 20));
 
         Estadisticas_por_tipo.add(jRadioButton3);
+        jRadioButton3.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         jRadioButton3.setText("Sala de Reuniones");
-        Estadisticas.add(jRadioButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 40, 110, 30));
+        Estadisticas.add(jRadioButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 60, 160, 20));
 
-        jLabel35.setText("Tipo de espacio:");
-        Estadisticas.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 10, 160, 40));
+        jLabel35.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel35.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel35.setText("Seleccióne un mes y año:");
+        Estadisticas.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 100, 150, 20));
 
         Estadisticas_por_tipo.add(jRadioButton1);
+        jRadioButton1.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        jRadioButton1.setSelected(true);
         jRadioButton1.setText("Laboratorio");
-        Estadisticas.add(jRadioButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 40, 110, 30));
+        Estadisticas.add(jRadioButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 40, 110, 20));
 
         Estadisticas_por_tipo.add(jRadioButton4);
+        jRadioButton4.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         jRadioButton4.setText("Sala de Computadores");
-        Estadisticas.add(jRadioButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 40, 140, 30));
-        Estadisticas.add(jMonthChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 80, -1, 30));
+        Estadisticas.add(jRadioButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 40, 160, 20));
+        Estadisticas.add(jMonthChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 90, -1, 30));
 
-        jButton8.setText("Buscar");
+        jButton8.setBackground(new java.awt.Color(0, 255, 240));
+        jButton8.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jButton8.setText("Mostrar");
+        jButton8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButton8MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jButton8MouseExited(evt);
+            }
+        });
         jButton8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton8ActionPerformed(evt);
             }
         });
-        Estadisticas.add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 80, 80, 30));
-        Estadisticas.add(jMonthChooser2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 110, 30));
-        Estadisticas.add(jYearChooser2, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 80, 90, 30));
+        Estadisticas.add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 480, 80, 30));
+        Estadisticas.add(jMonthChooser2, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 90, 110, 30));
+        Estadisticas.add(jYearChooser2, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 90, 90, 30));
+
+        jPanel1.setEnabled(false);
+        jPanel1.setFocusable(false);
         Estadisticas.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 140, 370, 330));
+
+        jPanel3.setEnabled(false);
+        jPanel3.setFocusable(false);
+        jPanel3.setFont(new java.awt.Font("Dialog", 0, 8)); // NOI18N
         Estadisticas.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 370, 330));
+
+        jLabel51.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel51.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel51.setText("Por espacios");
+        Estadisticas.add(jLabel51, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 120, 70, 20));
+
+        jLabel54.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel54.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel54.setText("Seleccióne un");
+        Estadisticas.add(jLabel54, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 40, 100, 20));
+
+        jLabel55.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel55.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel55.setText("Seleccióne un mes y año:");
+        Estadisticas.add(jLabel55, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 150, 30));
+
+        dudaEstadisticas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/signo-de-pregunta-en-circulos.png"))); // NOI18N
+        dudaEstadisticas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                dudaEstadisticasMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                dudaEstadisticasMouseExited(evt);
+            }
+        });
+        Estadisticas.add(dudaEstadisticas, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 50, -1, -1));
+
+        masInfoEstadisticas.setBackground(new java.awt.Color(255, 255, 255));
+        masInfoEstadisticas.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        masInfoEstadisticas.setText("<html><Center> Las graficas solo tienen encuenta<p> las solicitudes aceptadas. Los espacio<p>que no salen en las graficas es porque<p> no tienen solicitudes aceptadas.");
+        masInfoEstadisticas.setOpaque(true);
+        Estadisticas.add(masInfoEstadisticas, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 10, 150, 130));
+
+        jLabel56.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel56.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel56.setText("tipo de espacio:");
+        Estadisticas.add(jLabel56, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 60, 110, 20));
 
         Fondo7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondo_blanco1 1 .jpg"))); // NOI18N
         Estadisticas.add(Fondo7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 880, -1));
@@ -1685,6 +1825,7 @@ public class Frame_Main extends javax.swing.JFrame {
         validarEspacios = new ValidarEspacios(con);
         validarSolicitudes = new Validar_administrar_solicitud(con);
         validarInventario = new ValidarInventario(con);
+        graficar = new GraficarEstadisticas(con);
     }
     
     public void cargando(){        
@@ -1715,6 +1856,9 @@ public class Frame_Main extends javax.swing.JFrame {
             hiloCargando.setVariable(this.jLCargandos0);           
             if (usuario.getTipoUsuario() == 4) {
                 roleLabel1.setText("Usuario Encargado");
+            }else{
+                jLabel57.setVisible(false);
+                jSeparator19.setVisible(false);
             }
         } else if (usuario.getTipoUsuario() == 2) {
             Menu_UE.setVisible(false);
@@ -1740,6 +1884,9 @@ public class Frame_Main extends javax.swing.JFrame {
         masInfoAceptar.setVisible(false);
         masInfoRechazar.setVisible(false);
         masInfoCancelar.setVisible(false);
+        masInfoEstadisticas.setVisible(false);
+        masInfoSolicitud3.setVisible(false);
+        masInfoSolicitud4.setVisible(false);
         jLabel2.setVisible(false);
         jLabel3.setVisible(false);
 
@@ -1841,8 +1988,10 @@ public class Frame_Main extends javax.swing.JFrame {
         }
 
         try {
-            llenarTabla_solicitudes("Todos");
-        } catch (SQLException ex) {
+           cargando();  
+           hiloCargando.Iniciar("llenarTabla_solicitudes1");   
+           hiloFrame_Main.Iniciar("llenarTabla_solicitudes", "Todos");            
+        } catch (Exception ex) {
             Logger.getLogger(Frame_Main.class.getName()).log(Level.SEVERE, null, ex);
         }
         Tipo_estados.clearSelection();
@@ -1883,7 +2032,7 @@ public class Frame_Main extends javax.swing.JFrame {
         }      
     }
 
-    private void llenarTabla_solicitudes(String tipo_e) throws SQLException {
+    public void llenarTabla_solicitudes(String tipo_e) throws SQLException {
        try{  
         Administrar_Solicitudes.setEnabled(false);
         Categorias.setSelectedIndex(0);
@@ -1903,6 +2052,8 @@ public class Frame_Main extends javax.swing.JFrame {
          }catch (Exception e){
             System.out.println("Exception en llenarTabla_solicitudes e "+e);
         }
+       
+        hiloCargando.finalizarhilo();
     }
 
     private String obtener_fecha() {
@@ -2187,7 +2338,7 @@ public class Frame_Main extends javax.swing.JFrame {
            
     }
 
-    private void camCodig() {
+    public void camCodig() {
 
         try {
             usuario.setContrasenia(jPasswordField4.getText());
@@ -2215,10 +2366,10 @@ public class Frame_Main extends javax.swing.JFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "A ocurrido un error: " + e);
         }
-
+        hiloCargando.finalizarhilo();
     }
 
-    private void camCorreoNotificar() {
+    public void camCorreoNotificar() {
         try {
             usuario.setContrasenia(jPasswordField4.getText());
             Validar_Registro validar_Registro = new Validar_Registro(manipulacionConexiones);
@@ -2245,6 +2396,7 @@ public class Frame_Main extends javax.swing.JFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "A ocurrido un error: " + e);
         }
+         hiloCargando.finalizarhilo();        
     }
 
     public int tipoEspacio_estadistica(){
@@ -2263,6 +2415,35 @@ public class Frame_Main extends javax.swing.JFrame {
     return 0;
     }
 
+    public void mostrarPorTipEspacio(){
+         jPanel3.setLayout(new java.awt.BorderLayout());
+        JFreeChart chart = null;
+        try {
+            chart=graficar.graficarGeneral(usuario,jMonthChooser1.getMonth()+1, jYearChooser1.getYear());
+        } catch (IOException ex) {
+            Logger.getLogger(Frame_Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        ChartPanel cpa=new ChartPanel(chart);
+        jPanel3.add(cpa,BorderLayout.CENTER);
+        jPanel3.validate();
+         hiloCargando.finalizarhilo();
+    }
+    
+     public void mostrarPorEspacios(){
+          
+        jPanel1.setLayout(new java.awt.BorderLayout());
+        JFreeChart chart = null;
+        try {
+            chart=graficar.graficarEspecifico(usuario, tipoEspacio_estadistica(), jMonthChooser1.getMonth()+1, jYearChooser1.getYear());
+        } catch (IOException ex) {
+            Logger.getLogger(Frame_Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        ChartPanel cp=new ChartPanel(chart);
+        jPanel1.add(cp,BorderLayout.CENTER);
+        jPanel1.validate();
+         hiloCargando.finalizarhilo();
+    }
+       
     private void jlLabMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlLabMousePressed
         cargando();
         hiloCargando.Iniciar("Laboratorios");   
@@ -2459,16 +2640,20 @@ public class Frame_Main extends javax.swing.JFrame {
 
     private void Jcbox_rechazadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Jcbox_rechazadaActionPerformed
         try {
-            if (tipo_rechazada) {
-                llenarTabla_solicitudes("Todos");
+            if (tipo_rechazada) {                
+                cargando();  
+                hiloCargando.Iniciar("llenarTabla_solicitudes2");   
+                hiloFrame_Main.Iniciar("llenarTabla_solicitudes", "Todos");
                 tipo_rechazada = false;
                 Tipo_estados.clearSelection();
             } else {
                 tipo_rechazada = true;
-                llenarTabla_solicitudes("Rechazada");
+                 cargando();  
+                hiloCargando.Iniciar("llenarTabla_solicitudes3");   
+                hiloFrame_Main.Iniciar("llenarTabla_solicitudes", "Rechazada");                
             }
 
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(Frame_Main.class
                     .getName()).log(Level.SEVERE, null, ex);
         }
@@ -2477,14 +2662,18 @@ public class Frame_Main extends javax.swing.JFrame {
     private void Jcbox_esperaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Jcbox_esperaActionPerformed
         try {
             if (tipo_espera) {
-                llenarTabla_solicitudes("Todos");
+                cargando();  
+                hiloCargando.Iniciar("llenarTabla_solicitudes8");   
+                hiloFrame_Main.Iniciar("llenarTabla_solicitudes", "Todos");                
                 tipo_espera = false;
                 Tipo_estados.clearSelection();
             } else {
                 tipo_espera = true;
-                llenarTabla_solicitudes("Espera");
+                cargando();  
+                hiloCargando.Iniciar("llenarTabla_solicitudes9");   
+                hiloFrame_Main.Iniciar("llenarTabla_solicitudes", "Espera");                
             }
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(Frame_Main.class
                     .getName()).log(Level.SEVERE, null, ex);
         }
@@ -2493,14 +2682,18 @@ public class Frame_Main extends javax.swing.JFrame {
     private void Jcbox_canceladaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Jcbox_canceladaActionPerformed
         try {
             if (tipo_cancelada) {
-                llenarTabla_solicitudes("Todos");
+                cargando();  
+                hiloCargando.Iniciar("llenarTabla_solicitudes4");   
+                hiloFrame_Main.Iniciar("llenarTabla_solicitudes", "Todos");                
                 tipo_cancelada = false;
                 Tipo_estados.clearSelection();
             } else {
                 tipo_cancelada = true;
-                llenarTabla_solicitudes("Cancelada");
+                cargando();  
+                hiloCargando.Iniciar("llenarTabla_solicitudes5");   
+                hiloFrame_Main.Iniciar("llenarTabla_solicitudes", "Cancelada");                
             }
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(Frame_Main.class
                     .getName()).log(Level.SEVERE, null, ex);
         }
@@ -2509,14 +2702,18 @@ public class Frame_Main extends javax.swing.JFrame {
     private void Jcbox_aceptadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Jcbox_aceptadaActionPerformed
         try {
             if (tipo_aceptada) {
-                llenarTabla_solicitudes("Todos");
+                cargando();  
+                hiloCargando.Iniciar("llenarTabla_solicitudes6");   
+                hiloFrame_Main.Iniciar("llenarTabla_solicitudes", "Todos");  
                 tipo_aceptada = false;
                 Tipo_estados.clearSelection();
             } else {
                 tipo_aceptada = true;
-                llenarTabla_solicitudes("Aceptada");
+                cargando();  
+                hiloCargando.Iniciar("llenarTabla_solicitudes7");   
+                hiloFrame_Main.Iniciar("llenarTabla_solicitudes", "Aceptada");                  
             }
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(Frame_Main.class
                     .getName()).log(Level.SEVERE, null, ex);
         }
@@ -2538,14 +2735,9 @@ public class Frame_Main extends javax.swing.JFrame {
     }//GEN-LAST:event_BuscadorKeyTyped
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
-        try {
-            cambiarEstado("Cancelada");
-        } catch (AddressException ex) {
-            Logger.getLogger(Frame_Main.class
-                    .getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(Frame_Main.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        cargando();  
+        hiloCargando.Iniciar("Cancelada1");   
+        hiloFrame_Main.Iniciar("cambiarEstado", "Cancelada");  
     }//GEN-LAST:event_jButton10ActionPerformed
 
     private void Rechazar_sol_botonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Rechazar_sol_botonActionPerformed
@@ -2680,11 +2872,15 @@ public class Frame_Main extends javax.swing.JFrame {
     }//GEN-LAST:event_JtfUsuario2ActionPerformed
 
     private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
-        camCodig();
+        cargando();  
+        hiloCargando.Iniciar("camCodig");   
+        hiloFrame_Main.Iniciar("camCodig", "");
     }//GEN-LAST:event_jButton12ActionPerformed
 
     private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
-        camCorreoNotificar();
+        cargando();  
+        hiloCargando.Iniciar("camCorreoNotificar");   
+        hiloFrame_Main.Iniciar("camCorreoNotificar", "");        
     }//GEN-LAST:event_jButton13ActionPerformed
 
     private void jLabel49MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel49MousePressed
@@ -3020,35 +3216,75 @@ public class Frame_Main extends javax.swing.JFrame {
     }//GEN-LAST:event_dudaadmSolicitud3MouseExited
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        jPanel3.setLayout(new java.awt.BorderLayout());
-        JFreeChart chart = null;
-        try {
-            chart=graficar.graficarGeneral(usuario,jMonthChooser1.getMonth()+1, jYearChooser1.getYear());
-        } catch (IOException ex) {
-            Logger.getLogger(Frame_Main.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        ChartPanel cpa=new ChartPanel(chart);
-        jPanel3.add(cpa,BorderLayout.CENTER);
-        jPanel3.validate();
+        cargando();
+        hiloCargando.Iniciar("mostrarPorTipEspacio1");   
+        hiloFrame_Main.Iniciar("mostrarPorTipEspacio", "");
     }//GEN-LAST:event_jButton8ActionPerformed
-
+ 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        
-        jPanel1.setLayout(new java.awt.BorderLayout());
-        JFreeChart chart = null;
-        try {
-            chart=graficar.graficarEspecifico(usuario, tipoEspacio_estadistica(), jMonthChooser1.getMonth()+1, jYearChooser1.getYear());
-        } catch (IOException ex) {
-            Logger.getLogger(Frame_Main.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        ChartPanel cp=new ChartPanel(chart);
-        jPanel1.add(cp,BorderLayout.CENTER);
-        jPanel1.validate();
+        cargando();
+        hiloCargando.Iniciar("mostrarPorEspacios1");   
+        hiloFrame_Main.Iniciar("mostrarPorEspacios", "");
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
         
     }//GEN-LAST:event_formMouseClicked
+
+    private void jButton8MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton8MouseEntered
+        jButton8.setBackground(new Color(69, 162, 156));
+    }//GEN-LAST:event_jButton8MouseEntered
+
+    private void jButton8MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton8MouseExited
+     jButton8.setBackground(new Color(0, 255, 240));
+    }//GEN-LAST:event_jButton8MouseExited
+
+    private void jButton7MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton7MouseEntered
+      jButton7.setBackground(new Color(69, 162, 156));
+    }//GEN-LAST:event_jButton7MouseEntered
+
+    private void jButton7MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton7MouseExited
+     jButton7.setBackground(new Color(0, 255, 240));
+    }//GEN-LAST:event_jButton7MouseExited
+
+    private void dudaEstadisticasMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dudaEstadisticasMouseEntered
+       masInfoEstadisticas.setVisible(true);
+    }//GEN-LAST:event_dudaEstadisticasMouseEntered
+
+    private void dudaEstadisticasMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dudaEstadisticasMouseExited
+      masInfoEstadisticas.setVisible(false);
+    }//GEN-LAST:event_dudaEstadisticasMouseExited
+
+    private void jLabel57MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel57MouseEntered
+        jLabel57.setForeground(new Color(0, 0, 0));
+    }//GEN-LAST:event_jLabel57MouseEntered
+
+    private void jLabel57MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel57MouseExited
+       jLabel57.setForeground(new Color(255, 255, 255));
+    }//GEN-LAST:event_jLabel57MouseExited
+
+    private void jLabel57MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel57MousePressed
+        ver_Estadisticas();
+        jPanel1.removeAll();
+        jPanel3.removeAll();
+        Estadisticas_por_tipo.clearSelection();
+    }//GEN-LAST:event_jLabel57MousePressed
+
+    private void dudaSolicitud3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dudaSolicitud3MouseEntered
+       masInfoSolicitud3.setVisible(true);
+    }//GEN-LAST:event_dudaSolicitud3MouseEntered
+
+    private void dudaSolicitud3MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dudaSolicitud3MouseExited
+        masInfoSolicitud3.setVisible(false);
+    }//GEN-LAST:event_dudaSolicitud3MouseExited
+
+    private void dudaSolicitud4MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dudaSolicitud4MouseEntered
+       masInfoSolicitud4.setVisible(true);
+    }//GEN-LAST:event_dudaSolicitud4MouseEntered
+
+    private void dudaSolicitud4MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dudaSolicitud4MouseExited
+       masInfoSolicitud4.setVisible(false);
+    }//GEN-LAST:event_dudaSolicitud4MouseExited
 
     /**
      * @param args the command line arguments
@@ -3144,8 +3380,11 @@ public class Frame_Main extends javax.swing.JFrame {
     private javax.swing.JLabel controlPanelTitle3;
     private javax.swing.JLabel dudaCodigo;
     private javax.swing.JLabel dudaCorreo;
+    private javax.swing.JLabel dudaEstadisticas;
     private javax.swing.JLabel dudaSolicitud;
     private javax.swing.JLabel dudaSolicitud2;
+    private javax.swing.JLabel dudaSolicitud3;
+    private javax.swing.JLabel dudaSolicitud4;
     private javax.swing.JLabel dudaadmSolicitud1;
     private javax.swing.JLabel dudaadmSolicitud2;
     private javax.swing.JLabel dudaadmSolicitud3;
@@ -3209,8 +3448,13 @@ public class Frame_Main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel49;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel50;
+    private javax.swing.JLabel jLabel51;
     private javax.swing.JLabel jLabel52;
     private javax.swing.JLabel jLabel53;
+    private javax.swing.JLabel jLabel54;
+    private javax.swing.JLabel jLabel55;
+    private javax.swing.JLabel jLabel56;
+    private javax.swing.JLabel jLabel57;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
@@ -3248,6 +3492,7 @@ public class Frame_Main extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator16;
     private javax.swing.JSeparator jSeparator17;
     private javax.swing.JSeparator jSeparator18;
+    private javax.swing.JSeparator jSeparator19;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator20;
     private javax.swing.JSeparator jSeparator21;
@@ -3284,9 +3529,12 @@ public class Frame_Main extends javax.swing.JFrame {
     private javax.swing.JLabel masInfoCancelar;
     private javax.swing.JLabel masInfoCodigo;
     private javax.swing.JLabel masInfoCorreo;
+    private javax.swing.JLabel masInfoEstadisticas;
     private javax.swing.JLabel masInfoRechazar;
     private javax.swing.JLabel masInfoSolicitud;
     private javax.swing.JLabel masInfoSolicitud2;
+    private javax.swing.JLabel masInfoSolicitud3;
+    private javax.swing.JLabel masInfoSolicitud4;
     private javax.swing.JPanel notificaciones;
     private javax.swing.JLabel opcion1;
     private javax.swing.JLabel opcion2;

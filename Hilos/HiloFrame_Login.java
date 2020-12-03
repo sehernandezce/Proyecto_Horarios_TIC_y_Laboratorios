@@ -43,6 +43,20 @@ public class HiloFrame_Login extends Thread{
             }
                 break;
             }
+            case "CamPass":
+            {
+            try {
+                frame_Login.CamPass();
+            } catch (Exception ex) {
+                Logger.getLogger(HiloFrame_Login.class.getName()).log(Level.SEVERE, null, ex);
+            }
+                break;
+            }
+            case "logUp":
+            {
+                frame_Login.logUp();                
+                break;
+            }    
         }
          
     }

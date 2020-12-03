@@ -29,9 +29,12 @@ import Control.ManipularConecciones;
 import Hilos.HiloCargando;
 import Hilos.HiloFrame_Main;
 import Control.ValidarInventario;
+import java.awt.BorderLayout;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 import java.io.IOException;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
 
 public class Frame_Main extends javax.swing.JFrame {
 
@@ -274,8 +277,8 @@ public class Frame_Main extends javax.swing.JFrame {
         jButton8 = new javax.swing.JButton();
         jMonthChooser2 = new com.toedter.calendar.JMonthChooser();
         jYearChooser2 = new com.toedter.calendar.JYearChooser();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel51 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
         Fondo7 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -1661,8 +1664,8 @@ public class Frame_Main extends javax.swing.JFrame {
         Estadisticas.add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 80, 80, 30));
         Estadisticas.add(jMonthChooser2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 110, 30));
         Estadisticas.add(jYearChooser2, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 80, 90, 30));
-        Estadisticas.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 140, 370, 330));
-        Estadisticas.add(jLabel51, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 370, 330));
+        Estadisticas.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 140, 370, 330));
+        Estadisticas.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 370, 330));
 
         Fondo7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondo_blanco1 1 .jpg"))); // NOI18N
         Estadisticas.add(Fondo7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 880, -1));
@@ -2381,19 +2384,9 @@ public class Frame_Main extends javax.swing.JFrame {
 
     private void jLabel8MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MousePressed
         ver_Estadisticas();
-
-        ImageIcon grafico_general= new ImageIcon(getClass().getResource("/Graficos/Grafico_general_inicial.png"));
-        ImageIcon icon;
-        icon = new ImageIcon(grafico_general.getImage().getScaledInstance(jLabel51.getWidth(), jLabel51.getHeight(),Image.SCALE_DEFAULT));
-        jLabel51.setIcon(icon);
-        
-        
-        ImageIcon grafico_especifico= new ImageIcon(getClass().getResource("/Graficos/Grafico_especifico_inicial.png"));
-        ImageIcon icon_;
-        icon_ = new ImageIcon(grafico_especifico.getImage().getScaledInstance(jLabel6.getWidth(), jLabel6.getHeight(),Image.SCALE_DEFAULT));
-        jLabel6.setIcon(icon_);
-      
-
+        jPanel1.removeAll();
+        jPanel3.removeAll();
+        Estadisticas_por_tipo.clearSelection();
     }//GEN-LAST:event_jLabel8MousePressed
 
     private void jLabel18MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel18MousePressed
@@ -3027,31 +3020,30 @@ public class Frame_Main extends javax.swing.JFrame {
     }//GEN-LAST:event_dudaadmSolicitud3MouseExited
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        jPanel3.setLayout(new java.awt.BorderLayout());
+        JFreeChart chart = null;
         try {
-            graficar.graficarGeneral(usuario, jMonthChooser2.getMonth()+1, jYearChooser2.getYear());
+            chart=graficar.graficarGeneral(usuario,jMonthChooser1.getMonth()+1, jYearChooser1.getYear());
         } catch (IOException ex) {
             Logger.getLogger(Frame_Main.class.getName()).log(Level.SEVERE, null, ex);
         }
-        ImageIcon grafico_general= new ImageIcon(getClass().getResource("/Graficos/Grafico_general.png"));
-        ImageIcon icon;
-        icon = new ImageIcon(grafico_general.getImage().getScaledInstance(jLabel51.getWidth(), jLabel51.getHeight(),Image.SCALE_DEFAULT));
-        jLabel51.setIcon(icon);
+        ChartPanel cpa=new ChartPanel(chart);
+        jPanel3.add(cpa,BorderLayout.CENTER);
+        jPanel3.validate();
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        System.out.println(tipoEspacio_estadistica());
-        System.out.println(jMonthChooser1.getMonth());
-        System.out.println(jYearChooser1.getYear());
+        
+        jPanel1.setLayout(new java.awt.BorderLayout());
+        JFreeChart chart = null;
         try {
-            graficar.graficarEspecifico(usuario, tipoEspacio_estadistica(), jMonthChooser1.getMonth()+1, jYearChooser1.getYear());
+            chart=graficar.graficarEspecifico(usuario, tipoEspacio_estadistica(), jMonthChooser1.getMonth()+1, jYearChooser1.getYear());
         } catch (IOException ex) {
             Logger.getLogger(Frame_Main.class.getName()).log(Level.SEVERE, null, ex);
         }
-       
-        ImageIcon grafico_especifico= new ImageIcon(getClass().getResource("/Graficos/Grafico_especifico.png"));
-        ImageIcon icon;
-        icon = new ImageIcon(grafico_especifico.getImage().getScaledInstance(jLabel6.getWidth(), jLabel6.getHeight(),Image.SCALE_DEFAULT));
-        jLabel6.setIcon(icon);
+        ChartPanel cp=new ChartPanel(chart);
+        jPanel1.add(cp,BorderLayout.CENTER);
+        jPanel1.validate();
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
@@ -3217,10 +3209,8 @@ public class Frame_Main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel49;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel50;
-    private javax.swing.JLabel jLabel51;
     private javax.swing.JLabel jLabel52;
     private javax.swing.JLabel jLabel53;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
@@ -3229,7 +3219,9 @@ public class Frame_Main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelRepeticion;
     private com.toedter.calendar.JMonthChooser jMonthChooser1;
     private com.toedter.calendar.JMonthChooser jMonthChooser2;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JPasswordField jPasswordField2;
     private javax.swing.JPasswordField jPasswordField3;

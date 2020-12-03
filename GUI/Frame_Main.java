@@ -31,9 +31,13 @@ import Hilos.HiloFrame_Main;
 import Control.ValidarInventario;
 import java.awt.BorderLayout;
 import java.awt.Image;
+import java.io.File;
+import java.io.FileOutputStream;
 import javax.swing.ImageIcon;
 import java.io.IOException;
+import javax.swing.JFileChooser;
 import org.jfree.chart.ChartPanel;
+import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
 
 public class Frame_Main extends javax.swing.JFrame {
@@ -62,6 +66,12 @@ public class Frame_Main extends javax.swing.JFrame {
     public static HiloFrame_Main hiloFrame_Main= new HiloFrame_Main();
     private int EstadisticasSeleccion;    
     public String Tipo;
+    JFileChooser seleccionar=new JFileChooser();
+    private File archivo;
+    private byte[] imagen;
+    private FileOutputStream salida;
+            
+    
 
     public Frame_Main() {
         initComponents();
@@ -148,6 +158,8 @@ public class Frame_Main extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         masInfoSolicitud2 = new javax.swing.JLabel();
         masInfoSolicitud = new javax.swing.JLabel();
+        masInfoSolicitud3 = new javax.swing.JLabel();
+        masInfoSolicitud4 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable3 = new javax.swing.JTable();
         jSeparator12 = new javax.swing.JSeparator();
@@ -183,9 +195,7 @@ public class Frame_Main extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jComboSelectDuracion = new javax.swing.JComboBox<>();
         dudaSolicitud3 = new javax.swing.JLabel();
-        masInfoSolicitud3 = new javax.swing.JLabel();
         dudaSolicitud4 = new javax.swing.JLabel();
-        masInfoSolicitud4 = new javax.swing.JLabel();
         Fondo5 = new javax.swing.JLabel();
         Configuraciones = new javax.swing.JPanel();
         Menu_confg = new javax.swing.JPanel();
@@ -270,6 +280,7 @@ public class Frame_Main extends javax.swing.JFrame {
         jTextField2 = new javax.swing.JTextField();
         Fondo6 = new javax.swing.JLabel();
         Estadisticas = new javax.swing.JPanel();
+        masInfoEstadisticas = new javax.swing.JLabel();
         jLabel33 = new javax.swing.JLabel();
         jYearChooser1 = new com.toedter.calendar.JYearChooser();
         jLabel34 = new javax.swing.JLabel();
@@ -289,8 +300,9 @@ public class Frame_Main extends javax.swing.JFrame {
         jLabel54 = new javax.swing.JLabel();
         jLabel55 = new javax.swing.JLabel();
         dudaEstadisticas = new javax.swing.JLabel();
-        masInfoEstadisticas = new javax.swing.JLabel();
         jLabel56 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel58 = new javax.swing.JLabel();
         Fondo7 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -789,6 +801,7 @@ public class Frame_Main extends javax.swing.JFrame {
         getContentPane().add(Paneles_Menu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 170, 520));
 
         Bienvenida.setBackground(new java.awt.Color(204, 204, 204));
+        Bienvenida.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
         Bienvenida.setMaximumSize(new java.awt.Dimension(854, 520));
         Bienvenida.setMinimumSize(new java.awt.Dimension(854, 520));
         Bienvenida.setPreferredSize(new java.awt.Dimension(854, 520));
@@ -822,6 +835,7 @@ public class Frame_Main extends javax.swing.JFrame {
         getContentPane().add(Bienvenida, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 30, 854, 520));
 
         Solicitar_Espacio.setBackground(new java.awt.Color(204, 204, 204));
+        Solicitar_Espacio.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
         Solicitar_Espacio.setPreferredSize(new java.awt.Dimension(854, 520));
         Solicitar_Espacio.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -841,6 +855,18 @@ public class Frame_Main extends javax.swing.JFrame {
         masInfoSolicitud.setText("<html><Center> No se permite realizar<p> eventos los dias domingos. ");
         masInfoSolicitud.setOpaque(true);
         jPanel2.add(masInfoSolicitud, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 146, 130, 70));
+
+        masInfoSolicitud3.setBackground(new java.awt.Color(255, 255, 255));
+        masInfoSolicitud3.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        masInfoSolicitud3.setText("<html><Center> Calcular hora final: Hora final=Hora de inicio + duración en horas.<p> Solo se permite eventos de 2 horas para las siguientes horas de inicio<p> 7,9,11,14,16,18,20 ");
+        masInfoSolicitud3.setOpaque(true);
+        jPanel2.add(masInfoSolicitud3, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 110, 230, 90));
+
+        masInfoSolicitud4.setBackground(new java.awt.Color(255, 255, 255));
+        masInfoSolicitud4.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        masInfoSolicitud4.setText("<html><Center> Ingrese la hora inicial en horario militar en el rango de 6 a 21.<p> La hora debe ser exacta sin ',' o '.'");
+        masInfoSolicitud4.setOpaque(true);
+        jPanel2.add(masInfoSolicitud4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 210, 360, 40));
 
         jTable3 = new javax.swing.JTable(){
             public boolean isCellEditable (int rowIndex, int colIndex){
@@ -1086,12 +1112,6 @@ public class Frame_Main extends javax.swing.JFrame {
         });
         jPanel2.add(dudaSolicitud3, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 200, -1, -1));
 
-        masInfoSolicitud3.setBackground(new java.awt.Color(255, 255, 255));
-        masInfoSolicitud3.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        masInfoSolicitud3.setText("<html><Center> Calcular hora final: Hora final=Hora de inicio + duración en horas.<p> Solo se permite eventos de 2 horas para las siguientes horas de inicio<p> 7,9,11,14,16,18,20 ");
-        masInfoSolicitud3.setOpaque(true);
-        jPanel2.add(masInfoSolicitud3, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 130, 230, 70));
-
         dudaSolicitud4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/signo-de-pregunta-en-circulos.png"))); // NOI18N
         dudaSolicitud4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -1102,12 +1122,6 @@ public class Frame_Main extends javax.swing.JFrame {
             }
         });
         jPanel2.add(dudaSolicitud4, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 250, -1, -1));
-
-        masInfoSolicitud4.setBackground(new java.awt.Color(255, 255, 255));
-        masInfoSolicitud4.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        masInfoSolicitud4.setText("<html><Center> Ingrese la hora inicial en horario militar en el rango de 6 a 21.<p> La hora debe ser exacta sin ','");
-        masInfoSolicitud4.setOpaque(true);
-        jPanel2.add(masInfoSolicitud4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 210, 310, 40));
 
         Fondo5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondo_blanco1 1 .jpg"))); // NOI18N
         jPanel2.add(Fondo5, new org.netbeans.lib.awtextra.AbsoluteConstraints(-20, 0, 880, -1));
@@ -1190,7 +1204,7 @@ public class Frame_Main extends javax.swing.JFrame {
         jTextArea4.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         jTextArea4.setForeground(java.awt.SystemColor.info);
         jTextArea4.setRows(5);
-        jTextArea4.setText("\n      Esta aplicación fue desarrollada por estudiantes del programa Ingeniería de sistemas y computación\n      de la Universidad Nacional de Colombia: \n      \n       *Sebastián Hernández Cerón\n       *Yeison Cuervo Basurto\n       *Sebastian Camilo Casas Rojas\n       *Diego Esteban Morales Granados\n       *Rodrigo Sierra Agredo\n\n     Con el acompañamiento del profesor Henry Roberto Umana Acosta.\n\n     \n    \t\t\t\t\t\tv.3.0.0 7/12/2020");
+        jTextArea4.setText("\n      Esta aplicación fue desarrollada por estudiantes del programa Ingeniería de sistemas y computación\n      de la Universidad Nacional de Colombia: \n      \n       *Sebastián Hernández Cerón\n       *Yeison Cuervo Basurto\n       *Sebastian Camilo Casas Rojas\n       *Diego Esteban Morales Granados\n       *Rodrigo Sierra Agredo\n\n     Con el acompañamiento del profesor Henry Roberto Umana Acosta.\n\n     \n    \t\t\t\t\t            v.3.0.0 7/12/2020");
         jTextArea4.setEnabled(false);
         jScrollPane2.setViewportView(jTextArea4);
 
@@ -1448,6 +1462,7 @@ public class Frame_Main extends javax.swing.JFrame {
         getContentPane().add(Configuraciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 30, 854, 520));
 
         Administrar_Solicitudes.setBackground(new java.awt.Color(204, 204, 204));
+        Administrar_Solicitudes.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         Administrar_Solicitudes.setMinimumSize(new java.awt.Dimension(854, 520));
         Administrar_Solicitudes.setPreferredSize(new java.awt.Dimension(854, 520));
         Administrar_Solicitudes.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -1678,23 +1693,30 @@ public class Frame_Main extends javax.swing.JFrame {
         getContentPane().add(Administrar_Solicitudes, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 30, -1, -1));
 
         Estadisticas.setBackground(new java.awt.Color(204, 204, 204));
+        Estadisticas.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
         Estadisticas.setMinimumSize(new java.awt.Dimension(854, 520));
         Estadisticas.setName(""); // NOI18N
         Estadisticas.setPreferredSize(new java.awt.Dimension(854, 520));
         Estadisticas.setRequestFocusEnabled(false);
         Estadisticas.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        masInfoEstadisticas.setBackground(new java.awt.Color(255, 255, 255));
+        masInfoEstadisticas.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        masInfoEstadisticas.setText("<html><Center> Las graficas solo tienen encuenta<p> las solicitudes aceptadas. Los espacio<p>que no salen en las graficas es porque<p> no tienen solicitudes aceptadas.");
+        masInfoEstadisticas.setOpaque(true);
+        Estadisticas.add(masInfoEstadisticas, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 10, 150, 130));
+
         jLabel33.setBackground(new java.awt.Color(177, 178, 176));
         jLabel33.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel33.setForeground(new java.awt.Color(0, 102, 255));
         jLabel33.setText("Estadísticas");
         Estadisticas.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 200, 60));
-        Estadisticas.add(jYearChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 90, 110, 30));
+        Estadisticas.add(jYearChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 100, 110, 30));
 
         jLabel34.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel34.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel34.setText("Por tipo de espacio");
-        Estadisticas.add(jLabel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 110, 20));
+        jLabel34.setText("POR TIPO DE ESPACIO");
+        Estadisticas.add(jLabel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 70, 130, 20));
 
         jButton7.setBackground(new java.awt.Color(0, 255, 240));
         jButton7.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -1717,29 +1739,29 @@ public class Frame_Main extends javax.swing.JFrame {
         Estadisticas_por_tipo.add(jRadioButton2);
         jRadioButton2.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         jRadioButton2.setText("Auditorio");
-        Estadisticas.add(jRadioButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 60, 110, 20));
+        Estadisticas.add(jRadioButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 70, 110, 20));
 
         Estadisticas_por_tipo.add(jRadioButton3);
         jRadioButton3.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         jRadioButton3.setText("Sala de Reuniones");
-        Estadisticas.add(jRadioButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 60, 160, 20));
+        Estadisticas.add(jRadioButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 70, 160, 20));
 
         jLabel35.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel35.setForeground(new java.awt.Color(0, 0, 0));
         jLabel35.setText("Seleccióne un mes y año:");
-        Estadisticas.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 100, 150, 20));
+        Estadisticas.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 110, 150, 20));
 
         Estadisticas_por_tipo.add(jRadioButton1);
         jRadioButton1.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         jRadioButton1.setSelected(true);
         jRadioButton1.setText("Laboratorio");
-        Estadisticas.add(jRadioButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 40, 110, 20));
+        Estadisticas.add(jRadioButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 50, 110, 20));
 
         Estadisticas_por_tipo.add(jRadioButton4);
         jRadioButton4.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         jRadioButton4.setText("Sala de Computadores");
-        Estadisticas.add(jRadioButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 40, 160, 20));
-        Estadisticas.add(jMonthChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 90, -1, 30));
+        Estadisticas.add(jRadioButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 50, 160, 20));
+        Estadisticas.add(jMonthChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 100, -1, 30));
 
         jButton8.setBackground(new java.awt.Color(0, 255, 240));
         jButton8.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -1758,32 +1780,34 @@ public class Frame_Main extends javax.swing.JFrame {
             }
         });
         Estadisticas.add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 480, 80, 30));
-        Estadisticas.add(jMonthChooser2, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 90, 110, 30));
-        Estadisticas.add(jYearChooser2, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 90, 90, 30));
+        Estadisticas.add(jMonthChooser2, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 100, 120, 30));
+        Estadisticas.add(jYearChooser2, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 100, 80, 30));
 
         jPanel1.setEnabled(false);
         jPanel1.setFocusable(false);
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         Estadisticas.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 140, 370, 330));
 
         jPanel3.setEnabled(false);
         jPanel3.setFocusable(false);
         jPanel3.setFont(new java.awt.Font("Dialog", 0, 8)); // NOI18N
+        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         Estadisticas.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 370, 330));
 
         jLabel51.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel51.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel51.setText("Por espacios");
-        Estadisticas.add(jLabel51, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 120, 70, 20));
+        jLabel51.setText("POR ESPACIOS");
+        Estadisticas.add(jLabel51, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 20, 90, 20));
 
         jLabel54.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel54.setForeground(new java.awt.Color(0, 0, 0));
         jLabel54.setText("Seleccióne un");
-        Estadisticas.add(jLabel54, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 40, 100, 20));
+        Estadisticas.add(jLabel54, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 50, 100, 20));
 
         jLabel55.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel55.setForeground(new java.awt.Color(0, 0, 0));
         jLabel55.setText("Seleccióne un mes y año:");
-        Estadisticas.add(jLabel55, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 150, 30));
+        Estadisticas.add(jLabel55, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 150, 30));
 
         dudaEstadisticas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/signo-de-pregunta-en-circulos.png"))); // NOI18N
         dudaEstadisticas.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -1796,16 +1820,42 @@ public class Frame_Main extends javax.swing.JFrame {
         });
         Estadisticas.add(dudaEstadisticas, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 50, -1, -1));
 
-        masInfoEstadisticas.setBackground(new java.awt.Color(255, 255, 255));
-        masInfoEstadisticas.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        masInfoEstadisticas.setText("<html><Center> Las graficas solo tienen encuenta<p> las solicitudes aceptadas. Los espacio<p>que no salen en las graficas es porque<p> no tienen solicitudes aceptadas.");
-        masInfoEstadisticas.setOpaque(true);
-        Estadisticas.add(masInfoEstadisticas, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 10, 150, 130));
-
         jLabel56.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel56.setForeground(new java.awt.Color(0, 0, 0));
         jLabel56.setText("tipo de espacio:");
-        Estadisticas.add(jLabel56, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 60, 110, 20));
+        Estadisticas.add(jLabel56, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 70, 110, 20));
+
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/descargar.png"))); // NOI18N
+        jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel6MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLabel6MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLabel6MouseExited(evt);
+            }
+        });
+        Estadisticas.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 485, -1, -1));
+
+        jLabel58.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel58.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel58.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/descargar.png"))); // NOI18N
+        jLabel58.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel58MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLabel58MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLabel58MouseExited(evt);
+            }
+        });
+        Estadisticas.add(jLabel58, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 485, -1, 20));
 
         Fondo7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondo_blanco1 1 .jpg"))); // NOI18N
         Estadisticas.add(Fondo7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 880, -1));
@@ -2002,6 +2052,8 @@ public class Frame_Main extends javax.swing.JFrame {
 
     private void ver_Estadisticas() {
         ocultar_todosPaneles();
+        mostrarPorEspacios();
+        mostrarPorTipEspacio();
         Estadisticas.setVisible(true);
 
     }
@@ -2044,11 +2096,12 @@ public class Frame_Main extends javax.swing.JFrame {
 
                 }
         ));
+        
+        verTodoSolicitud();
+        Administrar_Solicitudes.setEnabled(true);
         if (jTable2.getRowCount() == 0) {
             JOptionPane.showMessageDialog(null, "No tiene registros de solicitudes", "Sin registros", JOptionPane.INFORMATION_MESSAGE);
         }
-        verTodoSolicitud();
-        Administrar_Solicitudes.setEnabled(true);
          }catch (Exception e){
             System.out.println("Exception en llenarTabla_solicitudes e "+e);
         }
@@ -2416,10 +2469,11 @@ public class Frame_Main extends javax.swing.JFrame {
     }
 
     public void mostrarPorTipEspacio(){
-         jPanel3.setLayout(new java.awt.BorderLayout());
+        jPanel3.removeAll();
+        jPanel3.setLayout(new java.awt.BorderLayout());
         JFreeChart chart = null;
         try {
-            chart=graficar.graficarGeneral(usuario,jMonthChooser1.getMonth()+1, jYearChooser1.getYear());
+            chart=graficar.graficarGeneral(usuario,jMonthChooser2.getMonth()+1, jYearChooser2.getYear());
         } catch (IOException ex) {
             Logger.getLogger(Frame_Main.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -2430,7 +2484,7 @@ public class Frame_Main extends javax.swing.JFrame {
     }
     
      public void mostrarPorEspacios(){
-          
+        jPanel1.removeAll();
         jPanel1.setLayout(new java.awt.BorderLayout());
         JFreeChart chart = null;
         try {
@@ -2438,12 +2492,32 @@ public class Frame_Main extends javax.swing.JFrame {
         } catch (IOException ex) {
             Logger.getLogger(Frame_Main.class.getName()).log(Level.SEVERE, null, ex);
         }
-        ChartPanel cp=new ChartPanel(chart);
+        ChartPanel cp=new ChartPanel(chart);        
         jPanel1.add(cp,BorderLayout.CENTER);
         jPanel1.validate();
-         hiloCargando.finalizarhilo();
+        hiloCargando.finalizarhilo();
     }
-       
+     
+
+         
+    public String GuardarArchivo(File archivo,JFreeChart chart){
+        String mensaje=null;
+        try{
+            int ancho=800; 
+            int alto=600;            
+            if(archivo.getName().endsWith("jpg")||archivo.getName().endsWith("png")){
+                File F= new File(archivo.getAbsolutePath()); 
+                ChartUtilities.saveChartAsPNG(F, chart ,ancho,alto);   
+            }else{
+                File F= new File(archivo.getAbsolutePath()+".png"); 
+                ChartUtilities.saveChartAsPNG(F, chart ,ancho,alto);               
+            }
+            mensaje="Archivo Guardado";
+        }catch(Exception e){            
+        }
+        return mensaje;
+    }
+
     private void jlLabMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlLabMousePressed
         cargando();
         hiloCargando.Iniciar("Laboratorios");   
@@ -2565,9 +2639,6 @@ public class Frame_Main extends javax.swing.JFrame {
 
     private void jLabel8MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MousePressed
         ver_Estadisticas();
-        jPanel1.removeAll();
-        jPanel3.removeAll();
-        Estadisticas_por_tipo.clearSelection();
     }//GEN-LAST:event_jLabel8MousePressed
 
     private void jLabel18MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel18MousePressed
@@ -3264,10 +3335,7 @@ public class Frame_Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel57MouseExited
 
     private void jLabel57MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel57MousePressed
-        ver_Estadisticas();
-        jPanel1.removeAll();
-        jPanel3.removeAll();
-        Estadisticas_por_tipo.clearSelection();
+        ver_Estadisticas();          
     }//GEN-LAST:event_jLabel57MousePressed
 
     private void dudaSolicitud3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dudaSolicitud3MouseEntered
@@ -3285,6 +3353,62 @@ public class Frame_Main extends javax.swing.JFrame {
     private void dudaSolicitud4MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dudaSolicitud4MouseExited
        masInfoSolicitud4.setVisible(false);
     }//GEN-LAST:event_dudaSolicitud4MouseExited
+
+    private void jLabel58MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel58MouseClicked
+      if(seleccionar.showDialog(null, "Guardar")== JFileChooser.APPROVE_OPTION){          
+          archivo=seleccionar.getSelectedFile();
+              String respuesta=null;
+              try {
+                  respuesta = GuardarArchivo(archivo,graficar.graficarGeneral(usuario,jMonthChooser2.getMonth()+1, jYearChooser2.getYear()));
+              } catch (IOException ex) {
+                  Logger.getLogger(Frame_Main.class.getName()).log(Level.SEVERE, null, ex);
+              }
+              if(respuesta!=null){
+                  JOptionPane.showMessageDialog(null, respuesta);
+              }else{
+                  JOptionPane.showMessageDialog(null, "Archivo No Guardado");
+              }
+      
+      }
+    }//GEN-LAST:event_jLabel58MouseClicked
+
+    private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
+            if(seleccionar.showDialog(null, "Guardar")== JFileChooser.APPROVE_OPTION){          
+          archivo=seleccionar.getSelectedFile();          
+              String respuesta=null;
+              try {
+                  respuesta = GuardarArchivo(archivo,graficar.graficarEspecifico(usuario, tipoEspacio_estadistica(), jMonthChooser1.getMonth()+1, jYearChooser1.getYear()));
+              } catch (IOException ex) {
+                  Logger.getLogger(Frame_Main.class.getName()).log(Level.SEVERE, null, ex);
+              }
+              if(respuesta!=null){
+                  JOptionPane.showMessageDialog(null, respuesta);
+              }else{
+                  JOptionPane.showMessageDialog(null, "Archivo No Guardado");
+              }
+      }
+    }//GEN-LAST:event_jLabel6MouseClicked
+
+    private void jLabel58MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel58MouseEntered
+       jLabel58.setIcon(new ImageIcon("src/Imagenes/descargar (1).png"));
+       jLabel58.setForeground(new Color(255, 255, 255));
+       
+    }//GEN-LAST:event_jLabel58MouseEntered
+
+    private void jLabel58MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel58MouseExited
+       jLabel58.setIcon(new ImageIcon("src/Imagenes/descargar.png"));
+       jLabel58.setForeground(new Color(0, 0, 0));
+    }//GEN-LAST:event_jLabel58MouseExited
+
+    private void jLabel6MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseEntered
+         jLabel6.setIcon(new ImageIcon("src/Imagenes/descargar (1).png"));
+         jLabel58.setForeground(new Color(255, 255, 255));
+    }//GEN-LAST:event_jLabel6MouseEntered
+
+    private void jLabel6MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseExited
+      jLabel6.setIcon(new ImageIcon("src/Imagenes/descargar.png"));
+      jLabel6.setForeground(new Color(0, 0, 0));
+    }//GEN-LAST:event_jLabel6MouseExited
 
     /**
      * @param args the command line arguments
@@ -3455,6 +3579,8 @@ public class Frame_Main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel55;
     private javax.swing.JLabel jLabel56;
     private javax.swing.JLabel jLabel57;
+    private javax.swing.JLabel jLabel58;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;

@@ -11,6 +11,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 public class Frame_Login extends javax.swing.JFrame {
@@ -32,6 +33,8 @@ public class Frame_Login extends javax.swing.JFrame {
         hiloFrame_Login.setVariable(this);              
         jLCargando2.setVisible(false);
         jLCargandoRecon.setVisible(false);
+        jLCargandoRecon2.setVisible(false);
+        jLCargandoRecon1.setVisible(false);
       
     }
     
@@ -89,6 +92,7 @@ public class Frame_Login extends javax.swing.JFrame {
            validar_Registro.crearCodC();
            int valReg = validar_Registro.verificarRegistro(usuario_r.getText(),contraseñaR.getText(),conf_contraseñaR.getText(),tipUser(),codico_coordinador.getText());
            if(valReg == 1){
+             codico_coordinador.setText("codigo");
              JOptionPane.showMessageDialog(this,"El usuario ha sido creado exitosamente");
            }else if(valReg == -1){
                 JOptionPane.showMessageDialog(null, "Usuario no Valido",  "Usuario no Valido", JOptionPane.INFORMATION_MESSAGE);
@@ -175,6 +179,20 @@ public class Frame_Login extends javax.swing.JFrame {
         jlClose1 = new javax.swing.JLabel();
         jlMinimize1 = new javax.swing.JLabel();
         LbUsuario = new javax.swing.JLabel();
+        panelIniciarSesion = new javax.swing.JPanel();
+        Ingresar = new javax.swing.JButton();
+        LbRegistrar = new javax.swing.JLabel();
+        JtfUsuario = new javax.swing.JTextField();
+        LbContraseña = new javax.swing.JLabel();
+        signInTitle = new javax.swing.JLabel();
+        userLogoLabel = new javax.swing.JLabel();
+        jPasswordField1 = new javax.swing.JPasswordField();
+        jSeparator1 = new javax.swing.JSeparator();
+        LbUsuario1 = new javax.swing.JLabel();
+        LbRegistrar2 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jLCargando2 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         panelRegistrase = new javax.swing.JPanel();
         usuario_r = new javax.swing.JTextField();
         usuario_institucional_r = new javax.swing.JLabel();
@@ -194,20 +212,6 @@ public class Frame_Login extends javax.swing.JFrame {
         conf_contraseña_r1 = new javax.swing.JLabel();
         jLCargandoRecon2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        panelIniciarSesion = new javax.swing.JPanel();
-        Ingresar = new javax.swing.JButton();
-        LbRegistrar = new javax.swing.JLabel();
-        JtfUsuario = new javax.swing.JTextField();
-        LbContraseña = new javax.swing.JLabel();
-        signInTitle = new javax.swing.JLabel();
-        userLogoLabel = new javax.swing.JLabel();
-        jPasswordField1 = new javax.swing.JPasswordField();
-        jSeparator1 = new javax.swing.JSeparator();
-        LbUsuario1 = new javax.swing.JLabel();
-        LbRegistrar2 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        jLCargando2 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         panelRecupararCon = new javax.swing.JPanel();
         registrarse1 = new javax.swing.JButton();
         LbRegistrar3 = new javax.swing.JLabel();
@@ -271,6 +275,12 @@ public class Frame_Login extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jlClose1MouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jlClose1MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jlClose1MouseExited(evt);
+            }
         });
         panelCerrar.add(jlClose1, new org.netbeans.lib.awtextra.AbsoluteConstraints(472, 8, -1, -1));
 
@@ -278,6 +288,12 @@ public class Frame_Login extends javax.swing.JFrame {
         jlMinimize1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jlMinimize1MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jlMinimize1MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jlMinimize1MouseExited(evt);
             }
         });
         panelCerrar.add(jlMinimize1, new org.netbeans.lib.awtextra.AbsoluteConstraints(445, 10, -1, -1));
@@ -290,6 +306,126 @@ public class Frame_Login extends javax.swing.JFrame {
         panelCerrar.add(LbUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 6, 240, 20));
 
         getContentPane().add(panelCerrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
+        panelIniciarSesion.setBackground(new java.awt.Color(166, 28, 26));
+        panelIniciarSesion.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        panelIniciarSesion.setMaximumSize(new java.awt.Dimension(500, 520));
+        panelIniciarSesion.setMinimumSize(new java.awt.Dimension(500, 520));
+        panelIniciarSesion.setPreferredSize(new java.awt.Dimension(500, 520));
+        panelIniciarSesion.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                panelIniciarSesionKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                panelIniciarSesionKeyTyped(evt);
+            }
+        });
+        panelIniciarSesion.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        Ingresar.setBackground(new java.awt.Color(0, 255, 240));
+        Ingresar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        Ingresar.setText("Ingresar");
+        Ingresar.setBorder(null);
+        Ingresar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                IngresarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                IngresarMouseExited(evt);
+            }
+        });
+        Ingresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                IngresarActionPerformed(evt);
+            }
+        });
+        panelIniciarSesion.add(Ingresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 380, 85, 30));
+
+        LbRegistrar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        LbRegistrar.setForeground(new java.awt.Color(255, 255, 255));
+        LbRegistrar.setText("¿Desea registrarse?");
+        LbRegistrar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                LbRegistrarMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                LbRegistrarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                LbRegistrarMouseExited(evt);
+            }
+        });
+        panelIniciarSesion.add(LbRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 420, 107, -1));
+
+        JtfUsuario.setText("Usuario institucional");
+        JtfUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JtfUsuarioActionPerformed(evt);
+            }
+        });
+        JtfUsuario.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                JtfUsuarioKeyPressed(evt);
+            }
+        });
+        panelIniciarSesion.add(JtfUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 220, 230, 30));
+
+        LbContraseña.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        LbContraseña.setForeground(new java.awt.Color(255, 255, 255));
+        LbContraseña.setText("Contraseña");
+        panelIniciarSesion.add(LbContraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 270, 62, -1));
+
+        signInTitle.setBackground(new java.awt.Color(177, 178, 176));
+        signInTitle.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
+        signInTitle.setForeground(new java.awt.Color(177, 178, 176));
+        signInTitle.setText("Iniciar sesión");
+        panelIniciarSesion.add(signInTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 50, 293, 46));
+
+        userLogoLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/usuario.png"))); // NOI18N
+        userLogoLabel.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/usuario.png"))); // NOI18N
+        panelIniciarSesion.add(userLogoLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 120, 70, -1));
+
+        jPasswordField1.setText("Contraseña");
+        jPasswordField1.setMinimumSize(new java.awt.Dimension(15, 20));
+        jPasswordField1.setPreferredSize(new java.awt.Dimension(15, 20));
+        jPasswordField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jPasswordField1KeyPressed(evt);
+            }
+        });
+        panelIniciarSesion.add(jPasswordField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 290, 230, 30));
+        panelIniciarSesion.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 100, 310, 10));
+
+        LbUsuario1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        LbUsuario1.setForeground(new java.awt.Color(255, 255, 255));
+        LbUsuario1.setText("Usuario institucional (sin @unal.edu.co)");
+        panelIniciarSesion.add(LbUsuario1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 200, 230, -1));
+
+        LbRegistrar2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        LbRegistrar2.setForeground(new java.awt.Color(255, 255, 255));
+        LbRegistrar2.setText("¿Ha olvidado su contraseña?");
+        LbRegistrar2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                LbRegistrar2MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                LbRegistrar2MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                LbRegistrar2MouseExited(evt);
+            }
+        });
+        panelIniciarSesion.add(LbRegistrar2, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 330, 160, -1));
+        panelIniciarSesion.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 440, -1, -1));
+
+        jLCargando2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/reloj-de-arena.png"))); // NOI18N
+        panelIniciarSesion.add(jLCargando2, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 389, 16, 16));
+
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondo1.jpg"))); // NOI18N
+        jLabel2.setText("jLabel2");
+        panelIniciarSesion.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(-570, 0, -1, -1));
+
+        getContentPane().add(panelIniciarSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, -1, -1));
 
         panelRegistrase.setBackground(new java.awt.Color(204, 204, 204));
         panelRegistrase.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
@@ -418,126 +554,6 @@ public class Frame_Login extends javax.swing.JFrame {
         panelRegistrase.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         getContentPane().add(panelRegistrase, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 500, 520));
-
-        panelIniciarSesion.setBackground(new java.awt.Color(166, 28, 26));
-        panelIniciarSesion.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-        panelIniciarSesion.setMaximumSize(new java.awt.Dimension(500, 520));
-        panelIniciarSesion.setMinimumSize(new java.awt.Dimension(500, 520));
-        panelIniciarSesion.setPreferredSize(new java.awt.Dimension(500, 520));
-        panelIniciarSesion.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                panelIniciarSesionKeyPressed(evt);
-            }
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                panelIniciarSesionKeyTyped(evt);
-            }
-        });
-        panelIniciarSesion.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        Ingresar.setBackground(new java.awt.Color(0, 255, 240));
-        Ingresar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        Ingresar.setText("Ingresar");
-        Ingresar.setBorder(null);
-        Ingresar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                IngresarMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                IngresarMouseExited(evt);
-            }
-        });
-        Ingresar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                IngresarActionPerformed(evt);
-            }
-        });
-        panelIniciarSesion.add(Ingresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 380, 85, 30));
-
-        LbRegistrar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        LbRegistrar.setForeground(new java.awt.Color(255, 255, 255));
-        LbRegistrar.setText("¿Desea registrarse?");
-        LbRegistrar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                LbRegistrarMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                LbRegistrarMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                LbRegistrarMouseExited(evt);
-            }
-        });
-        panelIniciarSesion.add(LbRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 420, 107, -1));
-
-        JtfUsuario.setText("Usuario institucional");
-        JtfUsuario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JtfUsuarioActionPerformed(evt);
-            }
-        });
-        JtfUsuario.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                JtfUsuarioKeyPressed(evt);
-            }
-        });
-        panelIniciarSesion.add(JtfUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 220, 230, 30));
-
-        LbContraseña.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        LbContraseña.setForeground(new java.awt.Color(255, 255, 255));
-        LbContraseña.setText("Contraseña");
-        panelIniciarSesion.add(LbContraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 270, 62, -1));
-
-        signInTitle.setBackground(new java.awt.Color(177, 178, 176));
-        signInTitle.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
-        signInTitle.setForeground(new java.awt.Color(177, 178, 176));
-        signInTitle.setText("Iniciar sesión");
-        panelIniciarSesion.add(signInTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 50, 293, 46));
-
-        userLogoLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/usuario.png"))); // NOI18N
-        userLogoLabel.setDisabledIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/usuario.png"))); // NOI18N
-        panelIniciarSesion.add(userLogoLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 120, 70, -1));
-
-        jPasswordField1.setText("Contraseña");
-        jPasswordField1.setMinimumSize(new java.awt.Dimension(15, 20));
-        jPasswordField1.setPreferredSize(new java.awt.Dimension(15, 20));
-        jPasswordField1.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jPasswordField1KeyPressed(evt);
-            }
-        });
-        panelIniciarSesion.add(jPasswordField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 290, 230, 30));
-        panelIniciarSesion.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 100, 310, 10));
-
-        LbUsuario1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        LbUsuario1.setForeground(new java.awt.Color(255, 255, 255));
-        LbUsuario1.setText("Usuario institucional (sin @unal.edu.co)");
-        panelIniciarSesion.add(LbUsuario1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 200, 230, -1));
-
-        LbRegistrar2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        LbRegistrar2.setForeground(new java.awt.Color(255, 255, 255));
-        LbRegistrar2.setText("¿Ha olvidado su contraseña?");
-        LbRegistrar2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                LbRegistrar2MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                LbRegistrar2MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                LbRegistrar2MouseExited(evt);
-            }
-        });
-        panelIniciarSesion.add(LbRegistrar2, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 330, 160, -1));
-        panelIniciarSesion.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 440, -1, -1));
-
-        jLCargando2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/reloj-de-arena.png"))); // NOI18N
-        panelIniciarSesion.add(jLCargando2, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 389, 16, 16));
-
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondo1.jpg"))); // NOI18N
-        jLabel2.setText("jLabel2");
-        panelIniciarSesion.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(-570, 0, -1, -1));
-
-        getContentPane().add(panelIniciarSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, -1, -1));
 
         panelRecupararCon.setBackground(new java.awt.Color(204, 204, 204));
         panelRecupararCon.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
@@ -897,6 +913,22 @@ public class Frame_Login extends javax.swing.JFrame {
     private void LbRegistrar3MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LbRegistrar3MouseExited
        LbRegistrar3.setForeground(new Color(255, 255, 255));
     }//GEN-LAST:event_LbRegistrar3MouseExited
+
+    private void jlClose1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlClose1MouseEntered
+        jlClose1.setIcon(new ImageIcon("src/Imagenes/cancelar-marca.png"));
+    }//GEN-LAST:event_jlClose1MouseEntered
+
+    private void jlClose1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlClose1MouseExited
+        jlClose1.setIcon(new ImageIcon("src/Imagenes/incorrecto.png"));
+    }//GEN-LAST:event_jlClose1MouseExited
+
+    private void jlMinimize1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlMinimize1MouseEntered
+         jlMinimize1.setIcon(new ImageIcon("src/Imagenes/menos.png"));
+    }//GEN-LAST:event_jlMinimize1MouseEntered
+
+    private void jlMinimize1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlMinimize1MouseExited
+        jlMinimize1.setIcon(new ImageIcon("src/Imagenes/linea.png"));
+    }//GEN-LAST:event_jlMinimize1MouseExited
 
     /**
      * @param args the command line arguments

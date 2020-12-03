@@ -246,18 +246,6 @@ public class SolicitudDAO {
                 diasString = diasString + dia;
             }
 
-            System.out.println("call Horarios_Tics_y_Laboratorios.Ingresar_Solicitud("
-                    + sol.getEvento().getTipoRepetición()
-                    + ", '" + sol.getEvento().getFechaEvento()
-                    + "', '" + sol.getEvento().getHoraInicio()
-                    + "', '" + sol.getEvento().getHoraFinalEvento()
-                    + "', '" + sol.getEvento().getFechaTerminaEvento()
-                    + "', '" + sol.getEvento().getMotivoEvento()
-                    + "', '" + sol.getEvento().getIdMotivoEvento()
-                    + "', '" + par.getNombreusuarioInstitucional()
-                    + "', '" + sol.getEspacioidEspacio()
-                    + "', '" + diasString + "');");
-
             resultSet = statement.executeQuery("call Horarios_Tics_y_Laboratorios.Ingresar_Solicitud("
                     + sol.getEvento().getTipoRepetición()
                     + ", '" + sol.getEvento().getFechaEvento()
@@ -303,13 +291,6 @@ public class SolicitudDAO {
             for (int dia : dias) {
                 diasString = diasString + dia;
             }
-
-            System.out.println("select Horarios_Tics_y_Laboratorios.compararEventos("
-                    + sol.getEspacioidEspacio()
-                    + ", '" + sol.getEvento().getHoraInicio()
-                    + "', '" + sol.getEvento().getHoraFinalEvento()
-                    + "', " + sol.getEvento().getTipoRepetición()
-                    + ", '" + sol.getEvento().getFechaEvento() + "', '" + sol.getEvento().getFechaTerminaEvento() + "', '" + diasString + "');");
 
             resultSet = statement.executeQuery("select Horarios_Tics_y_Laboratorios.compararEventos("
                     + sol.getEspacioidEspacio()

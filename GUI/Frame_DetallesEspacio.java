@@ -69,6 +69,7 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
         paneldetallesInventario = new javax.swing.JPanel();
+        masInfoEncargado = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -104,7 +105,6 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
         dudaEspacio = new javax.swing.JLabel();
         masInfoEstadoE = new javax.swing.JLabel();
         dudaEspacio2 = new javax.swing.JLabel();
-        masInfoEncargado = new javax.swing.JLabel();
         Fondo5 = new javax.swing.JLabel();
         panelCerrar = new javax.swing.JPanel();
         jlClose1 = new javax.swing.JLabel();
@@ -134,6 +134,12 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
         paneldetallesInventario.setMinimumSize(new java.awt.Dimension(770, 617));
         paneldetallesInventario.setPreferredSize(new java.awt.Dimension(770, 617));
         paneldetallesInventario.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        masInfoEncargado.setBackground(new java.awt.Color(255, 255, 255));
+        masInfoEncargado.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        masInfoEncargado.setText("<html><Center> El usuario debe estar registrado en la base de datos<p> No se permite a un usuario coordinador ser encargado de un espacio.");
+        masInfoEncargado.setOpaque(true);
+        paneldetallesInventario.add(masInfoEncargado, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 56, 280, 60));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel1.setText("Correo Encargado:");
@@ -397,10 +403,6 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
             }
         });
         paneldetallesInventario.add(dudaEspacio2, new org.netbeans.lib.awtextra.AbsoluteConstraints(145, 120, -1, -1));
-
-        masInfoEncargado.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        masInfoEncargado.setText("<html><Center> El usuario debe estar registrado en la base de datos");
-        paneldetallesInventario.add(masInfoEncargado, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 100, 280, -1));
 
         Fondo5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondo_blanco1 1 .jpg"))); // NOI18N
         paneldetallesInventario.add(Fondo5, new org.netbeans.lib.awtextra.AbsoluteConstraints(-20, 0, 880, -1));

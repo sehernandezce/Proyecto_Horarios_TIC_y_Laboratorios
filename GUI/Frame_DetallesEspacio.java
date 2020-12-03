@@ -458,10 +458,13 @@ public class Frame_DetallesEspacio extends javax.swing.JFrame {
 
     public void crearEspacio(String tipo, Frame_Main frame, Usuario u) throws SQLException {
         try{
-       
-        this.usuario = u;
+        
+        this.hiloFrame_DetallesEspacio.setVariable(this);
+        this.hiloCargando2.setVariable(jLCargando3);
+        this.usuario = u;        
         this.fraim = frame;
-        frame.hiloCargando.finalizarhilo();
+        frame.hiloCargando.finalizarhilo();        
+        
         if (u.getTipoUsuario() == 2) {
 
             jTextField3.setText(tipo);

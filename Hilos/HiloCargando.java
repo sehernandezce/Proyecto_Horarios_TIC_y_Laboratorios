@@ -40,7 +40,7 @@ public class HiloCargando extends Thread{
                        jLCargando.setIcon(new ImageIcon("src/Imagenes/reloj-de-arena.png"));  
                         giro=true;                            
                     }                   
-                    Thread.sleep(1000);                  
+                    Thread.sleep(1700);                  
                 }
                 
                 jLCargando.setVisible(false);                  

@@ -2690,8 +2690,7 @@ public class Frame_Main extends javax.swing.JFrame {
 
             String fecha = obtener_fecha();
 
-            int day = obt_diaSemana();
-            System.out.println(day);
+            int day = obt_diaSemana();            
             try {
                 llenarTabla_espacios(id_espacio, fecha, day);
             } catch (SQLException ex) {

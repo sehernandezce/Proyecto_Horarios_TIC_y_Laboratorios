@@ -114,7 +114,7 @@ public class EspaciosDAO {
             resultSet = null;
             statement = this.connection.createStatement();
             resultSet = statement.executeQuery("call Horarios_Tics_y_Laboratorios.Obtener_Horas_espacio('" + id_espacio + "','" + fecha + "','" + day + "')");
-            System.out.println("call Horarios_Tics_y_Laboratorios.Obtener_Horas_espacio('" + id_espacio + "','" + fecha + "','" + day + "')");
+            
             if (resultSet.next()) {
 
                 return ObtenerData_Horas(resultSet);
@@ -147,9 +147,7 @@ public class EspaciosDAO {
             resultSet2 = statement.executeQuery("Select * from SOLICITUDES where ID_ESPACIO = " + idEspacio + " AND ID_ESTADO = 2;");
             if (!resultSet2.next()) {
                 resultSet = statement.executeUpdate("update ESPACIOS set VIVO = false, ACTIVO = false where ID_ESPACIO = " + idEspacio + ";");
-                System.out.println("el resulset es: "+resultSet);
-                System.out.println("El id del espacio es: "+idEspacio);
-                
+                                
                 if (resultSet > 0) {
                     return 1;
                 } else {

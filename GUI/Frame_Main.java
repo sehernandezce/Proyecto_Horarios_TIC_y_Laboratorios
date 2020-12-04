@@ -1714,7 +1714,6 @@ public class Frame_Main extends javax.swing.JFrame {
         Estadisticas.add(jYearChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 100, 110, 30));
 
         jLabel34.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel34.setForeground(new java.awt.Color(0, 0, 0));
         jLabel34.setText("POR TIPO DE ESPACIO");
         Estadisticas.add(jLabel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 70, 130, 20));
 
@@ -1747,8 +1746,7 @@ public class Frame_Main extends javax.swing.JFrame {
         Estadisticas.add(jRadioButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 70, 160, 20));
 
         jLabel35.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel35.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel35.setText("Seleccióne un mes y año:");
+        jLabel35.setText("Seleccione un mes y año:");
         Estadisticas.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 110, 150, 20));
 
         Estadisticas_por_tipo.add(jRadioButton1);
@@ -1795,18 +1793,15 @@ public class Frame_Main extends javax.swing.JFrame {
         Estadisticas.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 370, 330));
 
         jLabel51.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel51.setForeground(new java.awt.Color(0, 0, 0));
         jLabel51.setText("POR ESPACIOS");
         Estadisticas.add(jLabel51, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 20, 90, 20));
 
         jLabel54.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel54.setForeground(new java.awt.Color(0, 0, 0));
         jLabel54.setText("Seleccióne un");
         Estadisticas.add(jLabel54, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 50, 100, 20));
 
         jLabel55.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel55.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel55.setText("Seleccióne un mes y año:");
+        jLabel55.setText("Seleccione un mes y año:");
         Estadisticas.add(jLabel55, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 150, 30));
 
         dudaEstadisticas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/signo-de-pregunta-en-circulos.png"))); // NOI18N
@@ -1821,12 +1816,10 @@ public class Frame_Main extends javax.swing.JFrame {
         Estadisticas.add(dudaEstadisticas, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 50, -1, -1));
 
         jLabel56.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel56.setForeground(new java.awt.Color(0, 0, 0));
         jLabel56.setText("tipo de espacio:");
         Estadisticas.add(jLabel56, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 70, 110, 20));
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(0, 0, 0));
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/descargar.png"))); // NOI18N
         jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -1842,7 +1835,6 @@ public class Frame_Main extends javax.swing.JFrame {
         Estadisticas.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 485, -1, -1));
 
         jLabel58.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel58.setForeground(new java.awt.Color(0, 0, 0));
         jLabel58.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/descargar.png"))); // NOI18N
         jLabel58.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {

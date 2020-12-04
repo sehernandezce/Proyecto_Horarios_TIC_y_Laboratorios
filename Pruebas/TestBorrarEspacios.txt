@@ -1,0 +1,60 @@
+
+package Control;
+
+import static junit.framework.Assert.assertEquals;
+import org.junit.*;
+import Control.ValidarEspacios;
+import Entidad.Usuario;
+import Control.Validar_Registro;
+import org.junit.Test;
+import static org.junit.Assert.*;
+
+public class TestBorrarEspacios {
+    
+    private ManipularConecciones datosConexion = new ManipularConecciones();
+    ValidarEspacios validarEspacios;
+    
+    private int Error_solicitudes_pendientes = -2;
+    private int Error_permiso = -3;  
+    private int Caso_exito = 1;
+    
+    @Test
+    public void testEliminarEspacioConSolicitudesPendientes(){
+    Usuario usuario = new Usuario();        
+    usuario.setNombreusuarioInstitucional("Rodrigo");
+    usuario.setContrasenia("rsaRSA9812");
+    usuario.setTipoUsuario(2);
+    datosConexion.crearConeccion(usuario);
+    validarEspacios = new ValidarEspacios(datosConexion);
+    
+    String idEspacioSeleccionado = "45";
+        int n= validarEspacios.borrarEspacio(usuario, idEspacioSeleccionado);
+       assertEquals(n,Error_solicitudes_pendientes);
+    }
+    
+    @Test
+    public void testEliminarEspacioConPermisoErroneo(){
+    Usuario usuario = new Usuario();        
+    usuario.setNombreusuarioInstitucional("KarlJohnson");
+    usuario.setContrasenia("sda1321QQQ");
+    usuario.setTipoUsuario(1);
+    datosConexion.crearConeccion(usuario);
+    validarEspacios = new ValidarEspacios(datosConexion);
+    String idEspacioSeleccionado = "45";
+        int n= validarEspacios.borrarEspacio(usuario, idEspacioSeleccionado);
+       assertEquals(Error_permiso, n);
+    }
+    
+    @Test
+    public void testEliminarEspacioCorrectamente(){
+    Usuario usuario = new Usuario();        
+    usuario.setNombreusuarioInstitucional("Rodrigo");
+    usuario.setContrasenia("rsaRSA9812");
+    usuario.setTipoUsuario(2);
+    datosConexion.crearConeccion(usuario);
+    validarEspacios = new ValidarEspacios(datosConexion);
+    String idEspacioSeleccionado = "46";
+        int n= validarEspacios.borrarEspacio(usuario, idEspacioSeleccionado);
+       assertEquals(Caso_exito, n);
+    }    
+}

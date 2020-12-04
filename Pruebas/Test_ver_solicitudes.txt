@@ -1,0 +1,78 @@
+package Control;
+import Entidad.Usuario;
+import java.sql.SQLException;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import static org.junit.Assert.*;
+
+public class Test_ver_solicitudes {
+    
+  private static Validar_administrar_solicitud Validarsolicitud;
+      private ManipularConecciones datosConexion = new ManipularConecciones();
+     /*Nota: Para algunas pruebas se usaron datos que ya existian en la base de datos.
+     *  
+    */
+      
+    public Test_ver_solicitudes() {
+          Usuario us = new Usuario();
+        us.setTipoUsuario(2);
+        datosConexion.crearConeccion(us);
+        Validarsolicitud = new Validar_administrar_solicitud(datosConexion);
+    }
+
+    @Test
+    public void PruebaUsuarioNoRegistrado() throws SQLException {
+        String estado = "Cancelada";
+        Usuario us = new Usuario();
+        us.setNombreusuarioInstitucional("Pedro");
+        us.setContrasenia("1616161EFfas");
+        assertEquals(Validarsolicitud.llenarMatriz(us, estado), null);
+        
+    }
+    
+     @Test
+    public void PruebaUsuarioRegistrado() throws SQLException {
+        Usuario us = new Usuario();
+        String estado = "Cancelada";
+        us.setNombreusuarioInstitucional("scasasr");
+        us.setContrasenia("11616161EFfas");
+        us.setTipoUsuario(2);
+        datosConexion.crearConeccion(us);
+        Validarsolicitud = new Validar_administrar_solicitud(datosConexion);
+        String[][] prueba = {{"4","2020-11-13",
+            "Cancelada",null,"scasasr_U",
+            "321 - 453 - Aulas de ingenieria", "2020-11-17","2020-11-17", null,"Ver más"}};
+        Assert.assertArrayEquals(Validarsolicitud.llenarMatriz(us, estado), prueba);
+    }
+    
+    @Test
+    public void PruebaDetallessolicitud_incorrecto () throws SQLException {
+        int Id_solicitud = 100;
+        Usuario us = new Usuario();
+        us.setNombreusuarioInstitucional("scasasr");
+        us.setContrasenia("11616161EFfas");
+        us.setTipoUsuario(2);
+        datosConexion.crearConeccion(us);
+        Validarsolicitud = new Validar_administrar_solicitud(datosConexion);
+        Assert.assertArrayEquals(Validarsolicitud.datos_solicitud(us, Id_solicitud), null);
+    }
+    
+    @Test
+    public void PruebaDetallessolicitud () throws SQLException {
+        int Id_solicitud=1;
+        Usuario us = new Usuario();
+        us.setNombreusuarioInstitucional("scasasr");
+        us.setContrasenia("11616161EFfas");
+        us.setTipoUsuario(2);
+        datosConexion.crearConeccion(us);
+        Validarsolicitud = new Validar_administrar_solicitud(datosConexion);
+        String[] prueba = {"2020-11-13","2020-11-13","07:00:00","09:00:00","No se repite",
+        "Prueba","Otro","454 - Ciencia y tecnologia CyT","105","Clase"};
+        Assert.assertArrayEquals(Validarsolicitud.datos_solicitud(us, Id_solicitud), prueba);
+    }
+
+}

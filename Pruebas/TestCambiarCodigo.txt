@@ -1,0 +1,143 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Control;
+
+import Control.ManipularConecciones;
+import Control.Validar_Registro;
+import Entidad.Usuario;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import static org.junit.Assert.*;
+
+/**
+ * Código test koUyrt90*65
+ *
+ * @author Usuario
+ */
+public class TestCambiarCodigo {
+
+    private ManipularConecciones manipularConexConecciones = new ManipularConecciones();
+    private Validar_Registro validarRegistro = new Validar_Registro(manipularConexConecciones);
+
+    private int CODIGO_NO_VALIDO = -3;
+    private int CONTRASENIA_DE_USUARIO_ERRADA = 0;
+    private int CONTRASENIA_NO_VALIDA = -2;
+    private int USUARIO_NO_ADMIN = -6;
+    private int CODIGO_NO_SEGURO = -4;
+    private int SATISFACTORIAMENTE = 1;
+
+    public TestCambiarCodigo() {
+    }
+
+    @Test
+    public void testCambiarCodigoContraseniaErrada() throws Exception {
+        Usuario par = new Usuario();
+        par.setNombreusuarioInstitucional("horariosdesalastics");
+        par.setContrasenia("123456789Sd");
+        par.setTipoUsuario(2);
+        manipularConexConecciones.crearConeccion(par);
+
+        String codigo = "koUyrt90*656";
+
+        int resultado = validarRegistro.cambiarCod(par, codigo);
+
+        assertEquals(CONTRASENIA_DE_USUARIO_ERRADA, resultado);
+    }
+    
+       @Test
+    public void testCambiarCodigoUsuarioNoCoordinador() throws Exception {
+        Usuario par = new Usuario();
+        par.setNombreusuarioInstitucional("ycuervob");
+        par.setContrasenia("123456789Qw");
+        par.setTipoUsuario(1);
+        manipularConexConecciones.crearConeccion(par);
+
+        String codigo = "koUyrt90*656";
+
+        int resultado = validarRegistro.cambiarCod(par, codigo);
+
+        assertEquals(USUARIO_NO_ADMIN, resultado);
+    }
+    
+       @Test
+    public void testCambiarCodigoContraseniaNoValida() throws Exception {
+        Usuario par = new Usuario();
+        par.setNombreusuarioInstitucional("horariosdesalastics");
+        par.setContrasenia("1234ads");
+        par.setTipoUsuario(2);
+        manipularConexConecciones.crearConeccion(par);
+
+        String codigo = "koUyrt90*656";
+
+        int resultado = validarRegistro.cambiarCod(par, codigo);
+
+        assertEquals(CONTRASENIA_NO_VALIDA, resultado);
+    }
+
+       @Test
+    public void testCambiarCodigoNovalido() throws Exception {
+        Usuario par = new Usuario();
+        par.setNombreusuarioInstitucional("horariosdesalastics");
+        par.setContrasenia("123456789Qw");
+        par.setTipoUsuario(2);
+        manipularConexConecciones.crearConeccion(par);
+
+        String codigo = "1234sad";
+
+        int resultado = validarRegistro.cambiarCod(par, codigo);
+
+        assertEquals(CODIGO_NO_VALIDO, resultado);
+    }
+    
+       @Test
+    public void testCambiarCodigoNoSeguro() throws Exception {
+        Usuario par = new Usuario();
+        par.setNombreusuarioInstitucional("horariosdesalastics");
+        par.setContrasenia("123456789Qw");
+        par.setTipoUsuario(2);
+        manipularConexConecciones.crearConeccion(par);
+
+        String codigo = "123456789";
+
+        int resultado = validarRegistro.cambiarCod(par, codigo);
+
+        assertEquals(CODIGO_NO_SEGURO, resultado);
+    }
+    
+       @Test
+    public void testCambiarCodigoCorrecto() throws Exception {
+        Usuario par = new Usuario();
+        par.setNombreusuarioInstitucional("horariosdesalastics");
+        par.setContrasenia("123456789Qw");
+        par.setTipoUsuario(2);
+        manipularConexConecciones.crearConeccion(par);
+
+        String codigo = "koUyrt90*656";
+
+        int resultado = validarRegistro.cambiarCod(par, codigo);
+
+        assertEquals(SATISFACTORIAMENTE, resultado);
+    }
+    
+      @Test
+    public void testCambiarCodigoCorrecto2() throws Exception {
+        Usuario par = new Usuario();
+        par.setNombreusuarioInstitucional("horariosdesalastics");
+        par.setContrasenia("123456789Qw");
+        par.setTipoUsuario(2);
+        manipularConexConecciones.crearConeccion(par);
+
+        String codigo = "koUyrt90*65";
+
+        int resultado = validarRegistro.cambiarCod(par, codigo);
+
+        assertEquals(SATISFACTORIAMENTE, resultado);
+    }
+    
+}

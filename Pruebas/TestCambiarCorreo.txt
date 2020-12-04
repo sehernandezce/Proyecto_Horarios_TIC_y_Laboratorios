@@ -1,0 +1,141 @@
+package Control;
+
+
+
+import Control.ManipularConecciones;
+import Control.Validar_Registro;
+import Entidad.Usuario;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+public class TestCambiarCorreo {
+    
+    
+    private ManipularConecciones datosConexionTemporal = new ManipularConecciones();
+    private static Validar_Registro validar_registro;
+    
+    private int USUARIO_NO_EXISTE_O_DATOS_INCORRECTOS = 0;
+    private int NO_TIENE_PERMISOS = -6;
+    private int NO_COINCIDEN_CONTRASEÑAS = -3;
+    private int DATOS_INGRESADOS_MUY_CORTOS = -4;
+    private int DATOS_CORRECTOS = 1;
+     
+    public TestCambiarCorreo() {
+        Usuario us = new Usuario();
+        us.setTipoUsuario(-10);
+        datosConexionTemporal.crearConeccion(us);
+        validar_registro= new Validar_Registro(datosConexionTemporal);  
+    }
+
+        @Test
+    public void testDatoUsuarioIncorrecto() throws Exception {
+        Usuario usuario = new Usuario();
+        usuario.setNombreusuarioInstitucional("horariosdesalastics");
+        usuario.setContrasenia("123456789Qww");
+        usuario.setTipoUsuario(2);
+       
+        String correo="horariosdesalastics@gmail.com";
+        String password="123456789Qw";
+        String passwordConf="123456789Qw";     
+     
+        assertEquals(validar_registro.camCorreoNot(usuario,correo,password,passwordConf),USUARIO_NO_EXISTE_O_DATOS_INCORRECTOS);
+
+    }
+    
+           @Test
+    public void testUsuarioNoexiste() throws Exception {
+        Usuario usuario = new Usuario();
+        usuario.setNombreusuarioInstitucional("horariosdes2");
+        usuario.setContrasenia("123456789Qw");
+        usuario.setTipoUsuario(2);
+       
+        String correo="horariosdesalastics@gmail.com";
+        String password="123456789Qw";
+        String passwordConf="123456789Qw";     
+     
+        assertEquals(validar_registro.camCorreoNot(usuario,correo,password,passwordConf),USUARIO_NO_EXISTE_O_DATOS_INCORRECTOS);
+
+    }
+    
+     @Test
+      public void testNoTienePermisos() throws Exception {
+        Usuario usuario = new Usuario();
+        usuario.setNombreusuarioInstitucional("horariosdesalastics");
+        usuario.setContrasenia("123456789Qw");
+        usuario.setTipoUsuario(1);
+       
+        String correo="horariosdesalastics@gmail.com";
+        String password="123456789Qw";
+        String passwordConf="123456789Qw";     
+     
+        assertEquals(validar_registro.camCorreoNot(usuario,correo,password,passwordConf),NO_TIENE_PERMISOS);
+
+    }
+      
+         @Test
+      public void testContraseñasNoCoinciden() throws Exception {
+        Usuario usuario = new Usuario();
+        usuario.setNombreusuarioInstitucional("horariosdesalastics");
+        usuario.setContrasenia("123456789Qw");
+        usuario.setTipoUsuario(2);
+       
+        String correo="horariosdesalastics@gmail.com";
+        String password="123456789Qwl";
+        String passwordConf="123456789Qwñ";     
+     
+        assertEquals(validar_registro.camCorreoNot(usuario,correo,password,passwordConf),NO_COINCIDEN_CONTRASEÑAS);
+
+    }
+      
+          @Test
+      public void testCorreoCorto() throws Exception {
+          Usuario usuario = new Usuario();
+        usuario.setNombreusuarioInstitucional("horariosdesalastics");
+        usuario.setContrasenia("123456789Qw");
+        usuario.setTipoUsuario(2);
+       
+        String correo="";
+        String password="123456789Qw";
+        String passwordConf="123456789Qw";     
+     
+        assertEquals(validar_registro.camCorreoNot(usuario,correo,password,passwordConf),DATOS_INGRESADOS_MUY_CORTOS);
+
+    }
+    
+       
+          @Test
+      public void testContraseñadelCorreoCorta() throws Exception {
+        Usuario usuario = new Usuario();
+        usuario.setNombreusuarioInstitucional("horariosdesalastics");
+        usuario.setContrasenia("123456789Qw");
+        usuario.setTipoUsuario(2);
+       
+        String correo="horariosdesalastics";
+        String password="";
+        String passwordConf="";     
+     
+        assertEquals(validar_registro.camCorreoNot(usuario,correo,password,passwordConf),DATOS_INGRESADOS_MUY_CORTOS);
+
+    }
+      
+      
+     @Test
+      public void testDatosCorrectos() throws Exception {
+        Usuario usuario = new Usuario();
+        usuario.setNombreusuarioInstitucional("horariosdesalastics");
+        usuario.setContrasenia("123456789Qw");
+        usuario.setTipoUsuario(2);
+       
+        String correo="horariosdesalastics";
+        String password="123456789Qw";
+        String passwordConf="123456789Qw";     
+     
+        assertEquals(validar_registro.camCorreoNot(usuario,correo,password,passwordConf),DATOS_CORRECTOS);
+
+    } 
+}

@@ -1,0 +1,177 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Control;
+
+import Control.ManipularConecciones;
+import Control.Validar_Login;
+import Control.Validar_Registro;
+import Entidad.Usuario;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import static org.junit.Assert.*;
+
+/**
+ *
+ * @author Usuario
+ */
+public class TestRecuperarContraseña {
+
+    private ManipularConecciones manipularConexConecciones = new ManipularConecciones();
+    private Validar_Registro validarRegistro = new Validar_Registro(manipularConexConecciones);
+
+    private int CONTRASENIAS_NO_COINCIDEN = -3;
+    private int CONTRASENIA_DE_USUARIO_ERRADA = 0;
+    private int CONTRASENIAS_MALA_LONGITUD = -2;
+    private int CONTRASENIAS_IDENTICA_ANTERIOR = -6;
+    private int CONTRASENIAS_NO_SEGURA = -4;
+    private int CONTRASENIAS_CAMBIO_CORRECTO = 1;
+    
+    
+    
+    
+    public TestRecuperarContraseña() {
+    }
+
+            @Test
+    public void testContraseniaTodoCorrectoRegresoAnterior() throws Exception {
+        Usuario par = new Usuario();
+        par.setNombreusuarioInstitucional("ycuervob");
+        par.setContrasenia("123456789Qw");
+        par.setTipoUsuario(1);
+        manipularConexConecciones.crearConeccion(par);
+
+        String nuevaContraseña = "123456789As";
+        String nuevaContraseñaRepetida = "123456789As";
+        
+        int resultado = validarRegistro.cambiarcontrasenia(par, nuevaContraseña, nuevaContraseñaRepetida);
+        
+        assertEquals(CONTRASENIAS_CAMBIO_CORRECTO, resultado);
+    }
+    
+    
+    @Test
+    public void testContraseniasNoCoinciden() throws Exception {
+        Usuario par = new Usuario();
+        par.setNombreusuarioInstitucional("ycuervob");
+        par.setContrasenia("123456789As");
+        par.setTipoUsuario(1);
+        manipularConexConecciones.crearConeccion(par);
+
+        String nuevaContraseña = "123456789Qw";
+        String nuevaContraseñaRepetida = "123456789Wq";
+        
+        int resultado = validarRegistro.cambiarcontrasenia(par, nuevaContraseña, nuevaContraseñaRepetida);
+        
+        assertEquals(CONTRASENIAS_NO_COINCIDEN, resultado);
+    }
+    
+        @Test
+    public void testContraseniaUsuarioNoValida() throws Exception {
+        Usuario par = new Usuario();
+        par.setNombreusuarioInstitucional("ycuervob");
+        par.setContrasenia("123456789as");
+        par.setTipoUsuario(1);
+        manipularConexConecciones.crearConeccion(par);
+
+        String nuevaContraseña = "123456789Qw";
+        String nuevaContraseñaRepetida = "123456789Qw";
+        
+        int resultado = validarRegistro.cambiarcontrasenia(par, nuevaContraseña, nuevaContraseñaRepetida);
+        
+        assertEquals(CONTRASENIA_DE_USUARIO_ERRADA, resultado);
+    }
+
+        @Test
+    public void testContraseniaNuevaCorta() throws Exception {
+        Usuario par = new Usuario();
+        par.setNombreusuarioInstitucional("ycuervob");
+        par.setContrasenia("123456789As");
+        par.setTipoUsuario(1);
+        manipularConexConecciones.crearConeccion(par);
+
+        String nuevaContraseña = "123Qw";
+        String nuevaContraseñaRepetida = "123Qw";
+        
+        int resultado = validarRegistro.cambiarcontrasenia(par, nuevaContraseña, nuevaContraseñaRepetida);
+        
+        assertEquals(CONTRASENIAS_MALA_LONGITUD, resultado);
+    }
+    
+    @Test
+    public void testContraseniaLarga() throws Exception {
+        Usuario par = new Usuario();
+        par.setNombreusuarioInstitucional("ycuervob");
+        par.setContrasenia("123456789As");
+        par.setTipoUsuario(1);
+        manipularConexConecciones.crearConeccion(par);
+
+        String nuevaContraseña = "123askdjfhbañksjdfhiaksdfiashdfliadfghbasdlkfglkasdadfsasdfasdfasdf5146a51dsf6as15df56a1s6dQw";
+        String nuevaContraseñaRepetida = "123askdjfhbañksjdfhiaksdfiashdfliadfghbasdlkfglkasdadfsasdfasdfasdf5146a51dsf6as15df56a1s6dQw";
+        
+        int resultado = validarRegistro.cambiarcontrasenia(par, nuevaContraseña, nuevaContraseñaRepetida);
+        
+        assertEquals(CONTRASENIAS_MALA_LONGITUD, resultado);
+    }
+    
+        @Test
+    public void testContraseniaIdenticaAlaAnterior() throws Exception {
+        Usuario par = new Usuario();
+        par.setNombreusuarioInstitucional("ycuervob");
+        par.setContrasenia("123456789As");
+        par.setTipoUsuario(1);
+        manipularConexConecciones.crearConeccion(par);
+
+        String nuevaContraseña = "123456789As";
+        String nuevaContraseñaRepetida = "123456789As";
+        
+        int resultado = validarRegistro.cambiarcontrasenia(par, nuevaContraseña, nuevaContraseñaRepetida);
+        
+        assertEquals(CONTRASENIAS_IDENTICA_ANTERIOR, resultado);
+    }
+    
+    @Test
+    public void testContraseniaNoSegura() throws Exception {
+        Usuario par = new Usuario();
+        par.setNombreusuarioInstitucional("ycuervob");
+        par.setContrasenia("123456789As");
+        par.setTipoUsuario(1);
+        manipularConexConecciones.crearConeccion(par);
+
+        String nuevaContraseña = "123456789";
+        String nuevaContraseñaRepetida = "123456789";
+        
+        int resultado = validarRegistro.cambiarcontrasenia(par, nuevaContraseña, nuevaContraseñaRepetida);
+        
+        assertEquals(CONTRASENIAS_NO_SEGURA, resultado);
+    }
+    
+    @Test
+    public void testContraseniaTodoCorrecto() throws Exception {
+        Usuario par = new Usuario();
+        par.setNombreusuarioInstitucional("ycuervob");
+        par.setContrasenia("123456789As");
+        par.setTipoUsuario(1);
+        manipularConexConecciones.crearConeccion(par);
+
+        String nuevaContraseña = "123456789Qw";
+        String nuevaContraseñaRepetida = "123456789Qw";
+        
+        int resultado = validarRegistro.cambiarcontrasenia(par, nuevaContraseña, nuevaContraseñaRepetida);
+        
+        assertEquals(CONTRASENIAS_CAMBIO_CORRECTO, resultado);
+    }
+    
+
+    
+    
+    
+    
+}

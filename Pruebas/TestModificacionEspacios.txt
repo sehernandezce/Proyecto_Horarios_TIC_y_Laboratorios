@@ -1,0 +1,186 @@
+package Control;
+
+import DAO.EspaciosDAO;
+import Entidad.Espacio;
+import Entidad.Usuario;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import static org.junit.Assert.*;
+
+/*Nota: Para algunas pruebas se usaron datos que ya existian en la base de datos.
+ * 
+ */
+public class TestModificacionEspacios {
+     private ManipularConecciones datosConexion = new ManipularConecciones();
+      
+    @Test
+    public void ModificarEspacioNoExistente(){
+        Espacio Espacio = new Espacio();
+        Usuario par = new Usuario();
+    
+        // informacion del usuario
+        par.setNombreusuarioInstitucional("dimorales");
+        par.setContrasenia("123456789Qw");
+        par.setTipoUsuario(2);
+        
+        datosConexion.crearConeccion(par);                   
+        EspaciosDAO Esp = new EspaciosDAO(datosConexion.getConeccion());
+        
+        //informacion del espacio a crear
+        Espacio.setId_espacio(100);
+        Espacio.setNombre_tipoespacio("2");
+        Espacio.setNombre_espacio("LaboratorioP");
+        Espacio.setNum_Espacio("340");
+        Espacio.setCorreo_encargado("sehernandezceE");
+        Espacio.setNombre_encargado("sebastian");
+        Espacio.setNum_edificio(453);
+        Espacio.setCapacidad(31);
+        Espacio.setNombre_edificio("Aulas de ingenieria");
+        Espacio.setEstado(true);
+
+        assertEquals(Esp.ActualizarinfoEspacio(par, Espacio), -9);
+    }
+    @Test
+    public void ModificarEspacioCambiarEstado(){
+        Espacio Espacio = new Espacio();
+        Usuario par = new Usuario();
+      
+
+        // informacion del usuario
+        par.setNombreusuarioInstitucional("dimorales");
+        par.setContrasenia("123456789Qw");
+        par.setTipoUsuario(2);
+        
+        datosConexion.crearConeccion(par);                   
+        EspaciosDAO Esp = new EspaciosDAO(datosConexion.getConeccion());
+        
+        //informacion del espacio a crear
+        Espacio.setId_espacio(27);
+        Espacio.setNombre_tipoespacio("2");
+        Espacio.setNombre_espacio("Prueba");
+        Espacio.setNum_Espacio("2002");
+        Espacio.setCorreo_encargado("sehernandezceE");
+        Espacio.setNombre_encargado("sebastian");
+        Espacio.setNum_edificio(453);
+        Espacio.setCapacidad(52);
+        Espacio.setNombre_edificio("Aulas de ingenieria");
+        Espacio.setEstado(false);
+
+        assertEquals(Esp.ActualizarinfoEspacio(par, Espacio), 1);
+    }
+    @Test
+    public void ModificarEspacioCambiarNumeroEspacio(){
+        Espacio Espacio = new Espacio();
+        Usuario par = new Usuario();
+
+
+        // informacion del usuario
+        par.setNombreusuarioInstitucional("dimorales");
+        par.setContrasenia("123456789Qw");
+        par.setTipoUsuario(2);
+
+        datosConexion.crearConeccion(par);                   
+        EspaciosDAO Esp = new EspaciosDAO(datosConexion.getConeccion());
+        
+        //informacion del espacio a crear
+        Espacio.setId_espacio(27);
+        Espacio.setNombre_tipoespacio("2");
+        Espacio.setNombre_espacio("Prueba");
+        Espacio.setNum_Espacio("2000");
+        Espacio.setCorreo_encargado("sehernandezceE");
+        Espacio.setNombre_encargado("sebastian");
+        Espacio.setNum_edificio(453);
+        Espacio.setCapacidad(52);
+        Espacio.setNombre_edificio("Aulas de ingenieria");
+        Espacio.setEstado(true);
+
+        assertEquals(Esp.ActualizarinfoEspacio(par, Espacio), 1);
+    }
+    @Test
+    public void ModificarEspacioCambiarNumeroEdificioNoExistente(){
+        Espacio Espacio = new Espacio();
+        Usuario par = new Usuario();
+
+
+        // informacion del usuario
+        par.setNombreusuarioInstitucional("dimorales");
+        par.setContrasenia("123456789Qw");
+        par.setTipoUsuario(2);
+
+        datosConexion.crearConeccion(par);                   
+        EspaciosDAO Esp = new EspaciosDAO(datosConexion.getConeccion());
+        
+        //informacion del espacio a crear
+        Espacio.setId_espacio(27);
+        Espacio.setNombre_tipoespacio("2");
+        Espacio.setNombre_espacio("Prueba");
+        Espacio.setNum_Espacio("2002");
+        Espacio.setCorreo_encargado("sehernandezceE");
+        Espacio.setNombre_encargado("sebastian");
+        Espacio.setNum_edificio(500);
+        Espacio.setCapacidad(52);
+        Espacio.setNombre_edificio("Aulas de ingenieria");
+        Espacio.setEstado(true);
+
+        assertEquals(Esp.ActualizarinfoEspacio(par, Espacio), 1);
+    }
+    @Test
+    public void ModificarEspacioCambiarNombreEdificioExistente(){
+        Espacio Espacio = new Espacio();
+        Usuario par = new Usuario();
+        
+
+        // informacion del usuario
+        par.setNombreusuarioInstitucional("dimorales");
+        par.setContrasenia("123456789Qw");
+        par.setTipoUsuario(2);
+
+        datosConexion.crearConeccion(par);                   
+        EspaciosDAO Esp = new EspaciosDAO(datosConexion.getConeccion());
+        
+        //informacion del espacio a crear
+        Espacio.setId_espacio(27);
+        Espacio.setNombre_tipoespacio("2");
+        Espacio.setNombre_espacio("Prueba");
+        Espacio.setNum_Espacio("2002");
+        Espacio.setCorreo_encargado("sehernandezceE");
+        Espacio.setNombre_encargado("sebastian");
+        Espacio.setNum_edificio(411);
+        Espacio.setCapacidad(52);
+        Espacio.setNombre_edificio("Ciencia y tecnologia CyT");
+        Espacio.setEstado(true);
+
+        assertEquals(Esp.ActualizarinfoEspacio(par, Espacio), 1);
+    }
+    @Test
+    public void ModificarEspacioCambiarNumeroEdificioExistente(){
+        Espacio Espacio = new Espacio();
+        Usuario par = new Usuario();
+        
+
+        // informacion del usuario
+        par.setNombreusuarioInstitucional("dimorales");
+        par.setContrasenia("123456789Qw");
+        par.setTipoUsuario(2);
+        
+        datosConexion.crearConeccion(par);                   
+        EspaciosDAO Esp = new EspaciosDAO(datosConexion.getConeccion());
+        
+        //informacion del espacio a crear
+        Espacio.setId_espacio(27);
+        Espacio.setNombre_tipoespacio("2");
+        Espacio.setNombre_espacio("Prueba");
+        Espacio.setNum_Espacio("2002");
+        Espacio.setCorreo_encargado("sehernandezceE");
+        Espacio.setNombre_encargado("sebastian");
+        Espacio.setNum_edificio(453);
+        Espacio.setCapacidad(52);
+        Espacio.setNombre_edificio("Laboratorio de Hidráulica");
+        Espacio.setEstado(true);
+
+        assertEquals(Esp.ActualizarinfoEspacio(par, Espacio), 1);
+    }
+}

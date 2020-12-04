@@ -1,0 +1,537 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Control;
+
+import Entidad.Evento;
+import Entidad.Solicitud;
+import Entidad.Usuario;
+import javax.mail.internet.AddressException;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import static org.junit.Assert.*;
+
+  /*Nota: Para algunas pruebas se usaron datos que ya existian en la base de datos.
+     *  
+    */
+public class TestSolicitarEspacio {
+    
+    private ManipularConecciones datosConexion = new ManipularConecciones();
+    private Validar_administrar_solicitud validarSolicitud;
+
+    private String HORAS__EN_HORAIO_NO_ADECUADO = "La hora de inicio o de final no están en el horario adecuado";
+    private String MINUTS_EN_HORAIO_NO_ADECUADO = "Los minutos de inicio o final no tienen sentido";
+    private String NO_HORARIO_USUAL = "Deben haber 2 horas entre las horas de inicio y final";
+    private String HORAS_CORRECTAS = "Las horas están correctas";
+
+    private String FECHA_FINAL_ANIO_ANTES_DE_INICIO = "Fecha terminacion con año antes de fecha inicio";
+    private String FECHA_CON_MES_ANTES_PERO_BIENANIO = "Fecha terminacion con mes antes de fecha inicio";
+    private String FECHA_CON_DIA_ANTES_PERO_BIENANIOYMES = "Fecha terminacion con dia antes de fecha inicio";
+    private String FECHA_MUY_ANTIGUA = "Alguna de las fechas ingresadas ya pasó";
+    private String FECHA__SIN_SENTIDO_MES = "Fecha de mes sin sentido";
+    private String FECHA__SIN_SENTIDO_DIA = "Fecha de dia sin sentido";
+    private String FECHA_CORRECTA = "La fecha es valida";
+
+    private String NO_MOTIVO_SELECCIONADO = "No se selecciono un motivo";
+    private String OTROMOTIVO_MUY_CORTO = "Motivo muy corto";
+    private String OTROMOTIVO_MUY_LARGO = "Motivo muy largo";
+    private String OTROMOTIVO_SIN_NADAESCRITO = "Motivo mal redactado";
+    private String MOTIVO_CORRECTO = "Motivo ingresado correctamente";
+
+    private boolean EVENTO_NO_SE_CRUZA = true;
+    private boolean EVENTO_SE_CRUZA = false;
+    
+    private String INGRESO_SOLICITUD_CORRECTO = "Ingreso completo"; 
+    private int RECHAZAR_EVENTO = 1;
+    
+    private boolean EVENTO_SE_PUEDE_INGRESAR = true;
+    private boolean EVENTO_SE_NO_PUEDE_INGRESAR = false;
+    
+    
+    public TestSolicitarEspacio() {
+        Usuario usuario =new Usuario();
+        usuario.setTipoUsuario(2);
+        datosConexion.crearConeccion(usuario);
+        validarSolicitud = new Validar_administrar_solicitud(datosConexion);
+    }
+
+    @Test
+    public void testHorasnegativas() {
+        int HoraInicio = -2;
+        int minutosInicio = 0;
+        int HoraFinal = -4;
+        int minutosFinal = 0;
+
+        String resultado = validarSolicitud.verificarHorasMinutosIngresadas(HoraInicio, minutosInicio, HoraFinal, minutosFinal);
+
+        assertEquals(HORAS__EN_HORAIO_NO_ADECUADO, resultado);
+    }
+
+    @Test
+    public void testMinutosNegativos() {
+        int HoraInicio = 7;
+        int minutosInicio = -10;
+        int HoraFinal = 9;
+        int minutosFinal = -20;
+
+        String resultado = validarSolicitud.verificarHorasMinutosIngresadas(HoraInicio, minutosInicio, HoraFinal, minutosFinal);
+
+        assertEquals(MINUTS_EN_HORAIO_NO_ADECUADO, resultado);
+    }
+
+    @Test
+    public void testHorasNoEn24H() {
+        int HoraInicio = 23;
+        int minutosInicio = -10;
+        int HoraFinal = 25;
+        int minutosFinal = -20;
+
+        String resultado = validarSolicitud.verificarHorasMinutosIngresadas(HoraInicio, minutosInicio, HoraFinal, minutosFinal);
+
+        assertEquals(HORAS__EN_HORAIO_NO_ADECUADO, resultado);
+    }
+
+    @Test
+    public void testminutosMayoresA60m() {
+        int HoraInicio = 7;
+        int minutosInicio = 60;
+        int HoraFinal = 9;
+        int minutosFinal = 61;
+
+        String resultado = validarSolicitud.verificarHorasMinutosIngresadas(HoraInicio, minutosInicio, HoraFinal, minutosFinal);
+
+        assertEquals(MINUTS_EN_HORAIO_NO_ADECUADO, resultado);
+    }
+
+    @Test
+    public void testhorasNoEnHorarioUN() {
+        int HoraInicio = 7;
+        int minutosInicio = 0;
+        int HoraFinal = 21;
+        int minutosFinal = 0;
+
+        String resultado = validarSolicitud.verificarHorasMinutosIngresadas(HoraInicio, minutosInicio, HoraFinal, minutosFinal);
+
+        assertEquals(NO_HORARIO_USUAL, resultado);
+    }
+
+    @Test
+    public void testhoraInicioMayorAFinal() {
+        int HoraInicio = 11;
+        int minutosInicio = 0;
+        int HoraFinal = 9;
+        int minutosFinal = 0;
+
+        String resultado = validarSolicitud.verificarHorasMinutosIngresadas(HoraInicio, minutosInicio, HoraFinal, minutosFinal);
+
+        assertEquals(NO_HORARIO_USUAL, resultado);
+    }
+
+    @Test
+    public void testhoraCorecta() {
+        int HoraInicio = 11;
+        int minutosInicio = 0;
+        int HoraFinal = 13;
+        int minutosFinal = 0;
+
+        String resultado = validarSolicitud.verificarHorasMinutosIngresadas(HoraInicio, minutosInicio, HoraFinal, minutosFinal);
+
+        assertEquals(HORAS_CORRECTAS, resultado);
+    }
+
+    @Test
+    public void testFechaConaniodeInicioMayorAnio() {
+        Usuario us = new Usuario();
+        us.setNombreusuarioInstitucional("ycuervob");
+        us.setContrasenia("123456789As");
+        us.setTipoUsuario(1);
+        String fechaEmpieza = "2021-11-19";
+        String fechaTermina = "2020-11-20";
+
+        String resultado = validarSolicitud.verificarFechaActual(us, fechaTermina, fechaEmpieza);
+
+        assertEquals(FECHA_FINAL_ANIO_ANTES_DE_INICIO, resultado);
+    }
+
+    @Test
+    public void testFechaConaniodeInicioMayorMes() {
+        Usuario us = new Usuario();
+        us.setNombreusuarioInstitucional("ycuervob");
+        us.setContrasenia("123456789As");
+
+        String fechaEmpieza = "2020-12-29";
+        String fechaTermina = "2020-11-29";
+        us.setTipoUsuario(1);
+        String resultado = validarSolicitud.verificarFechaActual(us, fechaTermina, fechaEmpieza);
+
+        assertEquals(FECHA_CON_MES_ANTES_PERO_BIENANIO, resultado);
+    }
+
+    @Test
+    public void testFechaConInicioMaoyorDia() {
+        Usuario us = new Usuario();
+        us.setNombreusuarioInstitucional("ycuervob");
+        us.setContrasenia("123456789As");
+        us.setTipoUsuario(1);
+        String fechaEmpieza = "2020-11-29";
+        String fechaTermina = "2020-11-25";
+
+        String resultado = validarSolicitud.verificarFechaActual(us, fechaTermina, fechaEmpieza);
+
+        assertEquals(FECHA_CON_DIA_ANTES_PERO_BIENANIOYMES, resultado);
+
+    }
+
+    @Test
+    public void testFechamuyAntiuga() {
+        Usuario us = new Usuario();
+        us.setNombreusuarioInstitucional("ycuervob");
+        us.setContrasenia("123456789As");
+        us.setTipoUsuario(1);
+        String fechaEmpieza = "1998-11-29";
+        String fechaTermina = "2020-11-25";
+
+        String resultado = validarSolicitud.verificarFechaActual(us, fechaTermina, fechaEmpieza);
+
+        assertEquals(FECHA_MUY_ANTIGUA, resultado);
+
+    }
+
+    @Test
+    public void testfechaSinSentidoMes() {
+        Usuario us = new Usuario();
+        us.setNombreusuarioInstitucional("ycuervob");
+        us.setContrasenia("123456789As");
+        us.setTipoUsuario(1);
+        String fechaEmpieza = "2020-15-26";
+        String fechaTermina = "2020-11-25";
+
+        String resultado = validarSolicitud.verificarFechaActual(us, fechaTermina, fechaEmpieza);
+
+        assertEquals(FECHA__SIN_SENTIDO_MES, resultado);
+
+    }
+
+    @Test
+    public void testfechaSinSentidoDia() {
+        Usuario us = new Usuario();
+        us.setNombreusuarioInstitucional("ycuervob");
+        us.setContrasenia("123456789As");
+
+        String fechaEmpieza = "2020-12-35";
+        String fechaTermina = "2020-11-25";
+        us.setTipoUsuario(1);
+
+        String resultado = validarSolicitud.verificarFechaActual(us, fechaTermina, fechaEmpieza);
+
+        assertEquals(FECHA__SIN_SENTIDO_DIA, resultado);
+
+    }
+
+    @Test
+    public void testfechaCorrecta() {
+        Usuario us = new Usuario();
+        us.setNombreusuarioInstitucional("ycuervob");
+        us.setContrasenia("123456789As");
+        us.setTipoUsuario(1);
+
+        String fechaEmpieza = "2020-11-25";
+        String fechaTermina = "2021-01-20";
+
+        String resultado = validarSolicitud.verificarFechaActual(us, fechaTermina, fechaEmpieza);
+
+        assertEquals(FECHA_CORRECTA, resultado);
+    }
+
+    @Test
+    public void testMotivoNoseleccionado() {
+        String motivoSeleccionado = "Seleccion";
+        String otromotivo = "";
+
+        String resultado = validarSolicitud.verificarMotivoSolicitud(motivoSeleccionado, otromotivo);
+
+        assertEquals(NO_MOTIVO_SELECCIONADO, resultado);
+
+    }
+
+    @Test
+    public void testMotivomuyCorto() {
+        String motivoSeleccionado = "Otro";
+        String otromotivo = "la";
+
+        String resultado = validarSolicitud.verificarMotivoSolicitud(motivoSeleccionado, otromotivo);
+
+        assertEquals(OTROMOTIVO_MUY_CORTO, resultado);
+
+    }
+
+    @Test
+    public void testMotivomLargo() {
+        String motivoSeleccionado = "Otro";
+        String otromotivo = "sustentación de maestria de estudiante de la facultad de ingeniería en asociascion con...";
+
+        String resultado = validarSolicitud.verificarMotivoSolicitud(motivoSeleccionado, otromotivo);
+
+        assertEquals(OTROMOTIVO_MUY_LARGO, resultado);
+
+    }
+
+    @Test
+    public void testMotivomSinEscribir() {
+        String motivoSeleccionado = "Otro";
+        String otromotivo = "         ";
+
+        String resultado = validarSolicitud.verificarMotivoSolicitud(motivoSeleccionado, otromotivo);
+
+        assertEquals(OTROMOTIVO_SIN_NADAESCRITO, resultado);
+
+    }
+
+    @Test
+    public void testMotivommalescrito() {
+        String motivoSeleccionado = "Otro";
+        String otromotivo = "      acá el motivo   ";
+
+        String resultado = validarSolicitud.verificarMotivoSolicitud(motivoSeleccionado, otromotivo);
+
+        assertEquals(OTROMOTIVO_SIN_NADAESCRITO, resultado);
+
+    }
+
+    @Test
+    public void testMotivocorrecto() {
+        String motivoSeleccionado = "Otro";
+        String otromotivo = "sustentación tesis de maestria";
+
+        String resultado = validarSolicitud.verificarMotivoSolicitud(motivoSeleccionado, otromotivo);
+
+        assertEquals(MOTIVO_CORRECTO, resultado);
+
+    }
+
+    @Test
+    public void testVerificarCruceEventos() {
+        Solicitud solicitud;
+        Evento evento;
+        Usuario us = new Usuario();
+        us.setNombreusuarioInstitucional("ycuervob");
+        us.setContrasenia("123456789As");
+        us.setTipoUsuario(1);
+
+        evento = new Evento(0,
+                7 + ":0" + 0 + ":00",
+                "Diario",
+                "2020-11-29",
+                "2020-12-31",
+                9 + ":0" + 0 + ":00",
+                "",
+                453,
+                1,
+                new int[2],
+                1);
+
+        solicitud = new Solicitud(0,
+                validarSolicitud.fechaBD(us),
+                "",
+                "2",
+                "",
+                "29",
+                evento);
+
+        boolean resultado = validarSolicitud.verificarCruceEventos(us, solicitud);
+
+        assertEquals(EVENTO_SE_CRUZA, resultado);
+    }
+    
+      @Test
+    public void testVerificarCruceEventosNosecruza() {
+        Solicitud solicitud;
+        Evento evento;
+        Usuario us = new Usuario();
+        us.setNombreusuarioInstitucional("ycuervob");
+        us.setContrasenia("123456789As");
+        us.setTipoUsuario(1);
+
+        evento = new Evento(0,
+                16 + ":0" + 0 + ":00",
+                "Diario",
+                "2020-11-29",
+                "2020-12-31",
+                18 + ":0" + 0 + ":00",
+                "",
+                453,
+                1,
+                new int[2],
+                1);
+
+        solicitud = new Solicitud(0,
+                validarSolicitud.fechaBD(us),
+                "",
+                "2",
+                "",
+                "29",
+                evento);
+
+        boolean resultado = validarSolicitud.verificarCruceEventos(us, solicitud);
+
+        assertEquals(EVENTO_NO_SE_CRUZA, resultado);
+    }
+    
+    
+    
+    
+    @Test
+    public void testVerificarSolicitudNuevaNOCorrecta(){//Existe solicitud en misma hora
+        Solicitud solicitud;
+        Evento evento;
+        Usuario us = new Usuario();
+        us.setNombreusuarioInstitucional("ycuervob");
+        us.setContrasenia("123456789As");
+        us.setTipoUsuario(1);
+
+        int[] diaRepet = {1,2,3,4,5,6,7};
+        
+        evento = new Evento(0,
+                9 + ":0" + 0 + ":00",
+                "Diario",
+                "2020-13-29",//Fecha mal
+                "2020-12-31",
+                11 + ":0" + 0 + ":00",
+                "",
+                453,
+                1,
+                diaRepet,
+                1);
+
+        solicitud = new Solicitud(0,
+                validarSolicitud.fechaBD(us),
+                "",
+                "2",
+                "",
+                "29",
+                evento);
+        
+        String motivo = "Cultural";
+        String horaInicio = solicitud.getEvento().getHoraInicio();
+        String horaFinal = solicitud.getEvento().getHoraFinalEvento();
+        
+        String[] horaInicioV = horaInicio.split(":");
+        String[] horaFinalV = horaFinal.split(":");
+        
+        
+
+        String resultado = validarSolicitud.verificarDatosSolicitudNueva(us, 
+                solicitud,
+                motivo,
+                solicitud.getEvento().getMotivoEvento(),
+                solicitud.getEvento().getFechaTerminaEvento(),
+                solicitud.getEvento().getFechaEvento(),
+                Integer.valueOf(horaInicioV[0]),
+                0,
+                Integer.valueOf(horaFinalV[0]),
+                0,
+                "En funcionamiento");
+
+        assertEquals("ok", resultado);
+    }
+    
+    @Test
+    public void testVerificarSolicitudNuevaCorrecta(){
+        Solicitud solicitud;
+        Evento evento;
+        Usuario us = new Usuario();
+        us.setNombreusuarioInstitucional("ycuervob");
+        us.setContrasenia("123456789As");
+        us.setTipoUsuario(1);
+
+        int[] diaRepet = {1,2,3,4,5,6,7};
+        
+        evento = new Evento(0,
+                14 + ":0" + 0 + ":00",
+                "Diario",
+                "2020-11-29",
+                "2020-12-31",
+                16 + ":0" + 0 + ":00",
+                "",
+                453,
+                1,
+                diaRepet,
+                1);
+
+        solicitud = new Solicitud(0,
+                validarSolicitud.fechaBD(us),
+                "",
+                "2",
+                "",
+                "26",
+                evento);
+        
+        String motivo = "Cultural";
+        String horaInicio = solicitud.getEvento().getHoraInicio();
+        String horaFinal = solicitud.getEvento().getHoraFinalEvento();
+        
+        String[] horaInicioV = horaInicio.split(":");
+        String[] horaFinalV = horaFinal.split(":");
+        
+        System.out.println("-------hora inicio: "+Integer.parseInt(horaInicioV[0])+"\n"+"hora final: "+Integer.parseInt(horaFinalV[0]));
+
+        
+
+        String resultado = validarSolicitud.verificarDatosSolicitudNueva(us, 
+                solicitud,
+                motivo,
+                solicitud.getEvento().getMotivoEvento(),
+                solicitud.getEvento().getFechaTerminaEvento(),
+                solicitud.getEvento().getFechaEvento(),
+                Integer.valueOf(horaInicioV[0]),
+                0,
+                Integer.valueOf(horaFinalV[0]),
+                0,
+                "En funcionamiento");
+
+        assertEquals("ok", resultado);
+    }
+    
+    
+    @Test
+    public void testSolicitarEventoCorrecto() {//ingresa un evento cada vez que se ejecuta
+        Solicitud solicitud;
+        Evento evento;
+        Usuario us = new Usuario();
+        us.setNombreusuarioInstitucional("ycuervob");
+        us.setContrasenia("123456789As");
+        us.setTipoUsuario(1);
+
+        int[] diaRepet = {1,2,3,4,5,6,7};
+        
+        evento = new Evento(0,
+                7 + ":0" + 0 + ":00",
+                "Diario",
+                "2020-11-29",
+                "2020-12-31",
+                9 + ":0" + 0 + ":00",
+                "Prueba Junit",
+                453,
+                1,
+                diaRepet,
+                1);
+
+        solicitud = new Solicitud(0,
+                validarSolicitud.fechaBD(us),
+                "",
+                "2",
+                "",
+                "26",
+                evento);
+
+        //String resultado = validarSolicitud.ingresarSolicitudNueva(us, solicitud);
+
+        //assertEquals(INGRESO_SOLICITUD_CORRECTO, resultado);
+    }
+
+}

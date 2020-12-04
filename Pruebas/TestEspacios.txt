@@ -1,0 +1,179 @@
+package Control;
+
+import Control.ValidarEspacios;
+import Entidad.Espacio;
+import Entidad.Usuario;
+import java.sql.SQLException;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import static org.junit.Assert.*;
+
+/**
+ *
+ * @author dimog
+ */
+public class TestEspacios {
+    
+    private ManipularConecciones datosConexion = new ManipularConecciones();
+    private static ValidarEspacios validarEspacios;
+    private Espacio espacio = new Espacio();
+    
+    /*Nota: Para algunas pruebas se usaron datos que ya existian en la base de datos.
+     *  
+    */
+    
+    public TestEspacios() {
+    }
+    
+    public void conexionD(){
+        Usuario usuario = new Usuario();
+        usuario.setTipoUsuario(2);
+        datosConexion.crearConeccion(usuario);
+        validarEspacios = new ValidarEspacios(datosConexion);
+    }
+
+    @Test
+    public void PruebaUsuarioNoRegistrado() {
+        int idEspacio = 2;
+        Usuario us = new Usuario();
+        conexionD();
+        us.setNombreusuarioInstitucional("Pedro");
+        us.setContrasenia("1616161EFfas");
+        assertEquals(validarEspacios.BuscarInfoEspacio(us, idEspacio), null);
+    }
+
+    @Test
+    public void PruebaIdNoEnconctrado() {
+        int idEspacio = 5;
+        Usuario us = new Usuario();
+        conexionD();
+        us.setNombreusuarioInstitucional("sehernandezce");
+        us.setContrasenia("123456789Qw");
+        us.setTipoUsuario(2);
+       //us.setIdUsuario(5);
+        assertEquals(validarEspacios.BuscarInfoEspacio(us, idEspacio), null);
+    }
+
+    @Test
+    public void PruebaEspacioRegistrado() {
+        int idEspacio = 2;
+        Usuario us = new Usuario();
+        conexionD();
+        us.setNombreusuarioInstitucional("sehernandezce");
+        us.setContrasenia("123456789Qw");
+        us.setTipoUsuario(2);
+        //us.setIdUsuario(5);
+        //valores Espacio de salida
+        espacio.setId_espacio(2);
+        espacio.setNombre_espacio("Sala yes");
+        espacio.setNum_Espacio("101");
+        espacio.setNombre_edificio("Aulas de Ingeniería");
+        espacio.setNombre_encargado("Sebastian Hernandez");
+        espacio.setEstado(Boolean.TRUE);
+        espacio.setNombre_tipoespacio("2");
+        assertEquals(validarEspacios.BuscarInfoEspacio(us, idEspacio).getId_espacio(), espacio.getId_espacio());
+    }
+
+    @Test
+    public void PruebaTipoEspacioIncorrecto() throws SQLException {
+        Usuario us = new Usuario();
+        conexionD();
+        us.setNombreusuarioInstitucional("sehernandezce");
+        us.setContrasenia("123456789Qw");
+        us.setTipoUsuario(2);
+        //us.setIdUsuario(5);
+        Assert.assertArrayEquals(validarEspacios.llenarMatriz("Gimnasio", us), null);
+    }
+
+    @Test
+    public void PruebaUsuarioSinRegistrar() throws SQLException {
+        Usuario us = new Usuario();
+        conexionD();
+        us.setNombreusuarioInstitucional("Pedro");
+        us.setContrasenia("1616161EFfas");
+        Assert.assertArrayEquals(validarEspacios.llenarMatriz("Laboratorios", us), null);
+    }
+
+    @Test
+    public void PruebaleerEspacioCorrecto() throws SQLException {
+        Usuario us = new Usuario();
+        conexionD();
+        us.setNombreusuarioInstitucional("sehernandezce");
+        us.setContrasenia("123456789Qw");
+        us.setTipoUsuario(2);
+        //us.setIdUsuario(5);
+
+        String[][] prueba = {{"SuperLab", "108",
+            "Facultad de Ingeniería", "Sebastian Hernandez",
+            "Activo", "1"
+        }};
+        
+        
+        Assert.assertArrayEquals(validarEspacios.llenarMatriz("Laboratorios", us), prueba);
+    }
+
+    @Test
+    public void PruebaLLenarHoraiD_Espacio_Incorrecto() throws SQLException {
+        Usuario us = new Usuario();
+        conexionD();
+        int Id_Espacio = 5;
+        int day=2;
+        String Fecha = "2020-10-23";
+        us.setNombreusuarioInstitucional("sehernandezce");
+        us.setContrasenia("123456789Qw");
+        us.setTipoUsuario(2);
+        //us.setIdUsuario(5);
+
+        Assert.assertArrayEquals(validarEspacios.llenarMatriz_horas(Id_Espacio, Fecha, us,day), null);
+    }
+
+    @Test
+    public void PruebaLLenarHoraFecha_Incorrecto() throws SQLException {
+        Usuario us = new Usuario();
+        conexionD();
+        int Id_Espacio = 4;
+        int day=2;
+        String Fecha = "2020-10-32";
+        us.setNombreusuarioInstitucional("sehernandezce");
+        us.setContrasenia("123456789Qw");
+        us.setTipoUsuario(2);
+        //us.setIdUsuario(5);
+
+        Assert.assertArrayEquals(validarEspacios.llenarMatriz_horas(Id_Espacio, Fecha, us,day), null);
+    }
+
+    @Test
+    public void PruebaLLenarHoraUsuario_Incorrecto() throws SQLException {
+        Usuario us = new Usuario();
+        conexionD();
+        int Id_Espacio = 4;
+        int day=3;
+        String Fecha = "2020-10-23";
+        us.setNombreusuarioInstitucional("Pedro");
+        us.setContrasenia("11616161EFfas");
+
+        Assert.assertArrayEquals(validarEspacios.llenarMatriz_horas(Id_Espacio, Fecha, us,day), null);
+    }
+
+    @Test
+    public void PruebaLLenarHoraCorrecto() throws SQLException {
+        Usuario us = new Usuario();
+        conexionD();
+        int Id_Espacio = 2;
+        int day=4;
+        String Fecha = "2020-11-06";
+        us.setNombreusuarioInstitucional("sehernandezce");
+        us.setContrasenia("123456789Qw");
+        us.setTipoUsuario(2);
+       // us.setIdUsuario(5);
+
+        String[][] prueba = {{"10:00:00/12:00:00"
+        }};
+        
+        Assert.assertArrayEquals(validarEspacios.llenarMatriz_horas(Id_Espacio, Fecha, us,day), prueba);
+    }
+}

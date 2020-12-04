@@ -166,13 +166,6 @@ public class Frame_PersonalizarRepeticion extends javax.swing.JFrame {
             "*Semanal: El evento se repite cada semana<p>" +
             "los dias escogidos incluyendo el dia de la<p>" +
             "semana de la fecha inicial y final del evento.<p>" +
-            "*Mensual: El evento se repite el dia de la<p>" +
-            "semana de la fecha inicial mensualmente.<p>" +
-            "Teniendo encuenta que si el dia de la semana<p>" +
-            "es el primero, el segundo, el tercero o el<p>" +
-            "cuarto(ultimo, si es el quinto sera entonces<p>" +
-            "el ultimo) de ese mes, se repetira de esta<p>" +
-            "forma todos los meses.<p><p>" +
             "Nota: En ningun caso, se agenda un evento <p>" +
             "los domingos. ");
         masInfoRepeticion.setOpaque(true);
@@ -198,7 +191,7 @@ public class Frame_PersonalizarRepeticion extends javax.swing.JFrame {
         panelRepetición.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, -1, -1));
 
         jComboSelectorDia.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jComboSelectorDia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione uno...", "Diario", "Semanalmente", "Mensualmente" }));
+        jComboSelectorDia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione uno...", "Diario", "Semanalmente" }));
         jComboSelectorDia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboSelectorDiaActionPerformed(evt);

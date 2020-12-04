@@ -1,0 +1,282 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Control;
+
+import Control.GraficarEstadisticas;
+import Control.ManipularConecciones;
+import Entidad.Usuario;
+import java.awt.Font;
+import java.io.IOException;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.DefaultCategoryDataset;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import static org.junit.Assert.*;
+
+/**
+ *
+ * @author Asus
+ */
+public class Test_ver_estadisticas {
+    
+    public Test_ver_estadisticas() {
+        Usuario us=new Usuario();
+        us.setTipoUsuario(2);
+        conexion.crearConeccion(us);
+        graficar=new GraficarEstadisticas(conexion);
+    }
+    
+    private  ManipularConecciones conexion = new ManipularConecciones();
+    private  GraficarEstadisticas graficar;
+    
+    @Test
+    public void pruebaUsuarioEstandar() throws IOException{
+        Usuario us = new Usuario();
+        us.setNombreusuarioInstitucional("scasasr");
+        us.setContrasenia("Seccro5418");
+        int tipo_espacio=1;
+        int mes=11;
+        int anio=2020;
+        JFreeChart chart_especifico;
+        JFreeChart chart_general;
+        
+        DefaultCategoryDataset  dataset= new DefaultCategoryDataset ();
+        dataset.setValue(1, "Espacio", "espacio test");
+        dataset.setValue(23, "Espacio", "LABORATORIO DE REDES");
+        dataset.setValue(27, "Espacio", "Laboratorio de microprocesadores(Practicas)");
+        dataset.setValue(32, "Espacio", "LABORATORIO INTEGRADO DE INGENIERIA INDUSTRIAL");
+        
+        DefaultCategoryDataset  dataset_general= new DefaultCategoryDataset ();
+        dataset_general.setValue(1, "Espacio", "Sala de reuniones");
+        dataset_general.setValue(14, "Espacio", "Auditorios");
+        dataset_general.setValue(83, "Espacio", "Laboratorios");
+        
+        Font font = new Font("Segoe UI", Font.PLAIN, 10);
+        chart_especifico=ChartFactory.createBarChart("Grafico por Laboratorios", "Espacios", "solicitudes", dataset, PlotOrientation.VERTICAL, false, true, true);
+        CategoryPlot p = chart_especifico.getCategoryPlot(); 
+        org.jfree.chart.axis.ValueAxis axis = p.getRangeAxis();
+        axis.setTickLabelFont(font);        
+        org.jfree.chart.axis.CategoryAxis axis2 = p.getDomainAxis();
+        axis2.setTickLabelFont(font); 
+        
+        chart_general=ChartFactory.createBarChart("Grafico espacios", "Espacios", "solicitudes", dataset_general, PlotOrientation.VERTICAL, false, true, true);
+        CategoryPlot p_g = chart_general.getCategoryPlot(); 
+        org.jfree.chart.axis.ValueAxis axis_g = p_g.getRangeAxis();
+        axis_g.setTickLabelFont(font);        
+        org.jfree.chart.axis.CategoryAxis axis2_g = p_g.getDomainAxis();
+        axis2_g.setTickLabelFont(font);
+        
+        assertEquals(graficar.graficarEspecifico(us,tipo_espacio,mes,anio),chart_especifico );
+        assertEquals(graficar.graficarGeneral(us, mes, anio),chart_general );
+    
+    }
+  
+    @Test
+    public void pruebaUsuarioCoordinador() throws IOException{
+        Usuario us = new Usuario();
+        us.setNombreusuarioInstitucional("horariosdesalastics");
+        us.setContrasenia("123456789Qw");
+        int tipo_espacio=1;
+        int mes=11;
+        int anio=2020;
+        JFreeChart chart_especifico;
+        JFreeChart chart_general;
+        
+        DefaultCategoryDataset  dataset= new DefaultCategoryDataset ();
+        dataset.setValue(1, "Espacio", "espacio test");
+        dataset.setValue(23, "Espacio", "LABORATORIO DE REDES");
+        dataset.setValue(27, "Espacio", "Laboratorio de microprocesadores(Practicas)");
+        dataset.setValue(32, "Espacio", "LABORATORIO INTEGRADO DE INGENIERIA INDUSTRIAL");
+        
+        DefaultCategoryDataset  dataset_general= new DefaultCategoryDataset ();
+        dataset_general.setValue(1, "Espacio", "Sala de reuniones");
+        dataset_general.setValue(14, "Espacio", "Auditorios");
+        dataset_general.setValue(83, "Espacio", "Laboratorios");
+        
+        Font font = new Font("Segoe UI", Font.PLAIN, 10);
+        chart_especifico=ChartFactory.createBarChart("Grafico por Laboratorios", "Espacios", "solicitudes", dataset, PlotOrientation.VERTICAL, false, true, true);
+        CategoryPlot p = chart_especifico.getCategoryPlot(); 
+        org.jfree.chart.axis.ValueAxis axis = p.getRangeAxis();
+        axis.setTickLabelFont(font);        
+        org.jfree.chart.axis.CategoryAxis axis2 = p.getDomainAxis();
+        axis2.setTickLabelFont(font); 
+        
+        chart_general=ChartFactory.createBarChart("Grafico espacios", "Espacios", "solicitudes", dataset_general, PlotOrientation.VERTICAL, false, true, true);
+        CategoryPlot p_g = chart_general.getCategoryPlot(); 
+        org.jfree.chart.axis.ValueAxis axis_g = p_g.getRangeAxis();
+        axis_g.setTickLabelFont(font);        
+        org.jfree.chart.axis.CategoryAxis axis2_g = p_g.getDomainAxis();
+        axis2_g.setTickLabelFont(font);
+        
+        assertEquals(graficar.graficarEspecifico(us, tipo_espacio, mes, anio),chart_especifico );
+        assertEquals(graficar.graficarGeneral(us, mes, anio),chart_general );
+    }
+    
+    @Test
+    public void pruebafechaIncorrecta() throws IOException{
+        Usuario us = new Usuario();
+        us.setNombreusuarioInstitucional("horariosdesalastics");
+        us.setContrasenia("123456789Qw");
+        int tipo_espacio=1;
+        int mes=15;
+        int anio=2020;
+        JFreeChart chart_especifico;
+        JFreeChart chart_general;
+        
+        DefaultCategoryDataset  dataset= new DefaultCategoryDataset ();
+        DefaultCategoryDataset  dataset_general= new DefaultCategoryDataset ();
+   
+        Font font = new Font("Segoe UI", Font.PLAIN, 10);
+        chart_especifico=ChartFactory.createBarChart("Grafico por Laboratorios", "Espacios", "solicitudes", dataset, PlotOrientation.VERTICAL, false, true, true);
+        CategoryPlot p = chart_especifico.getCategoryPlot(); 
+        org.jfree.chart.axis.ValueAxis axis = p.getRangeAxis();
+        axis.setTickLabelFont(font);        
+        org.jfree.chart.axis.CategoryAxis axis2 = p.getDomainAxis();
+        axis2.setTickLabelFont(font); 
+        
+        chart_general=ChartFactory.createBarChart("Grafico espacios", "Espacios", "solicitudes", dataset_general, PlotOrientation.VERTICAL, false, true, true);
+        CategoryPlot p_g = chart_general.getCategoryPlot(); 
+        org.jfree.chart.axis.ValueAxis axis_g = p_g.getRangeAxis();
+        axis_g.setTickLabelFont(font);        
+        org.jfree.chart.axis.CategoryAxis axis2_g = p_g.getDomainAxis();
+        axis2_g.setTickLabelFont(font);
+        
+        assertEquals(graficar.graficarEspecifico(us, tipo_espacio, mes, anio),chart_especifico );
+        assertEquals(graficar.graficarGeneral(us, mes, anio),chart_general );
+    }
+
+    @Test
+    public void pruebafechaCorrecta() throws IOException{
+        Usuario us = new Usuario();
+        us.setNombreusuarioInstitucional("horariosdesalastics");
+        us.setContrasenia("123456789Qw");
+        int tipo_espacio=1;
+        int mes=11;
+        int anio=2020;
+        JFreeChart chart_especifico;
+        JFreeChart chart_general;
+        
+        DefaultCategoryDataset  dataset= new DefaultCategoryDataset ();
+        dataset.setValue(1, "Espacio", "espacio test");
+        dataset.setValue(23, "Espacio", "LABORATORIO DE REDES");
+        dataset.setValue(27, "Espacio", "Laboratorio de microprocesadores(Practicas)");
+        dataset.setValue(32, "Espacio", "LABORATORIO INTEGRADO DE INGENIERIA INDUSTRIAL");
+        
+        DefaultCategoryDataset  dataset_general= new DefaultCategoryDataset ();
+        dataset_general.setValue(1, "Espacio", "Sala de reuniones");
+        dataset_general.setValue(14, "Espacio", "Auditorios");
+        dataset_general.setValue(83, "Espacio", "Laboratorios");
+        
+        Font font = new Font("Segoe UI", Font.PLAIN, 10);
+        chart_especifico=ChartFactory.createBarChart("Grafico por Laboratorios", "Espacios", "solicitudes", dataset, PlotOrientation.VERTICAL, false, true, true);
+        CategoryPlot p = chart_especifico.getCategoryPlot(); 
+        org.jfree.chart.axis.ValueAxis axis = p.getRangeAxis();
+        axis.setTickLabelFont(font);        
+        org.jfree.chart.axis.CategoryAxis axis2 = p.getDomainAxis();
+        axis2.setTickLabelFont(font); 
+        
+        chart_general=ChartFactory.createBarChart("Grafico espacios", "Espacios", "solicitudes", dataset_general, PlotOrientation.VERTICAL, false, true, true);
+        CategoryPlot p_g = chart_general.getCategoryPlot(); 
+        org.jfree.chart.axis.ValueAxis axis_g = p_g.getRangeAxis();
+        axis_g.setTickLabelFont(font);        
+        org.jfree.chart.axis.CategoryAxis axis2_g = p_g.getDomainAxis();
+        axis2_g.setTickLabelFont(font);
+        
+        assertEquals(graficar.graficarEspecifico(us, tipo_espacio, mes, anio),chart_especifico );
+        assertEquals(graficar.graficarGeneral(us, mes, anio),chart_general );
+    }
+    
+    @Test
+    public void pruebaTipodeespacioIncorrecto() throws IOException{
+        
+        Usuario us = new Usuario();
+        us.setNombreusuarioInstitucional("horariosdesalastics");
+        us.setContrasenia("123456789Qw");
+        int tipo_espacio=10;
+        int mes=11;
+        int anio=2020;
+        JFreeChart chart_especifico;
+        JFreeChart chart_general;
+        
+        DefaultCategoryDataset  dataset= new DefaultCategoryDataset ();
+        
+        DefaultCategoryDataset  dataset_general= new DefaultCategoryDataset ();
+        dataset_general.setValue(1, "Espacio", "Sala de reuniones");
+        dataset_general.setValue(14, "Espacio", "Auditorios");
+        dataset_general.setValue(83, "Espacio", "Laboratorios");
+        
+        
+        Font font = new Font("Segoe UI", Font.PLAIN, 10);
+        chart_especifico=ChartFactory.createBarChart("Grafico por null", "Espacios", "solicitudes", dataset, PlotOrientation.VERTICAL, false, true, true);
+        CategoryPlot p = chart_especifico.getCategoryPlot(); 
+        org.jfree.chart.axis.ValueAxis axis = p.getRangeAxis();
+        axis.setTickLabelFont(font);        
+        org.jfree.chart.axis.CategoryAxis axis2 = p.getDomainAxis();
+        axis2.setTickLabelFont(font); 
+        
+        chart_general=ChartFactory.createBarChart("Grafico espacios", "Espacios", "solicitudes", dataset_general, PlotOrientation.VERTICAL, false, true, true);
+        CategoryPlot p_g = chart_general.getCategoryPlot(); 
+        org.jfree.chart.axis.ValueAxis axis_g = p_g.getRangeAxis();
+        axis_g.setTickLabelFont(font);        
+        org.jfree.chart.axis.CategoryAxis axis2_g = p_g.getDomainAxis();
+        axis2_g.setTickLabelFont(font);
+        
+        assertEquals(graficar.graficarEspecifico(us, tipo_espacio, mes, anio),chart_especifico );
+        assertEquals(graficar.graficarGeneral(us, mes, anio),chart_general );
+    }
+    @Test
+    public void pruebaTipodeespacioCorrecto() throws IOException{
+        Usuario us = new Usuario();
+        us.setNombreusuarioInstitucional("horariosdesalastics");
+        us.setContrasenia("123456789Qw");
+        int tipo_espacio=1;
+        int mes=11;
+        int anio=2020;
+        JFreeChart chart_especifico;
+        JFreeChart chart_general;
+        
+        DefaultCategoryDataset  dataset= new DefaultCategoryDataset ();
+        dataset.setValue(1, "Espacio", "espacio test");
+        dataset.setValue(23, "Espacio", "LABORATORIO DE REDES");
+        dataset.setValue(27, "Espacio", "Laboratorio de microprocesadores(Practicas)");
+        dataset.setValue(32, "Espacio", "LABORATORIO INTEGRADO DE INGENIERIA INDUSTRIAL");
+        
+        DefaultCategoryDataset  dataset_general= new DefaultCategoryDataset ();
+        dataset_general.setValue(1, "Espacio", "Sala de reuniones");
+        dataset_general.setValue(14, "Espacio", "Auditorios");
+        dataset_general.setValue(83, "Espacio", "Laboratorios");
+        
+        Font font = new Font("Segoe UI", Font.PLAIN, 10);
+        chart_especifico=ChartFactory.createBarChart("Grafico por Laboratorios", "Espacios", "solicitudes", dataset, PlotOrientation.VERTICAL, false, true, true);
+        CategoryPlot p = chart_especifico.getCategoryPlot(); 
+        org.jfree.chart.axis.ValueAxis axis = p.getRangeAxis();
+        axis.setTickLabelFont(font);        
+        org.jfree.chart.axis.CategoryAxis axis2 = p.getDomainAxis();
+        axis2.setTickLabelFont(font); 
+        
+        chart_general=ChartFactory.createBarChart("Grafico espacios", "Espacios", "solicitudes", dataset_general, PlotOrientation.VERTICAL, false, true, true);
+        CategoryPlot p_g = chart_general.getCategoryPlot(); 
+        org.jfree.chart.axis.ValueAxis axis_g = p_g.getRangeAxis();
+        axis_g.setTickLabelFont(font);        
+        org.jfree.chart.axis.CategoryAxis axis2_g = p_g.getDomainAxis();
+        axis2_g.setTickLabelFont(font);
+        
+        assertEquals(graficar.graficarEspecifico(us, tipo_espacio, mes, anio),chart_especifico );
+        assertEquals(graficar.graficarGeneral(us, mes, anio),chart_general );
+    }
+    
+    // TODO add test methods here.
+    // The methods must be annotated with annotation @Test. For example:
+    //
+    // @Test
+    // public void hello() {}
+}

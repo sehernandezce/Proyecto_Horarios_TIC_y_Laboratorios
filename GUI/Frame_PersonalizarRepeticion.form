@@ -68,7 +68,7 @@
               <Font name="Segoe UI" size="11" style="0"/>
             </Property>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="&quot;&lt;html&gt;&lt;Center&gt;*Diario: El evento se repite todos los dias&lt;p&gt;&quot; +&#xa;    &quot;que se encuentren dentro de las fechas del &lt;p&gt;&quot; +&#xa;    &quot;evento.&lt;p&gt;&quot; +&#xa;    &quot;*Semanal: El evento se repite cada semana&lt;p&gt;&quot; +&#xa;    &quot;los dias escogidos incluyendo el dia de la&lt;p&gt;&quot; +&#xa;    &quot;semana de la fecha inicial y final del evento.&lt;p&gt;&quot; +&#xa;    &quot;*Mensual: El evento se repite el dia de la&lt;p&gt;&quot; +&#xa;    &quot;semana de la fecha inicial mensualmente.&lt;p&gt;&quot; +&#xa;    &quot;Teniendo encuenta que si el dia de la semana&lt;p&gt;&quot; +&#xa;    &quot;es el primero, el segundo, el tercero o el&lt;p&gt;&quot; +&#xa;    &quot;cuarto(ultimo, si es el quinto sera entonces&lt;p&gt;&quot; +&#xa;    &quot;el ultimo) de ese mes, se repetira de esta&lt;p&gt;&quot; +&#xa;    &quot;forma todos los meses.&lt;p&gt;&lt;p&gt;&quot; +&#xa;    &quot;Nota: En ningun caso, se agenda un evento &lt;p&gt;&quot; +&#xa;    &quot;los domingos. &quot;" type="code"/>
+              <Connection code="&quot;&lt;html&gt;&lt;Center&gt;*Diario: El evento se repite todos los dias&lt;p&gt;&quot; +&#xa;    &quot;que se encuentren dentro de las fechas del &lt;p&gt;&quot; +&#xa;    &quot;evento.&lt;p&gt;&quot; +&#xa;    &quot;*Semanal: El evento se repite cada semana&lt;p&gt;&quot; +&#xa;    &quot;los dias escogidos incluyendo el dia de la&lt;p&gt;&quot; +&#xa;    &quot;semana de la fecha inicial y final del evento.&lt;p&gt;&quot; +&#xa;    &quot;Nota: En ningun caso, se agenda un evento &lt;p&gt;&quot; +&#xa;    &quot;los domingos. &quot;" type="code"/>
             </Property>
             <Property name="opaque" type="boolean" value="true"/>
           </Properties>
@@ -126,11 +126,10 @@
               <Font name="Segoe UI" size="12" style="1"/>
             </Property>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="4">
+              <StringArray count="3">
                 <StringItem index="0" value="Seleccione uno..."/>
                 <StringItem index="1" value="Diario"/>
                 <StringItem index="2" value="Semanalmente"/>
-                <StringItem index="3" value="Mensualmente"/>
               </StringArray>
             </Property>
           </Properties>

@@ -1,0 +1,123 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Control;
+
+import Entidad.Usuario;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import static org.junit.Assert.*;
+
+/**
+ *
+ * @author Usuario
+ */
+public class TestLogin {
+    
+    private ManipularConecciones datosConexionTemporal = new ManipularConecciones();
+    private static Validar_Login validar_login;
+    
+    private int LONGITUD_NOMBRE_INCORRECTA = -1;
+    private int LONGITUD_CONTRASENIA_INCORRECTA = -2;
+    private int USUARIO_CORRECTO = 2;
+    private int USUARIO_INCORRECTO = 0;
+    
+    public TestLogin(){
+    }
+    
+    private void creaConexionTemporal() {
+        Usuario us = new Usuario();
+        us.setTipoUsuario(-10);
+        datosConexionTemporal.crearConeccion(us);
+        validar_login= new Validar_Login(datosConexionTemporal);        
+    }
+    @Test
+    public void testContraseñaCorta() throws Exception {
+        Usuario usuario = new Usuario();
+        creaConexionTemporal();
+        usuario.setNombreusuarioInstitucional("Francisco");
+        usuario.setContrasenia("123aA");
+        String verficarContraseña = "123aA";
+        int tipoUsuario = 0;
+        String codigo = "";
+        
+         assertEquals(validar_login.verificarLogin(usuario)
+                ,LONGITUD_CONTRASENIA_INCORRECTA);
+    }
+    
+    @Test
+    public void testContraseñaLarga() throws Exception {
+        Usuario usuario = new Usuario();
+        creaConexionTemporal();
+        usuario.setNombreusuarioInstitucional("Marcela");
+        usuario.setContrasenia("123456789QsadA0932sa472");
+        String verficarContraseña = "123456789QsadA0932sa472";
+        int tipoUsuario = 0;
+        String codigo = "";
+        
+         assertEquals(validar_login.verificarLogin(usuario)
+                ,LONGITUD_CONTRASENIA_INCORRECTA);
+    }
+    
+    @Test
+    public void testNombreCorto() throws Exception {
+        Usuario usuario = new Usuario();
+        creaConexionTemporal();
+        usuario.setNombreusuarioInstitucional("Juan");
+        usuario.setContrasenia("safdsQSD2216");
+        String verficarContraseña = "safdsQSD2216";
+        int tipoUsuario = 0;
+        String codigo = "";
+        
+         assertEquals(validar_login.verificarLogin(usuario)
+                ,LONGITUD_NOMBRE_INCORRECTA);
+    }
+    
+    @Test
+    public void testNombrelargo() throws Exception {
+        Usuario usuario = new Usuario();
+        creaConexionTemporal();
+        usuario.setNombreusuarioInstitucional("JuanEstevanGarzonGutierrezMolina");
+        usuario.setContrasenia("safdsQSD2216");
+        String verficarContraseña = "safdsQSD2216";
+        int tipoUsuario = 0;
+        String codigo = "";
+        
+         assertEquals(validar_login.verificarLogin(usuario)
+                ,LONGITUD_NOMBRE_INCORRECTA);
+    }
+    
+    @Test
+    public void testIngresoCorrecto() throws Exception {
+        Usuario usuario = new Usuario();
+        creaConexionTemporal();
+        usuario.setNombreusuarioInstitucional("sehernandezce");
+        usuario.setContrasenia("123456789Qw");
+        String verficarContraseña = "123456789Qw";
+        int tipoUsuario = 0;
+        String codigo = "";
+        
+         assertEquals(validar_login.verificarLogin(usuario)
+                ,USUARIO_CORRECTO);
+    }
+    
+    @Test
+    public void testIngresoIncorrecto() throws Exception {
+        Usuario usuario = new Usuario();
+        creaConexionTemporal();
+        usuario.setNombreusuarioInstitucional("EstevanGutierrez");
+        usuario.setContrasenia("safdsQSD2216");
+        String verficarContraseña = "safdsQSD2216";
+        int tipoUsuario = 0;
+        String codigo = "";
+        
+         assertEquals(validar_login.verificarLogin(usuario)
+                ,USUARIO_INCORRECTO);
+    }
+    
+}

@@ -1,0 +1,127 @@
+package Control;
+
+import Entidad.Usuario;
+import javax.mail.internet.AddressException;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import static org.junit.Assert.*;
+
+public class TestAdministrarSolicitudes {
+    
+    private int INTENTO_DE_CAMBIAR_EVENTO_RECHAZADO_O_CANCELADO = -5;
+    private int INTENTO_DE_CAMBIAR_EVENTO_RECHAZADO_A_ACEPTADO = -6;
+    
+    private boolean EVENTO_SE_PUEDE_INGRESAR = true;
+    private boolean EVENTO_SE_NO_PUEDE_INGRESAR = false;
+    private boolean ENVIO_CORREO_CORRECTO_NO_CORRECTO = false;
+    private boolean ENVIO_CORREO_CORRECTO = true;
+    
+    
+    private Validar_administrar_solicitud validarSolicitud;
+    private ManipularConecciones datosConexion = new ManipularConecciones();
+    
+     /*Nota: Para algunas pruebas se usaron datos que ya existian en la base de datos.
+     *  
+    */
+    public TestAdministrarSolicitudes() {
+        Usuario us = new Usuario();
+        us.setTipoUsuario(2);
+        datosConexion.crearConeccion(us);
+        validarSolicitud = new Validar_administrar_solicitud(datosConexion);
+        
+    }
+    
+
+    @Test
+    public void testCambiarTipoEstadoCancelada() {//Funciona solo en solicitudes que estás en espera per se no se puede hacer 2 veces sobre la misma solicitud
+        
+        Usuario us = new Usuario();
+        us.setNombreusuarioInstitucional("sehernandezceC");
+        us.setContrasenia("123456789Qw");
+        us.setTipoUsuario(2);
+        datosConexion.crearConeccion(us);
+        validarSolicitud = new Validar_administrar_solicitud(datosConexion);
+
+        //id 22
+        int resultado = validarSolicitud.cambiarEstado(
+                us, 
+                "Rechazada", 
+                "20", 
+                "Test Rechazo", 
+                "Espera");
+
+        //assertEquals(RECHAZAR_EVENTO, resultado);
+    }
+    
+        @Test
+    public void testCambiarTipoEstadosolicitudRechazadaAceptada() {
+        
+        Usuario us = new Usuario();
+        us.setNombreusuarioInstitucional("sehernandezceC");
+        us.setContrasenia("123456789Qw");
+        us.setTipoUsuario(2);
+             datosConexion.crearConeccion(us);
+        validarSolicitud = new Validar_administrar_solicitud(datosConexion);
+
+        //id 22
+        int resultado = validarSolicitud.cambiarEstado(
+                us, 
+                "Aceptada", 
+                "19", 
+                "Test Cancelacion", 
+                "Rechazada");
+
+        assertEquals(INTENTO_DE_CAMBIAR_EVENTO_RECHAZADO_A_ACEPTADO, resultado);
+    }
+    
+            @Test
+    public void testCambiarTipoEstadosolicitudRechazadaCancelada() {
+        
+        Usuario us = new Usuario();
+        us.setNombreusuarioInstitucional("sehernandezceC");
+        us.setContrasenia("123456789Qw");
+        us.setTipoUsuario(2);
+             datosConexion.crearConeccion(us);
+        validarSolicitud = new Validar_administrar_solicitud(datosConexion);
+
+        //id 22
+        int resultado = validarSolicitud.cambiarEstado(
+                us, 
+                "Cancelada", 
+                "19", 
+                "Test Cancelacion", 
+                "Rechazada");
+
+        assertEquals(INTENTO_DE_CAMBIAR_EVENTO_RECHAZADO_O_CANCELADO, resultado);
+    }
+    
+                @Test
+    public void testVerificaEnvíodeCorreocorrecto() throws AddressException, Exception {
+        String contrasenia = "iodU78+*OpH";
+        String id = "1315";
+        String tipE = "Aceptado";
+        String correoU = "ycuervob";
+        String obs = "NO hay observaciones";
+        
+        
+        boolean resultado = validarSolicitud.verificarEnvio(contrasenia,  id, tipE, correoU, obs);
+        assertEquals(ENVIO_CORREO_CORRECTO, resultado);
+    }
+    
+    
+                @Test
+    public void testVerificaEnvíodeCorreoIncorrecto() throws AddressException, Exception {
+        String contrasenia = "Mala contraseña";
+        String id = "1315";
+        String tipE = "Aceptado";
+        String correoU = "ycuervob";
+        String obs = "NO hay observaciones";
+        
+        
+        boolean resultado = validarSolicitud.verificarEnvio(contrasenia,  id, tipE, correoU, obs);
+        assertEquals(ENVIO_CORREO_CORRECTO_NO_CORRECTO, resultado);
+    }
+}

@@ -1,0 +1,239 @@
+
+package Control;
+
+import Entidad.Usuario;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+public class TestRegistro {
+
+    private ManipularConecciones datosConexionTemporal = new ManipularConecciones();
+    private static Validar_Registro validar_registro;
+
+    private int LONGITUD_NOMBRE_INCORRECTA = -1;
+    private int LONGITUD_CONTRASENIA_INCORRECTA = -2;
+    private int CONTRASENIAS_CONFIRMACIÓN_INCORRECTA = -3;
+    private int CONTRASENIA_NO_SEGURA = -4;
+    private int USUARIO_CORRECTO_REGISTRADO = 1;
+    private int USUARIO_YA_EXISTENTE = -6;
+    private int USUARIO_CORRECTO_INGRESADO = 2;
+    private int USUARIO_CORRECTO_NO_REGISTRADO = 1;
+    private int CODIGO_ADMINISTRADOR_INCORRECTO = -5;
+
+    public TestRegistro() {
+    }
+    
+     private void creaConexionTemporal() {
+        Usuario us = new Usuario();
+        us.setTipoUsuario(-10);
+        datosConexionTemporal.crearConeccion(us);
+        validar_registro= new Validar_Registro(datosConexionTemporal);        
+    }
+    @Test
+    public void testContraseñaCorta() throws Exception {
+        Usuario usuario = new Usuario();
+        creaConexionTemporal();
+        usuario.setNombreusuarioInstitucional("Francisco");
+        usuario.setContrasenia("123aA");
+        String verficarContraseña = "123aA";
+        int tipoUsuario = 1;
+        String codigo = "";
+
+        assertEquals(validar_registro.verificarRegistro(
+                usuario.getNombreusuarioInstitucional(),
+                usuario.getContrasenia(),
+                verficarContraseña,
+                tipoUsuario, codigo),
+                LONGITUD_CONTRASENIA_INCORRECTA);
+
+    }
+
+    @Test
+    public void testContraseñaLarga() throws Exception {
+        Usuario usuario = new Usuario();
+        creaConexionTemporal();
+        usuario.setNombreusuarioInstitucional("Marcela");
+        usuario.setContrasenia("123456789Qsad@0932sa427");
+        String verficarContraseña = "123456789Qsad@0932sa427";
+        int tipoUsuario = 1;
+        String codigo = "";
+
+        assertEquals(validar_registro.verificarRegistro(
+                usuario.getNombreusuarioInstitucional(),
+                usuario.getContrasenia(),
+                verficarContraseña,
+                tipoUsuario, codigo),
+                LONGITUD_CONTRASENIA_INCORRECTA);
+
+    }
+
+    @Test
+    public void testContraseñaInsegura() throws Exception {
+        Usuario usuario = new Usuario();
+        creaConexionTemporal();
+        usuario.setNombreusuarioInstitucional("Francisco");
+        usuario.setContrasenia("12345678910");
+        String verficarContraseña = "12345678910";
+        int tipoUsuario = 1;
+        String codigo = "";
+
+        assertEquals(validar_registro.verificarRegistro(
+                usuario.getNombreusuarioInstitucional(),
+                usuario.getContrasenia(),
+                verficarContraseña,
+                tipoUsuario, codigo),
+                CONTRASENIA_NO_SEGURA);
+
+    }
+
+    @Test
+    public void testContraseñasololetras() throws Exception {
+        Usuario usuario = new Usuario();
+        creaConexionTemporal();
+        usuario.setNombreusuarioInstitucional("Francisco");
+        usuario.setContrasenia("Alargaprueb");
+        String verficarContraseña = "Alargaprueb";
+        int tipoUsuario = 1;
+        String codigo = "";
+
+        assertEquals(validar_registro.verificarRegistro(
+                usuario.getNombreusuarioInstitucional(),
+                usuario.getContrasenia(),
+                verficarContraseña,
+                tipoUsuario, codigo),
+                CONTRASENIA_NO_SEGURA);
+    }
+
+    @Test
+    public void testContraseñasNoCoinciden() throws Exception {
+        Usuario usuario = new Usuario();
+        creaConexionTemporal();
+        usuario.setNombreusuarioInstitucional("Francisco");
+        usuario.setContrasenia("safdsQSD2216");
+        String verficarContraseña = "afsdf1321EWFR";
+        int tipoUsuario = 1;
+        String codigo = "";
+
+        assertEquals(validar_registro.verificarRegistro(
+                usuario.getNombreusuarioInstitucional(),
+                usuario.getContrasenia(),
+                verficarContraseña,
+                tipoUsuario, codigo),
+                CONTRASENIAS_CONFIRMACIÓN_INCORRECTA);
+    }
+
+    @Test
+    public void testNombreCorto() throws Exception {
+        Usuario usuario = new Usuario();
+        creaConexionTemporal();
+        usuario.setNombreusuarioInstitucional("Juan");
+        usuario.setContrasenia("safdsQSD2216");
+        String verficarContraseña = "safdsQSD2216";
+        int tipoUsuario = 1;
+        String codigo = "";
+
+        assertEquals(validar_registro.verificarRegistro(
+                usuario.getNombreusuarioInstitucional(),
+                usuario.getContrasenia(),
+                verficarContraseña,
+                tipoUsuario, codigo),
+                LONGITUD_NOMBRE_INCORRECTA);
+    }
+
+    @Test
+    public void testNombreLargo() throws Exception {
+        Usuario usuario = new Usuario();
+        creaConexionTemporal();
+        usuario.setNombreusuarioInstitucional("juanEstevanGarzonGutierrezMolina");
+        usuario.setContrasenia("safdsQSD2216");
+        String verficarContraseña = "safdsQSD2216";
+        int tipoUsuario = 1;
+        String codigo = "";
+
+        assertEquals(validar_registro.verificarRegistro(
+                usuario.getNombreusuarioInstitucional(),
+                usuario.getContrasenia(),
+                verficarContraseña,
+                tipoUsuario, codigo),
+                LONGITUD_NOMBRE_INCORRECTA);
+    }
+
+    @Test
+    public void testRegistroCorrecto() throws Exception {
+        Usuario usuario = new Usuario();
+        creaConexionTemporal();
+        usuario.setNombreusuarioInstitucional("Francisco");
+        usuario.setContrasenia("safdsQSD2216");
+        String verficarContraseña = "safdsQSD2216";
+        int tipoUsuario = 1;
+        String codigo = "";
+
+        assertEquals(validar_registro.verificarRegistro(
+                usuario.getNombreusuarioInstitucional(),
+                usuario.getContrasenia(),
+                verficarContraseña,
+                tipoUsuario, codigo),
+                USUARIO_CORRECTO_REGISTRADO);
+    }
+
+    @Test
+    public void testRegistroUsuarioExistente() throws Exception {
+        Usuario usuario = new Usuario();
+    creaConexionTemporal();
+        usuario.setNombreusuarioInstitucional("sehernandezce");
+        usuario.setContrasenia("123456789Qw");
+        String verficarContraseña = "123456789Qw";
+        int tipoUsuario = 1;
+        String codigo = "";
+
+        assertEquals(validar_registro.verificarRegistro(
+                usuario.getNombreusuarioInstitucional(),
+                usuario.getContrasenia(),
+                verficarContraseña,
+                tipoUsuario, codigo),
+                USUARIO_YA_EXISTENTE);
+    }
+    
+    @Test
+    public void testRegistroUsuarioAdministrador() throws Exception {
+        Usuario usuario = new Usuario();
+        creaConexionTemporal();
+        usuario.setNombreusuarioInstitucional("Ricardo");
+        usuario.setContrasenia("safdsQSD2216");
+        String verficarContraseña = "safdsQSD2216";
+        int tipoUsuario = 2;
+        String codigo = "koUyrt90*65";
+
+        assertEquals(validar_registro.verificarRegistro(
+                usuario.getNombreusuarioInstitucional(),
+                usuario.getContrasenia(),
+                verficarContraseña,
+                tipoUsuario, codigo),
+                USUARIO_CORRECTO_REGISTRADO);
+    }
+    
+    @Test
+    public void testRegistroAdministradorCodigoIncorrecto() throws Exception {
+        Usuario usuario = new Usuario();
+        creaConexionTemporal();
+        usuario.setNombreusuarioInstitucional("Rosario");
+        usuario.setContrasenia("278dsQSD2216");
+        String verficarContraseña = "278dsQSD2216";
+        int tipoUsuario = 2;
+        String codigo = "Uyrt90";
+
+        assertEquals(validar_registro.verificarRegistro(
+                usuario.getNombreusuarioInstitucional(),
+                usuario.getContrasenia(),
+                verficarContraseña,
+                tipoUsuario, codigo),
+                CODIGO_ADMINISTRADOR_INCORRECTO);
+    }
+    
+
+}

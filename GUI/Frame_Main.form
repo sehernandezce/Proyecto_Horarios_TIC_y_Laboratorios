@@ -3345,7 +3345,7 @@
               <Font name="Segoe UI" size="12" style="0"/>
             </Property>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="&quot;&lt;html&gt;&lt;Center&gt; Las graficas solo tienen encuenta&lt;p&gt; las solicitudes aceptadas. Los espacio&lt;p&gt;que no salen en las graficas es porque&lt;p&gt; no tienen solicitudes aceptadas.&quot;" type="code"/>
+              <Connection code="&quot;&lt;html&gt;&lt;Center&gt; Las graficas presenta el numero de&lt;p&gt; solicitudes realizadas. Los espacio&lt;p&gt;que no salen en las graficas es porque&lt;p&gt; no tienen solicitudes.&quot;" type="code"/>
             </Property>
             <Property name="opaque" type="boolean" value="true"/>
           </Properties>

@@ -1702,7 +1702,7 @@ public class Frame_Main extends javax.swing.JFrame {
 
         masInfoEstadisticas.setBackground(new java.awt.Color(255, 255, 255));
         masInfoEstadisticas.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        masInfoEstadisticas.setText("<html><Center> Las graficas solo tienen encuenta<p> las solicitudes aceptadas. Los espacio<p>que no salen en las graficas es porque<p> no tienen solicitudes aceptadas.");
+        masInfoEstadisticas.setText("<html><Center> Las graficas presenta el numero de<p> solicitudes realizadas. Los espacio<p>que no salen en las graficas es porque<p> no tienen solicitudes.");
         masInfoEstadisticas.setOpaque(true);
         Estadisticas.add(masInfoEstadisticas, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 10, 150, 130));
 

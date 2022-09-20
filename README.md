@@ -1,5 +1,4 @@
 # Proyecto_Horarios_TIC_y_Laboratorios
-Proyecto final de ingeniería de software I clase.
 
 ## PLATAFORMAS PARA EL DESARROLLO DEL SOFTWARE
 
